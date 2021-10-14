@@ -11,6 +11,6 @@ namespace AIS.BLL.Interfaces.Services
         IEnumerable<TEntity> Get(Func<TEntity, bool> predicate);
         Task<TEntity> GetById(int id);
         Task<TEntity> Put(TEntity item);
-        Task<TEntity> Delete(TEntity item);
+        Task Delete(TEntity item);
     }
 }

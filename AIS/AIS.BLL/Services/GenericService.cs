@@ -20,9 +20,9 @@ namespace AIS.BLL.Services
             return await this._repository.Add(item);
         }
 
-        public async Task<TEntity> Delete(TEntity item)
+        public async Task Delete(TEntity item)
         {
-            return await this._repository.Delete(item);
+            await this._repository.Delete(item);
         }
 
         public async Task<TEntity> Put(TEntity item)

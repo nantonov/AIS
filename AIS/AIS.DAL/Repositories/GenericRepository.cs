@@ -11,6 +11,7 @@ namespace AIS.DAL.Repositories
     {
         private readonly DbContext _context;
         private readonly DbSet<TEntity> _dbSet;
+
         public GenericRepository(DbContext context)
         {
             this._context = context;
@@ -39,11 +40,10 @@ namespace AIS.DAL.Repositories
             return item;
         }
 
-        public async Task<TEntity> Delete(TEntity item)
+        public async Task Delete(TEntity item)
         {
             _dbSet.Remove(item);
             await _context.SaveChangesAsync();
-            return item;
         }
         public async Task<TEntity> Add(TEntity item)
         {

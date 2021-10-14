@@ -11,6 +11,6 @@ namespace AIS.DAL.Interfaces.Repositories
         IEnumerable<TEntity> Get(Func<TEntity, bool> predicate);
         Task<TEntity> GetById(int id);
         Task<TEntity> Update(TEntity item);
-        Task<TEntity> Delete(TEntity item);
+        Task Delete(TEntity item);
     }
 }
