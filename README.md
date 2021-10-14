@@ -1,5 +1,5 @@
 # AIS
-![example event parameter](https://github.com/github/docs/actions/workflows/main.yml/badge.svg?event=pull_request)
+<img src="https://github.com/nantonov/ASI/actions/workflows/dotnet.yml/badge.svg" alt="dotnet workflow" style="max-width: 100%;">
 
 ![Alt-текст](https://bitworks.software/assets/img/2018-12-11/Feature.png "Gitflow")
 
