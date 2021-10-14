@@ -1,2 +1,2 @@
 # AIS
-https://img.shields.io/badge/left-right-f39f37
+![C#](https://img.shields.io/badge/c%23-%23239120.svg?style=for-the-badge&logo=c-sharp&logoColor=white)
