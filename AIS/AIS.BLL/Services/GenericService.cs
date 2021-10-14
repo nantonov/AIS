@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AIS.BLL.Interfaces.Services;
-using AIS.DAL.Entities;
 using AIS.DAL.Interfaces.Repositories;
 
 namespace AIS.BLL.Services
 {
-    public class GenericService<TEntity> : IGenericService<TEntity> where TEntity : BaseEntity
+    public class GenericService<TEntity> : IGenericService<TEntity> where TEntity : class
     {
         private readonly IGenericRepository<TEntity> _repository;
 
@@ -15,24 +14,24 @@ namespace AIS.BLL.Services
         {
             _repository = repository;
         }
-        public async Task<TEntity> Add(TEntity item)
+        public Task<TEntity> Add(TEntity item)
         {
-            return await this._repository.Add(item);
+            return this._repository.Add(item);
         }
 
-        public async Task Delete(TEntity item)
+        public Task Delete(TEntity item)
         {
-            await this._repository.Delete(item);
+            return this._repository.Delete(item);
         }
 
-        public async Task<TEntity> Put(TEntity item)
+        public Task<TEntity> Put(TEntity item)
         {
-            return await this._repository.Update(item);
+            return this._repository.Update(item);
         }
 
-        public async Task<IEnumerable<TEntity>> Get()
+        public Task<IEnumerable<TEntity>> Get()
         {
-            return await this._repository.Get();
+            return this._repository.Get();
         }
 
         public IEnumerable<TEntity> Get(Func<TEntity, bool> predicate)
@@ -40,9 +39,9 @@ namespace AIS.BLL.Services
             return this._repository.Get(predicate);
         }
 
-        public async Task<TEntity> GetById(int id)
+        public Task<TEntity> GetById(int id)
         {
-            return await this._repository.GetById(id);
+            return this._repository.GetById(id);
         }
     }
 }
