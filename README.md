@@ -4,8 +4,9 @@
 
 #### Main - main branch for project.
 #### feature/* - branches for new features.
-#### bux/* - branches for fix something that went wrong.
+#### bug/* - branches for fix something that went wrong.
 
+# Work steps
 
 When you take any task you should create new branch named 'feature/WHAT_YOU_WILL_DO'.
 After creating branch you should create merge(pull) request into main.
