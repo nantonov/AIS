@@ -5,11 +5,12 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AIS.API.Infrastructure;
 
 namespace AIS.API.Controllers
 {
     [Controller]
-    [Route("[controller]")]
+    [Route(EndpointConstants.ControllerEndpointRoute)]
     public class EmployeeController : Controller
     {
         private readonly IMapper _mapper;
@@ -21,13 +22,14 @@ namespace AIS.API.Controllers
             _service = service;
         }
 
-        [HttpGet]
+        [HttpGet()]
+        [HttpGet(EndpointConstants.GetEndpoitRoute)]
         public async Task<IEnumerable<EmployeeViewModel>> GetAll()
         {
             return _mapper.Map<IEnumerable<EmployeeViewModel>>(await _service.Get());
         }
 
-        [HttpPost("add")]
+        [HttpPost(EndpointConstants.AddEndpoitRoute)]
         public async Task<EmployeeViewModel> Add([FromBody] EmployeeViewModel viewModel)
         {
             return 
@@ -38,13 +40,13 @@ namespace AIS.API.Controllers
                 );
         }
 
-        [HttpDelete("delete")]
+        [HttpDelete(EndpointConstants.DeleteEndpoitRoute)]
         public async Task Delete([FromBody] EmployeeViewModel viewModel)
         {
             await _service.Delete(_mapper.Map<Employee>(viewModel));
         }
 
-        [HttpPut("update")]
+        [HttpPut(EndpointConstants.UpdateEndpoitRoute)]
         public async Task<EmployeeViewModel> Update([FromBody] EmployeeViewModel viewModel)
         {
             return 
