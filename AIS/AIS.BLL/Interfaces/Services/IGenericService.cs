@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace AIS.BLL.Interfaces.Services
 {
-    interface IGenericService
+    public interface IGenericService<TEntity>
     {
+        Task<TEntity> Add(TEntity item);
+        Task<IEnumerable<TEntity>> Get();
+        IEnumerable<TEntity> Get(Func<TEntity, bool> predicate);
+        Task<TEntity> GetById(int id);
+        Task<TEntity> Put(TEntity item);
+        Task<TEntity> Delete(TEntity item);
     }
 }

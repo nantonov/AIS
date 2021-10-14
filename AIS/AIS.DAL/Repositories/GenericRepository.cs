@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AIS.DAL.Repositories
 {
-    class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
+    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
-        private DbContext _context;
-        private DbSet<TEntity> _dbSet;
+        private readonly DbContext _context;
+        private readonly DbSet<TEntity> _dbSet;
         public GenericRepository(DbContext context)
         {
             this._context = context;
@@ -39,10 +39,11 @@ namespace AIS.DAL.Repositories
             return item;
         }
 
-        public async Task Delete(TEntity item)
+        public async Task<TEntity> Delete(TEntity item)
         {
             _dbSet.Remove(item);
             await _context.SaveChangesAsync();
+            return item;
         }
         public async Task<TEntity> Add(TEntity item)
         {
