@@ -45,6 +45,7 @@ namespace AIS.DAL.Repositories
             _dbSet.Remove(item);
             await _context.SaveChangesAsync();
         }
+        
         public async Task<TEntity> Add(TEntity item)
         {
             _dbSet.Add(item);
