@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AIS.BLL.DI;
 
 namespace AIS.API
 {
@@ -32,6 +33,7 @@ namespace AIS.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AIS.API", Version = "v1" });
             });
+            services.AddBusinessLogic(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
