@@ -32,8 +32,6 @@ namespace AIS.API
             services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
-            DataAccessRegister.AddDataAccess(services, Configuration);
-
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

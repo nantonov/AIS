@@ -23,7 +23,6 @@ namespace AIS.API.Controllers
         }
 
         [HttpGet()]
-        [HttpGet(EndpointConstants.GetEndpoitRoute)]
         public async Task<IEnumerable<EmployeeViewModel>> GetAll()
         {
             return _mapper.Map<IEnumerable<EmployeeViewModel>>(await _service.Get());
