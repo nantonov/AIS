@@ -1,5 +1,5 @@
 # AIS
-<img src="https://github.com/nantonov/ASI/actions/workflows/dotnet.yml/badge.svg" alt="dotnet workflow" style="max-width: 100%;">
+![dotnet workflow](https://github.com/nantonov/AIS/actions/workflows/dotnet.yml/badge.svg)
 
 ![Alt-текст](https://bitworks.software/assets/img/2018-12-11/Feature.png "Gitflow")
 
