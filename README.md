@@ -1,5 +1,6 @@
 # AIS
 ![dotnet workflow](https://github.com/nantonov/AIS/actions/workflows/dotnet.yml/badge.svg)
+![dotnet workflow](https://github.com/nantonov/HRMS/actions/workflows/codeql-analysis.yml/badge.svg)
 
 ![Alt-текст](https://bitworks.software/assets/img/2018-12-11/Feature.png "Gitflow")
 
