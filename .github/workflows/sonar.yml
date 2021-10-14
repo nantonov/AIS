@@ -1,23 +1,46 @@
--name: Sonar Scan
-  # You may pin to the exact commit or the version.
-  # uses: sijomc/sonarscan-action@5a3a0c0eacbe76ac7c3e3513696f7449f4f914a5
-uses: sijomc/sonarscan-action@1.1
-  with:
-    # SonarQube server URL
-    host: 
-    # The project's unique key. Allowed characters are: letters, numbers, -, _, . and :, with at least one non-digit.
-    projectKey: # optional, default is 
-    # Name of the project that will be displayed on the web interface.
-    projectName: # optional, default is 
-    # The project version.
-    projectVersion: # optional, default is 
-    # Set the sonar.projectBaseDir analysis property
-    projectBaseDir: # optional, default is .
-    # Exclude directories from scanning
-    exclusions: # optional
-    # Login or authentication token of a SonarQube user
-    login: 
-    # Password that goes with the sonar.login username. This should be left blank if an authentication token is being used.
-    password: # optional
-    # Sonar Scanner options for memory optimization
-    scannerOptions: # optional
+name: Build
+on:
+  push:
+    branches:
+      - master # or the name of your main branch
+  pull_request:
+    types: [opened, synchronize, reopened]
+jobs:
+  build:
+    name: Build
+    runs-on: windows-latest
+    steps:
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.11
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Cache SonarQube packages
+        uses: actions/cache@v1
+        with:
+          path: ~\sonar\cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Cache SonarQube scanner
+        id: cache-sonar-scanner
+        uses: actions/cache@v1
+        with:
+          path: .\.sonar\scanner
+          key: ${{ runner.os }}-sonar-scanner
+          restore-keys: ${{ runner.os }}-sonar-scanner
+      - name: Install SonarQube scanner
+        if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
+        shell: powershell
+        run: |
+          New-Item -Path .\.sonar\scanner -ItemType Directory
+          dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
+      - name: Build and analyze
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+        shell: powershell
+        run: |
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"example" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}"
+          dotnet build
+          .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
