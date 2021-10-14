@@ -14,6 +14,7 @@ namespace AIS.BLL.Services
         {
             _repository = repository;
         }
+        
         public Task<TEntity> Add(TEntity item)
         {
             return this._repository.Add(item);
