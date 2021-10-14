@@ -13,39 +13,46 @@ namespace AIS.API.Controllers
     public class EmployeeController : Controller
     {
         private readonly IMapper _mapper;
-        private readonly IGenericService<EmployeeDto> _service;
+        private readonly IGenericService<Employee> _service;
 
-        public EmployeeController(IMapper mapper, IGenericService<EmployeeDto> service)
+        public EmployeeController(IMapper mapper, IGenericService<Employee> service)
         {
             _mapper = mapper;
             _service = service;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<EmployeeModel>> GetAll()
+        public async Task<IEnumerable<EmployeeViewModel>> GetAll()
         {
-            return _mapper.Map<IEnumerable<EmployeeModel>>(await _service.Get());
+            return _mapper.Map<IEnumerable<EmployeeViewModel>>(await _service.Get());
         }
 
-        [HttpPost]
-        [Route("add")]
-        public async Task<EmployeeModel> Add([FromBody] EmployeeModel model)
+        [HttpPost("add")]
+        public async Task<EmployeeViewModel> Add([FromBody] EmployeeViewModel viewModel)
         {
-            return _mapper.Map<EmployeeModel>(await _service.Add(_mapper.Map<EmployeeDto>(model)));
+            return 
+                _mapper.Map<EmployeeViewModel>(
+                    await _service.Add(
+                    _mapper.Map<Employee>(viewModel)
+                    )
+                );
         }
 
-        [HttpDelete]
-        [Route("delete")]
-        public async Task Delete([FromBody] EmployeeModel model)
+        [HttpDelete("delete")]
+        public async Task Delete([FromBody] EmployeeViewModel viewModel)
         {
-            await _service.Delete(_mapper.Map<EmployeeDto>(model));
+            await _service.Delete(_mapper.Map<Employee>(viewModel));
         }
 
-        [HttpPut]
-        [Route("update")]
-        public async Task<EmployeeModel> Update([FromBody] EmployeeModel model)
+        [HttpPut("update")]
+        public async Task<EmployeeViewModel> Update([FromBody] EmployeeViewModel viewModel)
         {
-            return _mapper.Map<EmployeeModel>(await _service.Put(_mapper.Map<EmployeeDto>(model)));
+            return 
+                _mapper.Map<EmployeeViewModel>(
+                    await _service.Put(
+                    _mapper.Map<Employee>(viewModel)
+                    )
+                );
         }
     }
 }
