@@ -16,6 +16,7 @@ namespace AIS.API.Controllers
     {
         private readonly IGenericService<Company> _companyService;
         private readonly IMapper _mapper;
+
         public CompanyController(IGenericService<Company> companyService, IMapper mapper)
         {
             this._companyService = companyService;
@@ -57,6 +58,5 @@ namespace AIS.API.Controllers
         {
             return _companyService.Delete(id, ct);
         }
-    
     }
 }
