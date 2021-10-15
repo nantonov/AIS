@@ -4,6 +4,7 @@ using AIS.BLL.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using AIS.API.Infrastructure;
 
@@ -25,7 +26,7 @@ namespace AIS.API.Controllers
         [HttpGet]
         public async Task<IEnumerable<EmployeeViewModel>> GetAll()
         {
-            return _mapper.Map<IEnumerable<EmployeeViewModel>>(await _service.Get());
+            return _mapper.Map<IEnumerable<EmployeeViewModel>>(await _service.Get(CancellationToken.None));
         }
 
         [HttpPost(EndpointConstants.AddEndpoitRoute)]
@@ -34,7 +35,7 @@ namespace AIS.API.Controllers
             return 
                 _mapper.Map<EmployeeViewModel>(
                     await _service.Add(
-                    _mapper.Map<Employee>(viewModel)
+                    _mapper.Map<Employee>(viewModel), CancellationToken.None
                     )
                 );
         }
@@ -42,7 +43,7 @@ namespace AIS.API.Controllers
         [HttpDelete(EndpointConstants.DeleteEndpoitRoute)]
         public async Task Delete([FromBody] EmployeeViewModel viewModel)
         {
-            await _service.Delete(_mapper.Map<Employee>(viewModel));
+            await _service.Delete(_mapper.Map<Employee>(viewModel), CancellationToken.None);
         }
 
         [HttpPut(EndpointConstants.UpdateEndpoitRoute)]
@@ -51,7 +52,7 @@ namespace AIS.API.Controllers
             return 
                 _mapper.Map<EmployeeViewModel>(
                     await _service.Put(
-                    _mapper.Map<Employee>(viewModel)
+                    _mapper.Map<Employee>(viewModel), CancellationToken.None
                     )
                 );
         }

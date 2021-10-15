@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AIS.DAL.Entities;
@@ -28,6 +30,11 @@ namespace AIS.DAL.Repositories
             return await _context.Interviewees.ToListAsync(ct);
         }
 
+        public async Task<IEnumerable<IntervieweeEntity>> Get(Func<IntervieweeEntity, bool> predicate, CancellationToken ct)
+        {
+            return await Task.FromResult(_context.Interviewees.Where(predicate).ToList());
+        }
+
         public async Task<IntervieweeEntity> GetById(int id, CancellationToken ct)
         {
             return await _context.Interviewees.FindAsync(new object[] {id}, ct);
@@ -38,6 +45,11 @@ namespace AIS.DAL.Repositories
             _context.Entry(entity).State = EntityState.Modified;
             await _context.SaveChangesAsync(ct);
             return entity;
+        }
+
+        public Task Delete(IntervieweeEntity entity, CancellationToken ct)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task Delete(int id, CancellationToken ct)

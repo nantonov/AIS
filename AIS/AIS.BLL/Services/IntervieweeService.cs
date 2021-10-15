@@ -35,6 +35,13 @@ namespace AIS.BLL.Services
             );
         }
 
+        public async Task<IEnumerable<Interviewee>> Get(Func<Interviewee, bool> predicate, CancellationToken ct)
+        {
+            return _mapper.Map<IEnumerable<Interviewee>>(
+                await _repo.Get(_mapper.Map<Func<IntervieweeEntity, bool>>(predicate), ct)
+            );
+        }
+
         public async Task<Interviewee> GetById(int id, CancellationToken ct)
         {
             return _mapper.Map<Interviewee>(
@@ -47,6 +54,11 @@ namespace AIS.BLL.Services
             return _mapper.Map<Interviewee>(
                 await _repo.Update(_mapper.Map<IntervieweeEntity>(entity), ct)
             );
+        }
+
+        public Task Delete(Interviewee entity, CancellationToken ct)
+        {
+            throw new NotImplementedException();
         }
 
         public Task Delete(int id, CancellationToken ct)
