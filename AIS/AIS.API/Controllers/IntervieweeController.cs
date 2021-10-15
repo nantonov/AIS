@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using AIS.API.Infrastructure;
 using AIS.API.ViewModels;
 using AIS.BLL.Interfaces.Services;
 using AIS.BLL.Models;
@@ -9,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AIS.API.Controllers
 {
-    [Route("api/Interviewee")]
+    [Route(EndpointConstants.ControllerEndpointRoute)]
     [ApiController]
     public class IntervieweeController : ControllerBase
     {
@@ -21,7 +22,7 @@ namespace AIS.API.Controllers
             _mapper = mapper;
         }
     
-        [HttpGet("{id}")]
+        [HttpGet(EndpointConstants.IdTemplate)]
         public async Task<IntervieweeViewModel> GetInterviewee(int id)
         {
             var interviewee = _mapper.Map<Interviewee, IntervieweeViewModel>(await _intervieweeService.GetById(id, new CancellationToken()));
@@ -51,7 +52,7 @@ namespace AIS.API.Controllers
             );
         }
     
-        [HttpDelete("{id}")]
+        [HttpDelete(EndpointConstants.IdTemplate)]
         public Task Delete(int id)
         {
             return _intervieweeService.Delete(id, new CancellationToken());

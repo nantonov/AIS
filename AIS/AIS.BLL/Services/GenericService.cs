@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using AIS.BLL.Interfaces.Services;
 using AIS.DAL.Interfaces.Repositories;
@@ -15,34 +16,34 @@ namespace AIS.BLL.Services
             _repository = repository;
         }
         
-        public Task<TEntity> Add(TEntity entity)
+        public Task<TEntity> Add(TEntity entity, CancellationToken ct)
         {
-            return this._repository.Add(entity);
+            return this._repository.Add(entity, ct);
         }
 
-        public Task Delete(TEntity entity)
+        public Task Delete(TEntity entity, CancellationToken ct)
         {
-            return this._repository.Delete(entity);
+            return this._repository.Delete(entity, ct);
         }
 
-        public Task<TEntity> Put(TEntity entity)
+        public Task<TEntity> Put(TEntity entity, CancellationToken ct)
         {
-            return this._repository.Update(entity);
+            return this._repository.Update(entity, ct);
         }
 
-        public Task<IEnumerable<TEntity>> Get()
+        public Task<IEnumerable<TEntity>> Get(CancellationToken ct)
         {
-            return this._repository.Get();
+            return this._repository.Get(ct);
         }
 
-        public IEnumerable<TEntity> Get(Func<TEntity, bool> predicate)
+        public Task<IEnumerable<TEntity>> Get(Func<TEntity, bool> predicate, CancellationToken ct)
         {
-            return this._repository.Get(predicate);
+            return this._repository.Get(predicate, ct);
         }
 
-        public Task<TEntity> GetById(int id)
+        public Task<TEntity> GetById(int id, CancellationToken ct)
         {
-            return this._repository.GetById(id);
+            return this._repository.GetById(id, ct);
         }
     }
 }

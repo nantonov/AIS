@@ -8,8 +8,8 @@ namespace AIS.DAL.MappingConfiguration
     {
         public void Configure(EntityTypeBuilder<IntervieweeEntity> builder)
         {
-            builder.HasKey(a => a.IntervieweeId);
-            builder.Property(a => a.IntervieweeId).ValueGeneratedOnAdd();
+            builder.HasKey(a => a.Id);
+            builder.Property(a => a.Id).ValueGeneratedOnAdd();
 
             builder.Property(a => a.Name).HasColumnName("Name");
             builder.Property(a => a.AppliesFor).HasColumnName("AppliesFor");

@@ -1,3 +1,4 @@
+using AIS.API.MiddleWare;
 using AIS.BLL.DI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -39,7 +40,7 @@ namespace AIS.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AIS.API v1"));
             }
-
+            app.UseMiddleware<ExceptionMiddleWare>();
             app.UseHttpsRedirection();
 
             app.UseRouting();

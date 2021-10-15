@@ -11,6 +11,7 @@ namespace AIS.BLL.DI
         public static void AddBusinessLogic(this IServiceCollection services, IConfiguration config)
         {
             services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
+            services.AddScoped<IIntervieweeService, IntervieweeService>();
             services.AddDataAccess(config);
         }
     }

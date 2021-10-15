@@ -8,11 +8,11 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
@@ -23,13 +23,14 @@ jobs:
       run: dotnet build --no-restore AIS/AIS.sln
     - name: Test
       run: dotnet test --no-build --verbosity normal AIS/AIS.sln
-    - name: SonarCloud Scan
-      uses: SonarSource/sonarcloud-github-action@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    - name: sonarscan-dotnet
+      uses: highbyte/sonarscan-dotnet@v2.1.1-beta
       with:
-        args: >
-          -Dsonar.organization=nantonov
-          -Dsonar.projectKey=nantonov_AIS
-        projectBaseDir: AIS
+        sonarProjectKey: nantonov_AIS
+        sonarProjectName: AIS
+        sonarOrganization: nantonov
+        dotnetBuildArguments: AIS/AIS.sln
+        dotnetTestArguments: --no-build --verbosity normal AIS/AIS.sln
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
