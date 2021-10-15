@@ -9,10 +9,10 @@ namespace AIS.DAL.Repositories
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
-        private readonly DbContext _context;
+        private readonly DatabaseContext _context;
         private readonly DbSet<TEntity> _dbSet;
 
-        public GenericRepository(DbContext context)
+        public GenericRepository(DatabaseContext context)
         {
             this._context = context;
             _dbSet = _context.Set<TEntity>();

@@ -1,0 +1,57 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using AIS.BLL.Interfaces.Services;
+using AIS.BLL.Models;
+using AIS.DAL.Entities;
+using AIS.DAL.Interfaces.Repositories;
+using AutoMapper;
+
+namespace AIS.BLL.Services
+{
+    public class IntervieweeService : IIntervieweeService
+    {
+        private readonly IIntervieweeRepository _repo;
+        private readonly IMapper _mapper;
+
+        public IntervieweeService(IIntervieweeRepository repo, IMapper mapper)
+        {
+            this._repo = repo;
+            this._mapper = mapper;
+        }
+
+        public async Task<Interviewee> Add(Interviewee entity, CancellationToken ct)
+        {
+            return _mapper.Map<Interviewee>(
+                await _repo.Add(_mapper.Map<IntervieweeEntity>(entity), ct)
+            );
+        }
+
+        public async Task<IEnumerable<Interviewee>> Get(CancellationToken ct)
+        {
+            return _mapper.Map<IEnumerable<Interviewee>>(
+                await _repo.Get(ct)
+            );
+        }
+
+        public async Task<Interviewee> GetById(int id, CancellationToken ct)
+        {
+            return _mapper.Map<Interviewee>(
+                await _repo.GetById(id, ct)
+            );
+        }
+
+        public async Task<Interviewee> Put(Interviewee entity, CancellationToken ct)
+        {
+            return _mapper.Map<Interviewee>(
+                await _repo.Update(_mapper.Map<IntervieweeEntity>(entity), ct)
+            );
+        }
+
+        public Task Delete(int id, CancellationToken ct)
+        {
+            return _repo.Delete(id, ct);
+        }
+    }
+}

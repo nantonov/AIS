@@ -15,19 +15,19 @@ namespace AIS.BLL.Services
             _repository = repository;
         }
         
-        public Task<TEntity> Add(TEntity item)
+        public Task<TEntity> Add(TEntity entity)
         {
-            return this._repository.Add(item);
+            return this._repository.Add(entity);
         }
 
-        public Task Delete(TEntity item)
+        public Task Delete(TEntity entity)
         {
-            return this._repository.Delete(item);
+            return this._repository.Delete(entity);
         }
 
-        public Task<TEntity> Put(TEntity item)
+        public Task<TEntity> Put(TEntity entity)
         {
-            return this._repository.Update(item);
+            return this._repository.Update(entity);
         }
 
         public Task<IEnumerable<TEntity>> Get()
