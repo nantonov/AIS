@@ -11,6 +11,7 @@ namespace AIS.DAL.DI
         public static void AddDataAccess(this IServiceCollection services, IConfiguration config)
         {
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddScoped<IIntervieweeRepository, IntervieweeRepository>();
             services.AddDbContext<DatabaseContext>(op =>
                 {
                     op.UseSqlServer(config.GetConnectionString("DefaultConnection"));
