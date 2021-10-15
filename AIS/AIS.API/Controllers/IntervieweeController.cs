@@ -14,48 +14,48 @@ namespace AIS.API.Controllers
     [ApiController]
     public class IntervieweeController : ControllerBase
     {
-        private readonly IIntervieweeService _intervieweeService;
+        private readonly IGenericService<Interviewee> _intervieweeService;
         private readonly IMapper _mapper;
-        public IntervieweeController(IIntervieweeService intervieweeService, IMapper mapper)
+        public IntervieweeController(IGenericService<Interviewee> intervieweeService, IMapper mapper)
         {
             this._intervieweeService = intervieweeService;
             _mapper = mapper;
         }
     
         [HttpGet(EndpointConstants.IdTemplate)]
-        public async Task<IntervieweeViewModel> GetInterviewee(int id)
+        public async Task<IntervieweeViewModel> GetInterviewee(int id, CancellationToken ct)
         {
-            var interviewee = _mapper.Map<Interviewee, IntervieweeViewModel>(await _intervieweeService.GetById(id, new CancellationToken()));
+            var interviewee = _mapper.Map<Interviewee, IntervieweeViewModel>(await _intervieweeService.GetById(id, ct));
             return interviewee;
         }
     
         [HttpGet]
-        public async Task<IEnumerable<IntervieweeViewModel>> GetInterviewees()
+        public async Task<IEnumerable<IntervieweeViewModel>> GetInterviewees(CancellationToken ct)
         {
-            var interviewees = await _intervieweeService.Get(new CancellationToken());
+            var interviewees = await _intervieweeService.Get(ct);
             return _mapper.Map<IEnumerable<IntervieweeViewModel>>(interviewees);
         }
     
         [HttpPost]
-        public async Task<IntervieweeViewModel> Post(IntervieweeViewModel interviewee)
+        public async Task<IntervieweeViewModel> Post(IntervieweeViewModel interviewee, CancellationToken ct)
         {
             return _mapper.Map<IntervieweeViewModel>(
-                await _intervieweeService.Add(_mapper.Map<Interviewee>(interviewee), new CancellationToken())
+                await _intervieweeService.Add(_mapper.Map<Interviewee>(interviewee), ct)
                 );
         }
     
         [HttpPut]
-        public async Task<IntervieweeViewModel> Put(IntervieweeViewModel interviewee)
+        public async Task<IntervieweeViewModel> Put(IntervieweeViewModel interviewee, CancellationToken ct)
         {
             return _mapper.Map<IntervieweeViewModel>(
-                await _intervieweeService.Put(_mapper.Map<Interviewee>(interviewee), new CancellationToken())
+                await _intervieweeService.Put(_mapper.Map<Interviewee>(interviewee), ct)
             );
         }
     
         [HttpDelete(EndpointConstants.IdTemplate)]
-        public Task Delete(int id)
+        public Task Delete(int id, CancellationToken ct)
         {
-            return _intervieweeService.Delete(id, new CancellationToken());
+            return _intervieweeService.Delete(id, ct);
         }
     
     }

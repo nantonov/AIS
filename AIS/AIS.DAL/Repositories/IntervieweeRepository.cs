@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AIS.DAL.Repositories
 {
-    class IntervieweeRepository : IIntervieweeRepository
+    class IntervieweeRepository : IGenericRepository<IntervieweeEntity>
     {
         private readonly DatabaseContext _context;
 
@@ -30,9 +30,9 @@ namespace AIS.DAL.Repositories
             return await _context.Interviewees.ToListAsync(ct);
         }
 
-        public async Task<IEnumerable<IntervieweeEntity>> Get(Func<IntervieweeEntity, bool> predicate, CancellationToken ct)
+        public IEnumerable<IntervieweeEntity> Get(Func<IntervieweeEntity, bool> predicate, CancellationToken ct)
         {
-            return await Task.FromResult(_context.Interviewees.Where(predicate).ToList());
+            return _context.Interviewees.Where(predicate).ToList();
         }
 
         public async Task<IntervieweeEntity> GetById(int id, CancellationToken ct)

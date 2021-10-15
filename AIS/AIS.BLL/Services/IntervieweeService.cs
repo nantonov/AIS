@@ -10,12 +10,12 @@ using AutoMapper;
 
 namespace AIS.BLL.Services
 {
-    public class IntervieweeService : IIntervieweeService
+    public class IntervieweeService : IGenericService<Interviewee>
     {
-        private readonly IIntervieweeRepository _repo;
+        private readonly IGenericRepository<IntervieweeEntity> _repo;
         private readonly IMapper _mapper;
 
-        public IntervieweeService(IIntervieweeRepository repo, IMapper mapper)
+        public IntervieweeService(IGenericRepository<IntervieweeEntity> repo, IMapper mapper)
         {
             this._repo = repo;
             this._mapper = mapper;
@@ -35,10 +35,10 @@ namespace AIS.BLL.Services
             );
         }
 
-        public async Task<IEnumerable<Interviewee>> Get(Func<Interviewee, bool> predicate, CancellationToken ct)
+        public IEnumerable<Interviewee> Get(Func<Interviewee, bool> predicate, CancellationToken ct)
         {
             return _mapper.Map<IEnumerable<Interviewee>>(
-                await _repo.Get(_mapper.Map<Func<IntervieweeEntity, bool>>(predicate), ct)
+                _repo.Get(_mapper.Map<Func<IntervieweeEntity, bool>>(predicate), ct)
             );
         }
 

@@ -9,7 +9,7 @@ namespace AIS.DAL.Interfaces.Repositories
     {
         Task<TEntity> Add(TEntity entity, CancellationToken ct);
         Task<IEnumerable<TEntity>> Get(CancellationToken ct);
-        Task<IEnumerable<TEntity>> Get(Func<TEntity, bool> predicate, CancellationToken ct);
+        IEnumerable<TEntity> Get(Func<TEntity, bool> predicate, CancellationToken ct);
         Task<TEntity> GetById(int id, CancellationToken ct);
         Task<TEntity> Update(TEntity entity, CancellationToken ct);
         Task Delete(TEntity entity, CancellationToken ct);

@@ -24,9 +24,9 @@ namespace AIS.DAL.Repositories
             return await _dbSet.AsNoTracking().ToListAsync(ct);
         }
 
-        public async Task<IEnumerable<TEntity>> Get(Func<TEntity, bool> predicate, CancellationToken ct)
+        public IEnumerable<TEntity> Get(Func<TEntity, bool> predicate, CancellationToken ct)
         {
-            return await Task.FromResult(_dbSet.Where(predicate).ToList());
+            return _dbSet.Where(predicate).ToList();
         }
 
         public async Task<TEntity> GetById(int id, CancellationToken ct)
@@ -55,7 +55,7 @@ namespace AIS.DAL.Repositories
 
         public async Task<TEntity> Add(TEntity entity, CancellationToken ct)
         {
-            _dbSet.Add(entity);
+            await _dbSet.AddAsync(entity, ct);
             await _context.SaveChangesAsync(ct);
             return entity;
         }
