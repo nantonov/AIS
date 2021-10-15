@@ -23,23 +23,13 @@ jobs:
       run: dotnet build --no-restore AIS/AIS.sln
     - name: Test
       run: dotnet test --no-build --verbosity normal AIS/AIS.sln
-    - name: SonarCloud Scan
-      uses: SonarSource/sonarcloud-github-action@v1.6
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      with:
-        args: >
-          -Dsonar.organization=nantonov
-          -Dsonar.projectKey=nantonov_AIS
-        projectBaseDir: AIS
     - name: sonarscan-dotnet
       uses: highbyte/sonarscan-dotnet@v2.1.1-beta
       with:
         sonarProjectKey: nantonov_AIS
         sonarProjectName: AIS
         sonarOrganization: nantonov
-        dotnetBuildArguments: --no-restore AIS/AIS.sln
+        dotnetBuildArguments: AIS/AIS.sln
         dotnetTestArguments: --no-build --verbosity normal AIS/AIS.sln
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
