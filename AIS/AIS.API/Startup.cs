@@ -1,6 +1,4 @@
-using AIS.API.Mappers;
 using AIS.BLL.DI;
-using AIS.BLL.Mappers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -22,7 +20,7 @@ namespace AIS.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAutoMapper(typeof(EmployeeViewModelProfile), typeof(EmployeeProfile));
+            services.AddAutoMapper(typeof(API.Mapper.MappingProfile).Assembly, typeof(BLL.Mapper.MappingProfile).Assembly);
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
