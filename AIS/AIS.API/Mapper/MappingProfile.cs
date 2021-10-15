@@ -9,6 +9,7 @@ namespace AIS.API.Mapper
         public MappingProfile()
         {
             CreateMap<Interviewee, IntervieweeViewModel>().ReverseMap();
+            CreateMap<Company, CompanyViewModel>().ReverseMap();
         }
     }
 }

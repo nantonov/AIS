@@ -9,7 +9,8 @@ namespace AIS.DAL.MappingConfiguration
         public void Configure(EntityTypeBuilder<CompanyEntity> builder)
         {
             builder.HasKey(a => a.Id);
-            builder.Property(a => a.Id).ValueGeneratedOnAdd();
+            builder.Property(a => a.Id)
+                .ValueGeneratedOnAdd();
 
             builder.Property(a => a.Name).HasColumnName("Name");
 
