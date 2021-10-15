@@ -34,24 +34,24 @@ namespace AIS.DAL.Repositories
             return await _dbSet.FindAsync(new object[] { id }, ct);
         }
 
-        public async Task<TEntity> Update(TEntity item, CancellationToken ct)
+        public async Task<TEntity> Update(TEntity entity, CancellationToken ct)
         {
-            _context.Entry(item).State = EntityState.Modified;
+            _context.Entry(entity).State = EntityState.Modified;
             await _context.SaveChangesAsync(ct);
-            return item;
+            return entity;
         }
 
-        public async Task Delete(TEntity item, CancellationToken ct)
+        public async Task Delete(TEntity entity, CancellationToken ct)
         {
-            _dbSet.Remove(item);
+            _dbSet.Remove(entity);
             await _context.SaveChangesAsync(ct);
         }
         
-        public async Task<TEntity> Add(TEntity item, CancellationToken ct)
+        public async Task<TEntity> Add(TEntity entity, CancellationToken ct)
         {
-            _dbSet.Add(item);
+            _dbSet.Add(entity);
             await _context.SaveChangesAsync(ct);
-            return item;
+            return entity;
         }
     }
 }
