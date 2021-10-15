@@ -20,6 +20,7 @@ namespace AIS.DAL
 
         public DbSet<IntervieweeEntity> Interviewees { get; set; }
         public DbSet<EmployeeEntity> Employees { get; set; }
+        public DbSet<CompanyEntity> Companies { get; set; }
 
         //add custom field configuration via IEntityTypeConfiguration
         protected override void OnModelCreating(ModelBuilder modelBuilder)
