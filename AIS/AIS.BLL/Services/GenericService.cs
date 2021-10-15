@@ -26,6 +26,11 @@ namespace AIS.BLL.Services
             return this._repository.Delete(entity, ct);
         }
 
+        public Task Delete(int id, CancellationToken ct)
+        {
+            return this._repository.Delete(id, ct);
+        }
+
         public Task<TEntity> Put(TEntity entity, CancellationToken ct)
         {
             return this._repository.Update(entity, ct);

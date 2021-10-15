@@ -13,5 +13,6 @@ namespace AIS.DAL.Interfaces.Repositories
         Task<TEntity> GetById(int id, CancellationToken ct);
         Task<TEntity> Update(TEntity entity, CancellationToken ct);
         Task Delete(TEntity entity, CancellationToken ct);
+        Task Delete(int id, CancellationToken ct);
     }
 }

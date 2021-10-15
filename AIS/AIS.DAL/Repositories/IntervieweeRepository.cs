@@ -47,9 +47,10 @@ namespace AIS.DAL.Repositories
             return entity;
         }
 
-        public Task Delete(IntervieweeEntity entity, CancellationToken ct)
+        public async Task Delete(IntervieweeEntity entity, CancellationToken ct)
         {
-            throw new NotImplementedException();
+            _context.Interviewees.Remove(entity);
+            await _context.SaveChangesAsync(ct);
         }
 
         public async Task Delete(int id, CancellationToken ct)

@@ -46,7 +46,13 @@ namespace AIS.DAL.Repositories
             _dbSet.Remove(entity);
             await _context.SaveChangesAsync(ct);
         }
-        
+        public async Task Delete(int id, CancellationToken ct)
+        {
+            var entity = await _dbSet.FindAsync(new object[] {id}, ct);
+            _dbSet.Remove(entity);
+            await _context.SaveChangesAsync(ct);
+        }
+
         public async Task<TEntity> Add(TEntity entity, CancellationToken ct)
         {
             _dbSet.Add(entity);

@@ -13,5 +13,6 @@ namespace AIS.BLL.Interfaces.Services
         Task<TEntity> GetById(int id, CancellationToken ct);
         Task<TEntity> Put(TEntity entity, CancellationToken ct);
         Task Delete(TEntity entity, CancellationToken ct);
+        Task Delete(int id, CancellationToken ct);
     }
 }
