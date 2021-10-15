@@ -1,4 +1,5 @@
 using AIS.API.Mappers;
+using AIS.API.MiddleWare;
 using AIS.BLL.DI;
 using AIS.BLL.Mappers;
 using Microsoft.AspNetCore.Builder;
@@ -41,7 +42,7 @@ namespace AIS.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AIS.API v1"));
             }
-
+            app.UseMiddleware<ExceptionMiddleWare>();
             app.UseHttpsRedirection();
 
             app.UseRouting();
