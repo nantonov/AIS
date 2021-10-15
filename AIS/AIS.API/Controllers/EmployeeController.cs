@@ -22,7 +22,7 @@ namespace AIS.API.Controllers
             _service = service;
         }
 
-        [HttpGet()]
+        [HttpGet]
         public async Task<IEnumerable<EmployeeViewModel>> GetAll()
         {
             return _mapper.Map<IEnumerable<EmployeeViewModel>>(await _service.Get());

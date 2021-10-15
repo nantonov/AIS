@@ -1,11 +1,6 @@
 using AIS.API.Mappers;
 using AIS.BLL.DI;
-using AIS.BLL.Interfaces.Services;
 using AIS.BLL.Mappers;
-using AIS.BLL.Services;
-using AIS.DAL.DI;
-using AIS.DAL.Interfaces.Repositories;
-using AIS.DAL.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -28,9 +23,6 @@ namespace AIS.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(typeof(EmployeeViewModelProfile), typeof(EmployeeProfile));
-
-            services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
-            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
