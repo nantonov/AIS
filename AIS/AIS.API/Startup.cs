@@ -1,4 +1,4 @@
-using AIS.API.MiddleWare
+using AIS.API.MiddleWare;
 using AIS.BLL.DI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
