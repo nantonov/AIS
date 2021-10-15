@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AIS.API.Infrastructure;
+using FluentValidation;
 
 namespace AIS.API.Controllers
 {
@@ -15,11 +16,13 @@ namespace AIS.API.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IGenericService<Employee> _service;
+        private readonly IValidator<EmployeeViewModel> _validator;
 
-        public EmployeeController(IMapper mapper, IGenericService<Employee> service)
+        public EmployeeController(IMapper mapper, IGenericService<Employee> service, IValidator<EmployeeViewModel> validator)
         {
             _mapper = mapper;
             _service = service;
+            _validator = validator;
         }
 
         [HttpGet]
@@ -31,6 +34,8 @@ namespace AIS.API.Controllers
         [HttpPost(EndpointConstants.AddEndpoitRoute)]
         public async Task<EmployeeViewModel> Add([FromBody] EmployeeViewModel viewModel)
         {
+            await _validator.ValidateAndThrowAsync(viewModel);
+
             return 
                 _mapper.Map<EmployeeViewModel>(
                     await _service.Add(
@@ -42,12 +47,15 @@ namespace AIS.API.Controllers
         [HttpDelete(EndpointConstants.DeleteEndpoitRoute)]
         public async Task Delete([FromBody] EmployeeViewModel viewModel)
         {
+            await _validator.ValidateAndThrowAsync(viewModel);
             await _service.Delete(_mapper.Map<Employee>(viewModel));
         }
 
         [HttpPut(EndpointConstants.UpdateEndpoitRoute)]
         public async Task<EmployeeViewModel> Update([FromBody] EmployeeViewModel viewModel)
         {
+            await _validator.ValidateAndThrowAsync(viewModel);
+
             return 
                 _mapper.Map<EmployeeViewModel>(
                     await _service.Put(
