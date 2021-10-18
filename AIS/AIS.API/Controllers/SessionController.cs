@@ -48,7 +48,7 @@ namespace AIS.API.Controllers
         public async Task<SessionViewModel> Put(SessionUpdateViewModel session, CancellationToken ct)
         {
             var mappedObject = _mapper.Map<Session>(session);
-            return _mapper.Map<SessionViewModel>(await _sessionService.Add(mappedObject, ct));
+            return _mapper.Map<SessionViewModel>(await _sessionService.Put(mappedObject, ct));
         }
 
         [HttpDelete(EndpointConstants.IdTemplate)]

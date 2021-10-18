@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AIS.BLL.Models;
+﻿using AIS.BLL.Models;
+using System;
 
 namespace AIS.API.ViewModels
 {
@@ -11,7 +8,7 @@ namespace AIS.API.ViewModels
         public int Id { get; set; }
         public DateTime StartTime { get; set; }
         public int CompanyId { get; set; } 
-        public Company _Company { get; set; }
+        public Company Company { get; set; }
         public int EmployeeId { get; set; }
         public Employee Employee { get; set; }
         public int IntervieweeId { get; set; }
