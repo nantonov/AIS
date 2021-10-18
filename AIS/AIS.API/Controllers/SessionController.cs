@@ -19,8 +19,8 @@ namespace AIS.API.Controllers
 
         public SessionController(IGenericService<Session> sessionService, IMapper mapper)
         {
-            this._sessionService = sessionService;
-            this._mapper = mapper;
+            _sessionService = sessionService;
+            _mapper = mapper;
         }
 
         [HttpGet(EndpointConstants.IdTemplate)]
