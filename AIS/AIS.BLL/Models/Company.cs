@@ -1,9 +1,8 @@
 ﻿namespace AIS.BLL.Models
 {
-    public class Employee
+    public class Company
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int CompanyId { get; set; }
     }
 }

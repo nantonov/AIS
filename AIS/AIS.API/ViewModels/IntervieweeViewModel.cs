@@ -1,9 +1,10 @@
-﻿namespace AIS.BLL.Models
+﻿namespace AIS.API.ViewModels
 {
-    public class Employee
+    public class IntervieweeViewModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string AppliesFor { get; set; }
         public int CompanyId { get; set; }
     }
 }

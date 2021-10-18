@@ -1,4 +1,5 @@
-﻿using AIS.DAL.Interfaces.Repositories;
+﻿using AIS.DAL.Entities;
+using AIS.DAL.Interfaces.Repositories;
 using AIS.DAL.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -11,6 +12,7 @@ namespace AIS.DAL.DI
         public static void AddDataAccess(this IServiceCollection services, IConfiguration config)
         {
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddScoped<IGenericRepository<IntervieweeEntity>, IntervieweeRepository>();
             services.AddDbContext<DatabaseContext>(op =>
                 {
                     op.UseSqlServer(config.GetConnectionString("DefaultConnection"));

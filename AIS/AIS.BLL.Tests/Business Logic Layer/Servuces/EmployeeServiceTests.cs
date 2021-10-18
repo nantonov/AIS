@@ -5,6 +5,7 @@ using Moq;
 using Moq.AutoMock;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -23,12 +24,12 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Servuces
                 new Employee() { Id = 4, Name = "Did" }
             };
 
-            mocker.Setup<IGenericService<Employee>, Task<IEnumerable<Employee>>>(setup => setup.Get()).ReturnsAsync(expected);
+            mocker.Setup<IGenericService<Employee>, Task<IEnumerable<Employee>>>(setup => setup.Get(CancellationToken.None)).ReturnsAsync(expected);
 
             var service = mocker.Get<IGenericService<Employee>>();
 
             // Act
-            var actual = await service.Get();
+            var actual = await service.Get(CancellationToken.None);
 
             // Assert
             Assert.Equal(expected, actual);
@@ -45,12 +46,12 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Servuces
                 Name = "Bob"
             };
 
-            mocker.Setup<IGenericService<Employee>, Task<Employee>>(setup => setup.Add(expected)).ReturnsAsync(expected);
+            mocker.Setup<IGenericService<Employee>, Task<Employee>>(setup => setup.Add(expected, CancellationToken.None)).ReturnsAsync(expected);
 
             var service = mocker.Get<IGenericService<Employee>>();
 
             // Act
-            var actual = await service?.Add(expected);
+            var actual = await service?.Add(expected,CancellationToken.None);
 
             // Assert
             Assert.Equal(expected, actual);
@@ -67,12 +68,12 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Servuces
                 Name = "Bob"
             };
 
-            mocker.Setup<IGenericService<Employee>, Task>(setup => setup.Delete(model));
+            mocker.Setup<IGenericService<Employee>, Task>(setup => setup.Delete(model, CancellationToken.None));
 
             var service = mocker.Get<IGenericService<Employee>>();
 
             // Act
-            Action act = () => service.Delete(model);
+            Action act = () => service.Delete(model, CancellationToken.None);
 
             // Assert
             act.Should().NotThrow();
@@ -89,12 +90,12 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Servuces
                 Name = "Bob"
             };
 
-            mocker.Setup<IGenericService<Employee>, Task<Employee>>(setup => setup.Put(expected)).ReturnsAsync(expected);
+            mocker.Setup<IGenericService<Employee>, Task<Employee>>(setup => setup.Put(expected, CancellationToken.None)).ReturnsAsync(expected);
 
             var service = mocker.Get<IGenericService<Employee>>();
 
             // Act
-            var actual = await service.Put(expected);
+            var actual = await service.Put(expected, CancellationToken.None);
 
             // Assert
             Assert.Equal(expected, actual);

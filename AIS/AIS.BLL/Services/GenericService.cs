@@ -1,48 +1,67 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using AIS.BLL.Interfaces.Services;
 using AIS.DAL.Interfaces.Repositories;
+using AutoMapper;
 
 namespace AIS.BLL.Services
 {
-    public class GenericService<TEntity> : IGenericService<TEntity> where TEntity : class
+    public class GenericService<TEntity, TMapToEntity> : IGenericService<TEntity>
+        where TEntity : class
+        where TMapToEntity : class
     {
-        private readonly IGenericRepository<TEntity> _repository;
+        private readonly IGenericRepository<TMapToEntity> _repository;
+        private readonly IMapper _mapper;
 
-        public GenericService(IGenericRepository<TEntity> repository)
+        public GenericService(IGenericRepository<TMapToEntity> repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
         
-        public Task<TEntity> Add(TEntity item)
+        public async Task<TEntity> Add(TEntity entity, CancellationToken ct)
         {
-            return this._repository.Add(item);
+            return _mapper.Map<TEntity>(await this._repository.Add(
+                _mapper.Map<TMapToEntity>(entity), ct
+            ));
         }
 
-        public Task Delete(TEntity item)
+        public Task Delete(TEntity entity, CancellationToken ct)
         {
-            return this._repository.Delete(item);
+            return this._repository.Delete(_mapper.Map<TMapToEntity>(entity), ct);
         }
 
-        public Task<TEntity> Put(TEntity item)
+        public Task Delete(int id, CancellationToken ct)
         {
-            return this._repository.Update(item);
+            return this._repository.Delete(id, ct);
         }
 
-        public Task<IEnumerable<TEntity>> Get()
+        public async Task<TEntity> Put(TEntity entity, CancellationToken ct)
         {
-            return this._repository.Get();
+            return _mapper.Map<TEntity>(
+                await this._repository.Update(_mapper.Map<TMapToEntity>(entity), ct)
+                );
         }
 
-        public IEnumerable<TEntity> Get(Func<TEntity, bool> predicate)
+        public async Task<IEnumerable<TEntity>> Get(CancellationToken ct)
         {
-            return this._repository.Get(predicate);
+            return _mapper.Map<IEnumerable<TEntity>>(
+                await this._repository.Get(ct)
+            );
         }
 
-        public Task<TEntity> GetById(int id)
+        public IEnumerable<TEntity> Get(Func<TEntity, bool> predicate, CancellationToken ct)
         {
-            return this._repository.GetById(id);
+            return _mapper.Map<IEnumerable<TEntity>>(
+                this._repository.Get(_mapper.Map<Func<TMapToEntity, bool>>(predicate), ct)
+                );
+        }
+
+        public async Task<TEntity> GetById(int id, CancellationToken ct)
+        {
+            return _mapper.Map<TEntity>(await this._repository.GetById(id, ct));
         }
     }
 }
