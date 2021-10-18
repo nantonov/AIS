@@ -44,10 +44,11 @@ namespace AIS.API.Controllers
             return _mapper.Map<SessionViewModel>(await _sessionService.Add(mappedObject, ct));
         }
 
-        [HttpPut]
-        public async Task<SessionViewModel> Put(SessionUpdateViewModel session, CancellationToken ct)
+        [HttpPut("Update/{id}")]
+        public async Task<SessionViewModel> Put(int id, [FromBody] SessionUpdateViewModel session, CancellationToken ct)
         {
             var mappedObject = _mapper.Map<Session>(session);
+            mappedObject.Id = id;
             return _mapper.Map<SessionViewModel>(await _sessionService.Put(mappedObject, ct));
         }
 

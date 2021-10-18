@@ -1,8 +1,9 @@
 ﻿using System;
+using AIS.BLL.Interfaces;
 
 namespace AIS.BLL.Models
 {
-    public class Session
+    public class Session : IHasIdBase
     {
         public int Id { get; set; }
         public DateTime StartTime { get; set; }

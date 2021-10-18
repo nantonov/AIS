@@ -5,7 +5,6 @@ namespace AIS.API.ViewModels
 {
     public class SessionUpdateViewModel
     {
-        public int Id { get; set; }
         public DateTime StartTime { get; set; }
         public int CompanyId { get; set; }
         public Company Company { get; set; }
