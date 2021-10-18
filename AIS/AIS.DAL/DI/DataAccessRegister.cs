@@ -13,6 +13,7 @@ namespace AIS.DAL.DI
         {
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IGenericRepository<IntervieweeEntity>, IntervieweeRepository>();
+            services.AddScoped<IGenericRepository<SessionEntity>, SessionRepository>();
             services.AddDbContext<DatabaseContext>(op =>
                 {
                     op.UseSqlServer(config.GetConnectionString("DefaultConnection"));

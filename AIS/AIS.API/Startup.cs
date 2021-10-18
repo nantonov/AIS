@@ -22,6 +22,7 @@ namespace AIS.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(typeof(API.Mapper.MappingProfile).Assembly, typeof(BLL.Mapper.MappingProfile).Assembly);
+            services.AddAutoMapper(typeof(API.Mapper.SessionViewModelProfile), typeof(BLL.Mapper.SessionProfile));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
