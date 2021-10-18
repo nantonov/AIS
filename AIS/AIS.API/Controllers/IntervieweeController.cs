@@ -19,7 +19,7 @@ namespace AIS.API.Controllers
         public IntervieweeController(IGenericService<Interviewee> intervieweeService, IMapper mapper)
         {
             this._intervieweeService = intervieweeService;
-            _mapper = mapper;
+            this._mapper = mapper;
         }
     
         [HttpGet(EndpointConstants.IdTemplate)]

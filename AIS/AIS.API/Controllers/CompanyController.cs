@@ -20,7 +20,7 @@ namespace AIS.API.Controllers
         public CompanyController(IGenericService<Company> companyService, IMapper mapper)
         {
             this._companyService = companyService;
-            _mapper = mapper;
+            this._mapper = mapper;
         }
     
         [HttpGet(EndpointConstants.IdTemplate)]

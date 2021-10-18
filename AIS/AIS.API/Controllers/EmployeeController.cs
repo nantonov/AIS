@@ -19,8 +19,8 @@ namespace AIS.API.Controllers
 
         public EmployeeController(IMapper mapper, IGenericService<Employee> service)
         {
-            _mapper = mapper;
-            _service = service;
+            this._mapper = mapper;
+            this._service = service;
         }
 
         [HttpGet]

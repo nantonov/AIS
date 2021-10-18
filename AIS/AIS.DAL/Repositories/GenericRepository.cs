@@ -16,7 +16,7 @@ namespace AIS.DAL.Repositories
         public GenericRepository(DatabaseContext context)
         {
             this._context = context;
-            _dbSet = _context.Set<TEntity>();
+            this._dbSet = _context.Set<TEntity>();
         }
 
         public async Task<IEnumerable<TEntity>> Get(CancellationToken ct)
