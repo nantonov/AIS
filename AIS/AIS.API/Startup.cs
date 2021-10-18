@@ -26,13 +26,10 @@ namespace AIS.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(typeof(API.Mapper.MappingProfile).Assembly, typeof(BLL.Mapper.MappingProfile).Assembly);
-<<<<<<< HEAD
-            services.AddAutoMapper(typeof(API.Mapper.SessionViewModelProfile).Assembly, typeof(BLL.Mapper.SessionProfile).Assembly);
-=======
             services.AddAutoMapper(typeof(API.Mapper.SessionViewModelProfile), typeof(BLL.Mapper.SessionProfile));
             services.AddAutoMapper(typeof(EmployeeViewModelProfile), typeof(EmployeeProfile));
             services.AddScoped<IValidator<EmployeeViewModel>, EmployeeViewModelValidator>();
->>>>>>> ecc2cc7224e562ed487069366a395fa87ec544cd
+            services.AddAutoMapper(typeof(API.Mapper.SessionViewModelProfile).Assembly, typeof(BLL.Mapper.SessionProfile).Assembly);
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
