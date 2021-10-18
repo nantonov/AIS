@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AIS.DAL.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace AIS.DAL
 {
@@ -17,11 +18,15 @@ namespace AIS.DAL
             Database.Migrate();
         }
 
+        public DbSet<IntervieweeEntity> Interviewees { get; set; }
+        public DbSet<EmployeeEntity> Employees { get; set; }
+        public DbSet<CompanyEntity> Companies { get; set; }
+
         //add custom field configuration via IEntityTypeConfiguration
-        /*protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(<mapping_config>).Assembly);
-        }*/
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(DatabaseContext).Assembly);
+        }
     }
 }
