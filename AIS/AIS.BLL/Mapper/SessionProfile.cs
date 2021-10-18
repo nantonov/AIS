@@ -8,7 +8,7 @@ namespace AIS.BLL.Mapper
     {
         public SessionProfile()
         {
-            CreateMap<SessionEntity, Session>();
+            CreateMap<SessionEntity, Session>().ReverseMap();
         }
     }
 }

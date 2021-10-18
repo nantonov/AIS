@@ -19,14 +19,14 @@ namespace AIS.API.Controllers
 
         public SessionController(IGenericService<Session> sessionService, IMapper mapper)
         {
-            _sessionService = sessionService;
-            _mapper = mapper;
+            this._sessionService = sessionService;
+            this._mapper = mapper;
         }
 
         [HttpGet(EndpointConstants.IdTemplate)]
         public async Task<SessionViewModel> GetSession(int id, CancellationToken ct)
         {
-            var session = _mapper.Map<Session, SessionViewModel>(await _sessionService.GetById(id, ct));
+            var session = _mapper.Map<SessionViewModel>(await _sessionService.GetById(id, ct));
             return session;
         }
 
