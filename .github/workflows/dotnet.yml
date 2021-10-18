@@ -30,7 +30,7 @@ jobs:
         sonarProjectName: AIS
         sonarOrganization: nantonov
         dotnetBuildArguments: AIS/AIS.sln
-        dotnetTestArguments: --no-build --verbosity normal AIS/AIS.sln
+        dotnetTestArguments: --no-build --verbosity normal AIS/AIS.sln /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=opencover.xml
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
