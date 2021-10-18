@@ -1,5 +1,6 @@
 using AIS.API.MiddleWare;
 using AIS.BLL.DI;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -22,6 +23,7 @@ namespace AIS.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(typeof(API.Mapper.MappingProfile).Assembly, typeof(BLL.Mapper.MappingProfile).Assembly);
+            services.AddFluentValidation();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
