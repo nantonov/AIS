@@ -49,7 +49,7 @@ namespace AIS.API.Controllers
         public async Task Delete([FromBody] EmployeeViewModel viewModel, CancellationToken ct)
         {
             await _validator.ValidateAndThrowAsync(viewModel);
-            await _service.Delete(_mapper.Map<Employee>(viewModel));
+            await _service.Delete(_mapper.Map<Employee>(viewModel), ct);
         }
 
         [HttpPut(EndpointConstants.UpdateEndpoitRoute)]
