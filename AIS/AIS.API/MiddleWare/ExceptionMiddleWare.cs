@@ -13,6 +13,7 @@ namespace AIS.API.MiddleWare
         {
             _next = next;
         }
+
         public async Task InvokeAsync(HttpContext context, ILogger<ExceptionMiddleWare> logger)
         {
             try

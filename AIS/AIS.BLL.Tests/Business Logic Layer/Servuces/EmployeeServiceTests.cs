@@ -35,7 +35,6 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Servuces
             Assert.Equal(expected, actual);
         }
 
-
         [Fact]
         public async Task Add_WhenServiceHasData_ShouldReturnValidModel()
         {
@@ -58,7 +57,6 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Servuces
             Assert.Equal(expected, actual);
         }
 
-
         [Fact]
         public void Delete_WhenServiceHasData_ShouldReturnValidModel()
         {
@@ -80,7 +78,6 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Servuces
             // Assert
             act.Should().NotThrow();
         }
-
 
         [Fact]
         public async Task Update_WhenServiceHasData_ShouldReturnValidModel()

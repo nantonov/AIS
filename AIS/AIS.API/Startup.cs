@@ -1,5 +1,9 @@
 using AIS.API.MiddleWare;
+using AIS.API.Validators;
+using AIS.API.ViewModels;
 using AIS.BLL.DI;
+using AIS.BLL.Mappers;
+using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -21,7 +25,8 @@ namespace AIS.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAutoMapper(typeof(API.Mapper.MappingProfile).Assembly, typeof(BLL.Mapper.MappingProfile).Assembly);
+            services.AddAutoMapper(typeof(EmployeeViewModelProfile), typeof(EmployeeProfile));
+            services.AddScoped<IValidator<EmployeeViewModel>, EmployeeViewModelValidator>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
