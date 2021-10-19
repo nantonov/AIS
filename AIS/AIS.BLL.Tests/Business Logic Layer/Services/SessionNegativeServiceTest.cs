@@ -34,7 +34,7 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
               Assert.Equal(new List<Session>(), sessions);
           }
         [Fact]
-        public async Task GetSessionById_ShouldReturnSession_WhereSessionWasFound()
+        public async Task GetSessionById_ShouldReturnNull_WhereSessionNotFound()
         {
             _sessionRepoMock.Setup(x => x.GetById(int.MaxValue, default)).ReturnsAsync(() => null);
             var session = await _service.GetById(int.MaxValue, default);

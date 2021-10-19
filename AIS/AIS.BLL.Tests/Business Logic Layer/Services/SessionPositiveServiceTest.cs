@@ -35,7 +35,7 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
         [Fact]
         public async Task GetSessionById_ShouldReturnSession_WhereSessionWasFound()
         {
-            var sessionId = 5;
+            const int sessionId = 5;
             var sessionEntity = new SessionEntity
             {
                 Id = 5,
