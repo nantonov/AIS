@@ -21,7 +21,7 @@ namespace AIS.API.Controllers
         private readonly IValidator<AddEmployeeViewModel> _addEmployeeValidator;
 
         public EmployeeController(
-                         IMapper mapper, 
+                         IMapper mapper,
                          IGenericService<Employee> service,
                          IValidator<EmployeeViewModel> employeeValidator,
                          IValidator<AddEmployeeViewModel> addEmployeeValidator)
@@ -39,12 +39,12 @@ namespace AIS.API.Controllers
         }
 
         [HttpPost(EndpointConstants.AddEndpoitRoute)]
-        public async Task<AddEmployeeViewModel> Add([FromBody] AddEmployeeViewModel viewModel, CancellationToken ct)
+        public async Task<EmployeeViewModel> Add([FromBody] AddEmployeeViewModel viewModel, CancellationToken ct)
         {
             await _addEmployeeValidator.ValidateAndThrowAsync(viewModel);
 
-            return 
-                _mapper.Map<AddEmployeeViewModel>(
+            return
+                _mapper.Map<EmployeeViewModel>(
                     await _service.Add(
                     _mapper.Map<Employee>(viewModel), ct
                     )
@@ -58,11 +58,11 @@ namespace AIS.API.Controllers
         }
 
         [HttpPut(EndpointConstants.UpdateEndpoitRoute)]
-        public async Task<EmployeeViewModel> Update([FromBody] EmployeeViewModel viewModel, CancellationToken ct)
+        public async Task<EmployeeViewModel> Update([FromBody] EmployeeViewModel viewModel, int id, CancellationToken ct)
         {
             await _employeeValidator.ValidateAndThrowAsync(viewModel);
 
-            return 
+            return
                 _mapper.Map<EmployeeViewModel>(
                     await _service.Put(
                     _mapper.Map<Employee>(viewModel), ct
