@@ -35,11 +35,13 @@ namespace AIS.API.Tests.Validators
             };
 
             // Act
+            //var result = validator.Validate(model);
+
             var result = validator.Validate(model);
 
             // Assert
             Assert.Equal(1, result.Errors.Count);
-            Assert.Equal(result.Errors[0].ToString(), "'Name' must not be empty.");
+            Assert.Equal(result.Errors[0].PropertyName, "Name");
         }
 
         [Fact]
@@ -57,7 +59,7 @@ namespace AIS.API.Tests.Validators
 
             // Assert
             Assert.Equal(1, result.Errors.Count);
-            Assert.Equal(result.Errors[0].ToString(), "'Company Id' must be greater than '0'.");
+            Assert.Equal(result.Errors[0].PropertyName, "CompanyId");
         }
 
         [Fact]
@@ -76,7 +78,7 @@ namespace AIS.API.Tests.Validators
 
             // Assert
             Assert.Equal(1, result.Errors.Count);
-            Assert.Equal(result.Errors[0].ToString(), "'Company Id' must be greater than '0'.");
+            Assert.Equal(result.Errors[0].PropertyName, "CompanyId");
         }
 
         [Fact]
@@ -95,7 +97,7 @@ namespace AIS.API.Tests.Validators
 
             // Assert
             Assert.Equal(1, result.Errors.Count);
-            Assert.Equal(result.Errors[0].ToString(), $"The length of 'Name' must be at least 3 characters. You entered {model.Name.Length} characters.");
+            Assert.Equal(result.Errors[0].PropertyName, "Name");
         }
     }
 }
