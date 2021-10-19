@@ -7,7 +7,6 @@ using AIS.DAL.Interfaces.Repositories;
 using AutoMapper;
 using Moq;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -26,17 +25,17 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
         }
 
         [Fact]
-        public async Task GetSessions_ShouldReturnListSession_WhereSessionExist()
+        public async Task GetSessions_ReturnsSessionList()
         {
             var expected = await _service.Get(default);
 
             Assert.NotNull(expected);
 
         }
-        [Fact]
+
+      /*  [Fact]
         public void GetSessionsWithFunction_ShouldReturnListSession_WhereSessionExist()
         {
-            
             var session = new Session()
             {
                 Id = 5,
@@ -50,10 +49,10 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
             var result = _service.Get(null, default);
 
             Assert.Equal(new List<Session>(),result);
+        }*/
 
-        }
         [Fact]
-        public async Task GetSessionById_ShouldReturnSession_WhereSessionWasFound()
+        public async Task GetSession_ValidId_ReturnsSessionById()
         {
             const int sessionId = 5;
             var sessionEntity = new SessionEntity
@@ -98,7 +97,7 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
         }
 
         [Fact]
-        public void DeleteSession_ShouldNOtGenerateException_WhereModelWasFound()
+        public void DeleteSession_ValidId_ReturnsNull()
         {
             _sessionRepoMock.Setup(x => x.Delete(5, default)).Returns(() => null);
             var result = _service.Delete(5, default);
@@ -106,7 +105,7 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
         }
 
         [Fact]
-        public async Task UpdateSession_ShouldReturnValidModel_WhereModelWasFound()
+        public async Task PutSession_ValidSession_ReturnsSession()
         {
             var sessionEntity = new SessionEntity()
             {

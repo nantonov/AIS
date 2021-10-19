@@ -23,15 +23,17 @@ namespace AIS.API.Tests.Controllers
             var mapper = mockMapper.CreateMapper();
             _controller = new SessionController(_sessionControllerMock.Object, mapper);
         }
+
         [Fact]
-        public async Task GetSession_ShouldReturnNull_WhereSessionNotExist()
+        public async Task GetSessions_ReturnsEmptySessionList()
         {
             _sessionControllerMock.Setup(x => x.Get(default)).ReturnsAsync(() => null);
             var sessions = await _controller.GetSessions(default);
             Assert.Equal(new List<SessionViewModel>(), sessions);
         }
+
         [Fact]
-        public async Task GetSessionById_ShouldReturnNull_WhereSessionNotFound()
+        public async Task GetSession_NotValidId_ReturnsNull()
         {
            _sessionControllerMock.Setup(x => x.GetById(int.MaxValue, default)).ReturnsAsync(() => null);
             var session = await _controller.GetSession(int.MaxValue, default);
@@ -39,7 +41,7 @@ namespace AIS.API.Tests.Controllers
         }
 
         [Fact]
-        public void DeleteSession_ShouldNOtGenerateException_WhereModelWasFound()
+        public void DeleteSession_ValidId_ReturnsNull()
         {
             _sessionControllerMock.Setup(x => x.Delete(int.MinValue, default)).Returns(() => null);
             var session = _controller.Delete(int.MinValue, default);
@@ -47,7 +49,7 @@ namespace AIS.API.Tests.Controllers
         }
 
         [Fact]
-        public async Task UpdateSession_ShouldReturnNull_WhereModelNotValid()
+        public async Task PutSession_ValidSession_ReturnsNull()
         {
             var sessionEntity = new Session()
             {

@@ -1,85 +1,144 @@
-﻿using System;
-using System.Threading.Tasks;
-using AIS.BLL.Mapper;
-using AIS.BLL.Services;
-using AIS.DAL.Entities;
-using AIS.DAL.Interfaces.Repositories;
+﻿using AIS.DAL.Entities;
 using AIS.DAL.Repositories;
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
-using Moq;
 
 namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Session
 {
     public class SessionPositiveRepositoryTest
     {
-        private readonly Mock<DatabaseContext> _contextMock = new ();
-        private readonly Mock<SessionRepository> _sessionRepoMock;
-        private readonly Mock<IGenericRepository<SessionEntity>> _genericIRepoMock;
+        private readonly DatabaseContext _context = new
+        (new DbContextOptionsBuilder<DatabaseContext>().UseInMemoryDatabase(Guid.NewGuid().ToString())
+            .Options);
+        private readonly SessionRepository _repo;
 
         public SessionPositiveRepositoryTest()
         {
-            _sessionRepoMock = new Mock<SessionRepository>(_contextMock.Object);
-        }
-
-       // [Fact]
-     /*   public async Task GetSession_ShouldReturnListSession_WhereSessionExist()
-        {
-            var expected = _genericIRepoMock.Setup(x => x.Get(default));
-            Assert.NotNull(expected);
-      //      _test.Setup(x => x.Get(default));
-        }
-     /*   [Fact]
-        public async Task GetSessionById_ShouldReturnSession_WhereSessionWasFound()
-        {
-            const int sessionId = 5;
-            var sessionEntity = new SessionEntity
-            {
-                Id = 5,
-                StartTime = DateTime.Today,
-                CompanyId = 5,
-                EmployeeId = 5,
-                IntervieweeId = 5,
-                QuestionAreaId = 1
-            };
-            _sessionRepoMock.Setup(x => x.GetById(sessionId, default)).ReturnsAsync(sessionEntity);
-            var session = await _service.GetById(sessionId, default);
-            Assert.Equal(sessionId, session.Id);
+            _repo = new SessionRepository(_context);
         }
 
         [Fact]
-        public void DeleteSession_ShouldNOtGenerateException_WhereModelWasFound()
+        public async Task GetSession_ValidId_ReturnsSessionById()
         {
-            _sessionRepoMock.Setup(x => x.Delete(5, default)).Returns(() => null);
-            var result = _service.Delete(5, default);
-            Assert.Null(result);
-        }
-
-        [Fact]
-        public async Task UpdateSession_ShouldReturnValidModel_WhereModelWasFound()
-        {
+            var id = new Random().Next();
             var sessionEntity = new SessionEntity()
             {
-                Id = int.MaxValue,
-                StartTime = DateTime.Today,
-                CompanyId = 5,
-                EmployeeId = 5,
-                IntervieweeId = 5,
-                QuestionAreaId = 1
+                Id = id,
+                CompanyId = id,
+                EmployeeId = id,
+                IntervieweeId = id,
+                QuestionAreaId = id,
+                StartTime = DateTime.Today
             };
-            var session = new Session()
+            await _context.Sessions.AddAsync(sessionEntity);
+            await _context.SaveChangesAsync();
+            var session = await _repo.GetById(id, default);
+            Assert.Equal(id, session.Id);
+            Assert.Equal(id, session.CompanyId);
+            await _context.Database.EnsureDeletedAsync();
+        }
+
+        [Fact]
+        public async Task GetSessions_ReturnsSessionList()
+        {
+            var sessions = await _repo.Get(default);
+
+            Assert.IsType<List<SessionEntity>>(sessions);
+            await _context.Database.EnsureDeletedAsync();
+        }
+
+        [Fact]
+        public async Task AddSession_ValidSession_ReturnsSession()
+        {
+            var id = new Random().Next();
+            var sessionEntity = new SessionEntity()
             {
-                Id = int.MaxValue,
-                StartTime = DateTime.Today,
-                CompanyId = 5,
-                EmployeeId = 5,
-                IntervieweeId = 5,
-                QuestionAreaId = 1
+                Id = id,
+                CompanyId = id,
+                EmployeeId = id,
+                IntervieweeId = id,
+                QuestionAreaId = id,
+                StartTime = DateTime.Today
             };
-            _sessionRepoMock.Setup(x => x.Update(sessionEntity, default)).ReturnsAsync(() => sessionEntity);
-            var expected = await _service.Put(session, default);
-            Assert.Null(expected);
-        }*/
+            await _context.Sessions.AddAsync(sessionEntity);
+            var session = await _repo.GetById(id, default);
+
+            Assert.Equal(id, session.Id);
+            Assert.Equal(id, session.CompanyId);
+            await _context.Database.EnsureDeletedAsync();
+        }
+
+        [Fact]
+        public async Task PutSession_ValidSession_ReturnsSession()
+        {
+            var id = new Random().Next();
+            var sessionEntity = new SessionEntity()
+            {
+                Id = id,
+                CompanyId = id,
+                EmployeeId = id,
+                IntervieweeId = id,
+                QuestionAreaId = id,
+                StartTime = DateTime.Today
+            };
+
+            await _context.Sessions.AddAsync(sessionEntity);
+            await _context.SaveChangesAsync();
+
+            var session = await _repo.Update(sessionEntity, default);
+            Assert.Equal(id, session.Id);
+            Assert.Equal(id, session.CompanyId);
+
+            await _context.Database.EnsureDeletedAsync();
+        }
+        [Fact]
+        public async Task DeleteSession_ValidId_ReturnsNull()
+        {
+            var id = new Random().Next();
+            var sessionEntity = new SessionEntity()
+            {
+                Id = id,
+                CompanyId = id,
+                EmployeeId = id,
+                IntervieweeId = id,
+                QuestionAreaId = id,
+                StartTime = DateTime.Today
+            };
+
+            await _context.Sessions.AddAsync(sessionEntity);
+            await _context.SaveChangesAsync();
+            await _repo.Delete(id, default);
+            await _context.SaveChangesAsync();
+            Task.WaitAll();
+            var session = Task.Run(() => _repo.GetById(id, default).Start());
+            await _context.Database.EnsureDeletedAsync();
+            Assert.Null(session);
+        }
+
+        [Fact]
+        public async Task SessionExists_ValidId_ReturnsTrue()
+        {
+            var id = new Random().Next();
+            var sessionEntity = new SessionEntity()
+            {
+                Id = id,
+                CompanyId = id,
+                EmployeeId = id,
+                IntervieweeId = id,
+                QuestionAreaId = id,
+                StartTime = DateTime.Today
+            };
+
+            await _context.Sessions.AddAsync(sessionEntity);
+            await _context.SaveChangesAsync();
+
+            // var session = _repo.Get(id, default);
+
+            //  Assert.True(session);
+            await _context.Database.EnsureDeletedAsync();
+        }
     }
 }

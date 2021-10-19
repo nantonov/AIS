@@ -23,7 +23,7 @@ namespace AIS.API.Tests.Controllers
             _controller = new SessionController(_sessionControllerMock.Object, mapper);
         }
         [Fact]
-        public async Task GetSession_ShouldReturnListSession_WhereSessionExist()
+        public async Task GetSessions_ReturnsSessionList()
         {
             var expected = await _controller.GetSessions(default);
 
@@ -32,7 +32,7 @@ namespace AIS.API.Tests.Controllers
         }
 
         [Fact]
-        public async Task GetSessionById_ShouldReturnSession_WhereSessionWasFound()
+        public async Task GetSession_ValidId_ReturnsSessionById()
         {
             const int sessionId = 5;
             var expectedSession = new Session
@@ -50,15 +50,16 @@ namespace AIS.API.Tests.Controllers
         }
 
         [Fact]
-        public void DeleteSession_ShouldNOtGenerateException_WhereModelWasFound()
+        public void DeleteSession_ValidId_ReturnsNull()
         {
             _sessionControllerMock.Setup(x => x.Delete(5, default)).Returns(() => null);
-            var result = _controller.Delete(5, default);
+            _controller.Delete(5, default);
+            var result = _controller.GetSession(5, default);
             Assert.Null(result);
         }
 
         [Fact]
-        public async Task UpdateSession_ShouldReturnValidModel_WhereModelWasFound()
+        public async Task PutSession_ValidSession_ReturnsSession()
         {
             var sessionEntity = new Session()
             {
