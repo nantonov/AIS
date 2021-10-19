@@ -42,7 +42,7 @@ namespace AIS.API.Tests.Controllers
             var controller = new EmployeeController(mockMapper.Object, mockService.Object, mockValidator.Object);
 
             // Act
-            var result = await controller.Add(expected, CancellationToken.None);
+            var result = await controller.Add(expected, default);
 
             // Assert
             Assert.Equal(expected, result);
