@@ -1,4 +1,5 @@
-﻿using AIS.API.Validators;
+﻿using System.Linq;
+using AIS.API.Validators;
 using AIS.API.ViewModels.Employee;
 using Xunit;
 
@@ -40,8 +41,8 @@ namespace AIS.API.Tests.Validators
             var result = validator.Validate(model);
 
             // Assert
-            Assert.Equal(1, result.Errors.Count);
-            Assert.Equal(result.Errors[0].PropertyName, "Id");
+            Assert.NotEqual(0, result.Errors.Count);
+            Assert.True(result.Errors.Any(x => x.PropertyName == nameof(model.Id)));
         }
 
         [Fact]
