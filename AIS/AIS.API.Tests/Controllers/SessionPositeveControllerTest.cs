@@ -49,7 +49,7 @@ namespace AIS.API.Tests.Controllers
             Assert.Equal(sessionId, session.Id);
         }
 
-        [Fact]
+      /*  [Fact]
         public void DeleteSession_ValidId_ReturnsNull()
         {
             _sessionControllerMock.Setup(x => x.Delete(5, default)).Returns(() => null);
@@ -57,7 +57,7 @@ namespace AIS.API.Tests.Controllers
             var result = _controller.GetSession(5, default);
             Assert.Null(result);
         }
-
+      */
         [Fact]
         public async Task PutSession_ValidSession_ReturnsSession()
         {
