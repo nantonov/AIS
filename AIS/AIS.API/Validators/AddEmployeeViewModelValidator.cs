@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace AIS.API.Validators
 {
-    public class AddEmployeeViewModelValidator : AbstractValidator<AddEmployeeViewModel>
+    public class ChangeEmployeeViewModelValidator : AbstractValidator<ChangeEmployeeViewModel>
     {
-        public AddEmployeeViewModelValidator()
+        public ChangeEmployeeViewModelValidator()
         {
             RuleFor(x => x.CompanyId).NotNull().GreaterThan(0);
             RuleFor(x => x.Name).NotNull().MinimumLength(3);

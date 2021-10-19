@@ -1,4 +1,4 @@
-﻿using AIS.API.ViewModels.Employee;
+using AIS.API.ViewModels.Employee;
 using FluentValidation;
 
 namespace AIS.API.Validators

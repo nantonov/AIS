@@ -17,19 +17,16 @@ namespace AIS.API.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IGenericService<Employee> _service;
-        private readonly IValidator<EmployeeViewModel> _employeeValidator;
-        private readonly IValidator<AddEmployeeViewModel> _addEmployeeValidator;
+        private readonly IValidator<ChangeEmployeeViewModel> _changeEmployeeValidator;
 
         public EmployeeController(
                          IMapper mapper,
                          IGenericService<Employee> service,
-                         IValidator<EmployeeViewModel> employeeValidator,
-                         IValidator<AddEmployeeViewModel> addEmployeeValidator)
+                         IValidator<ChangeEmployeeViewModel> changeEmployeeValidator)
         {
-            this._mapper = mapper;
-            this._service = service;
-            this._employeeValidator = employeeValidator;
-            this._addEmployeeValidator = addEmployeeValidator;
+            _mapper = mapper;
+            _service = service;
+            _changeEmployeeValidator = changeEmployeeValidator;
         }
 
         [HttpGet]
@@ -39,9 +36,9 @@ namespace AIS.API.Controllers
         }
 
         [HttpPost(EndpointConstants.AddEndpoitRoute)]
-        public async Task<EmployeeViewModel> Add([FromBody] AddEmployeeViewModel viewModel, CancellationToken ct)
+        public async Task<EmployeeViewModel> Add([FromBody] ChangeEmployeeViewModel viewModel, CancellationToken ct)
         {
-            await _addEmployeeValidator.ValidateAndThrowAsync(viewModel);
+            await _changeEmployeeValidator.ValidateAndThrowAsync(viewModel);
 
             return
                 _mapper.Map<EmployeeViewModel>(
@@ -58,9 +55,9 @@ namespace AIS.API.Controllers
         }
 
         [HttpPut(EndpointConstants.UpdateEndpoitRoute)]
-        public async Task<EmployeeViewModel> Update([FromBody] EmployeeViewModel viewModel, int id, CancellationToken ct)
+        public async Task<EmployeeViewModel> Update([FromBody] ChangeEmployeeViewModel viewModel, int id, CancellationToken ct)
         {
-            await _employeeValidator.ValidateAndThrowAsync(viewModel);
+            await _changeEmployeeValidator.ValidateAndThrowAsync(viewModel);
 
             return
                 _mapper.Map<EmployeeViewModel>(

@@ -9,7 +9,7 @@ namespace AIS.API.Mappers
         public EmployeeViewModelProfile()
         {
             CreateMap<EmployeeViewModel, Employee>().ReverseMap();
-            CreateMap<AddEmployeeViewModel, Employee>().ReverseMap();
+            CreateMap<ChangeEmployeeViewModel, Employee>();
         }
     }
 }
