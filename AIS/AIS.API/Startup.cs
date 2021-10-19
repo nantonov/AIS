@@ -1,3 +1,4 @@
+using System.Reflection;
 using AIS.API.Mappers;
 using AIS.API.MiddleWare;
 using AIS.API.Validators;
@@ -29,7 +30,7 @@ namespace AIS.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(typeof(API.Mapper.MappingProfile).Assembly, typeof(BLL.Mapper.MappingProfile).Assembly);
-            services.AddFluentValidation();
+            services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssembly(Assembly.Load("AIS.API")));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
