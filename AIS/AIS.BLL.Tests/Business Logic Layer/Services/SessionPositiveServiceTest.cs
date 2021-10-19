@@ -49,44 +49,18 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
             var session = await _service.GetById(sessionId, default);
             Assert.Equal(sessionId, session.Id);
         }
+
         [Fact]
-        public async Task AddSession_ShouldReturnSession_WhereSessionValidModel()
+        public void DeleteSession_ShouldNOtGenerateException_WhereModelWasFound()
         {
-            // Arrange
-            var expected = new SessionEntity()
-            {
-                Id = 20,
-                StartTime = DateTime.Today,
-                CompanyId = 5,
-                EmployeeId = 5,
-                IntervieweeId = 5,
-                QuestionAreaId = 1
-            };
-            _sessionRepoMock.Setup(x => x.Add(expected, default)).ReturnsAsync(expected);
-            var session = new Session()
-            {
-                Id = 20,
-                StartTime = DateTime.Today,
-                CompanyId = 5,
-                EmployeeId = 5,
-                IntervieweeId = 5,
-                QuestionAreaId = 1
-            };
-            var result = await _service.Add(session, default);
-            Assert.Equal(session, result);
+            _sessionRepoMock.Setup(x => x.Delete(5, default)).Returns(() => null);
+            var result = _service.Delete(5, default);
+            Assert.Null(result);
         }
 
-            [Fact]
-            public void DeleteSession_ShouldNOtGenerateException_WhereModelWasFound()
-            {
-                _sessionRepoMock.Setup(x => x.Delete(5, default)).Returns(() => null);
-                var result =  _service.Delete(5,default);
-                Assert.Null(result);
-            }
-
-            [Fact]
-            public async Task UpdateSession_ShouldReturnValidModel_WhereModelWasFound()
-            {
+        [Fact]
+        public async Task UpdateSession_ShouldReturnValidModel_WhereModelWasFound()
+        {
             var sessionEntity = new SessionEntity()
             {
                 Id = int.MaxValue,
