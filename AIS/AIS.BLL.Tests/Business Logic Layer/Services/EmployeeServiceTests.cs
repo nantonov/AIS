@@ -9,7 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace AIS.BLL.Tests.Business_Logic_Layer.Servuces
+namespace AIS.BLL.Tests.Business_Logic_Layer.Services
 {
     public class EmployeeServiceTests
     {
