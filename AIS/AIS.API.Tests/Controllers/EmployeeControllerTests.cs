@@ -17,8 +17,6 @@ namespace AIS.API.Tests.Controllers
 {
     public class EmployeeControllerTests
     {
-        private readonly CancellationToken ct = new();
-
         [Fact]
         public async Task Add_WhenControllerHasData_ShouldReturnValidModel()
         {
@@ -40,11 +38,11 @@ namespace AIS.API.Tests.Controllers
             mockMapper.Setup(map => map.Map<Employee>(expected)).Returns(expectedEmployee);
             mockMapper.Setup(map => map.Map<EmployeeViewModel>(expectedEmployee)).Returns(expected);
             var mockService = new Mock<IGenericService<Employee>>();
-            mockService.Setup(serv => serv.Add(mockMapper.Object.Map<Employee>(expected), ct)).ReturnsAsync(expectedEmployee);
+            mockService.Setup(serv => serv.Add(mockMapper.Object.Map<Employee>(expected), default)).ReturnsAsync(expectedEmployee);
             var controller = new EmployeeController(mockMapper.Object, mockService.Object, mockValidator.Object);
 
             // Act
-            var result = await controller.Add(expected, ct);
+            var result = await controller.Add(expected, CancellationToken.None);
 
             // Assert
             Assert.Equal(expected, result);
@@ -71,11 +69,11 @@ namespace AIS.API.Tests.Controllers
             mockMapper.Setup(map => map.Map<Employee>(expected)).Returns(expectedEmployee);
             mockMapper.Setup(map => map.Map<EmployeeViewModel>(expectedEmployee)).Returns(expected);
             var mockService = new Mock<IGenericService<Employee>>();
-            mockService.Setup(serv => serv.Put(mockMapper.Object.Map<Employee>(expected), ct)).ReturnsAsync(expectedEmployee);
+            mockService.Setup(serv => serv.Put(mockMapper.Object.Map<Employee>(expected), default)).ReturnsAsync(expectedEmployee);
             var controller = new EmployeeController(mockMapper.Object, mockService.Object, mockValidator.Object);
 
             // Act
-            var result = await controller.Update(expected, ct);
+            var result = await controller.Update(expected, default);
 
             // Assert
             Assert.Equal(expected, result);
@@ -118,11 +116,11 @@ namespace AIS.API.Tests.Controllers
             mockMapper.Setup(map => map.Map<IEnumerable<Employee>>(expected)).Returns(expectedEmployee);
             mockMapper.Setup(map => map.Map<IEnumerable<EmployeeViewModel>>(expectedEmployee)).Returns(expected);
             var mockService = new Mock<IGenericService<Employee>>();
-            mockService.Setup(serv => serv.Get(ct)).ReturnsAsync(expectedEmployee);
+            mockService.Setup(serv => serv.Get(default)).ReturnsAsync(expectedEmployee);
             var controller = new EmployeeController(mockMapper.Object, mockService.Object, mockValidator.Object);
 
             // Act
-            var result = await controller.GetAll(ct);
+            var result = await controller.GetAll(default);
 
             // Assert
             Assert.Equal(expected, result);
@@ -149,11 +147,11 @@ namespace AIS.API.Tests.Controllers
             var mockMapper = new Mock<IMapper>();
             mockMapper.Setup(map => map.Map<Employee>(expected)).Returns(expectedEmployee);
             var mockService = new Mock<IGenericService<Employee>>();
-            mockService.Setup(serv => serv.Delete(expectedEmployee, ct));
+            mockService.Setup(serv => serv.Delete(expectedEmployee, default));
             var controller = new EmployeeController(mockMapper.Object, mockService.Object, mockValidator.Object);
 
             // Act
-            Action act = () => controller.Delete(expected, ct);
+            Action act = () => controller.Delete(expected, default);
 
             // Assert
             act.Should().NotThrow();
