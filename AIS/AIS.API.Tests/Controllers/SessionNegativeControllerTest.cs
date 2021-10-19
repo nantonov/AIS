@@ -8,7 +8,6 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AIS.DAL.Entities;
 using Xunit;
 
 namespace AIS.API.Tests.Controllers
@@ -17,13 +16,12 @@ namespace AIS.API.Tests.Controllers
     {
         private readonly Mock<IGenericService<Session>> _sessionControllerMock = new();
         private readonly SessionController _controller;
-        private readonly IMapper _mapper;
 
         public SessionNegativeControllerTest()
         {
             var mockMapper = new MapperConfiguration(cfg => { cfg.AddProfile(new SessionViewModelProfile()); });
-            _mapper = mockMapper.CreateMapper();
-            _controller = new SessionController(_sessionControllerMock.Object, _mapper);
+            var mapper = mockMapper.CreateMapper();
+            _controller = new SessionController(_sessionControllerMock.Object, mapper);
         }
         [Fact]
         public async Task GetSession_ShouldReturnNull_WhereSessionNotExist()

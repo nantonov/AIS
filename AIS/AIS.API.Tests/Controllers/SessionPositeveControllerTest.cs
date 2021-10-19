@@ -11,13 +11,13 @@ using Xunit;
 
 namespace AIS.API.Tests.Controllers
 {
-    public class SessionPositeveControllerTest
+    public class SessionPositiveControllerTest
     {
         private readonly Mock<IGenericService<Session>> _sessionControllerMock = new();
         private readonly SessionController _controller;
         private readonly IMapper _mapper;
 
-        public SessionPositeveControllerTest()
+        public SessionPositiveControllerTest()
         {
             var mockMapper = new MapperConfiguration(cfg => { cfg.AddProfile(new SessionViewModelProfile()); });
             _mapper = mockMapper.CreateMapper();
