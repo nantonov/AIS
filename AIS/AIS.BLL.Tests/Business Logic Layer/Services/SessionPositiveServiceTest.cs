@@ -7,6 +7,7 @@ using AIS.DAL.Interfaces.Repositories;
 using AutoMapper;
 using Moq;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -25,11 +26,30 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
         }
 
         [Fact]
-        public async Task GetSession_ShouldReturnListSession_WhereSessionExist()
+        public async Task GetSessions_ShouldReturnListSession_WhereSessionExist()
         {
             var expected = await _service.Get(default);
 
             Assert.NotNull(expected);
+
+        }
+        [Fact]
+        public void GetSessionsWithFunction_ShouldReturnListSession_WhereSessionExist()
+        {
+            
+            var session = new Session()
+            {
+                Id = 5,
+                StartTime = DateTime.Today,
+                CompanyId = 5,
+                EmployeeId = 5,
+                IntervieweeId = 5,
+                QuestionAreaId = 1
+            };
+
+            var result = _service.Get(null, default);
+
+            Assert.Equal(new List<Session>(),result);
 
         }
         [Fact]
@@ -48,6 +68,33 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
             _sessionRepoMock.Setup(x => x.GetById(sessionId, default)).ReturnsAsync(sessionEntity);
             var session = await _service.GetById(sessionId, default);
             Assert.Equal(sessionId, session.Id);
+        }
+
+        [Fact]
+        public void DeleteSessionEntity_ShouldGenerateException()
+        {
+            var sessionEntity = new SessionEntity()
+            {
+                Id = 5,
+                StartTime = DateTime.Today,
+                CompanyId = 5,
+                EmployeeId = 5,
+                IntervieweeId = 5,
+                QuestionAreaId = 1
+            };
+            var session = new Session()
+            {
+                Id = 5,
+                StartTime = DateTime.Today,
+                CompanyId = 5,
+                EmployeeId = 5,
+                IntervieweeId = 5,
+                QuestionAreaId = 1
+            };
+
+            _sessionRepoMock.Setup(x => x.Delete(sessionEntity, default)).Returns(() => null);
+            Task Act() => _service.Delete(session, default);
+            Assert.ThrowsAsync<NotImplementedException>(Act);
         }
 
         [Fact]

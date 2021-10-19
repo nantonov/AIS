@@ -25,14 +25,59 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
             _service = new SessionService(_sessionRepoMock.Object, mapper);
 
         }
+        [Fact]
+        public void GetSessionsWithFunction_ShouldReturnListSession_WhereSessionExist()
+        {
 
-          [Fact]
-          public async Task GetSessionList_ShouldReturnNull_WhereSessionNotExist()
-          {
-              _sessionRepoMock.Setup(x => x.Get(default)).ReturnsAsync(() => null);
-              var sessions = await _service.Get(default);
-              Assert.Equal(new List<Session>(), sessions);
-          }
+            var session = new Session()
+            {
+                Id = 5,
+                StartTime = DateTime.Today,
+                CompanyId = 5,
+                EmployeeId = 5,
+                IntervieweeId = 5,
+                QuestionAreaId = 1
+            };
+
+            var result = _service.Get(null, default);
+
+            Assert.Equal(new List<Session>(), result);
+
+        }
+        [Fact]
+        public void DeleteSessionEntity_ShouldGenerateException()
+        {
+            var sessionEntity = new SessionEntity()
+            {
+                Id = 5,
+                StartTime = DateTime.Today,
+                CompanyId = 5,
+                EmployeeId = 5,
+                IntervieweeId = 5,
+                QuestionAreaId = 1
+            };
+            var session = new Session()
+            {
+                Id = 5,
+                StartTime = DateTime.Today,
+                CompanyId = 5,
+                EmployeeId = 5,
+                IntervieweeId = 5,
+                QuestionAreaId = 1
+            };
+
+            _sessionRepoMock.Setup(x => x.Delete(sessionEntity, default)).Returns(() => null);
+            Task Act() => _service.Delete(session, default);
+            Assert.ThrowsAsync<NotImplementedException>(Act);
+        }
+
+        [Fact]
+        public async Task GetSessionList_ShouldReturnNull_WhereSessionNotExist()
+        {
+            _sessionRepoMock.Setup(x => x.Get(default)).ReturnsAsync(() => null);
+            var sessions = await _service.Get(default);
+            Assert.Equal(new List<Session>(), sessions);
+        }
         [Fact]
         public async Task GetSessionById_ShouldReturnNull_WhereSessionNotFound()
         {
