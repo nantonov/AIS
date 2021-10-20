@@ -38,7 +38,7 @@ namespace AIS.API.Controllers
         [HttpPost(EndpointConstants.AddEndpoitRoute)]
         public async Task<EmployeeViewModel> Add([FromBody] ChangeEmployeeViewModel viewModel, CancellationToken ct)
         {
-            await _changeEmployeeValidator.ValidateAndThrowAsync(viewModel);
+            await _changeEmployeeValidator.ValidateAndThrowAsync(viewModel, ct);
 
             return
                 _mapper.Map<EmployeeViewModel>(
@@ -57,13 +57,14 @@ namespace AIS.API.Controllers
         [HttpPut(EndpointConstants.UpdateEndpoitRoute)]
         public async Task<EmployeeViewModel> Update([FromBody] ChangeEmployeeViewModel viewModel, int id, CancellationToken ct)
         {
-            await _changeEmployeeValidator.ValidateAndThrowAsync(viewModel);
+            await _changeEmployeeValidator.ValidateAndThrowAsync(viewModel, ct);
+
+            var mappedModel = _mapper.Map<Employee>(viewModel);
+            mappedModel.Id = id;
 
             return
                 _mapper.Map<EmployeeViewModel>(
-                    await _service.Put(
-                    _mapper.Map<Employee>(viewModel), ct
-                    )
+                    await _service.Put(mappedModel, ct)
                 );
         }
     }
