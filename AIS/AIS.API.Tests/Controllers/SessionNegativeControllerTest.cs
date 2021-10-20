@@ -14,7 +14,7 @@ namespace AIS.API.Tests.Controllers
 {
     public class SessionNegativeControllerTest
     {
-        private readonly Mock<IGenericService<Session>> _sessionControllerMock = new();
+        private readonly Mock<ISessionService> _sessionControllerMock = new();
         private readonly SessionController _controller;
 
         public SessionNegativeControllerTest()
@@ -35,17 +35,17 @@ namespace AIS.API.Tests.Controllers
         [Fact]
         public async Task GetSession_NotValidId_ReturnsNull()
         {
-           _sessionControllerMock.Setup(x => x.GetById(int.MaxValue, default)).ReturnsAsync(() => null);
+            _sessionControllerMock.Setup(x => x.GetById(int.MaxValue, default)).ReturnsAsync(() => null);
             var session = await _controller.GetSession(int.MaxValue, default);
             Assert.Null(session);
         }
 
         [Fact]
-        public void DeleteSession_ValidId_ReturnsNull()
+        public async Task DeleteSession_ValidId_ReturnsNull()
         {
-            _sessionControllerMock.Setup(x => x.Delete(int.MinValue, default)).Returns(() => null);
-            var session = _controller.Delete(int.MinValue, default);
-            Assert.Null(session);
+            _sessionControllerMock.Setup(x => x.Delete(int.MinValue, default)).ReturnsAsync(false);
+            var session = await _controller.Delete(int.MinValue, default);
+            Assert.False(session);
         }
 
         [Fact]
@@ -68,7 +68,7 @@ namespace AIS.API.Tests.Controllers
                 IntervieweeId = 5,
                 QuestionAreaId = 1
             };
-           _sessionControllerMock.Setup(x => x.Put(sessionEntity, default)).ReturnsAsync(() => null);
+            _sessionControllerMock.Setup(x => x.Put(sessionEntity, default)).ReturnsAsync(() => null);
             var expected = await _controller.Put(int.MaxValue, session, default);
             Assert.Null(expected);
         }

@@ -15,8 +15,8 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
 {
     public class SessionNegativeServiceTest
     {
-        private readonly IGenericService<Session> _service;
-        private readonly Mock<IGenericRepository<SessionEntity>> _sessionRepoMock = new();
+        private readonly ISessionService _service;
+        private readonly Mock<ISessionRepository> _sessionRepoMock = new();
 
         public SessionNegativeServiceTest()
         {
@@ -25,26 +25,9 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
             _service = new SessionService(_sessionRepoMock.Object, mapper);
 
         }
-      /*  [Fact]
-        public void GetSessionsWithFunction_ShouldReturnListSession_WhereSessionExist()
-        {
 
-            var session = new Session()
-            {
-                Id = 5,
-                StartTime = DateTime.Today,
-                CompanyId = 5,
-                EmployeeId = 5,
-                IntervieweeId = 5,
-                QuestionAreaId = 1
-            };
-
-            var result = _service.Get(null, default);
-
-            Assert.Equal(new List<Session>(), result);
-        }*/
         [Fact]
-        public void DeleteSessionEntity_ShouldGenerateException()
+        public async Task DeleteSession_ValidId_ReturnsFalse()
         {
             var sessionEntity = new SessionEntity()
             {
@@ -55,19 +38,10 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
                 IntervieweeId = 5,
                 QuestionAreaId = 1
             };
-            var session = new Session()
-            {
-                Id = 5,
-                StartTime = DateTime.Today,
-                CompanyId = 5,
-                EmployeeId = 5,
-                IntervieweeId = 5,
-                QuestionAreaId = 1
-            };
 
-            _sessionRepoMock.Setup(x => x.Delete(sessionEntity, default)).Returns(() => null);
-            Task Act() => _service.Delete(session, default);
-            Assert.ThrowsAsync<NotImplementedException>(Act);
+            _sessionRepoMock.Setup(x => x.Delete(sessionEntity, default)).ReturnsAsync(false);
+            var result = await _service.Delete(int.MaxValue, default);
+            Assert.False(result);
         }
 
         [Fact]
@@ -83,14 +57,6 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
         {
             _sessionRepoMock.Setup(x => x.GetById(int.MaxValue, default)).ReturnsAsync(() => null);
             var session = await _service.GetById(int.MaxValue, default);
-            Assert.Null(session);
-        }
-
-        [Fact]
-        public void DeleteSession_ValidId_ReturnsNull()
-        {
-            _sessionRepoMock.Setup(x => x.Delete(int.MinValue, default)).Returns(() => null);
-            var session = _service.Delete(int.MinValue, default);
             Assert.Null(session);
         }
 
@@ -115,7 +81,7 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
                 IntervieweeId = 5,
                 QuestionAreaId = 1
             };
-            _sessionRepoMock.Setup(x => x.Update(sessionEntity, default)).ReturnsAsync(() => null);
+            _sessionRepoMock.Setup(x => x.Put(sessionEntity, default)).ReturnsAsync(() => null);
             var expected = await _service.Put(session, default);
             Assert.Null(expected);
         }
