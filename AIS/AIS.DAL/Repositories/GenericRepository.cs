@@ -26,7 +26,7 @@ namespace AIS.DAL.Repositories
 
         public IEnumerable<TEntity> Get(Func<TEntity, bool> predicate, CancellationToken ct)
         {
-            return _dbSet.Where(predicate).ToList();
+            return _dbSet.AsNoTracking().Where(predicate).ToList();
         }
 
         public async Task<TEntity> GetById(int id, CancellationToken ct)

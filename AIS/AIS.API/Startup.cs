@@ -1,19 +1,13 @@
-using System.Reflection;
-using AIS.API.Mappers;
 using AIS.API.MiddleWare;
-using AIS.API.Validators;
-using AIS.API.ViewModels;
-using AIS.API.ViewModels.Employee;
 using AIS.BLL.DI;
 using FluentValidation.AspNetCore;
-using AIS.BLL.Mappers;
-using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 namespace AIS.API
 {
@@ -32,7 +26,9 @@ namespace AIS.API
             services.AddAutoMapper(typeof(API.Mapper.MappingProfile).Assembly, typeof(BLL.Mapper.MappingProfile).Assembly);
             services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssembly(Assembly.Load("AIS.API")));
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            ); ;
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AIS.API", Version = "v1" });
