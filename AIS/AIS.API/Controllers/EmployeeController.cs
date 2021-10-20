@@ -51,12 +51,7 @@ namespace AIS.API.Controllers
         [HttpDelete(EndpointConstants.DeleteEndpoitRoute)]
         public async Task Delete(int id, CancellationToken ct)
         {
-
-            await _validator.ValidateAndThrowAsync(viewModel);
-            await _service.Delete(_mapper.Map<Employee>(viewModel), ct);
-
             await _service.Delete(id, ct);
-
         }
 
         [HttpPut(EndpointConstants.UpdateEndpoitRoute)]
