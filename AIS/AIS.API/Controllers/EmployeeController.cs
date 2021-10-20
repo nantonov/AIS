@@ -1,4 +1,4 @@
-﻿using AIS.API.ViewModels;
+﻿using AIS.API.ViewModels.Employee;
 using AIS.BLL.Interfaces.Services;
 using AIS.BLL.Models;
 using AutoMapper;
@@ -17,13 +17,16 @@ namespace AIS.API.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IGenericService<Employee> _service;
-        private readonly IValidator<EmployeeViewModel> _validator;
+        private readonly IValidator<ChangeEmployeeViewModel> _changeEmployeeValidator;
 
-        public EmployeeController(IMapper mapper, IGenericService<Employee> service, IValidator<EmployeeViewModel> validator)
+        public EmployeeController(
+                         IMapper mapper,
+                         IGenericService<Employee> service,
+                         IValidator<ChangeEmployeeViewModel> changeEmployeeValidator)
         {
             _mapper = mapper;
             _service = service;
-            _validator = validator;
+            _changeEmployeeValidator = changeEmployeeValidator;
         }
 
         [HttpGet]
@@ -33,11 +36,11 @@ namespace AIS.API.Controllers
         }
 
         [HttpPost(EndpointConstants.AddEndpoitRoute)]
-        public async Task<EmployeeViewModel> Add([FromBody] EmployeeViewModel viewModel, CancellationToken ct)
+        public async Task<EmployeeViewModel> Add([FromBody] ChangeEmployeeViewModel viewModel, CancellationToken ct)
         {
-            await _validator.ValidateAndThrowAsync(viewModel);
+            await _changeEmployeeValidator.ValidateAndThrowAsync(viewModel, ct);
 
-            return 
+            return
                 _mapper.Map<EmployeeViewModel>(
                     await _service.Add(
                     _mapper.Map<Employee>(viewModel), ct
@@ -46,22 +49,27 @@ namespace AIS.API.Controllers
         }
 
         [HttpDelete(EndpointConstants.DeleteEndpoitRoute)]
-        public async Task Delete([FromBody] EmployeeViewModel viewModel, CancellationToken ct)
+        public async Task Delete(int id, CancellationToken ct)
         {
+
             await _validator.ValidateAndThrowAsync(viewModel);
             await _service.Delete(_mapper.Map<Employee>(viewModel), ct);
+
+            await _service.Delete(id, ct);
+
         }
 
         [HttpPut(EndpointConstants.UpdateEndpoitRoute)]
-        public async Task<EmployeeViewModel> Update([FromBody] EmployeeViewModel viewModel, CancellationToken ct)
+        public async Task<EmployeeViewModel> Update([FromBody] ChangeEmployeeViewModel viewModel, int id, CancellationToken ct)
         {
-            await _validator.ValidateAndThrowAsync(viewModel);
+            await _changeEmployeeValidator.ValidateAndThrowAsync(viewModel, ct);
 
-            return 
+            var mappedModel = _mapper.Map<Employee>(viewModel);
+            mappedModel.Id = id;
+
+            return
                 _mapper.Map<EmployeeViewModel>(
-                    await _service.Put(
-                    _mapper.Map<Employee>(viewModel), ct
-                    )
+                    await _service.Put(mappedModel, ct)
                 );
         }
     }

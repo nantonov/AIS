@@ -1,4 +1,4 @@
-﻿using AIS.API.ViewModels;
+﻿using AIS.API.ViewModels.Employee;
 using AIS.BLL.Models;
 using AutoMapper;
 
@@ -8,7 +8,8 @@ namespace AIS.API.Mappers
     {
         public EmployeeViewModelProfile()
         {
-            CreateMap<EmployeeViewModel, Employee>().ReverseMap();
+            CreateMap<Employee, EmployeeViewModel>();
+            CreateMap<ChangeEmployeeViewModel, Employee>();
         }
     }
 }

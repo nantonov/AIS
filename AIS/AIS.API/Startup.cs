@@ -1,8 +1,13 @@
+
+using System.Reflection;
+
 using AIS.API.Mappers;
 using AIS.API.MiddleWare;
 using AIS.API.Validators;
 using AIS.API.ViewModels;
+using AIS.API.ViewModels.Employee;
 using AIS.BLL.DI;
+using FluentValidation.AspNetCore;
 using AIS.BLL.Mappers;
 using FluentValidation;
 using Microsoft.AspNetCore.Builder;
@@ -27,10 +32,14 @@ namespace AIS.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(typeof(API.Mapper.MappingProfile).Assembly, typeof(BLL.Mapper.MappingProfile).Assembly);
+
             services.AddAutoMapper(typeof(API.Mapper.SessionViewModelProfile), typeof(BLL.Mapper.SessionProfile));
             services.AddAutoMapper(typeof(EmployeeViewModelProfile), typeof(EmployeeProfile));
             services.AddScoped<IValidator<EmployeeViewModel>, EmployeeViewModelValidator>();
             services.AddAutoMapper(typeof(API.Mapper.SessionViewModelProfile).Assembly, typeof(BLL.Mapper.SessionProfile).Assembly);
+
+            services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssembly(Assembly.Load("AIS.API")));
+
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
