@@ -14,10 +14,10 @@ namespace AIS.API.Controllers
     [ApiController]
     public class SessionController : ControllerBase
     {
-        private readonly ISessionService _sessionService;
+        private readonly IGenericService<Session> _sessionService;
         private readonly IMapper _mapper;
 
-        public SessionController(ISessionService sessionService, IMapper mapper)
+        public SessionController(IGenericService<Session> sessionService, IMapper mapper)
         {
             _sessionService = sessionService;
             _mapper = mapper;
@@ -53,9 +53,9 @@ namespace AIS.API.Controllers
         }
 
         [HttpDelete(EndpointConstants.IdTemplate)]
-        public async Task<bool> Delete(int id, CancellationToken ct)
+        public Task Delete(int id, CancellationToken ct)
         {
-            return await _sessionService.Delete(id, ct);
+            return _sessionService.Delete(id, ct);
         }
     }
 }
