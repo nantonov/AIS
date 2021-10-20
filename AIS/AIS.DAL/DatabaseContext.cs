@@ -27,11 +27,6 @@ namespace AIS.DAL
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(DatabaseContext).Assembly);
-
-            modelBuilder.Entity<EmployeeEntity>().Navigation(x => x.Company).AutoInclude();
-            modelBuilder.Entity<IntervieweeEntity>().Navigation(x => x.Company).AutoInclude();
-            modelBuilder.Entity<CompanyEntity>().Navigation(x => x.Interviewees).AutoInclude();
-            modelBuilder.Entity<CompanyEntity>().Navigation(x => x.Employees).AutoInclude();
         }
     }
 }

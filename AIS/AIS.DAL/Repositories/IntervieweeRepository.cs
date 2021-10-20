@@ -27,12 +27,12 @@ namespace AIS.DAL.Repositories
 
         public async Task<IEnumerable<IntervieweeEntity>> Get(CancellationToken ct)
         {
-            return await _context.Interviewees.ToListAsync(ct);
+            return await _context.Interviewees.Include(x => x.Company).ToListAsync(ct);
         }
 
         public IEnumerable<IntervieweeEntity> Get(Func<IntervieweeEntity, bool> predicate, CancellationToken ct)
         {
-            return _context.Interviewees.Where(predicate).ToList();
+            return _context.Interviewees.Include(x => x.Company).Where(predicate).ToList();
         }
 
         public async Task<IntervieweeEntity> GetById(int id, CancellationToken ct)
