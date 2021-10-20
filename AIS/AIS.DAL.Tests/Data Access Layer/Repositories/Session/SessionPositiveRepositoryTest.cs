@@ -88,13 +88,13 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Session
             await _context.Sessions.AddAsync(sessionEntity);
             await _context.SaveChangesAsync();
 
-            var session = await _repo.Update(sessionEntity, default);
+            var session = await _repo.Put(sessionEntity, default);
             Assert.Equal(id, session.Id);
             Assert.Equal(id, session.CompanyId);
 
             await _context.Database.EnsureDeletedAsync();
         }
-      /*  [Fact]
+        [Fact]
         public async Task DeleteSession_ValidId_ReturnsNull()
         {
             var id = new Random().Next();
@@ -110,13 +110,11 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Session
 
             await _context.Sessions.AddAsync(sessionEntity);
             await _context.SaveChangesAsync();
-            await _repo.Delete(id, default);
+            var result = await _repo.Delete(sessionEntity, default);
             await _context.SaveChangesAsync();
-            Task.WaitAll();
-            var session = Task.Run(() => _repo.GetById(id, default).Start());
             await _context.Database.EnsureDeletedAsync();
-            Assert.Null(session);
-        }*/
+            Assert.True(result);
+        }
 
         [Fact]
         public async Task SessionExists_ValidId_ReturnsTrue()
@@ -135,9 +133,8 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Session
             await _context.Sessions.AddAsync(sessionEntity);
             await _context.SaveChangesAsync();
 
-            // var session = _repo.Get(id, default);
-
-            //  Assert.True(session);
+            var session = _repo.Get(default);
+            Assert.NotNull(session);
             await _context.Database.EnsureDeletedAsync();
         }
     }

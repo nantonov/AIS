@@ -14,10 +14,10 @@ namespace AIS.API.Controllers
     [ApiController]
     public class SessionController : ControllerBase
     {
-        private readonly IGenericService<Session> _sessionService;
+        private readonly ISessionService _sessionService;
         private readonly IMapper _mapper;
 
-        public SessionController(IGenericService<Session> sessionService, IMapper mapper)
+        public SessionController(ISessionService sessionService, IMapper mapper)
         {
             _sessionService = sessionService;
             _mapper = mapper;
@@ -41,7 +41,8 @@ namespace AIS.API.Controllers
         public async Task<SessionViewModel> Post(SessionAddViewModel session, CancellationToken ct)
         {
             var mappedObject = _mapper.Map<Session>(session);
-            return _mapper.Map<SessionViewModel>(await _sessionService.Add(mappedObject, ct));
+            var result = await _sessionService.Add(mappedObject, ct);
+            return _mapper.Map<SessionViewModel>(result);
         }
 
         [HttpPut("Update/{id}")]
@@ -53,9 +54,9 @@ namespace AIS.API.Controllers
         }
 
         [HttpDelete(EndpointConstants.IdTemplate)]
-        public Task Delete(int id, CancellationToken ct)
+        public async Task<bool> Delete(int id, CancellationToken ct)
         {
-            return _sessionService.Delete(id, ct);
+            return await _sessionService.Delete(id, ct);
         }
     }
 }

@@ -1,19 +1,22 @@
 ﻿using AIS.API.Controllers;
+using AIS.API.Mapper;
 using AIS.API.ViewModels;
 using AIS.BLL.Interfaces.Services;
 using AIS.BLL.Models;
+using AIS.BLL.Services;
+using AIS.DAL.Entities;
+using AIS.DAL.Interfaces.Repositories;
 using AutoMapper;
 using Moq;
 using System;
 using System.Threading.Tasks;
-using AIS.API.Mapper;
 using Xunit;
 
 namespace AIS.API.Tests.Controllers
 {
     public class SessionPositiveControllerTest
     {
-        private readonly Mock<IGenericService<Session>> _sessionControllerMock = new();
+        private readonly Mock<ISessionService> _sessionControllerMock = new();
         private readonly SessionController _controller;
 
         public SessionPositiveControllerTest()
@@ -49,15 +52,13 @@ namespace AIS.API.Tests.Controllers
             Assert.Equal(sessionId, session.Id);
         }
 
-      /*  [Fact]
-        public void DeleteSession_ValidId_ReturnsNull()
+        [Fact]
+        public async Task DeleteSession_ValidId_ReturnsNull()
         {
-            _sessionControllerMock.Setup(x => x.Delete(5, default)).Returns(() => null);
-            _controller.Delete(5, default);
-            var result = _controller.GetSession(5, default);
-            Assert.Null(result);
+            _sessionControllerMock.Setup(x => x.Delete(6, default)).ReturnsAsync(true);
+            var result = await _controller.Delete(6, default);
+            Assert.True(result);
         }
-      */
         [Fact]
         public async Task PutSession_ValidSession_ReturnsSession()
         {
@@ -79,6 +80,37 @@ namespace AIS.API.Tests.Controllers
             };
             _sessionControllerMock.Setup(x => x.Put(sessionEntity, default)).ReturnsAsync(() => sessionEntity);
             var expected = await _controller.Put(int.MaxValue, session, default);
+            Assert.Null(expected);
+        }
+        [Fact]
+        public async Task AddSession_ValidSession_ReturnsSession()
+        {
+            var sessionEntity = new SessionEntity()
+            {
+                StartTime = DateTime.Today,
+                CompanyId = 5,
+                EmployeeId = 5,
+                IntervieweeId = 5,
+                QuestionAreaId = 1
+            };
+            var session= new Session()
+            {
+                StartTime = DateTime.Today,
+                CompanyId = 5,
+                EmployeeId = 5,
+                IntervieweeId = 5,
+                QuestionAreaId = 1
+            };
+            var sessionAddViewModel = new SessionAddViewModel()
+            {
+                StartTime = DateTime.Today,
+                CompanyId = 5,
+                EmployeeId = 5,
+                IntervieweeId = 5,
+                QuestionAreaId = 1
+            };
+            _sessionControllerMock.Setup(x => x.Add(session, default)).ReturnsAsync(() => session);
+            var expected = await _controller.Post(sessionAddViewModel, default);
             Assert.Null(expected);
         }
     }
