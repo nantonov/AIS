@@ -93,7 +93,7 @@ namespace AIS.API.Tests.Controllers
             };
             _sessionControllerMock.Setup(x => x.Add(sessionEntity, default)).ReturnsAsync(() => sessionEntity);
             var expected = await _controller.Post(session, default);
-            Assert.Null(expected);
+            Assert.NotNull(expected);
         }
     }
 }
