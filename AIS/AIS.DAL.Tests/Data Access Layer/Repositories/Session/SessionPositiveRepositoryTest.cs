@@ -65,7 +65,7 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Session
             };
             await _context.Sessions.AddAsync(sessionEntity);
             var session = await _repo.GetById(id, default);
-
+            Assert.NotNull(session);
             Assert.Equal(id, session.Id);
             Assert.Equal(id, session.CompanyId);
             await _context.Database.EnsureDeletedAsync();

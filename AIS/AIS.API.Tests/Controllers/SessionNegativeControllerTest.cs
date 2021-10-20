@@ -77,23 +77,14 @@ namespace AIS.API.Tests.Controllers
         {
             var sessionEntity = new Session()
             {
-                /*StartTime = DateTime.Today,
-                CompanyId = 5,
-                EmployeeId = 5,
-                IntervieweeId = 5,
-                QuestionAreaId = 1*/
             };
             var session = new SessionAddViewModel()
             {
-               /* StartTime = DateTime.Today,
-                CompanyId = 5,
-                EmployeeId = 5,
-                IntervieweeId = 5,
-                QuestionAreaId = 1*/
+
             };
             _sessionControllerMock.Setup(x => x.Add(sessionEntity, default)).ReturnsAsync(() => sessionEntity);
             var expected = await _controller.Post(session, default);
-            Assert.NotNull(expected);
+            Assert.Null(expected);
         }
     }
 }
