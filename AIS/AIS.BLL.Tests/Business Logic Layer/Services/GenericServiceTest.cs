@@ -1,15 +1,12 @@
 ﻿using AIS.BLL.Interfaces.Services;
-using AIS.BLL.Mappers;
 using AIS.BLL.Models;
 using AIS.BLL.Services;
 using AIS.DAL.Entities;
 using AIS.DAL.Interfaces.Repositories;
 using AutoMapper;
 using Moq;
-using Moq.AutoMock;
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -17,38 +14,83 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
 {
     public class GenericServiceTest
     {
-        private readonly GenericService<Employee, EmployeeEntity> _service;
         private readonly Mock<IGenericRepository<EmployeeEntity>> _sessionRepoMock = new();
-        private readonly IGenericService<Session> _genericService;
-        private readonly AutoMocker _mocker = new(MockBehavior.Default, DefaultValue.Mock);
+        private readonly IGenericService<Employee> _service;
+        private readonly Mock<IMapper> _mapperMock = new();
 
         public GenericServiceTest()
         {
-            _genericService = _mocker.Get<IGenericService<Session>>();
-            var mockMapper = new MapperConfiguration(cfg => { cfg.AddProfile(new EmployeeProfile()); });
-            var mapper = mockMapper.CreateMapper();
-            _service = new GenericService<Employee, EmployeeEntity>(_sessionRepoMock.Object, mapper);
+            _service = new GenericService<Employee, EmployeeEntity>(_sessionRepoMock.Object, _mapperMock.Object);
 
         }
 
         [Fact]
         public async Task GetEmployee_ReturnsEmptyEmployeeList()
         {
-            _sessionRepoMock.Setup(x => x.Get(default)).ReturnsAsync(() => null);
-            var employees = await _service.Get(default);
-            Assert.Equal(new List<Employee>(), employees);
+            List<EmployeeEntity> employeesEntity = new()
+            {
+                new EmployeeEntity()
+                {
+                Id = 5,
+                Name = "Test",
+                CompanyId = 5,
+            }
+           
+        };
+            List<Employee> employes = new()
+            {
+                new Employee()
+                {
+                Id = 5,
+                Name = "Test",
+                CompanyId = 5,
+            }
+    };
+            _mapperMock.Setup(x => x.Map<IEnumerable<EmployeeEntity>>(It.IsAny<IEnumerable<Employee>>())).Returns(employeesEntity);
+            _sessionRepoMock.Setup(x => x.Get(default)).ReturnsAsync(new List<EmployeeEntity>());
+            _mapperMock.Setup(x => x.Map<IEnumerable<Employee>>(It.IsAny<IEnumerable<Session>>())).Returns(employes);
+            var result = await _service.Get(default);
+            Assert.NotNull(result);
         }
 
         [Fact]
         public async Task GetEmployee_NotValidId_ReturnsNull()
         {
-            _sessionRepoMock.Setup(x => x.GetById(int.MaxValue, default)).ReturnsAsync(() => null);
-            var session = await _service.GetById(int.MaxValue, default);
-            Assert.Null(session);
+            _mapperMock.Setup(x => x.Map<EmployeeEntity>(It.IsAny<Employee>())).Returns(new EmployeeEntity());
+            _sessionRepoMock.Setup(x => x.GetById(6, default)).ReturnsAsync(new EmployeeEntity());
+            _mapperMock.Setup(x => x.Map<Employee>(It.IsAny<Session>())).Returns(new Employee());
+            // Act
+            var actual = await _service.GetById(int.MaxValue, default);
+
+            // Assert
+            Assert.NotEqual(int.MaxValue, actual.Id);
         }
 
         [Fact]
-        public async Task PutEmployee_ValidEmployee_ReturnsNull()
+        public async Task PutEmployee_ValidEmployee_ReturnsEmployee()
+        {
+            var employeeEntity = new EmployeeEntity()
+            {
+                Id = 5,
+                    Name = "Test",
+                    CompanyId = 5,
+            };
+            var employee = new Employee()
+            {
+                Id = 5,
+                Name = "Test",
+                CompanyId = 5,
+            };
+
+            _mapperMock.Setup(x => x.Map<EmployeeEntity>(It.IsAny<Session>())).Returns(employeeEntity);
+            _sessionRepoMock.Setup(x => x.Update(employeeEntity, default)).ReturnsAsync(() => employeeEntity);
+            _mapperMock.Setup(x => x.Map<Employee>(It.IsAny<EmployeeEntity > ())).Returns(employee);
+            var expected = await _service.Put(employee, default);
+            Assert.Equal(employee, expected);
+        }
+
+        [Fact]
+        public async Task PostEmployee_ValidEmployee_ReturnsEmployee()
         {
             var employeeEntity = new EmployeeEntity()
             {
@@ -62,53 +104,29 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
                 Name = "Test",
                 CompanyId = 5,
             };
-            _sessionRepoMock.Setup(x => x.Update(employeeEntity, default)).ReturnsAsync(employeeEntity);
-            var expected = await _service.Put(employee, default);
-            Assert.Null(expected);
-        }
-
-        [Fact]
-        public async Task PostSession_ValidSession_ReturnsSession()
-        {
-            var session = new Session()
-            {
-                Id = 11,
-                StartTime = DateTime.Today,
-                CompanyId = 5,
-                EmployeeId = 5,
-                IntervieweeId = 5,
-                QuestionAreaId = 1
-            };
-
-            _mocker.Setup<IGenericService<Session>, Task<Session>>(setup => setup.Add(session, CancellationToken.None))
-                .ReturnsAsync(session);
-
+            _mapperMock.Setup(x => x.Map<EmployeeEntity>(It.IsAny<Employee>())).Returns(employeeEntity);
+            _sessionRepoMock.Setup(x => x.Add(It.IsAny<EmployeeEntity>(), default)).ReturnsAsync(employeeEntity);
+            _mapperMock.Setup(x => x.Map<Employee>(It.IsAny<EmployeeEntity>())).Returns(employee);
             // Act
-            var actual = await _genericService.Add(session, default);
+            var actual = await _service.Add(employee, default);
 
             // Assert
-            Assert.Equal(session, actual);
+            Assert.Equal(employee, actual);
         }
 
         [Fact]
         public async Task DeleteEmployee_ValidId_ReturnsNull()
         {
-            var employeeEntity = new EmployeeEntity()
-            {
-                Id = 6,
-                Name = "Test",
-                CompanyId = 5,
-            };
             var employee = new Employee()
             {
-                Id = 6,
+                Id = 5,
                 Name = "Test",
                 CompanyId = 5,
             };
-            _sessionRepoMock.Setup(x => x.Delete(employeeEntity, default));
-            _sessionRepoMock.Setup(x => x.GetById(6, default)).ReturnsAsync(() => null);
+            _mapperMock.Setup(x => x.Map<EmployeeEntity>(It.IsAny<Employee>())).Verifiable();
             await _service.Delete(employee, default);
-            Assert.True(true);
+            _sessionRepoMock.Setup(x => x.Delete(6, default));
+             Action act = ()=> _sessionRepoMock.Verify(x=> x.Delete(6, default), Times.Once);
         }
     }
 }

@@ -50,9 +50,9 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
                     QuestionAreaId = 1
                 }
             };
-            _mapperMock.Setup(x => x.Map<IEnumerable<SessionEntity>>(It.IsAny<Session>())).Returns(sessionsEntity);
+            _mapperMock.Setup(x => x.Map<IEnumerable<SessionEntity>>(It.IsAny<IEnumerable<Session>>())).Returns(sessionsEntity);
             _sessionRepoMock.Setup(x => x.Get(default)).ReturnsAsync(new List<SessionEntity>());
-            _mapperMock.Setup(x => x.Map<IEnumerable<Session>>(It.IsAny<Session>())).Returns(sessions);
+            _mapperMock.Setup(x => x.Map<IEnumerable<Session>>(It.IsAny<IEnumerable<Session>>())).Returns(sessions);
             var result = await _service.Get(default);
             Assert.NotNull(result);
         }
