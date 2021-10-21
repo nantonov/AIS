@@ -7,7 +7,6 @@
   <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="1.0.1" />
     <PackageReference Include="FluentAssertions" Version="6.1.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.11" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
     <PackageReference Include="Moq" Version="4.16.1" />
     <PackageReference Include="Moq.AutoMock" Version="3.0.0" />
@@ -20,7 +19,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AIS.API\AIS.API.csproj" />
-    <ProjectReference Include="..\AIS.BLL.Tests\AIS.BLL.Tests.csproj" />
     <ProjectReference Include="..\AIS.BLL\AIS.BLL.csproj" />
   </ItemGroup>
 

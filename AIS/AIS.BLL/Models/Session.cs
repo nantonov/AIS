@@ -14,6 +14,5 @@ namespace AIS.BLL.Models
         public virtual int IntervieweeId { get; set; }
         public virtual Interviewee Interviewee { get; set; }
         public int QuestionAreaId { get; set; }
-        // public QuestionArea QuestionArea { get; set; }
     }
 }

@@ -2,7 +2,6 @@
 using AIS.API.ViewModels;
 using AIS.BLL.Interfaces.Services;
 using AIS.BLL.Models;
-using AIS.BLL.Tests.Business_Logic_Layer.Services;
 using AutoMapper;
 using Moq;
 using System;
@@ -43,13 +42,9 @@ namespace AIS.API.Tests.Controllers
                 IntervieweeId = 5,
                 QuestionAreaId = 1
             };
-            _sessionControllerMock.Setup(x => x.Add(expectedSession, default)).ReturnsAsync(expectedSession);
             _sessionControllerMock.Setup(x => x.GetById(sessionId, default)).ReturnsAsync(expectedSession);
-
-            await new SessionPositiveServiceTest().AddSession_ValidSession_ReturnsSession();
-
-            var session = new SessionPositiveServiceTest().GetSession_ValidId_ReturnsSessionById();
-            Assert.NotNull(session);
+            await _controller.GetSession(9, default);
+            _sessionControllerMock.Verify(x => x.GetById(9, default), Times.Once);
         }
 
         [Fact]
@@ -60,7 +55,7 @@ namespace AIS.API.Tests.Controllers
             Assert.True(result);
         }
         [Fact]
-        public void PutSession_ValidSession_ReturnsSession()
+        public async Task PutSession_ValidSession_ReturnsSession()
         {
             var sessionEntity = new Session()
             {
@@ -70,12 +65,20 @@ namespace AIS.API.Tests.Controllers
                 IntervieweeId = 5,
                 QuestionAreaId = 1
             };
+            var sessionUpdateViewModel = new SessionUpdateViewModel()
+            {
+                StartTime = DateTime.Today,
+                CompanyId = 5,
+                EmployeeId = 5,
+                IntervieweeId = 5,
+                QuestionAreaId = 1
+            };
+            _mapperMock.Setup(x => x.Map<Session>(It.IsAny<SessionUpdateViewModel>())).Returns(sessionEntity);
             _sessionControllerMock.Setup(x => x.Add(sessionEntity, default)).ReturnsAsync(() => sessionEntity);
-
+            _mapperMock.Setup(x => x.Map<SessionUpdateViewModel>(It.IsAny<Session>())).Returns(sessionUpdateViewModel);
             _sessionControllerMock.Setup(x => x.Put(sessionEntity, default)).ReturnsAsync(() => sessionEntity);
-            var expected = 
-                new SessionPositiveServiceTest().PutSession_ValidSession_ReturnsSession();
-            Assert.NotNull(expected);
+            await _controller.Put(6,sessionUpdateViewModel,default);
+            _sessionControllerMock.Verify(x => x.Put(sessionEntity, default), Times.Once);
         }
         [Fact]
         public async Task AddSession_ValidSession_ReturnsSession()

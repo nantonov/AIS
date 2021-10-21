@@ -13,6 +13,5 @@ namespace AIS.API.ViewModels
         public int IntervieweeId { get; set; }
         public Interviewee Interviewee { get; set; }
         public int QuestionAreaId { get; set; }
-        // public QuestionArea QuestionArea { get; set; }
     }
 }
