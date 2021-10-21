@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace AIS.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route(EndpointConstants.ControllerEndpointRoute)]
     [ApiController]
     public class TrueAnswersController : ControllerBase
     {
@@ -26,30 +26,30 @@ namespace AIS.API.Controllers
         [HttpGet(EndpointConstants.IdTemplate)]
         public async Task<TrueAnswerViewModel> GetTrueAnswer(int id, CancellationToken ct)
         {
-            var TrueAnswer = _mapper.Map<TrueAnswer, TrueAnswerViewModel>(await _trueAnswerService.GetById(id, ct));
-            return TrueAnswer;
+            var trueAnswer = _mapper.Map<TrueAnswer, TrueAnswerViewModel>(await _trueAnswerService.GetById(id, ct));
+            return trueAnswer;
         }
 
         [HttpGet]
         public async Task<IEnumerable<TrueAnswerViewModel>> GetTrueAnswers(CancellationToken ct)
         {
-            var TrueAnswers = await _trueAnswerService.Get(ct);
-            return _mapper.Map<IEnumerable<TrueAnswerViewModel>>(TrueAnswers);
+            var trueAnswers = await _trueAnswerService.Get(ct);
+            return _mapper.Map<IEnumerable<TrueAnswerViewModel>>(trueAnswers);
         }
 
         [HttpPost]
-        public async Task<TrueAnswerViewModel> AddTrueAnswer(TrueAnswerViewModel TrueAnswer, CancellationToken ct)
+        public async Task<TrueAnswerViewModel> AddTrueAnswer(TrueAnswerViewModel trueAnswer, CancellationToken ct)
         {
             return _mapper.Map<TrueAnswerViewModel>(
-                await _trueAnswerService.Add(_mapper.Map<TrueAnswer>(TrueAnswer), ct)
-                );
+                await _trueAnswerService.Add(_mapper.Map<TrueAnswer>(trueAnswer), ct)
+            );
         }
 
         [HttpPut]
-        public async Task<TrueAnswerViewModel> UpdateTrueAnswer(TrueAnswerViewModel TrueAnswer, CancellationToken ct)
+        public async Task<TrueAnswerViewModel> UpdateTrueAnswer(TrueAnswerViewModel trueAnswer, CancellationToken ct)
         {
             return _mapper.Map<TrueAnswerViewModel>(
-                await _trueAnswerService.Put(_mapper.Map<TrueAnswer>(TrueAnswer), ct)
+                await _trueAnswerService.Put(_mapper.Map<TrueAnswer>(trueAnswer), ct)
             );
         }
 

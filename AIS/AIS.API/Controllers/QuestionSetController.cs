@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace AIS.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route(EndpointConstants.ControllerEndpointRoute)]
     [ApiController]
     public class QuestionSetController : ControllerBase
     {
@@ -42,7 +42,7 @@ namespace AIS.API.Controllers
         {
             return _mapper.Map<QuestionSetViewModel>(
                 await _questionSetService.Add(_mapper.Map<QuestionSet>(questionSet), ct)
-                );
+            );
         }
 
         [HttpPut]
