@@ -46,7 +46,7 @@ namespace AIS.API.Controllers
         [HttpPost]
         public async Task<IntervieweeViewModel> Post(ChangeIntervieweeViewModel interviewee, CancellationToken ct)
         {
-            await _validator.ValidateAndThrowAsync(interviewee);
+            await _validator.ValidateAndThrowAsync(interviewee, ct);
 
             return _mapper.Map<IntervieweeViewModel>(
                 await _intervieweeService.Add(_mapper.Map<Interviewee>(interviewee), ct)
@@ -56,7 +56,7 @@ namespace AIS.API.Controllers
         [HttpPut]
         public async Task<IntervieweeViewModel> Put(ChangeIntervieweeViewModel interviewee, int id, CancellationToken ct)
         {
-            await _validator.ValidateAndThrowAsync(interviewee);
+            await _validator.ValidateAndThrowAsync(interviewee, ct);
 
             var entity = _mapper.Map<Interviewee>(interviewee);
             entity.Id = id;

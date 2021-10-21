@@ -46,7 +46,7 @@ namespace AIS.API.Controllers
         [HttpPost]
         public async Task<CompanyViewModel> Post(ChangeCompanyViewModel company, CancellationToken ct)
         {
-            await _validator.ValidateAndThrowAsync(company);
+            await _validator.ValidateAndThrowAsync(company, ct);
 
             return _mapper.Map<CompanyViewModel>(
                 await _companyService.Add(_mapper.Map<Company>(company), ct)
@@ -56,7 +56,7 @@ namespace AIS.API.Controllers
         [HttpPut]
         public async Task<CompanyViewModel> Put(ChangeCompanyViewModel company, int id, CancellationToken ct)
         {
-            await _validator.ValidateAndThrowAsync(company);
+            await _validator.ValidateAndThrowAsync(company, ct);
 
             var entity = _mapper.Map<Company>(company);
             entity.Id = id;
