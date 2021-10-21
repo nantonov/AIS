@@ -9,13 +9,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AIS.DAL.Repositories
 {
-    public class IntervieweeRepository : IGenericRepository<IntervieweeEntity>
+    public class IntervieweeRepository : IIntervieweeRepository
     {
         private readonly DatabaseContext _context;
 
         public IntervieweeRepository(DatabaseContext context)
         {
-            this._context = context;
+            _context = context;
         }
 
         public async Task<IntervieweeEntity> Add(IntervieweeEntity entity, CancellationToken ct)

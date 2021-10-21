@@ -23,12 +23,12 @@ namespace AIS.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAutoMapper(typeof(API.Mapper.MappingProfile).Assembly, typeof(BLL.Mapper.MappingProfile).Assembly);
+            services.AddAutoMapper(typeof(Mapper.MappingProfile).Assembly, typeof(BLL.Mapper.MappingProfile).Assembly);
             services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssembly(Assembly.Load("AIS.API")));
 
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-            ); ;
+            );
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AIS.API", Version = "v1" });
