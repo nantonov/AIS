@@ -95,14 +95,12 @@ namespace AIS.API.Tests.Controllers
             // Arrange
             var expected = new[]
             {
-                new EmployeeViewModel
+                new ChangeEmployeeViewModel
                 {
-                    Id = 1,
                     Name = "Boba"
                 },
-                new EmployeeViewModel
+                new ChangeEmployeeViewModel
                 {
-                    Id = 2,
                     Name = "Dida"
                 }
             };
@@ -110,18 +108,16 @@ namespace AIS.API.Tests.Controllers
             {
                 new Employee
                 {
-                    Id = expected[0].Id,
                     Name = expected[0].Name
                 },
                 new Employee
                 {
-                    Id = expected[1].Id,
                     Name = expected[1].Name
                 }
             };
 
             _mockMapper.Setup(map => map.Map<IEnumerable<Employee>>(expected)).Returns(expectedEmployee);
-            _mockMapper.Setup(map => map.Map<IEnumerable<EmployeeViewModel>>(expectedEmployee)).Returns(expected);
+            _mockMapper.Setup(map => map.Map<IEnumerable<ChangeEmployeeViewModel>>(expectedEmployee)).Returns(expected);
             _mockService.Setup(serv => serv.Get(default)).ReturnsAsync(expectedEmployee);
 
             var controller = new EmployeeController(_mockMapper.Object, _mockService.Object, _mockValidator.Object);

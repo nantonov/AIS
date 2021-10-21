@@ -1,4 +1,5 @@
 ﻿using AIS.API.ViewModels.Company;
+using AIS.API.ViewModels.Employee;
 using AIS.API.ViewModels.Interviewee;
 using AIS.BLL.Models;
 using AutoMapper;
@@ -9,10 +10,12 @@ namespace AIS.API.Mapper
     {
         public MappingProfile()
         {
-            CreateMap<Interviewee, IntervieweeViewModel>().ReverseMap();
-            CreateMap<ChangeIntervieweeViewModel, Interviewee>();
-            CreateMap<Company, CompanyViewModel>().ReverseMap();
-            CreateMap<ChangeCompanyViewModel, Company>();
+            CreateMap<Employee, EmployeeViewModel>();
+            CreateMap<ChangeEmployeeViewModel, Employee>().ReverseMap();
+            CreateMap<Interviewee, IntervieweeViewModel>();
+            CreateMap<ChangeIntervieweeViewModel, Interviewee>().ReverseMap();
+            CreateMap<Company, CompanyViewModel>();
+            CreateMap<ChangeCompanyViewModel, Company>().ReverseMap();
         }
     }
 }

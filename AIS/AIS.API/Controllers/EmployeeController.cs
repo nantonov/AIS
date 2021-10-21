@@ -30,9 +30,9 @@ namespace AIS.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<EmployeeViewModel>> GetAll(CancellationToken ct)
+        public async Task<IEnumerable<ChangeEmployeeViewModel>> GetAll(CancellationToken ct)
         {
-            return _mapper.Map<IEnumerable<EmployeeViewModel>>(await _service.Get(ct));
+            return _mapper.Map<IEnumerable<ChangeEmployeeViewModel>>(await _service.Get(ct));
         }
 
         [HttpPost(EndpointConstants.AddEndpoitRoute)]

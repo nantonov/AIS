@@ -6,6 +6,7 @@ using AIS.API.ViewModels.Company;
 using AIS.BLL.Interfaces.Services;
 using AIS.BLL.Models;
 using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AIS.API.Controllers
@@ -16,11 +17,16 @@ namespace AIS.API.Controllers
     {
         private readonly IGenericService<Company> _companyService;
         private readonly IMapper _mapper;
+        private readonly IValidator<ChangeCompanyViewModel> _validator;
 
-        public CompanyController(IGenericService<Company> companyService, IMapper mapper)
+        public CompanyController(
+                        IGenericService<Company> companyService, 
+                        IMapper mapper,
+                        IValidator<ChangeCompanyViewModel> validot)
         {
-            this._companyService = companyService;
-            this._mapper = mapper;
+            _companyService = companyService;
+            _mapper = mapper;
+            _validator = validot;
         }
     
         [HttpGet(EndpointConstants.IdTemplate)]
@@ -31,15 +37,17 @@ namespace AIS.API.Controllers
         }
     
         [HttpGet]
-        public async Task<IEnumerable<CompanyViewModel>> GetCompanies(CancellationToken ct)
+        public async Task<IEnumerable<ChangeCompanyViewModel>> GetCompanies(CancellationToken ct)
         {
             var companies = await _companyService.Get(ct);
-            return _mapper.Map<IEnumerable<CompanyViewModel>>(companies);
+            return _mapper.Map<IEnumerable<ChangeCompanyViewModel>>(companies);
         }
     
         [HttpPost]
         public async Task<CompanyViewModel> Post(ChangeCompanyViewModel company, CancellationToken ct)
         {
+            await _validator.ValidateAndThrowAsync(company);
+
             return _mapper.Map<CompanyViewModel>(
                 await _companyService.Add(_mapper.Map<Company>(company), ct)
                 );
@@ -48,6 +56,8 @@ namespace AIS.API.Controllers
         [HttpPut]
         public async Task<CompanyViewModel> Put(ChangeCompanyViewModel company, int id, CancellationToken ct)
         {
+            await _validator.ValidateAndThrowAsync(company);
+
             var entity = _mapper.Map<Company>(company);
             entity.Id = id;
 

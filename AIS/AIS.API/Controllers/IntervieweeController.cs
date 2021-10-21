@@ -6,6 +6,7 @@ using AIS.API.ViewModels.Interviewee;
 using AIS.BLL.Interfaces.Services;
 using AIS.BLL.Models;
 using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AIS.API.Controllers
@@ -16,10 +17,16 @@ namespace AIS.API.Controllers
     {
         private readonly IGenericService<Interviewee> _intervieweeService;
         private readonly IMapper _mapper;
-        public IntervieweeController(IGenericService<Interviewee> intervieweeService, IMapper mapper)
+        private readonly IValidator<ChangeIntervieweeViewModel> _validator;
+
+        public IntervieweeController(
+                    IGenericService<Interviewee> intervieweeService, 
+                    IMapper mapper, 
+                    IValidator<ChangeIntervieweeViewModel> validator)
         {
-            this._intervieweeService = intervieweeService;
-            this._mapper = mapper;
+            _intervieweeService = intervieweeService;
+            _mapper = mapper;
+            _validator = validator;
         }
     
         [HttpGet(EndpointConstants.IdTemplate)]
@@ -30,15 +37,17 @@ namespace AIS.API.Controllers
         }
     
         [HttpGet]
-        public async Task<IEnumerable<IntervieweeViewModel>> GetInterviewees(CancellationToken ct)
+        public async Task<IEnumerable<ChangeIntervieweeViewModel>> GetInterviewees(CancellationToken ct)
         {
             var interviewees = await _intervieweeService.Get(ct);
-            return _mapper.Map<IEnumerable<IntervieweeViewModel>>(interviewees);
+            return _mapper.Map<IEnumerable<ChangeIntervieweeViewModel>>(interviewees);
         }
     
         [HttpPost]
         public async Task<IntervieweeViewModel> Post(ChangeIntervieweeViewModel interviewee, CancellationToken ct)
         {
+            await _validator.ValidateAndThrowAsync(interviewee);
+
             return _mapper.Map<IntervieweeViewModel>(
                 await _intervieweeService.Add(_mapper.Map<Interviewee>(interviewee), ct)
                 );
@@ -47,6 +56,8 @@ namespace AIS.API.Controllers
         [HttpPut]
         public async Task<IntervieweeViewModel> Put(ChangeIntervieweeViewModel interviewee, int id, CancellationToken ct)
         {
+            await _validator.ValidateAndThrowAsync(interviewee);
+
             var entity = _mapper.Map<Interviewee>(interviewee);
             entity.Id = id;
 
