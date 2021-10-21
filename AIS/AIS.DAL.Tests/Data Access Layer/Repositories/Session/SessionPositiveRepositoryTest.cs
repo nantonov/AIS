@@ -78,7 +78,8 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Session
                 QuestionAreaId = id,
                 StartTime = DateTime.Today
             };
-            var session = await _context.Sessions.AddAsync(sessionEntity);
+            var session = await _repo.Add(sessionEntity, default);
+            Assert.Equal(session.EmployeeId, sessionEntity.EmployeeId);
             Assert.NotNull(session);
             await _context.Database.EnsureDeletedAsync();
         }
