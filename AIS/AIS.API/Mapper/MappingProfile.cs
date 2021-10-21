@@ -10,6 +10,10 @@ namespace AIS.API.Mapper
         {
             CreateMap<Interviewee, IntervieweeViewModel>().ReverseMap();
             CreateMap<Company, CompanyViewModel>().ReverseMap();
+            CreateMap<QuestionArea, QuestionAreaViewModel>().ReverseMap();
+            CreateMap<QuestionSet, QuestionSetViewModel>().ReverseMap();
+            CreateMap<Question, QuestionViewModel>().ReverseMap();
+            CreateMap<TrueAnswer, TrueAnswerViewModel>().ReverseMap();
         }
     }
 }
