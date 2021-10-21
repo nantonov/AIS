@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AIS.API.Infrastructure;
-using AIS.API.ViewModels;
+using AIS.API.ViewModels.Interviewee;
 using AIS.BLL.Interfaces.Services;
 using AIS.BLL.Models;
 using AutoMapper;
@@ -37,7 +37,7 @@ namespace AIS.API.Controllers
         }
     
         [HttpPost]
-        public async Task<IntervieweeViewModel> Post(IntervieweeViewModel interviewee, CancellationToken ct)
+        public async Task<IntervieweeViewModel> Post(ChangeIntervieweeViewModel interviewee, CancellationToken ct)
         {
             return _mapper.Map<IntervieweeViewModel>(
                 await _intervieweeService.Add(_mapper.Map<Interviewee>(interviewee), ct)
@@ -45,11 +45,14 @@ namespace AIS.API.Controllers
         }
     
         [HttpPut]
-        public async Task<IntervieweeViewModel> Put(IntervieweeViewModel interviewee, CancellationToken ct)
+        public async Task<IntervieweeViewModel> Put(ChangeIntervieweeViewModel interviewee, int id, CancellationToken ct)
         {
+            var entity = _mapper.Map<Interviewee>(interviewee);
+            entity.Id = id;
+
             return _mapper.Map<IntervieweeViewModel>(
-                await _intervieweeService.Put(_mapper.Map<Interviewee>(interviewee), ct)
-            );
+                    await _intervieweeService.Put(entity, ct)
+                );
         }
     
         [HttpDelete(EndpointConstants.IdTemplate)]

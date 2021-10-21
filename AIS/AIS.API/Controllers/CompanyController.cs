@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AIS.API.Infrastructure;
-using AIS.API.ViewModels;
+using AIS.API.ViewModels.Company;
 using AIS.BLL.Interfaces.Services;
 using AIS.BLL.Models;
 using AutoMapper;
@@ -38,7 +38,7 @@ namespace AIS.API.Controllers
         }
     
         [HttpPost]
-        public async Task<CompanyViewModel> Post(CompanyViewModel company, CancellationToken ct)
+        public async Task<CompanyViewModel> Post(ChangeCompanyViewModel company, CancellationToken ct)
         {
             return _mapper.Map<CompanyViewModel>(
                 await _companyService.Add(_mapper.Map<Company>(company), ct)
@@ -46,10 +46,13 @@ namespace AIS.API.Controllers
         }
     
         [HttpPut]
-        public async Task<CompanyViewModel> Put(CompanyViewModel company, CancellationToken ct)
+        public async Task<CompanyViewModel> Put(ChangeCompanyViewModel company, int id, CancellationToken ct)
         {
+            var entity = _mapper.Map<Company>(company);
+            entity.Id = id;
+
             return _mapper.Map<CompanyViewModel>(
-                await _companyService.Put(_mapper.Map<Company>(company), ct)
+                await _companyService.Put(entity, ct)
             );
         }
     
