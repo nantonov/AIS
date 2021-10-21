@@ -9,6 +9,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Shouldly;
 using Xunit;
 
 namespace AIS.API.Tests.Controllers
@@ -53,8 +54,8 @@ namespace AIS.API.Tests.Controllers
             var result = await controller.Post(inputEmployeeViewModel, default);
 
             // Assert
-            Assert.Equal(inputEmployeeViewModel.Name, result.Name);
-            Assert.Equal(inputEmployeeViewModel.CompanyId, result.CompanyId);
+            inputEmployeeViewModel.Name.ShouldBeEquivalentTo(result.Name);
+            inputEmployeeViewModel.CompanyId.ShouldBeEquivalentTo(result.CompanyId);
         }
 
         [Fact]
@@ -88,8 +89,8 @@ namespace AIS.API.Tests.Controllers
             var result = await controller.Put(inputEmployeeViewModel, 2, default);
 
             // Assert
-            Assert.Equal(inputEmployeeViewModel.CompanyId, result.CompanyId);
-            Assert.Equal(inputEmployeeViewModel.Name, result.Name);
+            inputEmployeeViewModel.CompanyId.ShouldBeEquivalentTo(result.CompanyId);
+            inputEmployeeViewModel.Name.ShouldBeEquivalentTo(result.Name);
         }
 
         [Fact]
@@ -129,7 +130,7 @@ namespace AIS.API.Tests.Controllers
             var result = await controller.GetInterviewees(default);
 
             // Assert
-            Assert.Equal(expected, result);
+            expected.ShouldBeEquivalentTo(result);
         }
 
         [Fact]

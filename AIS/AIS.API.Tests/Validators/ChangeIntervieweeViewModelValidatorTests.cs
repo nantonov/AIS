@@ -1,6 +1,7 @@
 ﻿using AIS.API.Validators;
 using AIS.API.ViewModels.Company;
 using AIS.API.ViewModels.Interviewee;
+using Shouldly;
 using Xunit;
 
 namespace AIS.API.Tests.Validators
@@ -37,8 +38,8 @@ namespace AIS.API.Tests.Validators
             var result = validator.Validate(model);
 
             // Assert
-            Assert.NotEmpty(result.Errors);
-            Assert.Contains(result.Errors, x => x.PropertyName == nameof(model.Name));
+            result.Errors.ShouldNotBeEmpty();
+            result.Errors.ShouldContain(x => x.PropertyName == nameof(model.Name));
         }
 
         [Fact]
@@ -56,8 +57,8 @@ namespace AIS.API.Tests.Validators
             var result = validator.Validate(model);
 
             // Assert
-            Assert.NotEmpty(result.Errors);
-            Assert.Contains(result.Errors, x => x.PropertyName == nameof(model.CompanyId));
+            result.Errors.ShouldNotBeEmpty();
+            result.Errors.ShouldContain(x => x.PropertyName == nameof(model.CompanyId));
         }
 
         [Fact]
@@ -75,8 +76,8 @@ namespace AIS.API.Tests.Validators
             var result = validator.Validate(model);
 
             // Assert
-            Assert.NotEmpty(result.Errors);
-            Assert.Contains(result.Errors, x => x.PropertyName == nameof(model.AppliesFor));
+            result.Errors.ShouldNotBeEmpty();
+            result.Errors.ShouldContain(x => x.PropertyName == nameof(model.AppliesFor));
         }
 
         [Fact]
@@ -94,8 +95,8 @@ namespace AIS.API.Tests.Validators
             var result = validator.Validate(model);
 
             // Assert
-            Assert.NotEmpty(result.Errors);
-            Assert.Contains(result.Errors, x => x.PropertyName == nameof(model.CompanyId));
+            result.Errors.ShouldNotBeEmpty();
+            result.Errors.ShouldContain(x => x.PropertyName == nameof(model.CompanyId));
         }
 
         [Fact]
@@ -114,8 +115,8 @@ namespace AIS.API.Tests.Validators
             var result = validator.Validate(model);
 
             // Assert
-            Assert.NotEmpty(result.Errors);
-            Assert.Contains(result.Errors, x => x.PropertyName == nameof(model.AppliesFor));
+            result.Errors.ShouldNotBeEmpty();
+            result.Errors.ShouldContain(x => x.PropertyName == nameof(model.AppliesFor));
         }
 
         [Fact]
@@ -134,8 +135,8 @@ namespace AIS.API.Tests.Validators
             var result = validator.Validate(model);
 
             // Assert
-            Assert.NotEmpty(result.Errors);
-            Assert.Contains(result.Errors, x => x.PropertyName == nameof(model.Name));
+            result.Errors.ShouldNotBeEmpty();
+            result.Errors.ShouldContain(x => x.PropertyName == nameof(model.Name));
         }
     }
 }
