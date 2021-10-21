@@ -131,5 +131,26 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
             await _service.Get(default);
             _sessionRepoMock.Verify(x => x.Get(default));
         }
+        
+        [Fact]
+        public async Task  DeleteEmployeeEntity_ValidId_ReturnsNull()
+        {
+            var employeeEntity = new EmployeeEntity()
+            {
+                Id = 5,
+                Name = "Test",
+                CompanyId = 5,
+            };
+            var employee = new Employee()
+            {
+                Id = 5,
+                Name = "Test",
+                CompanyId = 5,
+            };
+            _mapperMock.Setup(x => x.Map<EmployeeEntity>(It.IsAny<Employee>())).Returns(employeeEntity);
+            await _service.Delete(employee, default);
+            _mapperMock.Setup(x => x.Map<Employee>(It.IsAny<EmployeeEntity>())).Returns(employee);
+            _sessionRepoMock.Verify(x => x.Delete(employeeEntity, default), Times.Once);
+        }
     }
 }
