@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AIS.API\AIS.API.csproj" />
+    <ProjectReference Include="..\AIS.BLL.Tests\AIS.BLL.Tests.csproj" />
     <ProjectReference Include="..\AIS.BLL\AIS.BLL.csproj" />
   </ItemGroup>
 

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AIS.DAL.Interfaces.Repositories;
 using Xunit;
 
 namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Session
@@ -13,7 +14,7 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Session
         private readonly DatabaseContext _context = new
         (new DbContextOptionsBuilder<DatabaseContext>().UseInMemoryDatabase(Guid.NewGuid().ToString())
             .Options);
-        private readonly SessionRepository _repo;
+        private readonly ISessionRepository _repo;
 
         public SessionPositiveRepositoryTest()
         {
@@ -44,9 +45,23 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Session
         [Fact]
         public async Task GetSessions_ReturnsSessionList()
         {
+            var id = new Random().Next();
+            var sessionEntity = new SessionEntity()
+            {
+                Id = id,
+                CompanyId = id,
+                EmployeeId = id,
+                IntervieweeId = id,
+                QuestionAreaId = id,
+                StartTime = DateTime.Today
+            };
+            await _context.Sessions.AddAsync(sessionEntity);
+            await _context.SaveChangesAsync();
             var sessions = await _repo.Get(default);
 
             Assert.IsType<List<SessionEntity>>(sessions);
+            Assert.NotEmpty(sessions);
+            Assert.NotNull(sessions);
             await _context.Database.EnsureDeletedAsync();
         }
 

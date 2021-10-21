@@ -1,9 +1,12 @@
 ﻿using AIS.BLL.Interfaces.Services;
 using AIS.BLL.Models;
 using AIS.BLL.Services;
+using AIS.DAL;
 using AIS.DAL.Entities;
 using AIS.DAL.Interfaces.Repositories;
+using AIS.DAL.Repositories;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 using Moq.AutoMock;
 using System;
@@ -17,19 +20,39 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
     {
         private readonly ISessionService _service;
         private readonly Mock<ISessionRepository> _sessionRepoMock = new();
-        private readonly Mock<IMapper> _mapperMock = new();
+        private readonly Mock<IMapper> _mapperMock = new(); private readonly DatabaseContext _context = new
+        (new DbContextOptionsBuilder<DatabaseContext>().UseInMemoryDatabase(Guid.NewGuid().ToString())
+            .Options);
+        private readonly AutoMocker _mocker = new(MockBehavior.Default, DefaultValue.Mock);
+        private readonly ISessionRepository _repo;
+        private readonly IGenericService<Session> _genericService;
 
         public SessionPositiveServiceTest()
         {
+            _genericService = _mocker.Get<IGenericService<Session>>(); 
+                _repo = new SessionRepository(_context);
             _service = new SessionService(_sessionRepoMock.Object, _mapperMock.Object);
         }
         [Fact]
         public async Task GetSessions_ReturnsSessionList()
         {
-            var expected = await _service.Get(default);
+            var id = new Random().Next();
+            var sessionEntity = new SessionEntity()
+            {
+                Id = id,
+                CompanyId = id,
+                EmployeeId = id,
+                IntervieweeId = id,
+                QuestionAreaId = id,
+                StartTime = DateTime.Today
+            };
+            await _context.Sessions.AddAsync(sessionEntity);
+            await _context.SaveChangesAsync();
+            var sessions = await _repo.Get(default);
 
-            Assert.NotNull(expected);
+            Assert.NotNull(sessions);
 
+            await _context.Database.EnsureDeletedAsync();
         }
 
         [Fact]
@@ -46,15 +69,13 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
                 QuestionAreaId = 1
             };
 
-            mocker.Setup<IGenericService<Session>, Task<Session>>(setup => setup.GetById(9, CancellationToken.None)).ReturnsAsync(session);
-
-            var service = mocker.Get<IGenericService<Session>>();
-
+            mocker.Setup<IGenericService<Session>, Task<Session>>(setup => setup.GetById(11, CancellationToken.None))
+                .ReturnsAsync(session);
             // Act
-            var actual = await service?.GetById(9, default);
+            var actual = await _genericService.GetById(session.Id, default);
 
             // Assert
-            Assert.Equal(session, actual);
+            Assert.NotNull(actual);
         }
 
         [Fact]
@@ -104,7 +125,6 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
         [Fact]
         public async Task AddSession_ValidSession_ReturnsSession()
         {
-            var mocker = new AutoMocker(MockBehavior.Default, DefaultValue.Mock);
             var session = new Session()
             {
                 Id = 11,
@@ -115,12 +135,10 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
                 QuestionAreaId = 1
             };
 
-            mocker.Setup<IGenericService<Session>, Task<Session>>(setup => setup.Add(session, CancellationToken.None)).ReturnsAsync(session);
-
-            var service = mocker.Get<IGenericService<Session>>();
+            _mocker.Setup<IGenericService<Session>, Task<Session>>(setup => setup.Add(session, CancellationToken.None)).ReturnsAsync(session);
 
             // Act
-            var actual = await service?.Add(session, default);
+            var actual = await _genericService.Add(session, default);
 
             // Assert
             Assert.Equal(session, actual);
