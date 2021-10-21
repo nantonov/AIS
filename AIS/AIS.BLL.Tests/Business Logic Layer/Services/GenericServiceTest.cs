@@ -45,7 +45,8 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
                     CompanyId = 5,
                 }
             };
-            _mapperMock.Setup(x => x.Map<IEnumerable<EmployeeEntity>>(It.IsAny<IEnumerable<Employee>>())).Returns(employeesEntity);
+            _mapperMock.Setup(x => x.Map<IEnumerable<EmployeeEntity>>(It.IsAny<IEnumerable<Employee>>()))
+                .Returns(employeesEntity);
             _sessionRepoMock.Setup(x => x.Get(default)).ReturnsAsync(new List<EmployeeEntity>());
             _mapperMock.Setup(x => x.Map<IEnumerable<Employee>>(It.IsAny<IEnumerable<Session>>())).Returns(employes);
             var result = await _service.Get(default);
@@ -124,16 +125,17 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
         [Fact]
         public async Task GetSession_ReturnNull()
         {
-            _sessionRepoMock.Setup(x => x.Get(default)).ReturnsAsync(It.IsAny<List<EmployeeEntity>>());
-            _mapperMock.Setup(x => x.Map<List<EmployeeEntity>, List<Employee>>(It.IsAny<List<EmployeeEntity>>()))
+            _sessionRepoMock.Setup(x => x.Get(default)).ReturnsAsync(It.IsAny<IEnumerable<EmployeeEntity>>());
+            _mapperMock.Setup(x =>
+                    x.Map<IEnumerable<EmployeeEntity>, IEnumerable<Employee>>(It.IsAny<IEnumerable<EmployeeEntity>>()))
                 .Returns(new List<Employee>());
 
             await _service.Get(default);
             _sessionRepoMock.Verify(x => x.Get(default));
         }
-        
+
         [Fact]
-        public async Task  DeleteEmployeeEntity_ValidId_ReturnsNull()
+        public async Task DeleteEmployeeEntity_ValidId_ReturnsNull()
         {
             var employeeEntity = new EmployeeEntity()
             {

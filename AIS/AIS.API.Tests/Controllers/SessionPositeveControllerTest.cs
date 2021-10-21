@@ -99,9 +99,11 @@ namespace AIS.API.Tests.Controllers
                 IntervieweeId = 5,
                 QuestionAreaId = 1
             };
+            _mapperMock.Setup(x => x.Map<Session>(It.IsAny<SessionAddViewModel>())).Returns(session);
             _sessionControllerMock.Setup(x => x.Add(session, default)).ReturnsAsync(session);
-            var expected = await _controller.Post(sessionAddViewModel, default);
-            Assert.Null(expected);
+            _mapperMock.Setup(x => x.Map<SessionAddViewModel>(It.IsAny<Session>())).Returns(sessionAddViewModel);
+            await _controller.Post(sessionAddViewModel, default);
+            _sessionControllerMock.Verify(x => x.Add(session, default), Times.Once);
         }
     }
 }
