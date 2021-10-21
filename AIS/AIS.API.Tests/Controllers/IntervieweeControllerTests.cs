@@ -15,9 +15,9 @@ namespace AIS.API.Tests.Controllers
 {
     public class IntervieweeControllerTests
     {
-        private readonly Mock<IValidator<ChangeIntervieweeViewModel>> _mockValidator = new();
-        private readonly Mock<IMapper> _mockMapper = new();
-        private readonly Mock<IGenericService<Interviewee>> _mockService = new();
+        private readonly Mock<IValidator<ChangeIntervieweeViewModel>> _validatorMock = new();
+        private readonly Mock<IMapper> _mapperMock = new();
+        private readonly Mock<IGenericService<Interviewee>> _serviceMock = new();
 
         [Fact]
         public async Task Add_WhenControllerHasData_ShouldReturnValidModel()
@@ -42,12 +42,12 @@ namespace AIS.API.Tests.Controllers
                 AppliesFor = inputEmployeeModel.AppliesFor
             };
 
-            _mockValidator.Setup(valid => valid.Validate(inputEmployeeViewModel));
-            _mockMapper.Setup(map => map.Map<Interviewee>(inputEmployeeViewModel)).Returns(inputEmployeeModel);
-            _mockMapper.Setup(map => map.Map<IntervieweeViewModel>(inputEmployeeModel)).Returns(expectedModel);
-            _mockService.Setup(serv => serv.Add(_mockMapper.Object.Map<Interviewee>(inputEmployeeViewModel), default)).ReturnsAsync(inputEmployeeModel);
+            _validatorMock.Setup(valid => valid.Validate(inputEmployeeViewModel));
+            _mapperMock.Setup(map => map.Map<Interviewee>(inputEmployeeViewModel)).Returns(inputEmployeeModel);
+            _mapperMock.Setup(map => map.Map<IntervieweeViewModel>(inputEmployeeModel)).Returns(expectedModel);
+            _serviceMock.Setup(serv => serv.Add(_mapperMock.Object.Map<Interviewee>(inputEmployeeViewModel), default)).ReturnsAsync(inputEmployeeModel);
 
-            var controller = new IntervieweeController(_mockService.Object, _mockMapper.Object, _mockValidator.Object);
+            var controller = new IntervieweeController(_serviceMock.Object, _mapperMock.Object, _validatorMock.Object);
 
             // Act
             var result = await controller.Post(inputEmployeeViewModel, default);
@@ -77,12 +77,12 @@ namespace AIS.API.Tests.Controllers
                 CompanyId = inputEmployeeModel.CompanyId
             };
 
-            _mockValidator.Setup(valid => valid.Validate(inputEmployeeViewModel));
-            _mockMapper.Setup(map => map.Map<Interviewee>(inputEmployeeViewModel)).Returns(inputEmployeeModel);
-            _mockMapper.Setup(map => map.Map<IntervieweeViewModel>(inputEmployeeModel)).Returns(expectedModel);
-            _mockService.Setup(serv => serv.Put(_mockMapper.Object.Map<Interviewee>(inputEmployeeViewModel), default)).ReturnsAsync(inputEmployeeModel);
+            _validatorMock.Setup(valid => valid.Validate(inputEmployeeViewModel));
+            _mapperMock.Setup(map => map.Map<Interviewee>(inputEmployeeViewModel)).Returns(inputEmployeeModel);
+            _mapperMock.Setup(map => map.Map<IntervieweeViewModel>(inputEmployeeModel)).Returns(expectedModel);
+            _serviceMock.Setup(serv => serv.Put(_mapperMock.Object.Map<Interviewee>(inputEmployeeViewModel), default)).ReturnsAsync(inputEmployeeModel);
 
-            var controller = new IntervieweeController(_mockService.Object, _mockMapper.Object, _mockValidator.Object);
+            var controller = new IntervieweeController(_serviceMock.Object, _mapperMock.Object, _validatorMock.Object);
 
             // Act
             var result = await controller.Put(inputEmployeeViewModel, 2, default);
@@ -119,11 +119,11 @@ namespace AIS.API.Tests.Controllers
                 }
             };
 
-            _mockMapper.Setup(map => map.Map<IEnumerable<Interviewee>>(expected)).Returns(expectedEmployee);
-            _mockMapper.Setup(map => map.Map<IEnumerable<ChangeIntervieweeViewModel>>(expectedEmployee)).Returns(expected);
-            _mockService.Setup(serv => serv.Get(default)).ReturnsAsync(expectedEmployee);
+            _mapperMock.Setup(map => map.Map<IEnumerable<Interviewee>>(expected)).Returns(expectedEmployee);
+            _mapperMock.Setup(map => map.Map<IEnumerable<ChangeIntervieweeViewModel>>(expectedEmployee)).Returns(expected);
+            _serviceMock.Setup(serv => serv.Get(default)).ReturnsAsync(expectedEmployee);
 
-            var controller = new IntervieweeController(_mockService.Object, _mockMapper.Object, _mockValidator.Object);
+            var controller = new IntervieweeController(_serviceMock.Object, _mapperMock.Object, _validatorMock.Object);
 
             // Act
             var result = await controller.GetInterviewees(default);
@@ -147,10 +147,10 @@ namespace AIS.API.Tests.Controllers
                 Name = expected.Name
             };
 
-            _mockMapper.Setup(map => map.Map<Interviewee>(expected)).Returns(expectedEmployee);
-            _mockService.Setup(serv => serv.Delete(expectedEmployee, default));
+            _mapperMock.Setup(map => map.Map<Interviewee>(expected)).Returns(expectedEmployee);
+            _serviceMock.Setup(serv => serv.Delete(expectedEmployee, default));
 
-            var controller = new IntervieweeController(_mockService.Object, _mockMapper.Object, _mockValidator.Object);
+            var controller = new IntervieweeController(_serviceMock.Object, _mapperMock.Object, _validatorMock.Object);
 
             // Act
             Action act = () => controller.Delete(expected.Id, default);

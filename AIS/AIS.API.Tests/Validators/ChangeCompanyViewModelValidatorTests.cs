@@ -1,6 +1,5 @@
 ﻿using AIS.API.Validators;
 using AIS.API.ViewModels.Company;
-using System.Linq;
 using Xunit;
 
 namespace AIS.API.Tests.Validators
@@ -35,8 +34,8 @@ namespace AIS.API.Tests.Validators
             var result = validator.Validate(model);
 
             // Assert
-            Assert.NotEqual(0, result.Errors.Count);
-            Assert.True(result.Errors.Any(x => x.PropertyName == nameof(model.Name)));
+            Assert.NotEmpty(result.Errors);
+            Assert.Contains(result.Errors, x => x.PropertyName == nameof(model.Name));
         }
 
         [Fact]
@@ -53,8 +52,8 @@ namespace AIS.API.Tests.Validators
             var result = validator.Validate(model);
 
             // Assert
-            Assert.NotEqual(0, result.Errors.Count);
-            Assert.True(result.Errors.Any(x => x.PropertyName == nameof(model.Name)));
+            Assert.NotEmpty(result.Errors);
+            Assert.Contains(result.Errors, x => x.PropertyName == nameof(model.Name));
         }
     }
 }

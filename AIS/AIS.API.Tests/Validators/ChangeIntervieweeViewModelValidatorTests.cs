@@ -1,7 +1,6 @@
 ﻿using AIS.API.Validators;
 using AIS.API.ViewModels.Company;
 using AIS.API.ViewModels.Interviewee;
-using System.Linq;
 using Xunit;
 
 namespace AIS.API.Tests.Validators
@@ -38,8 +37,8 @@ namespace AIS.API.Tests.Validators
             var result = validator.Validate(model);
 
             // Assert
-            Assert.NotEqual(0, result.Errors.Count);
-            Assert.True(result.Errors.Any(x => x.PropertyName == nameof(model.Name)));
+            Assert.NotEmpty(result.Errors);
+            Assert.Contains(result.Errors, x => x.PropertyName == nameof(model.Name));
         }
 
         [Fact]
@@ -57,8 +56,8 @@ namespace AIS.API.Tests.Validators
             var result = validator.Validate(model);
 
             // Assert
-            Assert.NotEqual(0, result.Errors.Count);
-            Assert.True(result.Errors.Any(x => x.PropertyName == nameof(model.CompanyId)));
+            Assert.NotEmpty(result.Errors);
+            Assert.Contains(result.Errors, x => x.PropertyName == nameof(model.CompanyId));
         }
 
         [Fact]
@@ -76,8 +75,8 @@ namespace AIS.API.Tests.Validators
             var result = validator.Validate(model);
 
             // Assert
-            Assert.NotEqual(0, result.Errors.Count);
-            Assert.True(result.Errors.Any(x => x.PropertyName == nameof(model.AppliesFor)));
+            Assert.NotEmpty(result.Errors);
+            Assert.Contains(result.Errors, x => x.PropertyName == nameof(model.AppliesFor));
         }
 
         [Fact]
@@ -95,8 +94,8 @@ namespace AIS.API.Tests.Validators
             var result = validator.Validate(model);
 
             // Assert
-            Assert.NotEqual(0, result.Errors.Count);
-            Assert.True(result.Errors.Any(x => x.PropertyName == nameof(model.CompanyId)));
+            Assert.NotEmpty(result.Errors);
+            Assert.Contains(result.Errors, x => x.PropertyName == nameof(model.CompanyId));
         }
 
         [Fact]
@@ -115,8 +114,8 @@ namespace AIS.API.Tests.Validators
             var result = validator.Validate(model);
 
             // Assert
-            Assert.NotEqual(0, result.Errors.Count);
-            Assert.True(result.Errors.Any(x => x.PropertyName == nameof(model.AppliesFor)));
+            Assert.NotEmpty(result.Errors);
+            Assert.Contains(result.Errors, x => x.PropertyName == nameof(model.AppliesFor));
         }
 
         [Fact]
@@ -135,8 +134,8 @@ namespace AIS.API.Tests.Validators
             var result = validator.Validate(model);
 
             // Assert
-            Assert.NotEqual(0, result.Errors.Count);
-            Assert.True(result.Errors.Any(x => x.PropertyName == nameof(model.Name)));
+            Assert.NotEmpty(result.Errors);
+            Assert.Contains(result.Errors, x => x.PropertyName == nameof(model.Name));
         }
     }
 }
