@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace AIS.DAL.MappingConfiguration
 {
-    class IntervieweeMappingProfile : IEntityTypeConfiguration<IntervieweeEntity>
+    public class IntervieweeMappingProfile : IEntityTypeConfiguration<IntervieweeEntity>
     {
         public void Configure(EntityTypeBuilder<IntervieweeEntity> builder)
         {
