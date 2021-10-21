@@ -178,5 +178,34 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
             // Assert
             Assert.Equal(session, actual);
         }
+
+        [Fact]
+        public async Task AddSession_ValidSessionWithOutId_ReturnsSession()
+        {
+            var session = new Session()
+            {
+                StartTime = DateTime.Today,
+                CompanyId = 5,
+                EmployeeId = 5,
+                IntervieweeId = 5,
+                QuestionAreaId = 1
+            };
+            var sessionEntity = new SessionEntity()
+            {
+                StartTime = DateTime.Today,
+                CompanyId = 5,
+                EmployeeId = 5,
+                IntervieweeId = 5,
+                QuestionAreaId = 1
+            };
+            _mapperMock.Setup(x => x.Map<SessionEntity>(It.IsAny<Session>())).Returns(sessionEntity);
+            _sessionRepoMock.Setup(x => x.Add(It.IsAny<SessionEntity>(), default)).ReturnsAsync(sessionEntity);
+            _mapperMock.Setup(x => x.Map<Session>(It.IsAny<SessionEntity>())).Returns(session);
+            // Act
+            var actual = await _service.Add(session, default);
+
+            // Assert
+            Assert.Equal(session.CompanyId, actual.CompanyId);
+        }
     }
 }
