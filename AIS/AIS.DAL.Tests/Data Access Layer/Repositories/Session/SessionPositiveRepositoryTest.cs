@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AIS.DAL.Interfaces.Repositories;
 using Xunit;
 
 namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Session
@@ -14,7 +13,7 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Session
         private readonly DatabaseContext _context = new
         (new DbContextOptionsBuilder<DatabaseContext>().UseInMemoryDatabase(Guid.NewGuid().ToString())
             .Options);
-        private readonly ISessionRepository _repo;
+        private readonly SessionRepository _repo;
 
         public SessionPositiveRepositoryTest()
         {
