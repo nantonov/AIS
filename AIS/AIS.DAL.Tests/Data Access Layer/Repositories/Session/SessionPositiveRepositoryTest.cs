@@ -27,34 +27,10 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Session
 [Fact]
         public async Task GetSession_ValidId_ReturnsSessionById()
         {
-            await using (var context = new DatabaseContext(new DbContextOptionsBuilder<DatabaseContext>().UseInMemoryDatabase(Guid.NewGuid().ToString())
-                .Options))
-            {
-                var sessionEntity = new SessionEntity()
-                {
-                    CompanyId = 5,
-                    EmployeeId = 5,
-                    IntervieweeId = 5,
-                    QuestionAreaId = 1,
-                    StartTime = DateTime.Today
-                };
-               
-               // await _context.SaveChangesAsync();
-    
-               _repo = new SessionRepository(context);
-               var test = await _repo.Add(sessionEntity, default);
-               test.Id = 2;
-               await _context.Sessions.AddAsync(test);
-               await _context.SaveChangesAsync();
-                var items = await _repo.Get(default);
-
-                var sessionEntities = items.ToList();
-                Assert.Equal(1, sessionEntities.Count);
-                Assert.NotNull(sessionEntities);
-            }
+           
 
 
-           /* var id = new Random().Next();
+            var id = new Random().Next();
             var sessionEntity = new SessionEntity()
             {
                 Id = id,
@@ -69,30 +45,57 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Session
             var session = await _repo.GetById(id, default);
             Assert.Equal(id, session.Id);
             Assert.Equal(id, session.CompanyId);
-            await _context.Database.EnsureDeletedAsync();*/
+            await _context.Database.EnsureDeletedAsync();
         }
 
         [Fact]
         public async Task GetSessions_ReturnsSessionList()
         {
-            var id = new Random().Next();
-            var sessionEntity = new SessionEntity()
-            {
-                Id = id,
-                CompanyId = id,
-                EmployeeId = id,
-                IntervieweeId = id,
-                QuestionAreaId = id,
-                StartTime = DateTime.Today
-            };
-            await _context.Sessions.AddAsync(sessionEntity);
-            await _context.SaveChangesAsync();
-            var sessions = await _repo.Get(default);
 
-            Assert.IsType<List<SessionEntity>>(sessions);
-            Assert.NotEmpty(sessions);
-            Assert.NotNull(sessions);
-            await _context.Database.EnsureDeletedAsync();
+            await using (var context = new DatabaseContext(new DbContextOptionsBuilder<DatabaseContext>().UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .Options))
+            {
+                var sessionEntity = new SessionEntity()
+                {
+                    CompanyId = 5,
+                    EmployeeId = 5,
+                    IntervieweeId = 5,
+                    QuestionAreaId = 1,
+                    StartTime = DateTime.Today
+                };
+
+                // await _context.SaveChangesAsync();
+
+                _repo = new SessionRepository(context);
+                var test = await _repo.Add(sessionEntity, default);
+                test.Id = 2;
+                await _context.Sessions.AddAsync(test);
+                await _context.SaveChangesAsync();
+                var items = await _repo.Get(default);
+
+                var sessionEntities = items.ToList();
+                Assert.Equal(1, sessionEntities.Count);
+                Assert.NotNull(sessionEntities);
+            }
+
+            /*  var id = new Random().Next();
+              var sessionEntity = new SessionEntity()
+              {
+                  Id = id,
+                  CompanyId = id,
+                  EmployeeId = id,
+                  IntervieweeId = id,
+                  QuestionAreaId = id,
+                  StartTime = DateTime.Today
+              };
+              await _context.Sessions.AddAsync(sessionEntity);
+              await _context.SaveChangesAsync();
+              var sessions = await _repo.Get(default);
+
+              Assert.IsType<List<SessionEntity>>(sessions);
+              Assert.NotEmpty(sessions);
+              Assert.NotNull(sessions);
+              await _context.Database.EnsureDeletedAsync();*/
         }
 
         [Fact]
