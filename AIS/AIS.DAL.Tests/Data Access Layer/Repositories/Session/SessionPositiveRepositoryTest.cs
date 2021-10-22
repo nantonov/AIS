@@ -122,9 +122,12 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Session
 
             await _context.Sessions.AddAsync(sessionEntity);
             await _context.SaveChangesAsync();
-            var result = await _repo.Delete(sessionEntity, default);
-            await _context.SaveChangesAsync();
-            await _context.Database.EnsureDeletedAsync();
+          //  var result = await _repo.Delete(sessionEntity, default);
+            //await _context.SaveChangesAsync();
+           // await _context.Database.EnsureDeletedAsync();
+            //Assert.True(result);*/
+
+            var result = await _repo.Delete(sessionEntity,default);
             Assert.True(result);
         }
 
