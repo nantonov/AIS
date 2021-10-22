@@ -51,7 +51,7 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
                 }
             };
             _mapperMock.Setup(x => x.Map<IEnumerable<SessionEntity>>(It.IsAny<IEnumerable<Session>>())).Returns(sessionsEntity);
-            _sessionRepoMock.Setup(x => x.Get(default)).ReturnsAsync(new List<SessionEntity>());
+            _sessionRepoMock.Setup(x => x.Get(default)).ReturnsAsync(sessionsEntity);
             _mapperMock.Setup(x => x.Map<IEnumerable<Session>>(It.IsAny<IEnumerable<Session>>())).Returns(sessions);
             var result = await _service.Get(default);
             Assert.NotNull(result);
@@ -87,7 +87,7 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
 
             // Assert
             Assert.NotNull(actual);
-            Assert.Equal(session, actual);
+            Assert.Equal(session.CompanyId, actual.CompanyId);
         }
 
         [Fact]
@@ -145,7 +145,9 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
             _sessionRepoMock.Setup(x => x.Put(sessionEntity, default)).ReturnsAsync(() => sessionEntity);
             _mapperMock.Setup(x => x.Map<Session>(It.IsAny<SessionEntity>())).Returns(session);
             var expected = await _service.Put(session, default);
+            Assert.NotNull(expected);
             Assert.Equal(session, expected);
+            Assert.Equal(session.EmployeeId, expected.EmployeeId);
         }
 
         [Fact]
@@ -205,6 +207,7 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
             var actual = await _service.Add(session, default);
 
             // Assert
+            Assert.Equal(sessionEntity.EmployeeId, actual.EmployeeId);
             Assert.Equal(session.CompanyId, actual.CompanyId);
         }
     }
