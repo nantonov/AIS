@@ -5,12 +5,13 @@ using AIS.BLL.Models;
 using AutoMapper;
 using Moq;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace AIS.API.Tests.Controllers
 {
-   /* public class SessionPositiveControllerTest
+    public class SessionPositiveControllerTest
     {
         private readonly Mock<ISessionService> _sessionControllerMock = new();
         private readonly SessionController _controller;
@@ -23,10 +24,9 @@ namespace AIS.API.Tests.Controllers
         [Fact]
         public async void GetSessions_ReturnsSessionList()
         {
-            _sessionControllerMock.Setup(x => x.Get(default));
-            var allSessions = await _controller.GetSessions(default);
-            Assert.NotNull(allSessions);
-
+            _sessionControllerMock.Setup(x => x.Get( default)).ReturnsAsync(new List<Session>());
+             await _controller.GetSessions(default);
+            _sessionControllerMock.Verify(x => x.Get(default), Times.Once);
         }
 
         [Fact]
@@ -51,8 +51,8 @@ namespace AIS.API.Tests.Controllers
         public async Task DeleteSession_ValidId_ReturnsNull()
         {
             _sessionControllerMock.Setup(x => x.Delete(6, default)).ReturnsAsync(true);
-            var result = await _controller.Delete(6, default);
-            Assert.True(result);
+            await _controller.Delete(6, default);
+            _sessionControllerMock.Verify(x => x.Delete(6,default), Times.Once);
         }
         [Fact]
         public async Task PutSession_ValidSession_ReturnsSession()
@@ -74,8 +74,6 @@ namespace AIS.API.Tests.Controllers
                 QuestionAreaId = 1
             };
             _mapperMock.Setup(x => x.Map<Session>(It.IsAny<SessionUpdateViewModel>())).Returns(sessionEntity);
-            _sessionControllerMock.Setup(x => x.Add(sessionEntity, default)).ReturnsAsync(() => sessionEntity);
-            _mapperMock.Setup(x => x.Map<SessionUpdateViewModel>(It.IsAny<Session>())).Returns(sessionUpdateViewModel);
             _sessionControllerMock.Setup(x => x.Put(sessionEntity, default)).ReturnsAsync(() => sessionEntity);
             await _controller.Put(6,sessionUpdateViewModel,default);
             _sessionControllerMock.Verify(x => x.Put(sessionEntity, default), Times.Once);
@@ -100,10 +98,8 @@ namespace AIS.API.Tests.Controllers
                 QuestionAreaId = 1
             };
             _mapperMock.Setup(x => x.Map<Session>(It.IsAny<SessionAddViewModel>())).Returns(session);
-            _sessionControllerMock.Setup(x => x.Add(session, default)).ReturnsAsync(session);
-            _mapperMock.Setup(x => x.Map<SessionAddViewModel>(It.IsAny<Session>())).Returns(sessionAddViewModel);
             await _controller.Post(sessionAddViewModel, default);
             _sessionControllerMock.Verify(x => x.Add(session, default), Times.Once);
         }
-    }*/
+    }
 }
