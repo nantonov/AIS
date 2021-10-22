@@ -23,7 +23,7 @@ namespace AIS.DAL.Repositories
 
         public async Task<IEnumerable<SessionEntity>> Get(CancellationToken ct)
         {
-            return await _context.Sessions.ToListAsync(ct);
+            return Task.Run(()=> _context.Sessions.ToListAsync(ct)).Result;
         }
 
         public async Task<SessionEntity> GetById(int id, CancellationToken ct)
