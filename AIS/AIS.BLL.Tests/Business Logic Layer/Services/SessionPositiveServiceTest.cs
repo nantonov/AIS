@@ -12,7 +12,7 @@ using Xunit;
 
 namespace AIS.BLL.Tests.Business_Logic_Layer.Services
 {
-   /* public class SessionPositiveServiceTest
+    public class SessionPositiveServiceTest
     {
         private readonly ISessionService _service;
         private readonly Mock<ISessionRepository> _sessionRepoMock = new();
@@ -207,5 +207,5 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
             // Assert
             Assert.Equal(session.CompanyId, actual.CompanyId);
         }
-    }*/
+    }
 }

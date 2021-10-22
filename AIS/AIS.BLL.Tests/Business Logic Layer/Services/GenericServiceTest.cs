@@ -11,7 +11,7 @@ using Xunit;
 
 namespace AIS.BLL.Tests.Business_Logic_Layer.Services
 {
-  /*  public class GenericServiceTest
+    public class GenericServiceTest
     {
         private readonly Mock<IGenericRepository<EmployeeEntity>> _sessionRepoMock = new();
         private readonly IGenericService<Employee> _service;
@@ -154,5 +154,5 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
             _mapperMock.Setup(x => x.Map<Employee>(It.IsAny<EmployeeEntity>())).Returns(employee);
             _sessionRepoMock.Verify(x => x.Delete(employeeEntity, default), Times.Once);
         }
-    }*/
+    }
 }

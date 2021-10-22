@@ -12,7 +12,7 @@ using Xunit;
 
 namespace AIS.BLL.Tests.Business_Logic_Layer.Services
 {
-   /* public class SessionNegativeServiceTest
+    public class SessionNegativeServiceTest
     {
         private readonly ISessionService _service;
         private readonly Mock<ISessionRepository> _sessionRepoMock = new();
@@ -102,5 +102,5 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
             var expected = await _service.Put(session, default);
             Assert.NotEqual(session, expected);
         }
-    }*/
+    }
 }
