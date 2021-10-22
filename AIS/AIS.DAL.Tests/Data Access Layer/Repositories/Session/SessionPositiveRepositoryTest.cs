@@ -3,7 +3,6 @@ using AIS.DAL.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -14,20 +13,17 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Session
         private readonly DatabaseContext _context = new
         (new DbContextOptionsBuilder<DatabaseContext>().UseInMemoryDatabase(Guid.NewGuid().ToString())
             .Options);
-        private SessionRepository _repo;
+        private readonly SessionRepository _repo;
 
         public SessionPositiveRepositoryTest()
         {
             _repo = new SessionRepository(_context);
         }
 
-      
-
-
-[Fact]
+        [Fact]
         public async Task GetSession_ValidId_ReturnsSessionById()
         {
-           
+
 
 
             var id = new Random().Next();
@@ -51,51 +47,24 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Session
         [Fact]
         public async Task GetSessions_ReturnsSessionList()
         {
-
-            await using (var context = new DatabaseContext(new DbContextOptionsBuilder<DatabaseContext>().UseInMemoryDatabase(Guid.NewGuid().ToString())
-                .Options))
+            var id = new Random().Next();
+            var sessionEntity = new SessionEntity()
             {
-                var sessionEntity = new SessionEntity()
-                {
-                    CompanyId = 5,
-                    EmployeeId = 5,
-                    IntervieweeId = 5,
-                    QuestionAreaId = 1,
-                    StartTime = DateTime.Today
-                };
+                Id = id,
+                CompanyId = id,
+                EmployeeId = id,
+                IntervieweeId = id,
+                QuestionAreaId = id,
+                StartTime = DateTime.Today
+            };
+            await _context.Sessions.AddAsync(sessionEntity);
+            await _context.SaveChangesAsync();
+            var sessions = await _repo.Get(default);
 
-                // await _context.SaveChangesAsync();
-
-                _repo = new SessionRepository(context);
-                var test = await _repo.Add(sessionEntity, default);
-                test.Id = 2;
-                await _context.Sessions.AddAsync(test);
-                await _context.SaveChangesAsync();
-                var items = await _repo.Get(default);
-
-                var sessionEntities = items.ToList();
-                Assert.Equal(1, sessionEntities.Count);
-                Assert.NotNull(sessionEntities);
-            }
-
-            /*  var id = new Random().Next();
-              var sessionEntity = new SessionEntity()
-              {
-                  Id = id,
-                  CompanyId = id,
-                  EmployeeId = id,
-                  IntervieweeId = id,
-                  QuestionAreaId = id,
-                  StartTime = DateTime.Today
-              };
-              await _context.Sessions.AddAsync(sessionEntity);
-              await _context.SaveChangesAsync();
-              var sessions = await _repo.Get(default);
-
-              Assert.IsType<List<SessionEntity>>(sessions);
-              Assert.NotEmpty(sessions);
-              Assert.NotNull(sessions);
-              await _context.Database.EnsureDeletedAsync();*/
+            Assert.IsType<List<SessionEntity>>(sessions);
+            Assert.NotEmpty(sessions);
+            Assert.NotNull(sessions);
+            await _context.Database.EnsureDeletedAsync();
         }
 
         [Fact]
@@ -158,10 +127,6 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Session
             await _context.SaveChangesAsync();
             var result = await _repo.Delete(sessionEntity, default);
             await _context.SaveChangesAsync();
-            if (_context.SaveChangesAsync() is null)
-            {
-
-            }
             await _context.Database.EnsureDeletedAsync();
             Assert.True(result);
         }
