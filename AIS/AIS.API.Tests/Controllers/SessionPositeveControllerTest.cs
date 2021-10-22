@@ -10,7 +10,7 @@ using Xunit;
 
 namespace AIS.API.Tests.Controllers
 {
-    public class SessionPositiveControllerTest
+   /* public class SessionPositiveControllerTest
     {
         private readonly Mock<ISessionService> _sessionControllerMock = new();
         private readonly SessionController _controller;
@@ -105,5 +105,5 @@ namespace AIS.API.Tests.Controllers
             await _controller.Post(sessionAddViewModel, default);
             _sessionControllerMock.Verify(x => x.Add(session, default), Times.Once);
         }
-    }
+    }*/
 }
