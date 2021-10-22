@@ -37,10 +37,10 @@ namespace AIS.API.Controllers
         }
     
         [HttpGet]
-        public async Task<IEnumerable<ChangeCompanyViewModel>> GetCompanies(CancellationToken ct)
+        public async Task<IEnumerable<CompanyViewModel>> GetCompanies(CancellationToken ct)
         {
             var companies = await _companyService.Get(ct);
-            return _mapper.Map<IEnumerable<ChangeCompanyViewModel>>(companies);
+            return _mapper.Map<IEnumerable<CompanyViewModel>>(companies);
         }
     
         [HttpPost]

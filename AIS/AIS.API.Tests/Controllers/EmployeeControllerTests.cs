@@ -9,6 +9,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AIS.API.ViewModels.Company;
 using Shouldly;
 using Xunit;
 
@@ -98,10 +99,12 @@ namespace AIS.API.Tests.Controllers
             {
                 new ChangeEmployeeViewModel
                 {
+                    CompanyId = 2,
                     Name = "Boba"
                 },
                 new ChangeEmployeeViewModel
                 {
+                    CompanyId = 1,
                     Name = "Dida"
                 }
             };
@@ -109,16 +112,31 @@ namespace AIS.API.Tests.Controllers
             {
                 new Employee
                 {
+                    CompanyId = expected[0].CompanyId,
                     Name = expected[0].Name
                 },
                 new Employee
                 {
+                    CompanyId = expected[1].CompanyId,
                     Name = expected[1].Name
+                }
+            };
+            var expectedEmployeeViewModel = new[]
+            {
+                new EmployeeViewModel
+                {
+                    Name = expectedEmployee[0].Name,
+                    CompanyId = expectedEmployee[0].CompanyId
+                },
+                new EmployeeViewModel
+                {
+                    Name = expectedEmployee[1].Name,
+                    CompanyId = expectedEmployee[1].CompanyId
                 }
             };
 
             _mapperMock.Setup(map => map.Map<IEnumerable<Employee>>(expected)).Returns(expectedEmployee);
-            _mapperMock.Setup(map => map.Map<IEnumerable<ChangeEmployeeViewModel>>(expectedEmployee)).Returns(expected);
+            _mapperMock.Setup(map => map.Map<IEnumerable<EmployeeViewModel>>(expectedEmployee)).Returns(expectedEmployeeViewModel);
             _serviceMock.Setup(serv => serv.Get(default)).ReturnsAsync(expectedEmployee);
 
             var controller = new EmployeeController(_mapperMock.Object, _serviceMock.Object, _validatorMock.Object);
@@ -127,7 +145,7 @@ namespace AIS.API.Tests.Controllers
             var result = await controller.GetAll(default);
 
             // Assert
-            expected.ShouldBeEquivalentTo(result);
+            expectedEmployeeViewModel.ShouldBeEquivalentTo(result);
         }
 
         [Fact]

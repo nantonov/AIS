@@ -11,11 +11,11 @@ namespace AIS.API.Mapper
         public MappingProfile()
         {
             CreateMap<Employee, EmployeeViewModel>();
-            CreateMap<ChangeEmployeeViewModel, Employee>().ReverseMap();
+            CreateMap<ChangeEmployeeViewModel, Employee>();
             CreateMap<Interviewee, IntervieweeViewModel>();
-            CreateMap<ChangeIntervieweeViewModel, Interviewee>().ReverseMap();
+            CreateMap<ChangeIntervieweeViewModel, Interviewee>();
             CreateMap<Company, CompanyViewModel>();
-            CreateMap<ChangeCompanyViewModel, Company>().ReverseMap();
+            CreateMap<ChangeCompanyViewModel, Company>();
         }
     }
 }
