@@ -21,18 +21,45 @@ namespace AIS.API.Tests.Controllers
         {
             _controller = new SessionController(_sessionServiceMock.Object, _mapperMock.Object);
         }
+
         [Fact]
         public async void GetSessions_ReturnsSessionList()
         {
-            _sessionServiceMock.Setup(x => x.Get( default)).ReturnsAsync(new List<Session>());
-             await _controller.GetSessions(default);
+            IEnumerable<Session> sessionsList = new List<Session>()
+            {
+                new()
+                {
+                    Id = 9,
+                    StartTime = DateTime.Today,
+                    CompanyId = 5,
+                    EmployeeId = 5,
+                    IntervieweeId = 5,
+                    QuestionAreaId = 1
+                }
+            };
+            IEnumerable<SessionViewModel> sessionsListViewModel = new List<SessionViewModel>()
+            {
+                new()
+                {
+                    Id = 9,
+                    StartTime = DateTime.Today,
+                    CompanyId = 5,
+                    EmployeeId = 5,
+                    IntervieweeId = 5,
+                    QuestionAreaId = 1
+                }
+            };
+            _sessionServiceMock.Setup(x => x.Get(default)).ReturnsAsync(sessionsList);
+            _mapperMock.Setup(x => x.Map<IEnumerable<SessionViewModel>>(It.IsAny<IEnumerable<SessionViewModel>>()))
+                .Returns(sessionsListViewModel);
+            var result = await _controller.GetSessions(default);
             _sessionServiceMock.Verify(x => x.Get(default), Times.Once);
+            Assert.Empty(result);
         }
 
         [Fact]
         public async Task GetSession_ValidId_ReturnsSessionById()
         {
-            const int sessionId = 9;
             var expectedSession = new Session
             {
                 Id = 9,
@@ -42,9 +69,20 @@ namespace AIS.API.Tests.Controllers
                 IntervieweeId = 5,
                 QuestionAreaId = 1
             };
-            _sessionServiceMock.Setup(x => x.GetById(sessionId, default)).ReturnsAsync(expectedSession);
-            await _controller.GetSession(9, default);
+            var sessionViewModel = new SessionViewModel
+            {
+                Id = 9,
+                StartTime = DateTime.Today,
+                CompanyId = 5,
+                EmployeeId = 5,
+                IntervieweeId = 5,
+                QuestionAreaId = 1
+            };
+            _sessionServiceMock.Setup(x => x.GetById(9, default)).ReturnsAsync(expectedSession);
+            _mapperMock.Setup(x => x.Map<SessionViewModel>(It.IsAny<Session>())).Returns(sessionViewModel);
+            var result = await _controller.GetSession(9, default);
             _sessionServiceMock.Verify(x => x.GetById(9, default), Times.Once);
+            Assert.Equal(expectedSession.Id,result.Id);
         }
 
         [Fact]
@@ -52,10 +90,50 @@ namespace AIS.API.Tests.Controllers
         {
             _sessionServiceMock.Setup(x => x.Delete(6, default)).ReturnsAsync(true);
             await _controller.Delete(6, default);
-            _sessionServiceMock.Verify(x => x.Delete(6,default), Times.Once);
+            _sessionServiceMock.Verify(x => x.Delete(6, default), Times.Once);
         }
+
         [Fact]
         public async Task PutSession_ValidSession_ReturnsSession()
+        {
+
+            var session = new Session()
+            {
+                Id = 5,
+                StartTime = DateTime.Today,
+                CompanyId = 5,
+                EmployeeId = 5,
+                IntervieweeId = 5,
+                QuestionAreaId = 1
+            };
+            var sessionUpdateEntity = new SessionUpdateViewModel()
+            {
+                StartTime = DateTime.Today,
+                CompanyId = 5,
+                EmployeeId = 5,
+                IntervieweeId = 5,
+                QuestionAreaId = 1
+            };
+            var sessionViewModel = new SessionViewModel()
+            {
+                Id = 5,
+                StartTime = DateTime.Today,
+                CompanyId = 5,
+                EmployeeId = 5,
+                IntervieweeId = 5,
+                QuestionAreaId = 1
+            };
+
+            _mapperMock.Setup(x => x.Map<Session>(It.IsAny<SessionUpdateViewModel>())).Returns(session);
+            _sessionServiceMock.Setup(x => x.Put(session, default)).ReturnsAsync(session);
+            _mapperMock.Setup(x => x.Map<SessionViewModel>(It.IsAny<Session>())).Returns(sessionViewModel);
+            var result = await _controller.Put(5, sessionUpdateEntity, default);
+            _sessionServiceMock.Verify(x => x.Put(session, default), Times.Once);
+            Assert.Equal(sessionViewModel, result);
+        }
+
+        [Fact]
+        public async Task AddSession_ValidSession_ReturnsSession()
         {
             var sessionEntity = new Session()
             {
@@ -63,43 +141,23 @@ namespace AIS.API.Tests.Controllers
                 CompanyId = 5,
                 EmployeeId = 5,
                 IntervieweeId = 5,
-                QuestionAreaId = 1
+                QuestionAreaId = 5
             };
-            var sessionUpdateViewModel = new SessionUpdateViewModel()
+            var sessionViewModel = new SessionViewModel()
             {
                 StartTime = DateTime.Today,
                 CompanyId = 5,
                 EmployeeId = 5,
                 IntervieweeId = 5,
-                QuestionAreaId = 1
+                QuestionAreaId = 5
             };
-            _mapperMock.Setup(x => x.Map<Session>(It.IsAny<SessionUpdateViewModel>())).Returns(sessionEntity);
-            _sessionServiceMock.Setup(x => x.Put(sessionEntity, default)).ReturnsAsync(() => sessionEntity);
-            await _controller.Put(6,sessionUpdateViewModel,default);
-            _sessionServiceMock.Verify(x => x.Put(sessionEntity, default), Times.Once);
-        }
-        [Fact]
-        public async Task AddSession_ValidSession_ReturnsSession()
-        {
-            var session= new Session()
-            {
-                StartTime = DateTime.Today,
-                CompanyId = 5,
-                EmployeeId = 5,
-                IntervieweeId = 5,
-                QuestionAreaId = 1
-            };
-            var sessionAddViewModel = new SessionAddViewModel()
-            {
-                StartTime = DateTime.Today,
-                CompanyId = 5,
-                EmployeeId = 5,
-                IntervieweeId = 5,
-                QuestionAreaId = 1
-            };
-            _mapperMock.Setup(x => x.Map<Session>(It.IsAny<SessionAddViewModel>())).Returns(session);
-            await _controller.Post(sessionAddViewModel, default);
-            _sessionServiceMock.Verify(x => x.Add(session, default), Times.Once);
+            var session = new SessionAddViewModel();
+            _mapperMock.Setup(x => x.Map<Session>(It.IsAny<SessionAddViewModel>())).Returns(sessionEntity);
+            _sessionServiceMock.Setup(x => x.Add(sessionEntity, default)).ReturnsAsync(sessionEntity);
+            _mapperMock.Setup(x => x.Map<SessionViewModel>(It.IsAny<Session>())).Returns(sessionViewModel);
+            var result = await _controller.Post(session, default);
+            _sessionServiceMock.Verify(x => x.Add(sessionEntity, default), Times.Once);
+            Assert.Equal(sessionViewModel,result);
         }
     }
 }
