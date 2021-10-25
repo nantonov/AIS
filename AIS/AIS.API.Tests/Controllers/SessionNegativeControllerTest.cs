@@ -47,7 +47,7 @@ namespace AIS.API.Tests.Controllers
         [Fact]
         public async Task DeleteSession_ValidId_ReturnsNull()
         {
-            _sessionServiceMock.Setup(x => x.Delete(int.MinValue, default));
+            _sessionServiceMock.Setup(x => x.Delete(int.MinValue, default)).ReturnsAsync(false);
             await _controller.Delete(int.MinValue, default);
             _sessionServiceMock.Verify(x => x.Delete(int.MinValue, default), Times.Once);
         }
