@@ -82,13 +82,13 @@ namespace AIS.API.Tests.Controllers
             _mapperMock.Setup(x => x.Map<SessionViewModel>(It.IsAny<Session>())).Returns(sessionViewModel);
             var result = await _controller.GetSession(9, default);
             _sessionServiceMock.Verify(x => x.GetById(9, default), Times.Once);
-            Assert.Equal(expectedSession.Id,result.Id);
+            Assert.Equal(expectedSession.Id, result.Id);
         }
 
         [Fact]
         public async Task DeleteSession_ValidId_ReturnsNull()
         {
-            _sessionServiceMock.Setup(x => x.Delete(6, default)).ReturnsAsync(true);
+            _sessionServiceMock.Setup(x => x.Delete(6, default));
             await _controller.Delete(6, default);
             _sessionServiceMock.Verify(x => x.Delete(6, default), Times.Once);
         }
@@ -157,7 +157,7 @@ namespace AIS.API.Tests.Controllers
             _mapperMock.Setup(x => x.Map<SessionViewModel>(It.IsAny<Session>())).Returns(sessionViewModel);
             var result = await _controller.Post(session, default);
             _sessionServiceMock.Verify(x => x.Add(sessionEntity, default), Times.Once);
-            Assert.Equal(sessionViewModel,result);
+            Assert.Equal(sessionViewModel, result);
         }
     }
 }
