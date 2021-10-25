@@ -1,11 +1,5 @@
-using AIS.API.Mappers;
-using System.Reflection;
-using AIS.API.Mapper;
 using AIS.API.MiddleWare;
-using AIS.API.ViewModels.Employee;
 using AIS.BLL.DI;
-using AIS.BLL.Mappers;
-using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
