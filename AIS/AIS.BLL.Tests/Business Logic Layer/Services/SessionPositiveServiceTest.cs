@@ -112,11 +112,12 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
                 QuestionAreaId = 2
             };
             _mapperMock.Setup(x => x.Map<SessionEntity>(It.IsAny<Session>())).Returns(sessionEntity);
-            _sessionRepoMock.Setup(x => x.Delete(sessionEntity, default)).ReturnsAsync(true);
+            _sessionRepoMock.Setup(x => x.Delete(sessionEntity, default));
             _mapperMock.Setup(x => x.Map<Session>(It.IsAny<Session>())).Returns(session);
             _sessionRepoMock.Setup(x => x.GetById(6, default)).ReturnsAsync(sessionEntity);
-            var result = await _service.Delete(6, default);
-            Assert.True(result);
+            await _service.Delete(6, default);
+            var result = await _service.GetById(6, default);
+            Assert.Null(result);
         }
 
         [Fact]
@@ -142,7 +143,7 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
             };
 
             _mapperMock.Setup(x => x.Map<SessionEntity>(It.IsAny<Session>())).Returns(sessionEntity);
-            _sessionRepoMock.Setup(x => x.Put(sessionEntity, default)).ReturnsAsync(() => sessionEntity);
+            _sessionRepoMock.Setup(x => x.Update(sessionEntity, default)).ReturnsAsync(() => sessionEntity);
             _mapperMock.Setup(x => x.Map<Session>(It.IsAny<SessionEntity>())).Returns(session);
             var expected = await _service.Put(session, default);
             Assert.NotNull(expected);

@@ -12,6 +12,5 @@ namespace AIS.API.Mapper
             CreateMap<SessionAddViewModel, Session>().ReverseMap();
             CreateMap<SessionUpdateViewModel, Session>().ReverseMap();
         }
-
     }
 }

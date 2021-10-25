@@ -84,7 +84,7 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Session
         }
 
         [Fact]
-        public async Task PutSession_ValidSession_ReturnsSession()
+        public async Task PutSession_ValidSessionEntity_ReturnsSession()
         {
             var id = new Random().Next();
             var sessionEntity = new SessionEntity()
@@ -100,12 +100,35 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Session
             await _context.Sessions.AddAsync(sessionEntity);
             await _context.SaveChangesAsync();
 
-            var session = await _repo.Put(sessionEntity, default);
+            var session = await _repo.Update(sessionEntity, default);
             Assert.Equal(id, session.Id);
             Assert.Equal(id, session.CompanyId);
 
             await _context.Database.EnsureDeletedAsync();
         }
+        [Fact]
+        public async Task DeleteSession_ValidSessionEntity_ReturnsNull()
+        {
+            var id = new Random().Next();
+            var sessionEntity = new SessionEntity()
+            {
+                Id = id,
+                CompanyId = id,
+                EmployeeId = id,
+                IntervieweeId = id,
+                QuestionAreaId = id,
+                StartTime = DateTime.Today
+            };
+
+            await _context.Sessions.AddAsync(sessionEntity);
+            await _context.SaveChangesAsync();
+            await _repo.Delete(sessionEntity, default);
+            await _context.SaveChangesAsync();
+            var result = await _repo.GetById(id, default);
+            await _context.Database.EnsureDeletedAsync();
+            Assert.Null(result);
+        }
+
         [Fact]
         public async Task DeleteSession_ValidId_ReturnsNull()
         {
@@ -122,10 +145,11 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Session
 
             await _context.Sessions.AddAsync(sessionEntity);
             await _context.SaveChangesAsync();
-            var result = await _repo.Delete(sessionEntity, default);
+            await _repo.Delete(id, default);
             await _context.SaveChangesAsync();
+            var result = await _repo.GetById(id, default);
             await _context.Database.EnsureDeletedAsync();
-            Assert.True(result);
+            Assert.Null(result);
         }
 
         [Fact]

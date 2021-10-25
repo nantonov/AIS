@@ -15,7 +15,6 @@ namespace AIS.BLL.DI
             services.AddScoped(typeof(IGenericService<Employee>), typeof(GenericService<Employee, EmployeeEntity>));
             services.AddScoped(typeof(IGenericService<Company>), typeof(GenericService<Company, CompanyEntity>));
             services.AddScoped<IGenericService<Interviewee>, IntervieweeService>();
-            services.AddScoped(typeof(IGenericService<Session>), typeof(GenericService<Session, SessionEntity>));
             services.AddScoped<ISessionService, SessionService>();
             services.AddDataAccess(config);
         }

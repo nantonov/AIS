@@ -15,10 +15,10 @@ namespace AIS.DAL.DI
             services.AddScoped<IGenericRepository<IntervieweeEntity>, IntervieweeRepository>();
             services.AddScoped<ISessionRepository, SessionRepository>();
             services.AddDbContext<DatabaseContext>(op =>
-                {
-                    op.UseSqlServer(config.GetConnectionString("DefaultConnection"));
-                }
-            );
+            {
+                op.UseSqlServer(config.GetConnectionString("DefaultConnection"));
+            }
+        );
         }
     }
 }

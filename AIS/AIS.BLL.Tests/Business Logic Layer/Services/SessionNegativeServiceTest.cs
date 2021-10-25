@@ -21,11 +21,10 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
         public SessionNegativeServiceTest()
         {
             _service = new SessionService(_sessionRepoMock.Object, _mapperMock.Object);
-
         }
 
         [Fact]
-        public async Task DeleteSession_NotValidId_ReturnsFalse()
+        public async Task DeleteSession_NotValidId_ReturnsSession()
         {
             var sessionEntity = new SessionEntity()
             {
@@ -46,10 +45,11 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
                 QuestionAreaId = 2
             };
             _mapperMock.Setup(x => x.Map<SessionEntity>(It.IsAny<Session>())).Returns(sessionEntity);
-            _sessionRepoMock.Setup(x => x.Delete(sessionEntity, default)).ReturnsAsync(true);
+            _sessionRepoMock.Setup(x => x.Delete(sessionEntity, default));
             _mapperMock.Setup(x => x.Map<Session>(It.IsAny<Session>())).Returns(session);
-            var result = await _service.Delete(int.MaxValue, default);
-            Assert.False(result);
+            await _service.Delete(int.MaxValue, default);
+            var result = await _service.GetById(6, default);
+            Assert.NotNull(result);
         }
 
         [Fact]
@@ -116,7 +116,7 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
             };
 
             _mapperMock.Setup(x => x.Map<SessionEntity>(It.IsAny<Session>())).Returns(sessionEntity);
-            _sessionRepoMock.Setup(x => x.Put(sessionEntity, default)).ReturnsAsync(() => sessionEntity);
+            _sessionRepoMock.Setup(x => x.Update(sessionEntity, default)).ReturnsAsync(() => sessionEntity);
             _mapperMock.Setup(x => x.Map<Session>(It.IsAny<SessionEntity>())).Returns(session);
             var expected = await _service.Put(session, default);
             Assert.NotEqual(sessionEntity.Id, expected.Id);
@@ -139,6 +139,5 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
             Assert.Equal(0, actual.CompanyId);
             Assert.Null(actual.Employee);
         }
-
     }
 }
