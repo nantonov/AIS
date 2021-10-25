@@ -1,4 +1,6 @@
-﻿namespace AIS.API.ViewModels
+﻿using AIS.API.ViewModels.Company;
+
+namespace AIS.API.ViewModels.Interviewee
 {
     public class IntervieweeViewModel
     {

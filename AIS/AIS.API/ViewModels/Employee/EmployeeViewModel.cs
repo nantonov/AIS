@@ -1,4 +1,6 @@
-﻿namespace AIS.API.ViewModels.Employee
+﻿using AIS.API.ViewModels.Company;
+
+namespace AIS.API.ViewModels.Employee
 {
     public class EmployeeViewModel
     {
