@@ -2,10 +2,11 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AIS.API.Infrastructure;
-using AIS.API.ViewModels;
+using AIS.API.ViewModels.Company;
 using AIS.BLL.Interfaces.Services;
 using AIS.BLL.Models;
 using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AIS.API.Controllers
@@ -16,11 +17,16 @@ namespace AIS.API.Controllers
     {
         private readonly IGenericService<Company> _companyService;
         private readonly IMapper _mapper;
+        private readonly IValidator<ChangeCompanyViewModel> _validator;
 
-        public CompanyController(IGenericService<Company> companyService, IMapper mapper)
+        public CompanyController(
+                        IGenericService<Company> companyService, 
+                        IMapper mapper,
+                        IValidator<ChangeCompanyViewModel> validot)
         {
-            this._companyService = companyService;
-            this._mapper = mapper;
+            _companyService = companyService;
+            _mapper = mapper;
+            _validator = validot;
         }
     
         [HttpGet(EndpointConstants.IdTemplate)]
@@ -38,18 +44,25 @@ namespace AIS.API.Controllers
         }
     
         [HttpPost]
-        public async Task<CompanyViewModel> Post(CompanyViewModel company, CancellationToken ct)
+        public async Task<CompanyViewModel> Post(ChangeCompanyViewModel company, CancellationToken ct)
         {
+            await _validator.ValidateAndThrowAsync(company, ct);
+
             return _mapper.Map<CompanyViewModel>(
                 await _companyService.Add(_mapper.Map<Company>(company), ct)
                 );
         }
     
         [HttpPut]
-        public async Task<CompanyViewModel> Put(CompanyViewModel company, CancellationToken ct)
+        public async Task<CompanyViewModel> Put(ChangeCompanyViewModel company, int id, CancellationToken ct)
         {
+            await _validator.ValidateAndThrowAsync(company, ct);
+
+            var entity = _mapper.Map<Company>(company);
+            entity.Id = id;
+
             return _mapper.Map<CompanyViewModel>(
-                await _companyService.Put(_mapper.Map<Company>(company), ct)
+                await _companyService.Put(entity, ct)
             );
         }
     
