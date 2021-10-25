@@ -43,5 +43,42 @@ namespace AIS.DAL.Tests
             await employee.ShouldNotBeNull();
             employee.Result.Name.ShouldBeEquivalentTo("asd");
         }
+
+        [Fact]
+        public async Task GetInterviewee_ReturnUser()
+        {
+            var options = new DbContextOptionsBuilder<DatabaseContext>()
+                .UseInMemoryDatabase(databaseName: "EmployeeDataBase")
+                .Options;
+
+            var context = new DatabaseContext(options);
+
+            using (var add = new DatabaseContext(options))
+            {
+                add.Interviewees.Add(new IntervieweeEntity
+                {
+                    Id = 12,
+                    CompanyId = 2,
+                    Name = "asd",
+                    AppliesFor = "qwe"
+                });
+
+                add.Interviewees.Add(new IntervieweeEntity
+                {
+                    Id = 15,
+                    CompanyId = 3,
+                    Name = "dsa",
+                    AppliesFor = "ewq"
+                });
+
+                await add.SaveChangesAsync();
+            }
+
+            var repository = new IntervieweeRepository(context);
+            var employee = repository.GetById(12, default);
+
+            await employee.ShouldNotBeNull();
+            employee.Result.Name.ShouldBeEquivalentTo("asd");
+        }
     }
 }
