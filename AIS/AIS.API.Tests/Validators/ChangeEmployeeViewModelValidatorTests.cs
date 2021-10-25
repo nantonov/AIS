@@ -1,11 +1,11 @@
-﻿using System.Linq;
-using AIS.API.Validators;
+﻿using AIS.API.Validators;
 using AIS.API.ViewModels.Employee;
+using Shouldly;
 using Xunit;
 
 namespace AIS.API.Tests.Validators
 {
-    public class ChangeChangeEmployeeViewModelValidatorTests
+    public class ChangeEmployeeViewModelValidatorTests
     {
         [Fact]
         public void Validate_ValidModel_ReturnsTrue()
@@ -22,7 +22,7 @@ namespace AIS.API.Tests.Validators
             var result = validator.Validate(model);
 
             // Assert
-            Assert.True(result.IsValid);
+            result.IsValid.ShouldBeTrue();
         }
 
         [Fact]
@@ -41,8 +41,8 @@ namespace AIS.API.Tests.Validators
             var result = validator.Validate(model);
 
             // Assert
-            Assert.NotEqual(0, result.Errors.Count);
-            Assert.True(result.Errors.Any(x => x.PropertyName == nameof(model.Name)));
+            result.Errors.ShouldNotBeEmpty();
+            result.Errors.ShouldContain(x => x.PropertyName == nameof(model.Name));
         }
 
         [Fact]
@@ -59,8 +59,8 @@ namespace AIS.API.Tests.Validators
             var result = validator.Validate(model);
 
             // Assert
-            Assert.NotEqual(0, result.Errors.Count);
-            Assert.True(result.Errors.Any(x => x.PropertyName == nameof(model.CompanyId)));
+            result.Errors.ShouldNotBeEmpty();
+            result.Errors.ShouldContain(x => x.PropertyName == nameof(model.CompanyId));
         }
 
         [Fact]
@@ -78,8 +78,8 @@ namespace AIS.API.Tests.Validators
             var result = validator.Validate(model);
 
             // Assert
-            Assert.NotEqual(0, result.Errors.Count);
-            Assert.True(result.Errors.Any(x => x.PropertyName == nameof(model.CompanyId)));
+            result.Errors.ShouldNotBeEmpty();
+            result.Errors.ShouldContain(x => x.PropertyName == nameof(model.CompanyId));
         }
 
         [Fact]
@@ -97,8 +97,8 @@ namespace AIS.API.Tests.Validators
             var result = validator.Validate(model);
 
             // Assert
-            Assert.NotEqual(0, result.Errors.Count);
-            Assert.True(result.Errors.Any(x => x.PropertyName == nameof(model.Name)));
+            result.Errors.ShouldNotBeEmpty();
+            result.Errors.ShouldContain(x => x.PropertyName == nameof(model.Name));
         }
     }
 }
