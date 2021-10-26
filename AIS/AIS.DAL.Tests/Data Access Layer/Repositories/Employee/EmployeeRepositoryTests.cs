@@ -3,6 +3,7 @@ using AIS.DAL.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -31,10 +32,16 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Employee
                 CompanyId = 2,
                 Name = "asd"
             };
+            var company = new CompanyEntity
+            {
+                Id = 2,
+                Name = "dsa"
+            };
 
             using (_context = new(_options))
             {
                 _context.Employees.Add(model);
+                _context.Companies.Add(company);
 
                 await _context.SaveChangesAsync();
 
@@ -88,9 +95,16 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Employee
                 Name = "asd"
             };
 
+            var ct = new CancellationToken();
+
             using (_context = new(_options))
             {
-                var employee = await _repository.Add(model, default);
+                var employee = await _repository.Add(model, ct);
+
+                if (ct.IsCancellationRequested)
+                {
+                    1.ShouldBe(9);
+                }
 
                 employee.ShouldNotBeNull();
                 employee.ShouldBeEquivalentTo(model);
@@ -242,7 +256,15 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Employee
         {
             var model = (EmployeeEntity)null;
 
-            await _repository.Add(model, default).ShouldThrowAsync(typeof(ArgumentNullException));
+            var ct = new CancellationToken();
+            var result = _repository.Add(model, ct);
+
+            if (ct.IsCancellationRequested)
+            {
+                1.ShouldBe(9);
+            }
+
+            await result.ShouldThrowAsync(typeof(ArgumentNullException));
         }
 
         [Fact]

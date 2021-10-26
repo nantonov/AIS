@@ -31,10 +31,16 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Interviewee
                 CompanyId = 2,
                 Name = "asd"
             };
+            var company = new CompanyEntity
+            {
+                Id = 2,
+                Name = "das"
+            };
 
             using (_context = new(_options))
             {
                 _context.Interviewees.Add(model);
+                _context.Companies.Add(company);
 
                 await _context.SaveChangesAsync();
 
@@ -205,13 +211,19 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Interviewee
             var model = new IntervieweeEntity
             {
                 Id = 9,
-                CompanyId = 2,
+                CompanyId = 21,
                 Name = "asd"
+            };
+            var company = new CompanyEntity
+            {
+                Id = 21,
+                Name = "dsa"
             };
 
             using (_context = new(_options))
             {
                 _context.Interviewees.Add(model);
+                _context.Companies.Add(company);
 
                 await _context.SaveChangesAsync();
 

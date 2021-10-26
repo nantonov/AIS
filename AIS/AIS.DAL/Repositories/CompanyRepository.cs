@@ -9,60 +9,30 @@ using System.Threading.Tasks;
 
 namespace AIS.DAL.Repositories
 {
-    public class CompanyRepository : ICompanyRepository
+    public class CompanyRepository : GenericRepository<CompanyEntity>, ICompanyRepository
     {
-        private readonly DatabaseContext _context;
 
-        public CompanyRepository(DatabaseContext context)
+        public CompanyRepository(DatabaseContext context) : base(context)
         {
-            _context = context;
         }
-
-        public async Task<CompanyEntity> Add(CompanyEntity entity, CancellationToken ct)
-        {
-            await 
-                _context.Companies.AddAsync(entity, ct);
-            await 
-                _context.SaveChangesAsync(ct);
-            return entity;
-        }
-
+        
         public async Task<IEnumerable<CompanyEntity>> Get(CancellationToken ct)
         {
-            var result = await 
-                _context.Companies.Include(x => x.Employees).Include(x => x.Interviewees).ToListAsync(ct);
+            var result = await _context.Companies.Include(x => x.Employees).Include(x => x.Interviewees).ToListAsync(ct);
 
             return result;
         }
 
         public IEnumerable<CompanyEntity> Get(Func<CompanyEntity, bool> predicate, CancellationToken ct)
         {
-            return _context.Companies.AsNoTracking().Include(x => x.Employees).Include(x => x.Interviewees).AsNoTracking().Where(predicate).ToList();
+            return _context.Companies.AsNoTracking().Include(x => x.Employees).Include(x => x.Interviewees).Where(predicate).ToList();
         }
 
         public async Task<CompanyEntity> GetById(int id, CancellationToken ct)
         {
-            return await _context.Companies.FindAsync(new object[] { id }, ct);
-        }
-
-        public async Task<CompanyEntity> Update(CompanyEntity entity, CancellationToken ct)
-        {
-            _context.Entry(entity).State = EntityState.Modified;
-            await _context.SaveChangesAsync(ct);
+            var entity = await _context.Companies.AsNoTracking().Include(x => x.Employees).Include(x => x.Interviewees).FirstOrDefaultAsync(x => x.Id == id, ct);
+            
             return entity;
-        }
-
-        public async Task Delete(CompanyEntity entity, CancellationToken ct)
-        {
-            _context.Companies.Remove(entity);
-            await _context.SaveChangesAsync(ct);
-        }
-
-        public async Task Delete(int id, CancellationToken ct)
-        {
-            var entity = await _context.Companies.FindAsync(new object[] { id }, ct);
-            _context.Companies.Remove(entity);
-            await _context.SaveChangesAsync(ct);
         }
     }
 }

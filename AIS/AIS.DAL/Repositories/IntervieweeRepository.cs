@@ -9,22 +9,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AIS.DAL.Repositories
 {
-    public class IntervieweeRepository : IIntervieweeRepository
+    public class IntervieweeRepository : GenericRepository<IntervieweeEntity>, IIntervieweeRepository
     {
-        private readonly DatabaseContext _context;
-
-        public IntervieweeRepository(DatabaseContext context)
+        public IntervieweeRepository(DatabaseContext context) : base(context)
         {
-            _context = context;
         }
-
-        public async Task<IntervieweeEntity> Add(IntervieweeEntity entity, CancellationToken ct)
-        {
-            await _context.Interviewees.AddAsync(entity, ct);
-            await _context.SaveChangesAsync(ct);
-            return entity;
-        }
-
+        
         public async Task<IEnumerable<IntervieweeEntity>> Get(CancellationToken ct)
         {
             return await _context.Interviewees.Include(x => x.Company).ToListAsync(ct);
@@ -37,27 +27,9 @@ namespace AIS.DAL.Repositories
 
         public async Task<IntervieweeEntity> GetById(int id, CancellationToken ct)
         {
-            return await _context.Interviewees.FindAsync(new object[] {id}, ct);
-        }
+            var entity = await _context.Interviewees.Include(x => x.Company).FirstOrDefaultAsync(x => x.Id == id, ct);
 
-        public async Task<IntervieweeEntity> Update(IntervieweeEntity entity, CancellationToken ct)
-        {
-            _context.Entry(entity).State = EntityState.Modified;
-            await _context.SaveChangesAsync(ct);
             return entity;
-        }
-
-        public async Task Delete(IntervieweeEntity entity, CancellationToken ct)
-        {
-            _context.Interviewees.Remove(entity);
-            await _context.SaveChangesAsync(ct);
-        }
-
-        public async Task Delete(int id, CancellationToken ct)
-        {
-            var entity = await _context.Interviewees.FindAsync(new object[] { id }, ct);
-            _context.Interviewees.Remove(entity);
-            await _context.SaveChangesAsync(ct);
         }
     }
 }

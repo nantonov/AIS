@@ -3,6 +3,7 @@ using AIS.DAL.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -28,7 +29,24 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Company
             var model = new CompanyEntity
             {
                 Id = 8,
-                Name = "asd"
+                Name = "asd",
+                Employees = new HashSet<EmployeeEntity>
+                {
+                    new EmployeeEntity
+                    {
+                        Id = 3,
+                        Name = "asd",
+                        CompanyId = 8
+                    }
+                },
+                Interviewees = new HashSet<IntervieweeEntity>
+                {
+                    new IntervieweeEntity
+                    {
+                        Id = 2,
+                        Name = "asd"
+                    }
+                }
             };
 
             using (_context = new(_options))
