@@ -4,18 +4,19 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Shouldly;
 using Xunit;
 
-namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Session
+namespace AIS.DAL.Tests.Repositories
 {
-    public class SessionPositiveRepositoryTest
+    public class SessionRepositoryTest
     {
         private readonly DatabaseContext _context = new
         (new DbContextOptionsBuilder<DatabaseContext>().UseInMemoryDatabase(Guid.NewGuid().ToString())
             .Options);
         private readonly SessionRepository _repo;
 
-        public SessionPositiveRepositoryTest()
+        public SessionRepositoryTest()
         {
             _repo = new SessionRepository(_context);
         }
@@ -38,6 +39,8 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Session
             var session = await _repo.GetById(id, default);
             Assert.Equal(id, session.Id);
             Assert.Equal(id, session.CompanyId);
+            Assert.Equal(id, session.IntervieweeId);
+            Assert.Equal(id, session.QuestionAreaId);
             await _context.Database.EnsureDeletedAsync();
         }
 
@@ -70,7 +73,6 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Session
             var id = new Random().Next();
             var sessionEntity = new SessionEntity()
             {
-                Id = id,
                 CompanyId = id,
                 EmployeeId = id,
                 IntervieweeId = id,
@@ -80,6 +82,14 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Session
             var session = await _repo.Add(sessionEntity, default);
             Assert.Equal(session.EmployeeId, sessionEntity.EmployeeId);
             Assert.NotNull(session);
+            await _context.Database.EnsureDeletedAsync();
+        }
+
+        [Fact]
+        public async Task AddSession_InvalidSession_ThrowException()
+        {
+            await _repo.Add(null, default).ShouldThrowAsync(typeof(ArgumentNullException));
+
             await _context.Database.EnsureDeletedAsync();
         }
 
@@ -96,13 +106,24 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Session
                 QuestionAreaId = id,
                 StartTime = DateTime.Today
             };
+            var updateEntity = new SessionEntity()
+            {
+                Id = id,
+                CompanyId = 5,
+                EmployeeId = 5,
+                IntervieweeId = 5,
+                QuestionAreaId = 5,
+                StartTime = DateTime.Today
+            };
 
             await _context.Sessions.AddAsync(sessionEntity);
             await _context.SaveChangesAsync();
-
-            var session = await _repo.Update(sessionEntity, default);
+            _context.Entry(sessionEntity).State = EntityState.Detached;
+            var session = await _repo.Update(updateEntity, default);
             Assert.Equal(id, session.Id);
-            Assert.Equal(id, session.CompanyId);
+            Assert.Equal(updateEntity.CompanyId, session.CompanyId);
+            Assert.Equal(updateEntity.IntervieweeId, session.IntervieweeId);
+            Assert.Equal(updateEntity.QuestionAreaId, session.QuestionAreaId);
 
             await _context.Database.EnsureDeletedAsync();
         }
@@ -122,11 +143,8 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Session
 
             await _context.Sessions.AddAsync(sessionEntity);
             await _context.SaveChangesAsync();
-            await _repo.Delete(sessionEntity, default);
-            await _context.SaveChangesAsync();
-            var result = await _repo.GetById(id, default);
+            await _repo.Delete(sessionEntity, default).ShouldNotThrowAsync();
             await _context.Database.EnsureDeletedAsync();
-            Assert.Null(result);
         }
 
         [Fact]
@@ -145,12 +163,24 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Session
 
             await _context.Sessions.AddAsync(sessionEntity);
             await _context.SaveChangesAsync();
-            await _repo.Delete(id, default);
-            await _context.SaveChangesAsync();
-            var result = await _repo.GetById(id, default);
+            await _repo.Delete(id, default).ShouldNotThrowAsync();
             await _context.Database.EnsureDeletedAsync();
-            Assert.Null(result);
         }
+
+        [Fact]
+        public async Task DeleteSession_InvalidSession_ThrowsException()
+        {
+            await _repo.Delete(null, default).ShouldThrowAsync(typeof(ArgumentNullException));
+            await _context.Database.EnsureDeletedAsync();
+        }
+
+        [Fact]
+        public async Task DeleteSession_InvalidId_ThrowsException()
+        {
+            await _repo.Delete(int.MaxValue, default).ShouldThrowAsync(typeof(ArgumentNullException));
+            await _context.Database.EnsureDeletedAsync();
+        }
+
 
         [Fact]
         public async Task SessionExists_ValidId_ReturnsTrue()

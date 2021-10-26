@@ -10,15 +10,15 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace AIS.BLL.Tests.Business_Logic_Layer.Services
+namespace AIS.BLL.Tests.Services
 {
-    public class SessionPositiveServiceTests
+    public class SessionServiceTests
     {
         private readonly ISessionService _service;
         private readonly Mock<ISessionRepository> _sessionRepoMock = new();
         private readonly Mock<IMapper> _mapperMock = new();
 
-        public SessionPositiveServiceTests()
+        public SessionServiceTests()
         {
             _service = new SessionService(_sessionRepoMock.Object, _mapperMock.Object);
         }
