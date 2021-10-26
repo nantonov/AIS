@@ -15,8 +15,13 @@ namespace AIS.DAL.Repositories
 
         public GenericRepository(DatabaseContext context)
         {
-            this._context = context;
-            this._dbSet = _context.Set<TEntity>();
+            _context = context;
+            _dbSet = _context.Set<TEntity>();
+        }
+
+        public async Task<IEnumerable<TEntity>> GetIncluded(CancellationToken ct)
+        {
+            return await Query(true).AsNoTracking().ToListAsync(ct);
         }
 
         public async Task<IEnumerable<TEntity>> Get(CancellationToken ct)
@@ -58,6 +63,22 @@ namespace AIS.DAL.Repositories
             await _dbSet.AddAsync(entity, ct);
             await _context.SaveChangesAsync(ct);
             return entity;
+        }
+
+        protected virtual IQueryable<TEntity> Query(bool eager = false)
+        {
+            var query = _dbSet.AsQueryable();
+            if (eager)
+            {
+                var navigation = _context.Model.FindEntityType(typeof(TEntity))
+                    .GetDerivedTypesInclusive()
+                    .SelectMany(type => type.GetNavigations())
+                    .Distinct();
+
+                foreach (var property in navigation)
+                    query = query.Include(property.Name).AsSplitQuery();
+            }
+            return query;
         }
     }
 }

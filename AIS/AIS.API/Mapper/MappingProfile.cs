@@ -1,4 +1,5 @@
-﻿using AIS.API.ViewModels.Company;
+﻿using AIS.API.ViewModels;
+using AIS.API.ViewModels.Company;
 using AIS.API.ViewModels.Employee;
 using AIS.API.ViewModels.Interviewee;
 using AIS.BLL.Models;

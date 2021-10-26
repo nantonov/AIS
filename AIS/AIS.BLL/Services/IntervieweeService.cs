@@ -17,8 +17,8 @@ namespace AIS.BLL.Services
 
         public IntervieweeService(IGenericRepository<IntervieweeEntity> repo, IMapper mapper)
         {
-            this._repo = repo;
-            this._mapper = mapper;
+            _repo = repo;
+            _mapper = mapper;
         }
 
         public async Task<Interviewee> Add(Interviewee entity, CancellationToken ct)
@@ -31,7 +31,7 @@ namespace AIS.BLL.Services
         public async Task<IEnumerable<Interviewee>> Get(CancellationToken ct)
         {
             return _mapper.Map<IEnumerable<Interviewee>>(
-                await _repo.Get(ct)
+                await _repo.GetIncluded(ct)
             );
         }
 

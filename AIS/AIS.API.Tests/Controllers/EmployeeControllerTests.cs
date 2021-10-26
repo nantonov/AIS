@@ -9,17 +9,15 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AIS.API.ViewModels.Company;
-using Shouldly;
 using Xunit;
 
 namespace AIS.API.Tests.Controllers
 {
     public class EmployeeControllerTests
     {
-        private readonly Mock<IValidator<ChangeEmployeeViewModel>> _validatorMock = new();
-        private readonly Mock<IMapper> _mapperMock = new();
-        private readonly Mock<IGenericService<Employee>> _serviceMock = new();
+        private readonly Mock<IValidator<ChangeEmployeeViewModel>> _mockValidator = new();
+        private readonly Mock<IMapper> _mockMapper = new();
+        private readonly Mock<IGenericService<Employee>> _mockService = new();
 
         [Fact]
         public async Task Add_WhenControllerHasData_ShouldReturnValidModel()
@@ -41,19 +39,19 @@ namespace AIS.API.Tests.Controllers
                 CompanyId = inputEmployeeViewModel.CompanyId
             };
 
-            _validatorMock.Setup(valid => valid.Validate(inputEmployeeViewModel));
-            _mapperMock.Setup(map => map.Map<Employee>(inputEmployeeViewModel)).Returns(inputEmployeeModel);
-            _mapperMock.Setup(map => map.Map<EmployeeViewModel>(inputEmployeeModel)).Returns(expectedModel);
-            _serviceMock.Setup(serv => serv.Add(_mapperMock.Object.Map<Employee>(inputEmployeeViewModel), default)).ReturnsAsync(inputEmployeeModel);
+            _mockValidator.Setup(valid => valid.Validate(inputEmployeeViewModel));
+            _mockMapper.Setup(map => map.Map<Employee>(inputEmployeeViewModel)).Returns(inputEmployeeModel);
+            _mockMapper.Setup(map => map.Map<EmployeeViewModel>(inputEmployeeModel)).Returns(expectedModel);
+            _mockService.Setup(serv => serv.Add(_mockMapper.Object.Map<Employee>(inputEmployeeViewModel), default)).ReturnsAsync(inputEmployeeModel);
 
-            var controller = new EmployeeController(_mapperMock.Object, _serviceMock.Object, _validatorMock.Object);
+            var controller = new EmployeeController(_mockMapper.Object, _mockService.Object, _mockValidator.Object);
 
             // Act
             var result = await controller.Add(inputEmployeeViewModel, default);
 
             // Assert
-            inputEmployeeViewModel.Name.ShouldBeEquivalentTo(result.Name);
-            inputEmployeeViewModel.CompanyId.ShouldBeEquivalentTo(result.CompanyId);
+            Assert.Equal(inputEmployeeViewModel.Name, result.Name);
+            Assert.Equal(inputEmployeeViewModel.CompanyId, result.CompanyId);
         }
 
         [Fact]
@@ -76,19 +74,19 @@ namespace AIS.API.Tests.Controllers
                 CompanyId = inputEmployeeModel.CompanyId
             };
 
-            _validatorMock.Setup(valid => valid.Validate(inputEmployeeViewModel));
-            _mapperMock.Setup(map => map.Map<Employee>(inputEmployeeViewModel)).Returns(inputEmployeeModel);
-            _mapperMock.Setup(map => map.Map<EmployeeViewModel>(inputEmployeeModel)).Returns(expectedModel);
-            _serviceMock.Setup(serv => serv.Put(_mapperMock.Object.Map<Employee>(inputEmployeeViewModel), default)).ReturnsAsync(inputEmployeeModel);
+            _mockValidator.Setup(valid => valid.Validate(inputEmployeeViewModel));
+            _mockMapper.Setup(map => map.Map<Employee>(inputEmployeeViewModel)).Returns(inputEmployeeModel);
+            _mockMapper.Setup(map => map.Map<EmployeeViewModel>(inputEmployeeModel)).Returns(expectedModel);
+            _mockService.Setup(serv => serv.Put(_mockMapper.Object.Map<Employee>(inputEmployeeViewModel), default)).ReturnsAsync(inputEmployeeModel);
 
-            var controller = new EmployeeController(_mapperMock.Object, _serviceMock.Object, _validatorMock.Object);
+            var controller = new EmployeeController(_mockMapper.Object, _mockService.Object, _mockValidator.Object);
 
             // Act
             var result = await controller.Update(inputEmployeeViewModel, 2, default);
 
             // Assert
-            inputEmployeeViewModel.CompanyId.ShouldBeEquivalentTo(result.CompanyId);
-            inputEmployeeViewModel.Name.ShouldBeEquivalentTo(result.Name);
+            Assert.Equal(inputEmployeeViewModel.CompanyId, result.CompanyId);
+            Assert.Equal(inputEmployeeViewModel.Name, result.Name);
         }
 
         [Fact]
@@ -97,14 +95,14 @@ namespace AIS.API.Tests.Controllers
             // Arrange
             var expected = new[]
             {
-                new ChangeEmployeeViewModel
+                new EmployeeViewModel
                 {
-                    CompanyId = 2,
+                    Id = 1,
                     Name = "Boba"
                 },
-                new ChangeEmployeeViewModel
+                new EmployeeViewModel
                 {
-                    CompanyId = 1,
+                    Id = 2,
                     Name = "Dida"
                 }
             };
@@ -112,40 +110,27 @@ namespace AIS.API.Tests.Controllers
             {
                 new Employee
                 {
-                    CompanyId = expected[0].CompanyId,
+                    Id = expected[0].Id,
                     Name = expected[0].Name
                 },
                 new Employee
                 {
-                    CompanyId = expected[1].CompanyId,
+                    Id = expected[1].Id,
                     Name = expected[1].Name
                 }
             };
-            var expectedEmployeeViewModel = new[]
-            {
-                new EmployeeViewModel
-                {
-                    Name = expectedEmployee[0].Name,
-                    CompanyId = expectedEmployee[0].CompanyId
-                },
-                new EmployeeViewModel
-                {
-                    Name = expectedEmployee[1].Name,
-                    CompanyId = expectedEmployee[1].CompanyId
-                }
-            };
 
-            _mapperMock.Setup(map => map.Map<IEnumerable<Employee>>(expected)).Returns(expectedEmployee);
-            _mapperMock.Setup(map => map.Map<IEnumerable<EmployeeViewModel>>(expectedEmployee)).Returns(expectedEmployeeViewModel);
-            _serviceMock.Setup(serv => serv.Get(default)).ReturnsAsync(expectedEmployee);
+            _mockMapper.Setup(map => map.Map<IEnumerable<Employee>>(expected)).Returns(expectedEmployee);
+            _mockMapper.Setup(map => map.Map<IEnumerable<EmployeeViewModel>>(expectedEmployee)).Returns(expected);
+            _mockService.Setup(serv => serv.Get(default)).ReturnsAsync(expectedEmployee);
 
-            var controller = new EmployeeController(_mapperMock.Object, _serviceMock.Object, _validatorMock.Object);
+            var controller = new EmployeeController(_mockMapper.Object, _mockService.Object, _mockValidator.Object);
 
             // Act
             var result = await controller.GetAll(default);
 
             // Assert
-            expectedEmployeeViewModel.ShouldBeEquivalentTo(result);
+            Assert.Equal(expected, result);
         }
 
         [Fact]
@@ -163,16 +148,16 @@ namespace AIS.API.Tests.Controllers
                 Name = expected.Name
             };
 
-            _mapperMock.Setup(map => map.Map<Employee>(expected)).Returns(expectedEmployee);
-            _serviceMock.Setup(serv => serv.Delete(expectedEmployee, default));
+            _mockMapper.Setup(map => map.Map<Employee>(expected)).Returns(expectedEmployee);
+            _mockService.Setup(serv => serv.Delete(expectedEmployee, default));
 
-            var controller = new EmployeeController(_mapperMock.Object, _serviceMock.Object, _validatorMock.Object);
+            var controller = new EmployeeController(_mockMapper.Object, _mockService.Object, _mockValidator.Object);
 
             // Act
-            Action act = () => controller.Delete(expected.Id, default);
+            Func<Task> act = async () => await controller.Delete(expected.Id, default);
 
             // Assert
-            act.Should().NotThrow();
+            act.Should().NotThrowAsync();
         }
     }
 }
