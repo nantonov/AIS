@@ -30,11 +30,10 @@ namespace AIS.API.Tests.Controllers
                 new()
                 {
                     Id = 9,
-                    StartTime = DateTime.Today,
+                    StartedAt = DateTime.Today,
                     CompanyId = 5,
                     EmployeeId = 5,
-                    IntervieweeId = 5,
-                    QuestionAreaId = 1
+                    IntervieweeId = 5
                 }
             };
             IEnumerable<SessionViewModel> sessionsListViewModel = new List<SessionViewModel>()
@@ -42,11 +41,9 @@ namespace AIS.API.Tests.Controllers
                 new()
                 {
                     Id = 9,
-                    StartTime = DateTime.Today,
                     CompanyId = 5,
                     EmployeeId = 5,
-                    IntervieweeId = 5,
-                    QuestionAreaId = 1
+                    IntervieweeId = 5
                 }
             };
             _sessionServiceMock.Setup(x => x.Get(default)).ReturnsAsync(sessionsList);
@@ -63,20 +60,17 @@ namespace AIS.API.Tests.Controllers
             var expectedSession = new Session
             {
                 Id = 9,
-                StartTime = DateTime.Today,
+                StartedAt = DateTime.Today,
                 CompanyId = 5,
                 EmployeeId = 5,
-                IntervieweeId = 5,
-                QuestionAreaId = 1
+                IntervieweeId = 5
             };
             var sessionViewModel = new SessionViewModel
             {
                 Id = 9,
-                StartTime = DateTime.Today,
                 CompanyId = 5,
                 EmployeeId = 5,
-                IntervieweeId = 5,
-                QuestionAreaId = 1
+                IntervieweeId = 5
             };
             _sessionServiceMock.Setup(x => x.GetById(9, default)).ReturnsAsync(expectedSession);
             _mapperMock.Setup(x => x.Map<SessionViewModel>(It.IsAny<Session>())).Returns(sessionViewModel);
@@ -100,28 +94,23 @@ namespace AIS.API.Tests.Controllers
             var session = new Session()
             {
                 Id = 5,
-                StartTime = DateTime.Today,
+                StartedAt = DateTime.Today,
                 CompanyId = 5,
                 EmployeeId = 5,
-                IntervieweeId = 5,
-                QuestionAreaId = 1
+                IntervieweeId = 5
             };
             var sessionUpdateEntity = new SessionUpdateViewModel()
             {
-                StartTime = DateTime.Today,
                 CompanyId = 5,
                 EmployeeId = 5,
-                IntervieweeId = 5,
-                QuestionAreaId = 1
+                IntervieweeId = 5
             };
             var sessionViewModel = new SessionViewModel()
             {
                 Id = 5,
-                StartTime = DateTime.Today,
                 CompanyId = 5,
                 EmployeeId = 5,
-                IntervieweeId = 5,
-                QuestionAreaId = 1
+                IntervieweeId = 5
             };
 
             _mapperMock.Setup(x => x.Map<Session>(It.IsAny<SessionUpdateViewModel>())).Returns(session);
@@ -137,19 +126,16 @@ namespace AIS.API.Tests.Controllers
         {
             var sessionEntity = new Session()
             {
-                StartTime = DateTime.Today,
+                StartedAt = DateTime.Today,
                 CompanyId = 5,
                 EmployeeId = 5,
-                IntervieweeId = 5,
-                QuestionAreaId = 5
+                IntervieweeId = 5
             };
             var sessionViewModel = new SessionViewModel()
             {
-                StartTime = DateTime.Today,
                 CompanyId = 5,
                 EmployeeId = 5,
-                IntervieweeId = 5,
-                QuestionAreaId = 5
+                IntervieweeId = 5
             };
             var session = new SessionAddViewModel();
             _mapperMock.Setup(x => x.Map<Session>(It.IsAny<SessionAddViewModel>())).Returns(sessionEntity);

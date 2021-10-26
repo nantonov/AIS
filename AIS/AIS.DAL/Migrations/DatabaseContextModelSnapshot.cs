@@ -93,13 +93,16 @@ namespace AIS.DAL.Migrations
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("FinishedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("IntervieweeId")
                         .HasColumnType("int");
 
                     b.Property<int>("QuestionAreaId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("StartTime")
+                    b.Property<DateTime>("StartedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");

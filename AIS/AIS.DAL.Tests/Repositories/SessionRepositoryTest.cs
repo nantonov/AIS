@@ -1,10 +1,10 @@
 ﻿using AIS.DAL.Entities;
 using AIS.DAL.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Shouldly;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Shouldly;
 using Xunit;
 
 namespace AIS.DAL.Tests.Repositories
@@ -32,8 +32,7 @@ namespace AIS.DAL.Tests.Repositories
                 CompanyId = id,
                 EmployeeId = id,
                 IntervieweeId = id,
-                QuestionAreaId = id,
-                StartTime = DateTime.Today
+                StartedAt = DateTime.Today
             };
             await _context.Sessions.AddAsync(sessionEntity);
             await _context.SaveChangesAsync();
@@ -41,7 +40,6 @@ namespace AIS.DAL.Tests.Repositories
             Assert.Equal(id, session.Id);
             Assert.Equal(id, session.CompanyId);
             Assert.Equal(id, session.IntervieweeId);
-            Assert.Equal(id, session.QuestionAreaId);
             await _context.Database.EnsureDeletedAsync();
         }
 
@@ -64,8 +62,7 @@ namespace AIS.DAL.Tests.Repositories
                 CompanyId = id,
                 EmployeeId = id,
                 IntervieweeId = id,
-                QuestionAreaId = id,
-                StartTime = DateTime.Today
+                StartedAt = DateTime.Today
             };
             await _context.Sessions.AddAsync(sessionEntity);
             await _context.SaveChangesAsync();
@@ -94,8 +91,7 @@ namespace AIS.DAL.Tests.Repositories
                 CompanyId = id,
                 EmployeeId = id,
                 IntervieweeId = id,
-                QuestionAreaId = id,
-                StartTime = DateTime.Today
+                StartedAt = DateTime.Today
             };
             var session = await _repo.Add(sessionEntity, default);
             Assert.Equal(session.EmployeeId, sessionEntity.EmployeeId);
@@ -121,8 +117,7 @@ namespace AIS.DAL.Tests.Repositories
                 CompanyId = id,
                 EmployeeId = id,
                 IntervieweeId = id,
-                QuestionAreaId = id,
-                StartTime = DateTime.Today
+                StartedAt = DateTime.Today
             };
             var updateEntity = new SessionEntity()
             {
@@ -130,8 +125,7 @@ namespace AIS.DAL.Tests.Repositories
                 CompanyId = 5,
                 EmployeeId = 5,
                 IntervieweeId = 5,
-                QuestionAreaId = 5,
-                StartTime = DateTime.Today
+                StartedAt = DateTime.Today
             };
 
             await _context.Sessions.AddAsync(sessionEntity);
@@ -141,7 +135,6 @@ namespace AIS.DAL.Tests.Repositories
             Assert.Equal(id, session.Id);
             Assert.Equal(updateEntity.CompanyId, session.CompanyId);
             Assert.Equal(updateEntity.IntervieweeId, session.IntervieweeId);
-            Assert.Equal(updateEntity.QuestionAreaId, session.QuestionAreaId);
 
             await _context.Database.EnsureDeletedAsync();
         }
@@ -156,8 +149,7 @@ namespace AIS.DAL.Tests.Repositories
                 CompanyId = id,
                 EmployeeId = id,
                 IntervieweeId = id,
-                QuestionAreaId = id,
-                StartTime = DateTime.Today
+                StartedAt = DateTime.Today
             };
             var updateEntity = new SessionEntity()
             {
@@ -165,8 +157,7 @@ namespace AIS.DAL.Tests.Repositories
                 CompanyId = 5,
                 EmployeeId = 5,
                 IntervieweeId = 5,
-                QuestionAreaId = 5,
-                StartTime = DateTime.Today
+                StartedAt = DateTime.Today
             };
 
             await _context.Sessions.AddAsync(sessionEntity);
@@ -187,8 +178,7 @@ namespace AIS.DAL.Tests.Repositories
                 CompanyId = id,
                 EmployeeId = id,
                 IntervieweeId = id,
-                QuestionAreaId = id,
-                StartTime = DateTime.Today
+                StartedAt = DateTime.Today
             };
 
             await _context.Sessions.AddAsync(sessionEntity);
@@ -207,8 +197,7 @@ namespace AIS.DAL.Tests.Repositories
                 CompanyId = id,
                 EmployeeId = id,
                 IntervieweeId = id,
-                QuestionAreaId = id,
-                StartTime = DateTime.Today
+                StartedAt = DateTime.Today
             };
 
             await _context.Sessions.AddAsync(sessionEntity);
@@ -242,8 +231,7 @@ namespace AIS.DAL.Tests.Repositories
                     CompanyId = id,
                     EmployeeId = id,
                     IntervieweeId = id,
-                    QuestionAreaId = id,
-                    StartTime = DateTime.Today
+                    StartedAt = DateTime.Today
                 }
             };
             await _context.Sessions.AddAsync(sessionEntity[0]);

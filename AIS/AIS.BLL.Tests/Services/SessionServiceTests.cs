@@ -32,11 +32,10 @@ namespace AIS.BLL.Tests.Services
                 new SessionEntity()
                 {
                     Id = 11,
-                    StartTime = DateTime.Today,
+                    StartedAt = DateTime.Today,
                     CompanyId = 5,
                     EmployeeId = 5,
-                    IntervieweeId = 5,
-                    QuestionAreaId = 1
+                    IntervieweeId = 5
                 }
             };
             List<Session> sessions = new()
@@ -44,11 +43,10 @@ namespace AIS.BLL.Tests.Services
                 new Session()
                 {
                     Id = 11,
-                    StartTime = DateTime.Today,
+                    StartedAt = DateTime.Today,
                     CompanyId = 5,
                     EmployeeId = 5,
-                    IntervieweeId = 5,
-                    QuestionAreaId = 1
+                    IntervieweeId = 5
                 }
             };
             _mapperMock.Setup(x => x.Map<IEnumerable<SessionEntity>>(It.IsAny<IEnumerable<Session>>())).Returns(sessionsEntity);
@@ -59,25 +57,41 @@ namespace AIS.BLL.Tests.Services
         }
 
         [Fact]
+        public async Task GetSessions_HasNotData_ReturnEmptySessionList()
+        {
+            List<SessionEntity> sessionsEntity = new()
+            {
+                new SessionEntity()
+            };
+            List<Session> sessions = new()
+            {
+                new Session()
+            };
+            _mapperMock.Setup(x => x.Map<IEnumerable<SessionEntity>>(It.IsAny<IEnumerable<Session>>())).Returns(sessionsEntity);
+            _sessionRepoMock.Setup(x => x.Get(default)).ReturnsAsync(sessionsEntity);
+            _mapperMock.Setup(x => x.Map<IEnumerable<Session>>(It.IsAny<IEnumerable<Session>>())).Returns(sessions);
+            var result = await _service.Get(default);
+            Assert.Equal(new List<Session>(), result);
+        }
+
+        [Fact]
         public async Task GetSession_ValidId_ReturnsSessionById()
         {
             var session = new Session()
             {
                 Id = 11,
-                StartTime = DateTime.Today,
+                StartedAt = DateTime.Today,
                 CompanyId = 5,
                 EmployeeId = 5,
-                IntervieweeId = 5,
-                QuestionAreaId = 1
+                IntervieweeId = 5
             };
             var sessionEntity = new SessionEntity()
             {
                 Id = 11,
-                StartTime = DateTime.Today,
+                StartedAt = DateTime.Today,
                 CompanyId = 5,
                 EmployeeId = 5,
-                IntervieweeId = 5,
-                QuestionAreaId = 1
+                IntervieweeId = 5
             };
 
             _mapperMock.Setup(x => x.Map<SessionEntity>(It.IsAny<Session>())).Returns(sessionEntity);
@@ -92,25 +106,39 @@ namespace AIS.BLL.Tests.Services
         }
 
         [Fact]
+        public async Task GetSession_InvalidId_ReturnsNullSessionById()
+        {
+            var session = new Session();
+            var sessionEntity = new SessionEntity();
+
+            _mapperMock.Setup(x => x.Map<SessionEntity>(It.IsAny<Session>())).Returns(sessionEntity);
+            _sessionRepoMock.Setup(x => x.GetById(int.MaxValue, default)).ReturnsAsync(sessionEntity);
+            _mapperMock.Setup(x => x.Map<Session>(It.IsAny<Session>())).Returns(session);
+            // Act
+            var actual = await _service.GetById(int.MaxValue, default);
+
+            // Assert
+            Assert.Null(actual);
+        }
+
+        [Fact]
         public async Task DeleteSession_ValidId_ReturnsNull()
         {
             var sessionEntity = new SessionEntity()
             {
                 Id = 6,
-                StartTime = DateTime.Today,
+                StartedAt = DateTime.Today,
                 CompanyId = 5,
                 EmployeeId = 5,
-                IntervieweeId = 5,
-                QuestionAreaId = 2
+                IntervieweeId = 5
             };
             var session = new Session()
             {
                 Id = 6,
-                StartTime = DateTime.Today,
+                StartedAt = DateTime.Today,
                 CompanyId = 5,
                 EmployeeId = 5,
-                IntervieweeId = 5,
-                QuestionAreaId = 2
+                IntervieweeId = 5
             };
             _mapperMock.Setup(x => x.Map<SessionEntity>(It.IsAny<Session>())).Returns(sessionEntity);
             _sessionRepoMock.Setup(x => x.Delete(sessionEntity, default));
@@ -127,20 +155,18 @@ namespace AIS.BLL.Tests.Services
             var sessionEntity = new SessionEntity()
             {
                 Id = 6,
-                StartTime = DateTime.Today,
+                StartedAt = DateTime.Today,
                 CompanyId = 5,
                 EmployeeId = 5,
-                IntervieweeId = 5,
-                QuestionAreaId = 2
+                IntervieweeId = 5
             };
             var session = new Session()
             {
                 Id = 6,
-                StartTime = DateTime.Today,
+                StartedAt = DateTime.Today,
                 CompanyId = 5,
                 EmployeeId = 5,
-                IntervieweeId = 5,
-                QuestionAreaId = 2
+                IntervieweeId = 5
             };
             _mapperMock.Setup(x => x.Map<SessionEntity>(It.IsAny<Session>())).Returns(sessionEntity);
             _sessionRepoMock.Setup(x => x.Delete(sessionEntity, default));
@@ -149,25 +175,23 @@ namespace AIS.BLL.Tests.Services
         }
 
         [Fact]
-        public async Task PutSession_ValidSession_ReturnsSession()
+        public async Task PutSession_InvalidSession_ReturnsSession()
         {
             var sessionEntity = new SessionEntity()
             {
                 Id = int.MaxValue,
-                StartTime = DateTime.Today,
+                StartedAt = DateTime.Today,
                 CompanyId = 5,
                 EmployeeId = 5,
-                IntervieweeId = 5,
-                QuestionAreaId = 1
+                IntervieweeId = 5
             };
             var session = new Session()
             {
                 Id = int.MaxValue,
-                StartTime = DateTime.Today,
+                StartedAt = DateTime.Today,
                 CompanyId = 5,
                 EmployeeId = 5,
-                IntervieweeId = 5,
-                QuestionAreaId = 1
+                IntervieweeId = 5
             };
 
             _mapperMock.Setup(x => x.Map<SessionEntity>(It.IsAny<Session>())).Returns(sessionEntity);
@@ -178,6 +202,17 @@ namespace AIS.BLL.Tests.Services
             Assert.Equal(session, expected);
             Assert.Equal(session.EmployeeId, expected.EmployeeId);
         }
+        [Fact]
+        public async Task PutSession_ValidSession_ReturnsNull()
+        {
+            var sessionEntity = (SessionEntity)null;
+
+            _mapperMock.Setup(x => x.Map<SessionEntity>(It.IsAny<Session>())).Returns((SessionEntity)null);
+            _sessionRepoMock.Setup(x => x.Update(sessionEntity, default)).ReturnsAsync((SessionEntity)null);
+            _mapperMock.Setup(x => x.Map<Session>(It.IsAny<SessionEntity>())).Returns((Session)null);
+            var result = await _service.Put(null, default);
+            Assert.Null(result);
+        }
 
         [Fact]
         public async Task AddSession_ValidSession_ReturnsSession()
@@ -185,20 +220,18 @@ namespace AIS.BLL.Tests.Services
             var session = new Session()
             {
                 Id = 11,
-                StartTime = DateTime.Today,
+                StartedAt = DateTime.Today,
                 CompanyId = 5,
                 EmployeeId = 5,
-                IntervieweeId = 5,
-                QuestionAreaId = 1
+                IntervieweeId = 5
             };
             var sessionEntity = new SessionEntity()
             {
                 Id = 11,
-                StartTime = DateTime.Today,
+                StartedAt = DateTime.Today,
                 CompanyId = 5,
                 EmployeeId = 5,
-                IntervieweeId = 5,
-                QuestionAreaId = 1
+                IntervieweeId = 5
             };
             _mapperMock.Setup(x => x.Map<SessionEntity>(It.IsAny<Session>())).Returns(sessionEntity);
             _sessionRepoMock.Setup(x => x.Add(It.IsAny<SessionEntity>(), default)).ReturnsAsync(sessionEntity);
@@ -215,19 +248,17 @@ namespace AIS.BLL.Tests.Services
         {
             var session = new Session()
             {
-                StartTime = DateTime.Today,
+                StartedAt = DateTime.Today,
                 CompanyId = 5,
                 EmployeeId = 5,
-                IntervieweeId = 5,
-                QuestionAreaId = 1
+                IntervieweeId = 5
             };
             var sessionEntity = new SessionEntity()
             {
-                StartTime = DateTime.Today,
+                StartedAt = DateTime.Today,
                 CompanyId = 5,
                 EmployeeId = 5,
-                IntervieweeId = 5,
-                QuestionAreaId = 1
+                IntervieweeId = 5
             };
             _mapperMock.Setup(x => x.Map<SessionEntity>(It.IsAny<Session>())).Returns(sessionEntity);
             _sessionRepoMock.Setup(x => x.Add(It.IsAny<SessionEntity>(), default)).ReturnsAsync(sessionEntity);
@@ -251,8 +282,7 @@ namespace AIS.BLL.Tests.Services
                     CompanyId = id,
                     EmployeeId = id,
                     IntervieweeId = id,
-                    QuestionAreaId = id,
-                    StartTime = DateTime.Today
+                    StartedAt = DateTime.Today
                 }
             };
             var session = new SessionEntity()
@@ -260,8 +290,7 @@ namespace AIS.BLL.Tests.Services
                 CompanyId = id,
                 EmployeeId = id,
                 IntervieweeId = id,
-                QuestionAreaId = id,
-                StartTime = DateTime.Today
+                StartedAt = DateTime.Today
             };
 
             var model = new Session()
@@ -269,8 +298,7 @@ namespace AIS.BLL.Tests.Services
                 CompanyId = id,
                 EmployeeId = id,
                 IntervieweeId = id,
-                QuestionAreaId = id,
-                StartTime = DateTime.Today
+                StartedAt = DateTime.Today
             };
 
             _mapperMock.Setup(x => x.Map<SessionEntity>(It.IsAny<Session>())).Returns(session);
