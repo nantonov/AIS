@@ -8,6 +8,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Shouldly;
 using Xunit;
 
 namespace AIS.BLL.Tests.Services
@@ -91,7 +92,7 @@ namespace AIS.BLL.Tests.Services
         }
 
         [Fact]
-        public async Task DeleteSession_ValidId_ReturnsTrue()
+        public async Task DeleteSession_ValidId_ReturnsNull()
         {
             var sessionEntity = new SessionEntity()
             {
@@ -118,6 +119,33 @@ namespace AIS.BLL.Tests.Services
             await _service.Delete(6, default);
             var result = await _service.GetById(6, default);
             Assert.Null(result);
+        }
+
+        [Fact]
+        public async Task DeleteSession_ValidSession_ReturnsNull()
+        {
+            var sessionEntity = new SessionEntity()
+            {
+                Id = 6,
+                StartTime = DateTime.Today,
+                CompanyId = 5,
+                EmployeeId = 5,
+                IntervieweeId = 5,
+                QuestionAreaId = 2
+            };
+            var session = new Session()
+            {
+                Id = 6,
+                StartTime = DateTime.Today,
+                CompanyId = 5,
+                EmployeeId = 5,
+                IntervieweeId = 5,
+                QuestionAreaId = 2
+            };
+            _mapperMock.Setup(x => x.Map<SessionEntity>(It.IsAny<Session>())).Returns(sessionEntity);
+            _sessionRepoMock.Setup(x => x.Delete(sessionEntity, default));
+            _mapperMock.Setup(x => x.Map<Session>(It.IsAny<Session>())).Returns(session);
+            await _service.Delete(session, default).ShouldNotThrowAsync();
         }
 
         [Fact]
@@ -210,6 +238,46 @@ namespace AIS.BLL.Tests.Services
             // Assert
             Assert.Equal(sessionEntity.EmployeeId, actual.EmployeeId);
             Assert.Equal(session.CompanyId, actual.CompanyId);
+        }
+
+        [Fact]
+        public void GetSessionsByPredicate_ValidPredicate_ReturnsSessionList()
+        {
+            var id = new Random().Next();
+            var sessionEntity = new List<SessionEntity>
+            {
+                new()
+                {
+                    CompanyId = id,
+                    EmployeeId = id,
+                    IntervieweeId = id,
+                    QuestionAreaId = id,
+                    StartTime = DateTime.Today
+                }
+            };
+            var session = new SessionEntity()
+            {
+                CompanyId = id,
+                EmployeeId = id,
+                IntervieweeId = id,
+                QuestionAreaId = id,
+                StartTime = DateTime.Today
+            };
+
+            var model = new Session()
+            {
+                CompanyId = id,
+                EmployeeId = id,
+                IntervieweeId = id,
+                QuestionAreaId = id,
+                StartTime = DateTime.Today
+            };
+
+            _mapperMock.Setup(x => x.Map<SessionEntity>(It.IsAny<Session>())).Returns(session);
+            _sessionRepoMock.Setup(x => x.Add(sessionEntity[0], default)).ReturnsAsync(session);
+            _mapperMock.Setup(x => x.Map<Session>(It.IsAny<SessionEntity>())).Returns(model);
+            var result = _service.Get(x => x.Id == sessionEntity[0].Id, default);
+            result.ShouldNotBeNull();
         }
     }
 }
