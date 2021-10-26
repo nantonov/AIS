@@ -9,11 +9,11 @@ using AIS.DAL.Interfaces.Repositories;
 
 namespace AIS.DAL.Repositories
 {
-    public class EmployeeRepository : IEmployeeRepository
+    public class EmployeeRepository : GenericRepository<EmployeeEntity>, IEmployeeRepository
     {
         private readonly DatabaseContext _context;
 
-        public EmployeeRepository(DatabaseContext context)
+        public EmployeeRepository(DatabaseContext context) : base(context)
         {
             _context = context;
         }

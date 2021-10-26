@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace AIS.DAL.Repositories
 {
-    public class CompanyRepository : ICompanyRepository
+    public class CompanyRepository : GenericRepository<CompanyEntity>, ICompanyRepository
     {
         private readonly DatabaseContext _context;
 
-        public CompanyRepository(DatabaseContext context)
+        public CompanyRepository(DatabaseContext context) : base(context)
         {
             _context = context;
         }
