@@ -37,10 +37,10 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Company
 
                 await _context.SaveChangesAsync();
 
-                var employee = _repository.GetById(8, default);
+                var employee = await _repository.GetById(8, default);
 
-                await employee.ShouldNotBeNull();
-                employee.Result.ShouldBeEquivalentTo(model);
+                employee.ShouldNotBeNull();
+                employee.ShouldBeEquivalentTo(model);
             }
         }
 
@@ -80,10 +80,10 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Company
 
             using (_context = new(_options))
             {
-                var employee = _repository.Add(model, default);
+                var employee = await _repository.Add(model, default);
 
-                await employee.ShouldNotBeNull();
-                employee.Result.ShouldBeEquivalentTo(model);
+                employee.ShouldNotBeNull();
+                employee.ShouldBeEquivalentTo(model);
             }
         }
 
@@ -107,10 +107,10 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Company
                 await _context.Companies.AddAsync(addedModel);
                 await _context.SaveChangesAsync();
 
-                var employee = _repository.Update(expectedModel, default);
+                var employee = await _repository.Update(expectedModel, default);
 
-                await employee.ShouldNotBeNull();
-                employee.Result.ShouldBeEquivalentTo(expectedModel);
+                employee.ShouldNotBeNull();
+                employee.ShouldBeEquivalentTo(expectedModel);
             }
         }
 
@@ -152,9 +152,7 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Company
 
                 await _context.SaveChangesAsync();
 
-                var employee = _repository.Delete(employeeModel, default);
-
-                await employee.ShouldNotThrowAsync();
+                await _repository.Delete(employeeModel, default).ShouldNotThrowAsync();
             }
         }
 
@@ -171,9 +169,7 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Company
 
                 await _context.SaveChangesAsync();
 
-                var employee = _repository.Delete(1, default);
-
-                await employee.ShouldNotThrowAsync();
+                await _repository.Delete(1, default).ShouldNotThrowAsync();
             }
         }
 
@@ -216,9 +212,7 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Company
             {
                 var model = (CompanyEntity)null;
 
-                var employee = _repository.Add(model, default);
-
-                await employee.ShouldThrowAsync(typeof(ArgumentNullException));
+                await _repository.Add(model, default).ShouldThrowAsync(typeof(ArgumentNullException));
             }
         }
 
@@ -241,9 +235,7 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Company
                 await _context.Companies.AddAsync(addedModel);
                 await _context.SaveChangesAsync();
 
-                var employee = _repository.Update(expectedModel, default);
-
-                await employee.ShouldThrowAsync(typeof(DbUpdateConcurrencyException));
+                await _repository.Update(expectedModel, default).ShouldThrowAsync(typeof(DbUpdateConcurrencyException));
             }
         }
 
@@ -266,17 +258,13 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Company
                 Id = -1
             };
 
-            var employee = _repository.Delete(employeeModel, default);
-
-            await employee.ShouldThrowAsync(typeof(DbUpdateConcurrencyException));
+            await _repository.Delete(employeeModel, default).ShouldThrowAsync(typeof(DbUpdateConcurrencyException));
         }
 
         [Fact]
         public async Task DeleteCompany_InvalidId_ThrowDbUpdateConcurrencyException()
         {
-            var employee = _repository.Delete(1, default);
-
-            await employee.ShouldThrowAsync(typeof(ArgumentNullException));
+            await _repository.Delete(1, default).ShouldThrowAsync(typeof(ArgumentNullException));
         }
     }
 }
