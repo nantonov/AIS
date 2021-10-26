@@ -8,9 +8,9 @@ namespace AIS.API.Mapper
     {
         public SessionViewModelProfile()
         {
-            CreateMap<SessionViewModel, Session>().ReverseMap();
-            CreateMap<SessionAddViewModel, Session>().ReverseMap();
-            CreateMap<SessionUpdateViewModel, Session>().ReverseMap();
+            CreateMap<Session, SessionViewModel>();
+            CreateMap<Session, SessionAddViewModel>();
+            CreateMap<Session, SessionUpdateViewModel >();
         }
     }
 }

@@ -45,8 +45,8 @@ namespace AIS.API.Controllers
             return _mapper.Map<SessionViewModel>(result);
         }
 
-        [HttpPut(EndpointConstants.UpdateSessionEndPointRoute)]
-        public async Task<SessionViewModel> Put(int id, [FromBody] SessionUpdateViewModel session, CancellationToken ct)
+        [HttpPut(EndpointConstants.UpdateEndpoitRoute)]
+        public async Task<SessionViewModel> Put([FromQuery]int id, [FromBody] SessionUpdateViewModel session, CancellationToken ct)
         {
             var mappedObject = _mapper.Map<Session>(session);
             mappedObject.Id = id;

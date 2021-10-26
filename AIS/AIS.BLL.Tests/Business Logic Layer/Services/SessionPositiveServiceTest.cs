@@ -24,7 +24,7 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
         }
 
         [Fact]
-        public async Task GetSessions_ReturnsSessionList()
+        public async Task GetSessions_HasData_ReturnsSessionList()
         {
             List<SessionEntity> sessionsEntity = new()
             {

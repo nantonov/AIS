@@ -23,7 +23,7 @@ namespace AIS.API.Tests.Controllers
         }
 
         [Fact]
-        public async Task GetSessions_ReturnsEmptySessionList()
+        public async Task GetSessions_HasNotData_ReturnsEmptySessionList()
         {
             IEnumerable<Session> sessionsList = new List<Session>();
             IEnumerable<SessionViewModel> sessionsListViewModel = new List<SessionViewModel>();

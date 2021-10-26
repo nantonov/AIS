@@ -53,7 +53,7 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Services
         }
 
         [Fact]
-        public async Task GetSessions_ReturnsEmptySessionList()
+        public async Task GetSessions_HasNotData_ReturnsEmptySessionList()
         {
             _sessionRepoMock.Setup(x => x.Get(default)).ReturnsAsync(new List<SessionEntity>());
             var sessions = await _service.Get(default);

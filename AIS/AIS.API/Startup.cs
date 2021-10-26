@@ -25,7 +25,6 @@ namespace AIS.API
         {
             services.AddAutoMapper(typeof(API.Mapper.MappingProfile).Assembly, typeof(BLL.Mapper.MappingProfile).Assembly);
 
-            services.AddAutoMapper(typeof(API.Mapper.SessionViewModelProfile), typeof(BLL.Mapper.SessionProfile));
             services.AddAutoMapper(typeof(API.Mapper.SessionViewModelProfile).Assembly, typeof(BLL.Mapper.SessionProfile).Assembly);
 
             services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssembly(Assembly.Load("AIS.API")));

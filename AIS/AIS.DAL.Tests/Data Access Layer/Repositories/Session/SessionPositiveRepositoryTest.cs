@@ -42,7 +42,7 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Session
         }
 
         [Fact]
-        public async Task GetSessions_ReturnsSessionList()
+        public async Task GetSessions_HasData_ReturnsSessionList()
         {
             var id = new Random().Next();
             var sessionEntity = new SessionEntity()
