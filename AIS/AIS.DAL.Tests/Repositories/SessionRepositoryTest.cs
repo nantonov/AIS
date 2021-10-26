@@ -14,6 +14,7 @@ namespace AIS.DAL.Tests.Repositories
         private readonly DatabaseContext _context = new
         (new DbContextOptionsBuilder<DatabaseContext>().UseInMemoryDatabase(Guid.NewGuid().ToString())
             .Options);
+
         private readonly SessionRepository _repo;
 
         public SessionRepositoryTest()
@@ -45,6 +46,15 @@ namespace AIS.DAL.Tests.Repositories
         }
 
         [Fact]
+        public async Task GetSession_InvalidId_ReturnsNullSession()
+        {
+            await _context.SaveChangesAsync();
+            var session = await _repo.GetById(int.MaxValue, default);
+            Assert.Null(session);
+            await _context.Database.EnsureDeletedAsync();
+        }
+
+        [Fact]
         public async Task GetSessions_HasData_ReturnsSessionList()
         {
             var id = new Random().Next();
@@ -65,6 +75,14 @@ namespace AIS.DAL.Tests.Repositories
             Assert.NotEmpty(sessions);
             Assert.NotNull(sessions);
             await _context.Database.EnsureDeletedAsync();
+        }
+
+        [Fact]
+        public async Task GetSessions_HasData_ReturnsSessionEmptyList()
+        {
+            var sessions = await _repo.Get(default);
+            Assert.IsType<List<SessionEntity>>(sessions);
+            Assert.Equal(new List<SessionEntity>(), sessions);
         }
 
         [Fact]
@@ -127,6 +145,38 @@ namespace AIS.DAL.Tests.Repositories
 
             await _context.Database.EnsureDeletedAsync();
         }
+
+        [Fact]
+        public async Task PutSession_InvalidSessionEntity_ThrowsDbUpdateConcurrencyException()
+        {
+            var id = new Random().Next();
+            var sessionEntity = new SessionEntity()
+            {
+                Id = id,
+                CompanyId = id,
+                EmployeeId = id,
+                IntervieweeId = id,
+                QuestionAreaId = id,
+                StartTime = DateTime.Today
+            };
+            var updateEntity = new SessionEntity()
+            {
+                Id = int.MaxValue,
+                CompanyId = 5,
+                EmployeeId = 5,
+                IntervieweeId = 5,
+                QuestionAreaId = 5,
+                StartTime = DateTime.Today
+            };
+
+            await _context.Sessions.AddAsync(sessionEntity);
+            await _context.SaveChangesAsync();
+            _context.Entry(sessionEntity).State = EntityState.Detached;
+            await _repo.Update(updateEntity, default).ShouldThrowAsync(typeof(DbUpdateConcurrencyException));
+
+            await _context.Database.EnsureDeletedAsync();
+        }
+
         [Fact]
         public async Task DeleteSession_ValidSessionEntity_ReturnsNull()
         {
@@ -181,27 +231,32 @@ namespace AIS.DAL.Tests.Repositories
             await _context.Database.EnsureDeletedAsync();
         }
 
-
         [Fact]
-        public async Task SessionExists_ValidId_ReturnsTrue()
+        public async Task GetSessionsByPredicate_ValidPredicate_ReturnsSessionEntityList()
         {
             var id = new Random().Next();
-            var sessionEntity = new SessionEntity()
+            var sessionEntity = new List<SessionEntity>
             {
-                Id = id,
-                CompanyId = id,
-                EmployeeId = id,
-                IntervieweeId = id,
-                QuestionAreaId = id,
-                StartTime = DateTime.Today
+                new()
+                {
+                    CompanyId = id,
+                    EmployeeId = id,
+                    IntervieweeId = id,
+                    QuestionAreaId = id,
+                    StartTime = DateTime.Today
+                }
             };
-
-            await _context.Sessions.AddAsync(sessionEntity);
+            await _context.Sessions.AddAsync(sessionEntity[0]);
             await _context.SaveChangesAsync();
+            var session =  _repo.Get(x => x.Id == sessionEntity[0].Id, default);
+            session.ShouldNotBeNull();
+        }
 
-            var session = _repo.Get(default);
-            Assert.NotNull(session);
-            await _context.Database.EnsureDeletedAsync();
+        [Fact]
+        public void GetSessionsByPredicate_InvalidPredicate_ReturnsEmptySessionEntityList()
+        {
+            var session = _repo.Get(x => x.Id == int.MaxValue, default);
+            session.ShouldNotBeNull();
         }
     }
 }
