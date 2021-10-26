@@ -29,13 +29,10 @@ namespace AIS.DAL.Repositories
 
         public async Task<IEnumerable<CompanyEntity>> Get(CancellationToken ct)
         {
-            return 
-                await 
-                    _context
-                        .Companies
-                        .Include(x => x.Employees)
-                        .Include(x => x.Interviewees)
-                        .ToListAsync(ct);
+            var result = await 
+                _context.Companies.Include(x => x.Employees).Include(x => x.Interviewees).ToListAsync(ct);
+
+            return result;
         }
 
         public IEnumerable<CompanyEntity> Get(Func<CompanyEntity, bool> predicate, CancellationToken ct)
