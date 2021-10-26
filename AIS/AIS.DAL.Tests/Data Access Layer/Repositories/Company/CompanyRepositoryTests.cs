@@ -84,31 +84,7 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Company
             
         }
 
-        [Fact]
-        public async Task UpdateCompany_ValidModel_ReturnsCompanyEntity()
-        {
-            var expectedModel = new CompanyEntity
-            {
-                Id = 14,
-                Name = "asd"
-            };
-
-            var addedModel = new CompanyEntity
-            {
-                Id = 14,
-                Name = "asd"
-            };
-
-            {
-                await _context.Companies.AddAsync(addedModel);
-                await _context.SaveChangesAsync();
-
-                var employee = await _repository.Update(expectedModel, default);
-
-                employee.ShouldNotBeNull();
-                employee.ShouldBeEquivalentTo(expectedModel);
-            }
-        }
+        
 
         [Fact]
         public async Task GetCompaniesByPredicate_ValidPredicate_ReturnsCompanyEntityList()
