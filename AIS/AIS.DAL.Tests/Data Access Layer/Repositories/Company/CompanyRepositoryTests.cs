@@ -31,7 +31,7 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Company
                 Name = "asd"
             };
 
-            
+            using (_context = new(_options))
             {
                 await _context.Companies.AddAsync(model);
                 await _context.SaveChangesAsync();
@@ -46,6 +46,7 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Company
         [Fact]
         public async Task GetCompanies_ValidModels_ReturnsCompanyEntityList()
         {
+            using (_context = new(_options))
             {
                 _context.Companies.Add(new CompanyEntity
                 {
@@ -76,15 +77,41 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Company
                 Name = "asd"
             };
 
-            
+            using (_context = new(_options))
+            {
                 var employee = await _repository.Add(model, default);
 
                 employee.ShouldNotBeNull();
                 employee.ShouldBeEquivalentTo(model);
-            
+            }
         }
 
-        
+        [Fact]
+        public async Task UpdateCompany_ValidModel_ReturnsCompanyEntity()
+        {
+            var expectedModel = new CompanyEntity
+            {
+                Id = 14,
+                Name = "asd"
+            };
+
+            var addedModel = new CompanyEntity
+            {
+                Id = 14,
+                Name = "asd"
+            };
+
+            using (_context = new(_options))
+            {
+                await _context.Companies.AddAsync(addedModel);
+                await _context.SaveChangesAsync();
+
+                var employee = await _repository.Update(expectedModel, default);
+
+                employee.ShouldNotBeNull();
+                employee.ShouldBeEquivalentTo(expectedModel);
+            }
+        }
 
         [Fact]
         public async Task GetCompaniesByPredicate_ValidPredicate_ReturnsCompanyEntityList()
@@ -97,6 +124,7 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Company
                     }
                 };
 
+            using (_context = new(_options))
             {
                 _context.Companies.Add(model[0]);
 
@@ -117,6 +145,7 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Company
                 Name = "asd",
             };
 
+            using (_context = new(_options))
             {
                 _context.Companies.Add(employeeModel);
 
@@ -129,6 +158,7 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Company
         [Fact]
         public async Task DeleteCompany_ValidId_NotThrow()
         {
+            using (_context = new(_options))
             {
                 _context.Companies.Add(new CompanyEntity
                 {
@@ -151,6 +181,7 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Company
                 Name = "asd"
             };
 
+            using (_context = new(_options))
             {
                 _context.Companies.Add(model);
 
@@ -165,6 +196,7 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Company
         [Fact]
         public async Task GetCompanies_NoModels_ReturnsEmptyCompanyEntityList()
         {
+            using (_context = new(_options))
             {
                 var employee = await _repository.Get(default);
 
@@ -175,6 +207,7 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Company
         [Fact]
         public async Task AddCompany_InvalidModel_ThrowArgumentNullException()
         {
+            using (_context = new(_options))
             {
                 var model = (CompanyEntity)null;
 
@@ -196,6 +229,7 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Company
                 Name = "asd"
             };
 
+            using (_context = new(_options))
             {
                 await _context.Companies.AddAsync(addedModel);
                 await _context.SaveChangesAsync();
@@ -207,6 +241,7 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Company
         [Fact]
         public void GetCompaniesByPredicate_ValidPredicate_ReturnsEmptyCompanyEntityList()
         {
+            using (_context = new(_options))
             {
                 var employee = _repository.Get(x => x.Id == -1, default);
 
