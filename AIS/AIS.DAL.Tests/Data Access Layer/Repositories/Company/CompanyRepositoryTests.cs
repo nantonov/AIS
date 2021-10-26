@@ -37,10 +37,10 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Company
 
                 await _context.SaveChangesAsync();
 
-                var employee = await _repository.GetById(8, default);
+                var employee = _repository.GetById(8, default);
 
-                employee.ShouldNotBeNull();
-                employee.ShouldBeEquivalentTo(model);
+                employee.Result.ShouldNotBeNull();
+                employee.Result.ShouldBeEquivalentTo(model);
             }
         }
 

@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AIS.DAL.Repositories
 {
-    public class IntervieweeRepository : GenericRepository<IntervieweeEntity>, IIntervieweeRepository
+    public class IntervieweeRepository : IIntervieweeRepository
     {
         private readonly DatabaseContext _context;
 
-        public IntervieweeRepository(DatabaseContext context) : base(context)
+        public IntervieweeRepository(DatabaseContext context)
         {
             _context = context;
         }
