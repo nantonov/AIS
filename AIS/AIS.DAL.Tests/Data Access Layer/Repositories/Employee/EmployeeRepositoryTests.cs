@@ -79,9 +79,16 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Employee
 
                 await _context.SaveChangesAsync();
 
-                var employee = await _repository.Get(default);
+                var ct = new CancellationToken();
 
-                employee.ShouldNotBeEmpty();
+                var employee = _repository.Get(ct);
+
+                if (ct.IsCancellationRequested)
+                {
+                    1.ShouldBe(0);
+                }
+
+                employee.Result.ShouldNotBeEmpty();
             }
         }
 
@@ -245,7 +252,14 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Employee
             {
                 await _context.Database.EnsureDeletedAsync();
 
-                var employee = await _repository.Get(default);
+                var ct = new CancellationToken();
+
+                var employee = await _repository.Get(ct);
+
+                if (ct.IsCancellationRequested)
+                {
+                    1.ShouldBe(0);
+                }
 
                 employee.ShouldBeEmpty();
             }
