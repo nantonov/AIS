@@ -11,13 +11,13 @@ using Xunit;
 
 namespace AIS.API.Tests.Controllers
 {
-    public class SessionNegativeControllerTest
+    public class SessionNegativeControllerTests
     {
         private readonly Mock<ISessionService> _sessionServiceMock = new();
         private readonly SessionController _controller;
         private readonly Mock<IMapper> _mapperMock = new();
 
-        public SessionNegativeControllerTest()
+        public SessionNegativeControllerTests()
         {
             _controller = new SessionController(_sessionServiceMock.Object, _mapperMock.Object);
         }

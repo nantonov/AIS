@@ -12,13 +12,13 @@ using Xunit;
 
 namespace AIS.BLL.Tests.Business_Logic_Layer.Services
 {
-    public class SessionNegativeServiceTest
+    public class SessionNegativeServiceTests
     {
         private readonly ISessionService _service;
         private readonly Mock<ISessionRepository> _sessionRepoMock = new();
         private readonly Mock<IMapper> _mapperMock = new();
 
-        public SessionNegativeServiceTest()
+        public SessionNegativeServiceTests()
         {
             _service = new SessionService(_sessionRepoMock.Object, _mapperMock.Object);
         }

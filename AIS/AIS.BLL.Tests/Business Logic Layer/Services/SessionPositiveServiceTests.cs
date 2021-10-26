@@ -12,19 +12,19 @@ using Xunit;
 
 namespace AIS.BLL.Tests.Business_Logic_Layer.Services
 {
-    public class SessionPositiveServiceTest
+    public class SessionPositiveServiceTests
     {
         private readonly ISessionService _service;
         private readonly Mock<ISessionRepository> _sessionRepoMock = new();
         private readonly Mock<IMapper> _mapperMock = new();
 
-        public SessionPositiveServiceTest()
+        public SessionPositiveServiceTests()
         {
             _service = new SessionService(_sessionRepoMock.Object, _mapperMock.Object);
         }
 
         [Fact]
-        public async Task GetSessions_HasData_ReturnsSessionList()
+        public async Task GetSessions_ReturnsSessionList()
         {
             List<SessionEntity> sessionsEntity = new()
             {

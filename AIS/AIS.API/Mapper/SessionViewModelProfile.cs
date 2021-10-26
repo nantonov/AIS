@@ -9,8 +9,8 @@ namespace AIS.API.Mapper
         public SessionViewModelProfile()
         {
             CreateMap<Session, SessionViewModel>();
-            CreateMap<Session, SessionAddViewModel>();
-            CreateMap<Session, SessionUpdateViewModel >();
+            CreateMap<SessionAddViewModel, Session>();
+            CreateMap<SessionUpdateViewModel, Session >();
         }
     }
 }
