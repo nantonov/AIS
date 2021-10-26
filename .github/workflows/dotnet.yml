@@ -29,7 +29,7 @@ jobs:
         sonarProjectKey: nantonov_AIS
         sonarProjectName: AIS
         sonarOrganization: nantonov
-        dotnetBuildArguments: AIS/AIS.sln
+        dotnetBuildArguments: --configuration Release --no-restore AIS/AIS.sln
         dotnetTestArguments: --no-build --configuration Release --verbosity normal AIS/AIS.sln --logger trx --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
         sonarBeginArguments: /d:sonar.cs.opencover.reportsPaths="**/TestResults/**/coverage.opencover.xml" -d:sonar.cs.vstest.reportsPaths="**/TestResults/*.trx"
       env:
