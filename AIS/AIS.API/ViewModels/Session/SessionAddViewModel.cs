@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AIS.API.ViewModels
+namespace AIS.API.ViewModels.Session
 {
     public class SessionAddViewModel
     {

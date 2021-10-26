@@ -1,5 +1,5 @@
 ﻿using AIS.API.Controllers;
-using AIS.API.ViewModels;
+using AIS.API.ViewModels.Session;
 using AIS.BLL.Interfaces.Services;
 using AIS.BLL.Models;
 using AutoMapper;

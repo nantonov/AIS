@@ -1,4 +1,4 @@
-﻿using AIS.API.ViewModels;
+﻿using AIS.API.ViewModels.Session;
 using AIS.BLL.Models;
 using AutoMapper;
 
