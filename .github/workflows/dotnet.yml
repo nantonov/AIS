@@ -17,6 +17,12 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
+    - uses: actions/cache@v1
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
     - name: Restore dependencies
       run: dotnet restore AIS/AIS.sln
     - name: Build
@@ -29,7 +35,7 @@ jobs:
         sonarProjectKey: nantonov_AIS
         sonarProjectName: AIS
         sonarOrganization: nantonov
-        dotnetBuildArguments: --configuration Release --no-restore AIS/AIS.sln
+        dotnetBuildArguments: --configuration Release AIS/AIS.sln
         dotnetTestArguments: --no-build --configuration Release --verbosity normal AIS/AIS.sln --logger trx --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
         sonarBeginArguments: /d:sonar.cs.opencover.reportsPaths="**/TestResults/**/coverage.opencover.xml" -d:sonar.cs.vstest.reportsPaths="**/TestResults/*.trx"
       env:
