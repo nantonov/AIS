@@ -15,7 +15,7 @@ namespace AIS.DAL.Repositories
 
         public IntervieweeRepository(DatabaseContext context)
         {
-            this._context = context;
+            _context = context;
         }
 
         public async Task<IntervieweeEntity> Add(IntervieweeEntity entity, CancellationToken ct)
@@ -40,6 +40,11 @@ namespace AIS.DAL.Repositories
             return await _context.Interviewees.FindAsync(new object[] {id}, ct);
         }
 
+        public async Task<IEnumerable<IntervieweeEntity>> GetIncluded(CancellationToken ct)
+        {
+            return await Query(true).AsNoTracking().ToListAsync(ct);
+        }
+
         public async Task<IntervieweeEntity> Update(IntervieweeEntity entity, CancellationToken ct)
         {
             _context.Entry(entity).State = EntityState.Modified;
@@ -58,6 +63,21 @@ namespace AIS.DAL.Repositories
             var entity = await _context.Interviewees.FindAsync(new object[] { id }, ct);
             _context.Interviewees.Remove(entity);
             await _context.SaveChangesAsync(ct);
+        }
+        protected virtual IQueryable<IntervieweeEntity> Query(bool eager = false)
+        {
+            var query = _context.Interviewees.AsQueryable();
+            if (eager)
+            {
+                var navigation = _context.Model.FindEntityType(typeof(IntervieweeEntity))
+                    .GetDerivedTypesInclusive()
+                    .SelectMany(type => type.GetNavigations())
+                    .Distinct();
+
+                foreach (var property in navigation)
+                    query = query.Include(property.Name).AsSplitQuery();
+            }
+            return query;
         }
     }
 }
