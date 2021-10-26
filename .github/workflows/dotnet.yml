@@ -20,9 +20,9 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore AIS/AIS.sln
     - name: Build
-      run: dotnet build --no-restore AIS/AIS.sln
+      run: dotnet build --configuration Release --no-restore AIS/AIS.sln
     - name: Test
-      run: dotnet test --no-build --verbosity normal AIS/AIS.sln
+      run: dotnet test --no-build --configuration Release --verbosity normal AIS/AIS.sln
     - name: sonarscan-dotnet
       uses: highbyte/sonarscan-dotnet@v2.1.1-beta
       with:
@@ -30,7 +30,7 @@ jobs:
         sonarProjectName: AIS
         sonarOrganization: nantonov
         dotnetBuildArguments: AIS/AIS.sln
-        dotnetTestArguments: --configuration Release --verbosity normal AIS/AIS.sln --logger trx --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+        dotnetTestArguments: --no-build --configuration Release --verbosity normal AIS/AIS.sln --logger trx --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
         sonarBeginArguments: /d:sonar.cs.opencover.reportsPaths="**/TestResults/**/coverage.opencover.xml" -d:sonar.cs.vstest.reportsPaths="**/TestResults/*.trx"
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
