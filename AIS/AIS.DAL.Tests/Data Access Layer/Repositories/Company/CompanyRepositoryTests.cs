@@ -40,7 +40,9 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Company
                 var employee = await _repository.GetById(8, default);
 
                 employee.ShouldNotBeNull();
-                employee.ShouldBeEquivalentTo(await _context.Companies.FindAsync(8));
+                employee.ShouldBeEquivalentTo(_context.Companies.FindAsync(8).Result);
+
+                Assert.Equal(employee.Name, model.Name);
 
                 var result = Task.Run(() => _repository.GetById(8, default)).Result;
 
