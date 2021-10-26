@@ -20,8 +20,10 @@ namespace AIS.DAL.Repositories
 
         public async Task<CompanyEntity> Add(CompanyEntity entity, CancellationToken ct)
         {
-            await _context.Companies.AddAsync(entity, ct);
-            await _context.SaveChangesAsync(ct);
+            await 
+                _context.Companies.AddAsync(entity, ct);
+            await 
+                _context.SaveChangesAsync(ct);
             return entity;
         }
 
