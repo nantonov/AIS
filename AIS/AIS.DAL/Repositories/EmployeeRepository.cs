@@ -15,17 +15,17 @@ namespace AIS.DAL.Repositories
         {
         }
         
-        public async Task<IEnumerable<EmployeeEntity>> Get(CancellationToken ct)
+        public override async Task<IEnumerable<EmployeeEntity>> Get(CancellationToken ct)
         {
             return await _context.Employees.AsNoTracking().Include(x => x.Company).ToListAsync(ct);
         }
 
-        public IEnumerable<EmployeeEntity> Get(Func<EmployeeEntity, bool> predicate, CancellationToken ct)
+        public override IEnumerable<EmployeeEntity> Get(Func<EmployeeEntity, bool> predicate, CancellationToken ct)
         {
             return _context.Employees.AsNoTracking().Include(x => x.Company).Where(predicate).ToList();
         }
 
-        public async Task<EmployeeEntity> GetById(int id, CancellationToken ct)
+        public override async Task<EmployeeEntity> GetById(int id, CancellationToken ct)
         {
             return await _context.Employees.Include(x => x.Company).FirstOrDefaultAsync(x => x.Id == id, ct);
         }
