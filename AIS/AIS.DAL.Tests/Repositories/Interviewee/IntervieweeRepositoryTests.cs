@@ -6,7 +6,7 @@ using System;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Interviewee
+namespace AIS.DAL.Tests.Repositories.Interviewee
 {
     public class IntervieweeRepositoryTests
     {

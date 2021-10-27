@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Employee
+namespace AIS.DAL.Tests.Repositories.Employee
 {
     public class EmployeeRepositoryTests
     {
@@ -83,11 +83,6 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Employee
 
                 var employee = _repository.Get(ct);
 
-                if (ct.IsCancellationRequested)
-                {
-                    1.ShouldBe(0);
-                }
-
                 employee.Result.ShouldNotBeEmpty();
             }
         }
@@ -107,11 +102,6 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Employee
             using (_context = new(_options))
             {
                 var employee = await _repository.Add(model, ct);
-
-                if (ct.IsCancellationRequested)
-                {
-                    1.ShouldBe(9);
-                }
 
                 employee.ShouldNotBeNull();
                 employee.ShouldBeEquivalentTo(model);
@@ -256,11 +246,6 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Employee
 
                 var employee = _repository.Get(ct).GetAwaiter();
 
-                if (ct.IsCancellationRequested)
-                {
-                    1.ShouldBe(0);
-                }
-
                 employee.GetResult().ShouldBeEmpty();
             }
         }
@@ -272,11 +257,6 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Employee
 
             var ct = new CancellationToken();
             var result = _repository.Add(model, ct);
-
-            if (ct.IsCancellationRequested)
-            {
-                1.ShouldBe(9);
-            }
 
             await result.ShouldThrowAsync(typeof(ArgumentNullException));
         }

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Company
+namespace AIS.DAL.Tests.Repositories.Company
 {
     public class CompanyRepositoryTests
     {
