@@ -27,7 +27,14 @@ namespace AIS.DAL.Repositories
 
         public override async Task<IntervieweeEntity> GetById(int id, CancellationToken ct)
         {
-            var entity = await _context.Interviewees.Include(x => x.Company).FirstOrDefaultAsync(x => x.Id == id, ct);
+            var entity = 
+                await 
+                    _context
+                        .Interviewees
+                        .Include(x => x.Company)
+                        .FirstOrDefaultAsync(
+                            x => x.Id == id, 
+                            ct);
 
             return entity;
         }
