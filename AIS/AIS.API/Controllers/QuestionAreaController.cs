@@ -19,8 +19,8 @@ namespace AIS.API.Controllers
 
         public QuestionAreaController(IGenericService<QuestionArea> questionAreaService, IMapper mapper)
         {
-            this._questionAreaService = questionAreaService;
-            this._mapper = mapper;
+            _questionAreaService = questionAreaService;
+            _mapper = mapper;
         }
 
         [HttpGet(EndpointConstants.IdTemplate)]
