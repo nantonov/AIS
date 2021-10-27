@@ -236,6 +236,8 @@ namespace AIS.DAL.Tests.Repositories.Interviewee
         {
             using (_context = new(_options))
             {
+                await _context.Database.EnsureDeletedAsync();
+
                 var employee = await _repository.Get(default);
 
                 employee.ShouldBeEmpty();
