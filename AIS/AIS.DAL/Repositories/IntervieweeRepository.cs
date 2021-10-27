@@ -31,5 +31,12 @@ namespace AIS.DAL.Repositories
 
             return entity;
         }
+
+        public async Task<int> Something()
+        {
+            await Task.Delay(100);
+
+            return 1;
+        }
     }
 }

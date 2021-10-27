@@ -23,6 +23,13 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Interviewee
         }
 
         [Fact]
+        public async Task Something()
+        {
+            var res = await _repository.Something();
+            res.ShouldBe(1);
+        }
+
+        [Fact]
         public async Task GetIntervieweeById_ValidId_ReturnsIntervieweeEntity()
         {
             var model = new IntervieweeEntity
