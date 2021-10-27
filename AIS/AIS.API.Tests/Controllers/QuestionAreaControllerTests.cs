@@ -120,7 +120,7 @@ namespace AIS.API.Tests.Controllers
                     Name = "Dida"
                 }
             };
-            var expectedCompanies = new[]
+            var expectedQuestionAreas = new[]
             {
                 new QuestionArea
                 {
@@ -143,9 +143,9 @@ namespace AIS.API.Tests.Controllers
                 }
             };
 
-            _mapperMock.Setup(map => map.Map<IEnumerable<QuestionArea>>(expected)).Returns(expectedCompanies);
-            _mapperMock.Setup(map => map.Map<IEnumerable<QuestionAreaViewModel>>(expectedCompanies)).Returns(expectedQuestionAreaViewModel);
-            _serviceMock.Setup(serv => serv.Get(default)).ReturnsAsync(expectedCompanies);
+            _mapperMock.Setup(map => map.Map<IEnumerable<QuestionArea>>(expected)).Returns(expectedQuestionAreas);
+            _mapperMock.Setup(map => map.Map<IEnumerable<QuestionAreaViewModel>>(expectedQuestionAreas)).Returns(expectedQuestionAreaViewModel);
+            _serviceMock.Setup(serv => serv.Get(default)).ReturnsAsync(expectedQuestionAreas);
 
             var controller = new QuestionAreaController(_serviceMock.Object, _mapperMock.Object);
 
@@ -165,14 +165,14 @@ namespace AIS.API.Tests.Controllers
                 Id = 3,
                 Name = "Bob"
             };
-            var expectedCompanies = new QuestionArea
+            var expectedQuestionAreas = new QuestionArea
             {
                 Id = expected.Id,
                 Name = expected.Name
             };
 
-            _mapperMock.Setup(map => map.Map<QuestionArea>(expected)).Returns(expectedCompanies);
-            _serviceMock.Setup(serv => serv.Delete(expectedCompanies, default));
+            _mapperMock.Setup(map => map.Map<QuestionArea>(expected)).Returns(expectedQuestionAreas);
+            _serviceMock.Setup(serv => serv.Delete(expectedQuestionAreas, default));
 
             var controller = new QuestionAreaController(_serviceMock.Object, _mapperMock.Object);
 
