@@ -254,7 +254,7 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Employee
 
                 var ct = new CancellationToken();
 
-                var employee = await _repository.Get(ct);
+                var employee = await _repository.Get(ct).ConfigureAwait(false);
 
                 if (ct.IsCancellationRequested)
                 {
