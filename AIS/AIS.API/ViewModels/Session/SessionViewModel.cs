@@ -9,5 +9,6 @@ namespace AIS.API.ViewModels.Session
         public int CompanyId { get; set; }
         public int EmployeeId { get; set; }
         public int IntervieweeId { get; set; }
+        public DateTime FinishedAt { get; set; }
     }
 }
