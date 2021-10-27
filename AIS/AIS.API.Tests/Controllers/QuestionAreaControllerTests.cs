@@ -82,6 +82,33 @@ namespace AIS.API.Tests.Controllers
         public async Task Get_WhenControllerHasData_ShouldReturnValidModel()
         {
             // Arrange
+            
+            var id = new Random().Next();
+            var expectedQuestionArea = new QuestionArea()
+            {
+                Id = id,
+            };
+            var expectedViewModel = new QuestionAreaViewModel()
+            {
+                Id = id
+            };
+
+            _mapperMock.Setup(map => map.Map<QuestionArea, QuestionAreaViewModel>(expectedQuestionArea)).Returns(expectedViewModel);
+            _serviceMock.Setup(serv => serv.GetById(id, default)).ReturnsAsync(expectedQuestionArea);
+
+            var controller = new QuestionAreaController(_serviceMock.Object, _mapperMock.Object);
+
+            // Act
+            var result = await controller.GetQuestionArea(id, default);
+
+            // Assert
+            expectedViewModel.ShouldBeEquivalentTo(result);
+        }
+
+        [Fact]
+        public async Task GetAll_WhenControllerHasData_ShouldReturnValidModel()
+        {
+            // Arrange
             var expected = new[]
             {
                 new QuestionAreaViewModel()
