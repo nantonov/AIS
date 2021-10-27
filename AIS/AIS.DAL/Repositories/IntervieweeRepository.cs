@@ -25,11 +25,11 @@ namespace AIS.DAL.Repositories
             return _context.Interviewees.Include(x => x.Company).Where(predicate).ToList();
         }
 
-        public override async Task<IntervieweeEntity> GetById(int id, CancellationToken ct)
+        public override Task<IntervieweeEntity> GetById(int id, CancellationToken ct)
         {
             var entity = _context.Interviewees.Include(x => x.Company).FirstOrDefaultAsync(x => x.Id == id, ct);
 
-            return entity.Result;
+            return entity;
         }
     }
 }

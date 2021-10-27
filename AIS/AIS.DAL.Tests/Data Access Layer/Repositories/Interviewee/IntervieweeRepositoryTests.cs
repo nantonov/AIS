@@ -37,7 +37,7 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Interviewee
                 Name = "das"
             };
 
-            using (_context = new(_options))
+            await using (_context = new(_options))
             {
                 _context.Interviewees.Add(model);
                 _context.Companies.Add(company);
@@ -54,8 +54,7 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Interviewee
         [Fact]
         public async Task GetInterviewees_ValidModels_ReturnsIntervieweeEntityList()
         {
-            using (_context = new(_options))
-            {
+            _context = new(_options);
                 _context.Interviewees.Add(new IntervieweeEntity
                 {
                     Id = 6,
@@ -81,7 +80,6 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Interviewee
                 var employee = await _repository.Get(default);
 
                 employee.ShouldNotBeNull();
-            }
         }
 
         [Fact]
