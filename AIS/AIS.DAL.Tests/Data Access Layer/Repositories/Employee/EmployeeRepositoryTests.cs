@@ -254,14 +254,14 @@ namespace AIS.DAL.Tests.Data_Access_Layer.Repositories.Employee
 
                 var ct = new CancellationToken();
 
-                var employee = await _repository.Get(ct).ConfigureAwait(false);
+                var employee = _repository.Get(ct).GetAwaiter();
 
                 if (ct.IsCancellationRequested)
                 {
                     1.ShouldBe(0);
                 }
 
-                employee.ShouldBeEmpty();
+                employee.GetResult().ShouldBeEmpty();
             }
         }
 
