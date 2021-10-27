@@ -23,7 +23,7 @@ namespace AIS.DAL.Tests.Repositories
         }
 
         [Fact]
-        public async Task GetSession_ValidId_ReturnsSessionById()
+        public async Task GetSessionById_ValidId_ReturnsSessionById()
         {
             var id = new Random().Next();
             var sessionEntity = new SessionEntity()
