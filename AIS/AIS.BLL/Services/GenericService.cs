@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using AIS.BLL.Interfaces.Services;
@@ -52,10 +53,10 @@ namespace AIS.BLL.Services
             );
         }
 
-        public IEnumerable<TEntity> Get(Func<TEntity, bool> predicate, CancellationToken ct)
+        public IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> predicate, CancellationToken ct)
         {
             return _mapper.Map<IEnumerable<TEntity>>(
-                this._repository.Get(_mapper.Map<Func<TMapToEntity, bool>>(predicate), ct)
+                this._repository.Get(_mapper.Map<Expression<Func<TMapToEntity, bool>>>(predicate), ct)
                 );
         }
 

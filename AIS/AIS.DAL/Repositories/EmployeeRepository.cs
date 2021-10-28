@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using AIS.DAL.Interfaces.Repositories;
@@ -20,12 +21,9 @@ namespace AIS.DAL.Repositories
             return await _dbSet.AsNoTracking().Include(x => x.Company).ToListAsync(ct);
         }
 
-        public override async Task<IEnumerable<EmployeeEntity>> Get(Func<EmployeeEntity, bool> predicate, CancellationToken ct)
+        public override async Task<IEnumerable<EmployeeEntity>> Get(Expression<Func<EmployeeEntity, bool>> predicate, CancellationToken ct)
         {
-            _dbSet.AsNoTracking().Include(x => x.Company);
-            var result = await _dbSet.ToListAsync(ct);
-                
-            return result.Where(predicate).ToList();
+            return await _dbSet.AsNoTracking().Include(x => x.Company).Where(predicate).ToListAsync(ct);
         }
 
         public override async Task<EmployeeEntity> GetById(int id, CancellationToken ct)

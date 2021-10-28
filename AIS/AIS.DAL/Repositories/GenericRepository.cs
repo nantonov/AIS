@@ -1,10 +1,11 @@
-﻿using System;
+﻿using AIS.DAL.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
-using AIS.DAL.Interfaces.Repositories;
-using Microsoft.EntityFrameworkCore;
 
 namespace AIS.DAL.Repositories
 {
@@ -24,11 +25,9 @@ namespace AIS.DAL.Repositories
             return await _dbSet.AsNoTracking().ToListAsync(ct);
         }
 
-        public virtual async Task<IEnumerable<TEntity>> Get(Func<TEntity, bool> predicate, CancellationToken ct)
+        public virtual async Task<IEnumerable<TEntity>> Get(Expression<Func<TEntity, bool>> predicate, CancellationToken ct)
         {
-            var result = await _dbSet.AsNoTracking().ToListAsync(ct);
-
-            return result.Where(predicate);
+            return await _dbSet.AsNoTracking().Where(predicate).ToListAsync(ct);
         }
 
         public virtual async Task<TEntity> GetById(int id, CancellationToken ct)
@@ -50,7 +49,7 @@ namespace AIS.DAL.Repositories
         }
         public async Task Delete(int id, CancellationToken ct)
         {
-            var entity = await _dbSet.FindAsync(new object[] {id}, ct);
+            var entity = await _dbSet.FindAsync(new object[] { id }, ct);
             _dbSet.Remove(entity);
             await _context.SaveChangesAsync(ct);
         }

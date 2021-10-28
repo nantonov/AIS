@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using AIS.DAL.Entities;
@@ -20,12 +21,9 @@ namespace AIS.DAL.Repositories
             return await _dbSet.Include(x => x.Company).ToListAsync(ct);
         }
 
-        public override async Task<IEnumerable<IntervieweeEntity>> Get(Func<IntervieweeEntity, bool> predicate, CancellationToken ct)
+        public override async Task<IEnumerable<IntervieweeEntity>> Get(Expression<Func<IntervieweeEntity, bool>> predicate, CancellationToken ct)
         {
-            _dbSet.Include(x => x.Company);
-            var result = await _dbSet.ToListAsync(ct);
-                
-            return result.Where(predicate).ToList();
+            return await _dbSet.Include(x => x.Company).Where(predicate).ToListAsync(ct);
         }
 
         public override async Task<IntervieweeEntity> GetById(int id, CancellationToken ct)
