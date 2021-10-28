@@ -28,7 +28,7 @@ namespace AIS.DAL.Repositories
         {
             var result = await _dbSet.AsNoTracking().ToListAsync(ct);
 
-            return _dbSet.Where(predicate);
+            return result.Where(predicate);
         }
 
         public virtual async Task<TEntity> GetById(int id, CancellationToken ct)
