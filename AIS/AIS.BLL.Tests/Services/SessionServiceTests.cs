@@ -7,6 +7,7 @@ using AutoMapper;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Shouldly;
 using Xunit;
@@ -49,11 +50,12 @@ namespace AIS.BLL.Tests.Services
                     IntervieweeId = 5
                 }
             };
-            _mapperMock.Setup(x => x.Map<IEnumerable<SessionEntity>>(It.IsAny<IEnumerable<Session>>())).Returns(sessionsEntity);
+            _mapperMock.Setup(x => x.Map<IEnumerable<Session>>(It.IsAny<IEnumerable<SessionEntity>>())).Returns(sessions);
             _sessionRepoMock.Setup(x => x.Get(default)).ReturnsAsync(sessionsEntity);
-            _mapperMock.Setup(x => x.Map<IEnumerable<Session>>(It.IsAny<IEnumerable<Session>>())).Returns(sessions);
             var result = await _service.Get(default);
             Assert.NotNull(result);
+            Assert.Equal(sessions.Count, result.Count());
+            result.ShouldBeEquivalentTo(sessions);
         }
 
         [Fact]

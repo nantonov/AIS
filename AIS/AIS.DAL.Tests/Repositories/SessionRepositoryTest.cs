@@ -28,18 +28,17 @@ namespace AIS.DAL.Tests.Repositories
             var id = new Random().Next();
             var sessionEntity = new SessionEntity()
             {
-                Id = id,
                 CompanyId = id,
                 EmployeeId = id,
                 IntervieweeId = id,
                 StartedAt = DateTime.Today
             };
-            await _context.Sessions.AddAsync(sessionEntity);
+            var model = await _context.Sessions.AddAsync(sessionEntity);
             await _context.SaveChangesAsync();
-            var session = await _repo.GetById(id, default);
-            Assert.Equal(id, session.Id);
-            Assert.Equal(id, session.CompanyId);
-            Assert.Equal(id, session.IntervieweeId);
+            var session = await _repo.GetById(model.Entity.Id, default);
+            Assert.Equal(sessionEntity.EmployeeId, session.EmployeeId);
+            Assert.Equal(sessionEntity.CompanyId, session.CompanyId);
+            Assert.Equal(sessionEntity.IntervieweeId, session.IntervieweeId);
             await _context.Database.EnsureDeletedAsync();
         }
 
