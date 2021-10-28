@@ -12,15 +12,12 @@ namespace AIS.DAL.Tests.Repositories.Company
     public class CompanyRepositoryTests
     {
         private readonly DbContextOptions<DatabaseContext> _options;
-        private DatabaseContext _context;
-        private readonly CompanyRepository _repository;
+        private CompanyRepository _repository;
 
         public CompanyRepositoryTests()
         {
             _options = new DbContextOptionsBuilder<DatabaseContext>().UseInMemoryDatabase(databaseName: "CompanyDataBase")
                 .Options;
-            _context = new(_options);
-            _repository = new(_context);
         }
 
         [Fact]
@@ -28,62 +25,54 @@ namespace AIS.DAL.Tests.Repositories.Company
         {
             var model = new CompanyEntity
             {
-                Id = 8,
                 Name = "asd",
                 Employees = new HashSet<EmployeeEntity>
                 {
-                    new EmployeeEntity
+                    new()
                     {
-                        Id = 3,
                         Name = "asd",
-                        CompanyId = 8
                     }
                 },
                 Interviewees = new HashSet<IntervieweeEntity>
                 {
-                    new IntervieweeEntity
+                    new()
                     {
-                        Id = 2,
                         Name = "asd"
                     }
                 }
             };
 
-            using (_context = new(_options))
-            {
-                await _context.Companies.AddAsync(model);
-                await _context.SaveChangesAsync();
+            await using DatabaseContext context = new(_options);
+            _repository = new(context);
+            var entity = await context.Companies.AddAsync(model);
+            await context.SaveChangesAsync();
 
-                var employee = await _repository.GetById(8, default);
+            var company = await _repository.GetById(entity.Entity.Id, default);
 
-                employee.ShouldNotBeNull();
-                employee.ShouldBeEquivalentTo(model);
-            }
+            company.ShouldNotBeNull();
+            company.ShouldBeEquivalentTo(entity.Entity);
         }
 
         [Fact]
         public async Task GetCompanies_ValidModels_ReturnsCompanyEntityList()
         {
-            using (_context = new(_options))
+            await using DatabaseContext context = new(_options);
+            _repository = new(context);
+            context.Companies.Add(new CompanyEntity
             {
-                _context.Companies.Add(new CompanyEntity
-                {
-                    Id = 6,
-                    Name = "asd"
-                });
+                Name = "asd"
+            });
 
-                _context.Companies.Add(new CompanyEntity
-                {
-                    Id = 7,
-                    Name = "dsa"
-                });
+            context.Companies.Add(new CompanyEntity
+            {
+                Name = "dsa"
+            });
 
-                await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
 
-                var employee = await _repository.Get(default);
+            var employee = await _repository.Get(default);
 
-                employee.ShouldNotBeNull();
-            }
+            employee.ShouldNotBeNull();
         }
 
         [Fact]
@@ -91,44 +80,33 @@ namespace AIS.DAL.Tests.Repositories.Company
         {
             var model = new CompanyEntity()
             {
-                Id = 10,
                 Name = "asd"
             };
 
-            using (_context = new(_options))
-            {
-                var employee = await _repository.Add(model, default);
+            await using DatabaseContext context = new(_options);
+            _repository = new(context);
+            var employee = await _repository.Add(model, default);
 
-                employee.ShouldNotBeNull();
-                employee.ShouldBeEquivalentTo(model);
-            }
+            employee.ShouldNotBeNull();
         }
 
         [Fact]
         public async Task UpdateCompany_ValidModel_ReturnsCompanyEntity()
         {
-            var expectedModel = new CompanyEntity
-            {
-                Id = 14,
-                Name = "asd"
-            };
-
             var addedModel = new CompanyEntity
             {
-                Id = 14,
                 Name = "asd"
             };
 
-            using (_context = new(_options))
-            {
-                await _context.Companies.AddAsync(addedModel);
-                await _context.SaveChangesAsync();
+            await using DatabaseContext context = new(_options);
+            _repository = new(context);
+            var entity = await context.Companies.AddAsync(addedModel);
+            await context.SaveChangesAsync();
+            
+            var company = await _repository.Update(entity.Entity, default);
 
-                var employee = await _repository.Update(expectedModel, default);
-
-                employee.ShouldNotBeNull();
-                employee.ShouldBeEquivalentTo(expectedModel);
-            }
+            company.ShouldNotBeNull();
+            company.ShouldBeEquivalentTo(entity.Entity);
         }
 
         [Fact]
@@ -137,21 +115,19 @@ namespace AIS.DAL.Tests.Repositories.Company
             var model = new[] {
                     new CompanyEntity
                     {
-                        Id = 13,
                         Name = "asd"
                     }
                 };
 
-            using (_context = new(_options))
-            {
-                _context.Companies.Add(model[0]);
+            await using DatabaseContext context = new(_options);
+            _repository = new(context);
 
-                await _context.SaveChangesAsync();
+            context.Companies.Add(model[0]);
+            await context.SaveChangesAsync();
 
-                var employee = _repository.Get(x => x.Id == model[0].Id, default);
+            var employee = await _repository.Get(x => x.Id == model[0].Id, default);
 
-                employee.ShouldNotBeNull();
-            }
+            employee.ShouldNotBeNull();
         }
 
         [Fact]
@@ -159,35 +135,31 @@ namespace AIS.DAL.Tests.Repositories.Company
         {
             var employeeModel = new CompanyEntity
             {
-                Id = 11,
                 Name = "asd",
             };
 
-            using (_context = new(_options))
-            {
-                _context.Companies.Add(employeeModel);
+            await using DatabaseContext context = new(_options);
+            _repository = new(context);
 
-                await _context.SaveChangesAsync();
+            context.Companies.Add(employeeModel);
+            await context.SaveChangesAsync();
 
-                await _repository.Delete(employeeModel, default).ShouldNotThrowAsync();
-            }
+            await _repository.Delete(employeeModel, default).ShouldNotThrowAsync();
         }
 
         [Fact]
         public async Task DeleteCompany_ValidId_NotThrow()
         {
-            using (_context = new(_options))
+            await using DatabaseContext context = new(_options);
+            _repository = new(context);
+
+            context.Companies.Add(new CompanyEntity
             {
-                _context.Companies.Add(new CompanyEntity
-                {
-                    Id = 1,
-                    Name = "asd"
-                });
+                Name = "asd"
+            });
+            await context.SaveChangesAsync();
 
-                await _context.SaveChangesAsync();
-
-                await _repository.Delete(1, default).ShouldNotThrowAsync();
-            }
+            await _repository.Delete(1, default).ShouldNotThrowAsync();
         }
 
         [Fact]
@@ -195,44 +167,39 @@ namespace AIS.DAL.Tests.Repositories.Company
         {
             var model = new CompanyEntity
             {
-                Id = 9,
                 Name = "asd"
             };
 
-            using (_context = new(_options))
-            {
-                _context.Companies.Add(model);
+            await using DatabaseContext context = new(_options);
+            _repository = new(context);
 
-                await _context.SaveChangesAsync();
+            context.Companies.Add(model);
+            await context.SaveChangesAsync();
 
-                var employee = await _repository.GetById(-8, default);
+            var employee = await _repository.GetById(-8, default);
 
-                employee.ShouldBeNull();
-            }
+            employee.ShouldBeNull();
         }
 
         [Fact]
         public async Task GetCompanies_NoModels_ReturnsEmptyCompanyEntityList()
         {
-            using (_context = new(_options))
-            {
-                await _context.Database.EnsureDeletedAsync();
+            await using DatabaseContext context = new(_options);
+            _repository = new(context);
 
-                var employee = await _repository.Get(default);
+            await context.Database.EnsureDeletedAsync();
+            var employee = await _repository.Get(default);
 
-                employee.ShouldBeEmpty();
-            }
+            employee.ShouldBeEmpty();
         }
 
         [Fact]
         public async Task AddCompany_InvalidModel_ThrowArgumentNullException()
         {
-            using (_context = new(_options))
-            {
-                var model = (CompanyEntity)null;
+            await using DatabaseContext context = new(_options);
+            _repository = new(context);
 
-                await _repository.Add(model, default).ShouldThrowAsync(typeof(ArgumentNullException));
-            }
+            await _repository.Add(null, default).ShouldThrowAsync(typeof(ArgumentNullException));
         }
 
         [Fact]
@@ -243,27 +210,24 @@ namespace AIS.DAL.Tests.Repositories.Company
                 Name = "Name"
             };
 
-            var addedModel = new CompanyEntity
-            {
-                Id = 4,
-                Name = "asd"
-            };
+            var addedModel = new CompanyEntity();
 
-            using (_context = new(_options))
-            {
-                await _context.Companies.AddAsync(addedModel);
-                await _context.SaveChangesAsync();
+            await using DatabaseContext context = new(_options);
+            _repository = new(context);
 
-                await _repository.Update(expectedModel, default).ShouldThrowAsync(typeof(DbUpdateConcurrencyException));
-            }
+            await context.Companies.AddAsync(addedModel);
+            await context.SaveChangesAsync();
+
+            await _repository.Update(expectedModel, default).ShouldThrowAsync(typeof(DbUpdateConcurrencyException));
         }
 
         [Fact]
-        public void GetCompaniesByPredicate_ValidPredicate_ReturnsEmptyCompanyEntityList()
+        public async Task GetCompaniesByPredicate_ValidPredicate_ReturnsEmptyCompanyEntityList()
         {
-            using (_context = new(_options))
+            await using DatabaseContext context = new(_options);
+            _repository = new(context);
             {
-                var employee = _repository.Get(x => x.Id == -1, default);
+                var employee = await _repository.Get(x => x.Id == -1, default);
 
                 employee.ShouldBeEmpty();
             }
@@ -272,6 +236,8 @@ namespace AIS.DAL.Tests.Repositories.Company
         [Fact]
         public async Task DeleteCompany_InvalidModel_ThrowNullArgumentException()
         {
+            await using DatabaseContext context = new(_options);
+            _repository = new(context);
             var employeeModel = new CompanyEntity
             {
                 Id = -1
@@ -283,7 +249,9 @@ namespace AIS.DAL.Tests.Repositories.Company
         [Fact]
         public async Task DeleteCompany_InvalidId_ThrowDbUpdateConcurrencyException()
         {
-            await _repository.Delete(1, default).ShouldThrowAsync(typeof(ArgumentNullException));
+            await using DatabaseContext context = new(_options);
+            _repository = new(context);
+            await _repository.Delete(-123, default).ShouldThrowAsync(typeof(ArgumentNullException));
         }
     }
 }

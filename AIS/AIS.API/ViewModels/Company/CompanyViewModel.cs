@@ -8,7 +8,7 @@ using AIS.API.ViewModels.Interviewee;
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public IEnumerable<EmployeeViewModel> Employees { get; set; }
-        public IEnumerable<IntervieweeViewModel> Interviewees { get; set; }
+        public IEnumerable<ShortEmployeeViewModel> Employees { get; set; }
+        public IEnumerable<ShortIntervieweeViewModel> Interviewees { get; set; }
     }
 }

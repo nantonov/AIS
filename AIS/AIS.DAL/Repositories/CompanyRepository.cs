@@ -18,19 +18,22 @@ namespace AIS.DAL.Repositories
         
         public override async Task<IEnumerable<CompanyEntity>> Get(CancellationToken ct)
         {
-            var result = await _context.Companies.Include(x => x.Employees).Include(x => x.Interviewees).ToListAsync(ct);
+            var result = await _dbSet.Include(x => x.Employees).Include(x => x.Interviewees).ToListAsync(ct);
 
             return result;
         }
 
-        public override IEnumerable<CompanyEntity> Get(Func<CompanyEntity, bool> predicate, CancellationToken ct)
+        public override async Task<IEnumerable<CompanyEntity>> Get(Func<CompanyEntity, bool> predicate, CancellationToken ct)
         {
-            return _context.Companies.AsNoTracking().Include(x => x.Employees).Include(x => x.Interviewees).Where(predicate).ToList();
+            _dbSet.AsNoTracking().Include(x => x.Employees).Include(x => x.Interviewees);
+            var result = await _dbSet.ToListAsync(ct);
+
+            return result.Where(predicate);
         }
 
         public override async Task<CompanyEntity> GetById(int id, CancellationToken ct)
         {
-            var entity = await _context.Companies.AsNoTracking().Include(x => x.Employees).Include(x => x.Interviewees).FirstOrDefaultAsync(x => x.Id == id, ct);
+            var entity = await _dbSet.AsNoTracking().Include(x => x.Employees).Include(x => x.Interviewees).FirstOrDefaultAsync(x => x.Id == id, ct);
             
             return entity;
         }

@@ -12,15 +12,12 @@ namespace AIS.DAL.Tests.Repositories.Employee
     public class EmployeeRepositoryTests
     {
         private readonly DbContextOptions<DatabaseContext> _options;
-        private DatabaseContext _context;
-        private readonly EmployeeRepository _repository;
+        private EmployeeRepository _repository;
 
         public EmployeeRepositoryTests()
         {
             _options = new DbContextOptionsBuilder<DatabaseContext>().UseInMemoryDatabase(databaseName: "EmployeeDataBase")
                 .Options;
-            _context = new(_options);
-            _repository = new(_context);
         }
 
         [Fact]
@@ -28,63 +25,56 @@ namespace AIS.DAL.Tests.Repositories.Employee
         {
             var model = new EmployeeEntity
             {
-                Id = 8,
-                CompanyId = 2,
+                CompanyId = 1,
                 Name = "asd"
             };
             var company = new CompanyEntity
             {
-                Id = 2,
                 Name = "dsa"
             };
 
-            using (_context = new(_options))
-            {
-                _context.Employees.Add(model);
-                _context.Companies.Add(company);
+            await using DatabaseContext context = new(_options);
+            _repository = new(context);
+            var entity = context.Employees.Add(model);
+            context.Companies.Add(company);
 
-                await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
 
-                var employee = await _repository.GetById(8, default);
+            var employee = await _repository.GetById(entity.Entity.Id, default);
 
-                employee.ShouldNotBeNull();
-                employee.ShouldBeEquivalentTo(model);
-            }
+            employee.ShouldNotBeNull();
+            employee.ShouldBeEquivalentTo(entity.Entity);
         }
 
         [Fact]
         public async Task GetEmployees_ValidModels_ReturnsEmployeeEntity()
         {
-            using (_context = new(_options))
+            await using DatabaseContext context = new(_options);
+            _repository = new(context);
+            context.Employees.Add(new EmployeeEntity
             {
-                _context.Employees.Add(new EmployeeEntity
-                {
-                    Id = 6,
-                    CompanyId = 1,
-                    Name = "asd"
-                });
+                CompanyId = 1,
+                Name = "asd"
+            });
 
-                _context.Employees.Add(new EmployeeEntity
-                {
-                    Id = 7,
-                    CompanyId = 1,
-                    Name = "dsa"
-                });
+            context.Employees.Add(new EmployeeEntity
+            {
+                CompanyId = 1,
+                Name = "dsa"
+            });
 
-                _context.Companies.Add(new CompanyEntity
-                {
-                    Id = 1,
-                    Name = "asd"
-                });
+            context.Companies.Add(new CompanyEntity
+            {
+                Name = "asd"
+            });
 
-                await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
 
-                var ct = new CancellationToken();
+            var ct = new CancellationToken();
 
-                var employee = _repository.Get(ct);
+            var employee = _repository.Get(ct);
 
-                employee.Result.ShouldNotBeEmpty();
-            }
+            employee.Result.ShouldNotBeEmpty();
         }
 
         [Fact]
@@ -92,87 +82,71 @@ namespace AIS.DAL.Tests.Repositories.Employee
         {
             var model = new EmployeeEntity()
             {
-                Id = 5,
                 CompanyId = 2,
                 Name = "asd"
             };
 
             var ct = new CancellationToken();
 
-            using (_context = new(_options))
-            {
-                var employee = await _repository.Add(model, ct);
+            await using DatabaseContext context = new(_options);
+            _repository = new(context);
+            var employee = await _repository.Add(model, ct);
 
-                employee.ShouldNotBeNull();
-                employee.ShouldBeEquivalentTo(model);
-            }
+            employee.ShouldNotBeNull();
         }
 
         [Fact]
         public async Task UpdateEmployee_ValidModel_ReturnsEmployeeEntity()
         {
-            var expectedModel = new EmployeeEntity
-            {
-                Id = 14,
-                CompanyId = 6,
-                Name = "asd"
-            };
-
             var addedModel = new EmployeeEntity
             {
-                Id = 14,
                 CompanyId = 6,
-                Name = "asd"
+                Name = "dsa"
             };
 
-            using (_context = new(_options))
+            await using DatabaseContext context = new(_options);
+            _repository = new(context);
+            var entity = await context.Employees.AddAsync(addedModel);
+            await context.SaveChangesAsync();
+
+            await context.Companies.AddAsync(new CompanyEntity
             {
-                await _context.Employees.AddAsync(addedModel);
-                await _context.SaveChangesAsync();
+                Name = "asd"
+            });
 
-                await _context.Companies.AddAsync(new CompanyEntity
-                {
-                    Id = 3,
-                    Name = "asd"
-                });
+            await context.SaveChangesAsync();
 
-                await _context.SaveChangesAsync();
+            var employee = await _repository.Update(entity.Entity, default);
 
-                var employee = await _repository.Update(expectedModel, default);
-
-                employee.ShouldNotBeNull();
-                employee.ShouldBeEquivalentTo(expectedModel);
-            }
+            employee.ShouldNotBeNull();
+            employee.ShouldBeEquivalentTo(entity.Entity);
         }
 
         [Fact]
-        public async Task GetEmployeesByPredicate_ValidPredicate_ReturnsEmployeeEnitityList()
+        public async Task GetEmployeesByPredicate_ValidPredicate_ReturnsEmployeeEntityList()
         {
             var model = new[] {
                     new EmployeeEntity
                     {
-                        Id = 13,
                         CompanyId = 5,
                         Name = "asd"
                     }
                 };
 
-            using (_context = new(_options))
+            await using DatabaseContext context = new(_options);
+            _repository = new(context);
+            context.Companies.Add(new CompanyEntity
             {
-                _context.Companies.Add(new CompanyEntity
-                {
-                    Id = 5,
-                    Name = "asd"
-                });
+                Name = "asd"
+            });
 
-                _context.Employees.Add(model[0]);
+            var entity = context.Employees.Add(model[0]);
 
-                await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
 
-                var employee = _repository.Get(x => x.Id == model[0].Id, default);
+            var employee = await _repository.Get(x => x.Id == entity.Entity.Id, default);
 
-                employee.ShouldNotBeNull();
-            }
+            employee.ShouldNotBeNull();
         }
 
         [Fact]
@@ -180,83 +154,66 @@ namespace AIS.DAL.Tests.Repositories.Employee
         {
             var employeeModel = new EmployeeEntity
             {
-                Id = 2,
                 CompanyId = 2,
                 Name = "asd",
             };
 
-            using (_context = new(_options))
-            {
-                _context.Employees.Add(employeeModel);
+            await using DatabaseContext context = new(_options);
+            _repository = new(context);
+            var entity = context.Employees.Add(employeeModel);
 
-                await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
 
-                await _repository.Delete(employeeModel, default).ShouldNotThrowAsync();
-            }
+            await _repository.Delete(entity.Entity, default).ShouldNotThrowAsync();
         }
 
         [Fact]
         public async Task DeleteEmployee_ValidId_NotThrow()
         {
-            using (_context = new(_options))
+            await using DatabaseContext context = new(_options);
+            _repository = new(context);
+            var entity = context.Employees.Add(new EmployeeEntity
             {
-                _context.Employees.Add(new EmployeeEntity
-                {
-                    Id = 1,
-                    CompanyId = 2,
-                    Name = "asd"
-                });
+                CompanyId = 2,
+                Name = "asd"
+            });
 
-                await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
 
-                await _repository.Delete(1, default).ShouldNotThrowAsync();
-            }
+            await _repository.Delete(entity.Entity.Id, default).ShouldNotThrowAsync();
         }
 
         [Fact]
         public async Task GetEmployeeById_InvalidId_ReturnsNull()
         {
-            var model = new EmployeeEntity
-            {
-                Id = 9,
-                CompanyId = 2,
-                Name = "asd"
-            };
+            await using DatabaseContext context = new(_options);
+            _repository = new(context);
+            var employee = await _repository.GetById(-8, default);
 
-            using (_context = new(_options))
-            {
-                _context.Employees.Add(model);
-
-                await _context.SaveChangesAsync();
-
-                var employee = await _repository.GetById(-8, default);
-
-                employee.ShouldBeNull();
-            }
+            employee.ShouldBeNull();
         }
 
         [Fact]
         public async Task GetEmployees_NoModels_ReturnsEmptyEmployeeEntityList()
         {
-            using (_context = new(_options))
-            {
-                await _context.Database.EnsureDeletedAsync();
+            await using DatabaseContext context = new(_options);
+            _repository = new(context);
+            await context.Database.EnsureDeletedAsync();
 
-                var ct = new CancellationToken();
+            var ct = new CancellationToken();
 
-                var employee = _repository.Get(ct).GetAwaiter();
+            var employee = await _repository.Get(ct);
 
-                employee.GetResult().ShouldBeEmpty();
-            }
+            employee.ShouldBeEmpty();
         }
 
         [Fact]
         public async Task AddEmployee_InvalidModel_ThrowArgumentNullException()
         {
-            var model = (EmployeeEntity)null;
-
+            await using DatabaseContext context = new(_options);
+            _repository = new(context);
             var ct = new CancellationToken();
-            var result = _repository.Add(model, ct);
+            var result = _repository.Add(null, ct);
 
             await result.ShouldThrowAsync(typeof(ArgumentNullException));
         }
@@ -264,53 +221,35 @@ namespace AIS.DAL.Tests.Repositories.Employee
         [Fact]
         public async Task UpdateEmployee_InvalidModel_ThrowDbUpdateConcurrencyException()
         {
-            var expectedModel = new EmployeeEntity
-            {
-                Name = "Name"
-            };
-
-            var addedModel = new EmployeeEntity
-            {
-                Id = 4,
-                CompanyId = 3,
-                Name = "asd"
-            };
-
-            using (_context = new(_options))
-            {
-                await _context.Employees.AddAsync(addedModel);
-                await _context.SaveChangesAsync();
-
-                await _repository.Update(expectedModel, default).ShouldThrowAsync(typeof(DbUpdateConcurrencyException));
-            }
+            await using DatabaseContext context = new(_options);
+            _repository = new(context);
+            await _repository.Update(null, default).ShouldThrowAsync(typeof(ArgumentNullException));
         }
 
         [Fact]
-        public void GetEmployeesByPredicate_ValidPredicate_ReturnsEmptyEmployeeEntityList()
+        public async Task GetEmployeesByPredicate_ValidPredicate_ReturnsEmptyEmployeeEntityList()
         {
-            using (_context = new(_options))
-            {
-                var employee = _repository.Get(x => x.Id == -1, default);
+            await using DatabaseContext context = new(_options);
+            _repository = new(context);
+            var employee = await _repository.Get(x => x.Id == -1, default);
 
-                employee.ShouldBeEmpty();
-            }
+            employee.ShouldBeEmpty();
         }
 
         [Fact]
         public async Task DeleteEmployee_InvalidModel_ThrowNullArgumentException()
         {
-            var employeeModel = new EmployeeEntity
-            {
-                Id = -1
-            };
-
-            await _repository.Delete(employeeModel, default).ShouldThrowAsync(typeof(DbUpdateConcurrencyException));
+            await using DatabaseContext context = new(_options);
+            _repository = new(context);
+            await _repository.Delete(null, default).ShouldThrowAsync(typeof(ArgumentNullException));
         }
 
         [Fact]
         public async Task DeleteEmployee_InvalidId_ThrowDbUpdateConcurrencyException()
         {
-            await _repository.Delete(1, default).ShouldThrowAsync(typeof(ArgumentNullException));
+            await using DatabaseContext context = new(_options);
+            _repository = new(context);
+            await _repository.Delete(-1, default).ShouldThrowAsync(typeof(ArgumentNullException));
         }
     }
 }
