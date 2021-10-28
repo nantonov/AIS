@@ -1,4 +1,4 @@
-﻿using AIS.API.ViewModels.Company;
+using AIS.API.ViewModels.Company;
 using AIS.API.ViewModels.Employee;
 using AIS.API.ViewModels.Interviewee;
 using AIS.API.ViewModels.Session;
@@ -20,6 +20,7 @@ namespace AIS.API.Mapper
             CreateMap<Session, SessionViewModel>();
             CreateMap<SessionAddViewModel, Session>();
             CreateMap<SessionUpdateViewModel, Session>();
+            CreateMap<Company, ShortCompanyViewModel>();
         }
     }
 }
