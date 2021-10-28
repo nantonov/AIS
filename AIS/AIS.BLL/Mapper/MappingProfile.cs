@@ -10,6 +10,8 @@ namespace AIS.BLL.Mapper
         {
             CreateMap<IntervieweeEntity, Interviewee>().ReverseMap();
             CreateMap<CompanyEntity, Company>().ReverseMap();
+            CreateMap<EmployeeEntity, Employee>().ReverseMap(); 
+            CreateMap<SessionEntity, Session>().ReverseMap();
         }
     }
 }

@@ -108,7 +108,7 @@ namespace AIS.BLL.Tests.Services
         }
 
         [Fact]
-        public async Task GetSession_InvalidId_ReturnsNullSessionById()
+        public async Task GetSessionById_InvalidId_ReturnsNullSessionById()
         {
             var session = new Session();
             var sessionEntity = new SessionEntity();
@@ -177,7 +177,7 @@ namespace AIS.BLL.Tests.Services
         }
 
         [Fact]
-        public async Task PutSession_InvalidSession_ReturnsSession()
+        public async Task PutSession_ValidSession_ReturnsSession()
         {
             var sessionEntity = new SessionEntity()
             {
@@ -205,7 +205,7 @@ namespace AIS.BLL.Tests.Services
             Assert.Equal(session.EmployeeId, expected.EmployeeId);
         }
         [Fact]
-        public async Task PutSession_ValidSession_ReturnsNull()
+        public async Task PutSession_InvalidSession_ReturnsNull()
         {
             var sessionEntity = (SessionEntity)null;
 
