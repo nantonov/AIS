@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace AIS.DAL.Tests.Repositories
+namespace AIS.DAL.Tests.Repositories.Session
 {
     public class SessionRepositoryTest
     {
