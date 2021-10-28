@@ -1,4 +1,4 @@
-﻿using AIS.API.ViewModels.Company;
+using AIS.API.ViewModels.Company;
 using AIS.API.ViewModels.Employee;
 using AIS.API.ViewModels.Interviewee;
 using AIS.BLL.Models;
@@ -16,6 +16,7 @@ namespace AIS.API.Mapper
             CreateMap<ChangeIntervieweeViewModel, Interviewee>();
             CreateMap<Company, CompanyViewModel>();
             CreateMap<ChangeCompanyViewModel, Company>();
+            CreateMap<Company, ShortCompanyViewModel>();
         }
     }
 }

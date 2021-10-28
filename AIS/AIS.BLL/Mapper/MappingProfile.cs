@@ -8,6 +8,7 @@ namespace AIS.BLL.Mapper
     {
         public MappingProfile()
         {
+            CreateMap<EmployeeEntity, Employee>().ReverseMap();
             CreateMap<IntervieweeEntity, Interviewee>().ReverseMap();
             CreateMap<CompanyEntity, Company>().ReverseMap();
         }

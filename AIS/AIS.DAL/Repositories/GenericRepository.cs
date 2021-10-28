@@ -1,17 +1,18 @@
-﻿using System;
+﻿using AIS.DAL.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
-using AIS.DAL.Interfaces.Repositories;
-using Microsoft.EntityFrameworkCore;
 
 namespace AIS.DAL.Repositories
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
-        private readonly DatabaseContext _context;
-        private readonly DbSet<TEntity> _dbSet;
+        protected readonly DatabaseContext _context;
+        protected readonly DbSet<TEntity> _dbSet;
 
         public GenericRepository(DatabaseContext context)
         {
@@ -19,17 +20,17 @@ namespace AIS.DAL.Repositories
             this._dbSet = _context.Set<TEntity>();
         }
 
-        public async Task<IEnumerable<TEntity>> Get(CancellationToken ct)
+        public virtual async Task<IEnumerable<TEntity>> Get(CancellationToken ct)
         {
             return await _dbSet.AsNoTracking().ToListAsync(ct);
         }
 
-        public IEnumerable<TEntity> Get(Func<TEntity, bool> predicate, CancellationToken ct)
+        public virtual async Task<IEnumerable<TEntity>> Get(Expression<Func<TEntity, bool>> predicate, CancellationToken ct)
         {
-            return _dbSet.Where(predicate).ToList();
+            return await _dbSet.AsNoTracking().Where(predicate).ToListAsync(ct);
         }
 
-        public async Task<TEntity> GetById(int id, CancellationToken ct)
+        public virtual async Task<TEntity> GetById(int id, CancellationToken ct)
         {
             return await _dbSet.FindAsync(new object[] { id }, ct);
         }
@@ -48,7 +49,7 @@ namespace AIS.DAL.Repositories
         }
         public async Task Delete(int id, CancellationToken ct)
         {
-            var entity = await _dbSet.FindAsync(new object[] {id}, ct);
+            var entity = await _dbSet.FindAsync(new object[] { id }, ct);
             _dbSet.Remove(entity);
             await _context.SaveChangesAsync(ct);
         }
