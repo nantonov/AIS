@@ -235,7 +235,7 @@ namespace AIS.DAL.Tests.Repositories.Session
             };
             await _context.Sessions.AddAsync(sessionEntity[0]);
             await _context.SaveChangesAsync();
-            var session =  _repo.Get(x => x.Id == sessionEntity[0].Id, default);
+            var session = await _repo.Get(x => x.Id == sessionEntity[0].Id, default);
             session.ShouldNotBeNull();
         }
 
