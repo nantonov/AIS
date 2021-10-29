@@ -17,6 +17,8 @@ namespace AIS.API.Mapper
             CreateMap<Company, CompanyViewModel>();
             CreateMap<ChangeCompanyViewModel, Company>();
             CreateMap<Company, ShortCompanyViewModel>();
+            CreateMap<Employee, ShortEmployeeViewModel>();
+            CreateMap<Interviewee, ShortIntervieweeViewModel>();
         }
     }
 }
