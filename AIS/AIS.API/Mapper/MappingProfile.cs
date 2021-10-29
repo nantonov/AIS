@@ -21,6 +21,8 @@ namespace AIS.API.Mapper
             CreateMap<SessionAddViewModel, Session>();
             CreateMap<SessionUpdateViewModel, Session>();
             CreateMap<Company, ShortCompanyViewModel>();
+            CreateMap<Employee, ShortEmployeeViewModel>();
+            CreateMap<Interviewee, ShortIntervieweeViewModel>();
         }
     }
 }
