@@ -15,7 +15,7 @@ namespace AIS.DAL.Repositories
         public IntervieweeRepository(DatabaseContext context) : base(context)
         {
         }
-        
+
         public override async Task<IEnumerable<IntervieweeEntity>> Get(CancellationToken ct)
         {
             return await _dbSet.Include(x => x.Company).ToListAsync(ct);

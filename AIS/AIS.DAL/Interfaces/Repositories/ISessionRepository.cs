@@ -2,7 +2,7 @@
 
 namespace AIS.DAL.Interfaces.Repositories
 {
-    public interface IIntervieweeRepository : IGenericRepository<IntervieweeEntity>
+    public interface ISessionRepository : IGenericRepository<SessionEntity>
     {
     }
 }

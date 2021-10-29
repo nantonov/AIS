@@ -1,4 +1,5 @@
 ﻿using AIS.DAL.Entities;
+using AIS.DAL.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
-using AIS.DAL.Interfaces.Repositories;
 
 namespace AIS.DAL.Repositories
 {
@@ -15,7 +15,7 @@ namespace AIS.DAL.Repositories
         public EmployeeRepository(DatabaseContext context) : base(context)
         {
         }
-        
+
         public override async Task<IEnumerable<EmployeeEntity>> Get(CancellationToken ct)
         {
             return await _dbSet.AsNoTracking().Include(x => x.Company).ToListAsync(ct);

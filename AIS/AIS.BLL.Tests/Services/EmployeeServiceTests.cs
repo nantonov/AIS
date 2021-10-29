@@ -18,7 +18,7 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Servuces
         {
             // Arrange
             var mocker = new AutoMocker(MockBehavior.Default, DefaultValue.Mock);
-            var expected = new []
+            var expected = new[]
             {
                 new Employee() { Id = 3, Name = "Bob" },
                 new Employee() { Id = 4, Name = "Did" }
@@ -51,7 +51,7 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Servuces
             var service = mocker.Get<IGenericService<Employee>>();
 
             // Act
-            var actual = await service?.Add(expected,CancellationToken.None);
+            var actual = await service?.Add(expected, CancellationToken.None);
 
             // Assert
             Assert.Equal(expected, actual);

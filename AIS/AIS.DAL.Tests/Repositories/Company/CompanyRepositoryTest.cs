@@ -102,7 +102,7 @@ namespace AIS.DAL.Tests.Repositories.Company
             _repository = new(context);
             var entity = await context.Companies.AddAsync(addedModel);
             await context.SaveChangesAsync();
-            
+
             var company = await _repository.Update(entity.Entity, default);
 
             company.ShouldNotBeNull();

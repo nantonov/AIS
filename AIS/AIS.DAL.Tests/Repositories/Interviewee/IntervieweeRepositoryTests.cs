@@ -35,14 +35,14 @@ namespace AIS.DAL.Tests.Repositories.Interviewee
             await using DatabaseContext context = new(_options);
             _repository = new(context);
             var entity = context.Interviewees.Add(model);
-                context.Companies.Add(company);
+            context.Companies.Add(company);
 
-                await context.SaveChangesAsync();
+            await context.SaveChangesAsync();
 
-                var interviewee = await _repository.GetById(entity.Entity.Id, default);
+            var interviewee = await _repository.GetById(entity.Entity.Id, default);
 
-                interviewee.ShouldNotBeNull();
-                interviewee.ShouldBeEquivalentTo(entity.Entity);
+            interviewee.ShouldNotBeNull();
+            interviewee.ShouldBeEquivalentTo(entity.Entity);
         }
 
         [Fact]
@@ -51,27 +51,27 @@ namespace AIS.DAL.Tests.Repositories.Interviewee
             await using DatabaseContext context = new(_options);
             _repository = new(context);
             context.Interviewees.Add(new IntervieweeEntity
-                {
-                    CompanyId = 1,
-                    Name = "asd"
-                });
+            {
+                CompanyId = 1,
+                Name = "asd"
+            });
 
-                context.Interviewees.Add(new IntervieweeEntity
-                {
-                    CompanyId = 1,
-                    Name = "dsa"
-                });
+            context.Interviewees.Add(new IntervieweeEntity
+            {
+                CompanyId = 1,
+                Name = "dsa"
+            });
 
-                context.Companies.Add(new CompanyEntity
-                {
-                    Name = "asd"
-                });
+            context.Companies.Add(new CompanyEntity
+            {
+                Name = "asd"
+            });
 
-                await context.SaveChangesAsync();
+            await context.SaveChangesAsync();
 
-                var interviewee = await _repository.Get(default);
+            var interviewee = await _repository.Get(default);
 
-                interviewee.ShouldNotBeNull();
+            interviewee.ShouldNotBeNull();
         }
 
         [Fact]
@@ -102,19 +102,19 @@ namespace AIS.DAL.Tests.Repositories.Interviewee
             await using DatabaseContext context = new(_options);
             _repository = new(context);
             var entity = await context.Interviewees.AddAsync(addedModel);
-                await context.SaveChangesAsync();
+            await context.SaveChangesAsync();
 
-                await context.Companies.AddAsync(new CompanyEntity
-                {
-                    Name = "asd"
-                });
+            await context.Companies.AddAsync(new CompanyEntity
+            {
+                Name = "asd"
+            });
 
-                await context.SaveChangesAsync();
-            
-                var interviewee = await _repository.Update(entity.Entity, default);
+            await context.SaveChangesAsync();
 
-                interviewee.ShouldNotBeNull();
-                interviewee.ShouldBeEquivalentTo(entity.Entity);
+            var interviewee = await _repository.Update(entity.Entity, default);
+
+            interviewee.ShouldNotBeNull();
+            interviewee.ShouldBeEquivalentTo(entity.Entity);
         }
 
         [Fact]
@@ -131,17 +131,17 @@ namespace AIS.DAL.Tests.Repositories.Interviewee
             await using DatabaseContext context = new(_options);
             _repository = new(context);
             context.Companies.Add(new CompanyEntity
-                {
-                    Name = "asd"
-                });
+            {
+                Name = "asd"
+            });
 
-                var entity = context.Interviewees.Add(model[0]);
+            var entity = context.Interviewees.Add(model[0]);
 
-                await context.SaveChangesAsync();
+            await context.SaveChangesAsync();
 
-                var interviewee = await _repository.Get(x => x.Id == entity.Entity.Id, default);
+            var interviewee = await _repository.Get(x => x.Id == entity.Entity.Id, default);
 
-                interviewee.ShouldNotBeNull();
+            interviewee.ShouldNotBeNull();
         }
 
         [Fact]
@@ -157,9 +157,9 @@ namespace AIS.DAL.Tests.Repositories.Interviewee
             _repository = new(context);
             context.Interviewees.Add(intervieweeModel);
 
-                await context.SaveChangesAsync();
+            await context.SaveChangesAsync();
 
-                await _repository.Delete(intervieweeModel, default).ShouldNotThrowAsync();
+            await _repository.Delete(intervieweeModel, default).ShouldNotThrowAsync();
         }
 
         [Fact]
@@ -177,9 +177,9 @@ namespace AIS.DAL.Tests.Repositories.Interviewee
             await using DatabaseContext context = new(_options);
             _repository = new(context);
 
-                var interviewee = await _repository.GetById(-8, default);
+            var interviewee = await _repository.GetById(-8, default);
 
-                interviewee.ShouldBeNull();
+            interviewee.ShouldBeNull();
         }
 
         [Fact]
@@ -189,9 +189,9 @@ namespace AIS.DAL.Tests.Repositories.Interviewee
             _repository = new(context);
             await context.Database.EnsureDeletedAsync();
 
-                var interviewee = await _repository.Get(default);
+            var interviewee = await _repository.Get(default);
 
-                interviewee.ShouldBeEmpty();
+            interviewee.ShouldBeEmpty();
         }
 
         [Fact]
@@ -208,7 +208,7 @@ namespace AIS.DAL.Tests.Repositories.Interviewee
             await using DatabaseContext context = new(_options);
             _repository = new(context);
 
-                await _repository.Update(null, default).ShouldThrowAsync(typeof(ArgumentNullException));
+            await _repository.Update(null, default).ShouldThrowAsync(typeof(ArgumentNullException));
         }
 
         [Fact]
@@ -218,7 +218,7 @@ namespace AIS.DAL.Tests.Repositories.Interviewee
             _repository = new(context);
             var interviewee = await _repository.Get(x => x.Id == -1, default);
 
-                interviewee.ShouldBeEmpty();
+            interviewee.ShouldBeEmpty();
         }
 
         [Fact]

@@ -1,8 +1,8 @@
-﻿using AIS.API.ViewModels.Employee;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using AIS.API.ViewModels.Employee;
 using AIS.API.ViewModels.Interviewee;
 
- namespace AIS.API.ViewModels.Company
+namespace AIS.API.ViewModels.Company
 {
     public class CompanyViewModel
     {
