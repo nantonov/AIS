@@ -77,7 +77,7 @@ namespace AIS.BLL.Tests.Services
         }
 
         [Fact]
-        public async Task GetSession_ValidId_ReturnsSessionById()
+        public async Task GetSessionById_ValidId_ReturnsSessionById()
         {
             var session = new Session()
             {

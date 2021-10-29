@@ -74,7 +74,7 @@ namespace AIS.DAL.Tests.Repositories.Session
         }
 
         [Fact]
-        public async Task GetSessions_HasData_ReturnsSessionEmptyList()
+        public async Task GetSessions_HasData_ReturnsEmptySessionList()
         {
             var sessions = await _repo.Get(default);
             Assert.IsType<List<SessionEntity>>(sessions);
