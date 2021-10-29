@@ -1,7 +1,8 @@
-﻿using AIS.API.ViewModels;
+using AIS.API.ViewModels;
 using AIS.API.ViewModels.Company;
 using AIS.API.ViewModels.Employee;
 using AIS.API.ViewModels.Interviewee;
+using AIS.API.ViewModels.Session;
 using AIS.BLL.Models;
 using AutoMapper;
 
@@ -21,6 +22,12 @@ namespace AIS.API.Mapper
             CreateMap<QuestionSet, QuestionSetViewModel>().ReverseMap();
             CreateMap<Question, QuestionViewModel>().ReverseMap();
             CreateMap<TrueAnswer, TrueAnswerViewModel>().ReverseMap();
+            CreateMap<Session, SessionViewModel>();
+            CreateMap<SessionAddViewModel, Session>();
+            CreateMap<SessionUpdateViewModel, Session>();
+            CreateMap<Company, ShortCompanyViewModel>();
+            CreateMap<Employee, ShortEmployeeViewModel>();
+            CreateMap<Interviewee, ShortIntervieweeViewModel>();
         }
     }
 }

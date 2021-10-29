@@ -1,6 +1,6 @@
 ﻿namespace AIS.API.Infrastructure
 {
-    public class EndpointConstants
+    public static class EndpointConstants
     {
         public const string ControllerEndpointRoute = "/api/[controller]";
         public const string AddEndpoitRoute = "add";

@@ -15,7 +15,7 @@ namespace AIS.BLL.DI
             services.AddScoped(typeof(IGenericService<Employee>), typeof(GenericService<Employee, EmployeeEntity>));
             services.AddScoped(typeof(IGenericService<Company>), typeof(GenericService<Company, CompanyEntity>));
             services.AddScoped<IGenericService<Interviewee>, IntervieweeService>();
-            services.AddScoped(typeof(IGenericService<QuestionArea>), typeof(GenericService<QuestionArea, QuestionAreaEntity>));
+            services.AddScoped<ISessionService, SessionService>(); services.AddScoped(typeof(IGenericService<QuestionArea>), typeof(GenericService<QuestionArea, QuestionAreaEntity>));
             services.AddScoped(typeof(IGenericService<QuestionSet>), typeof(GenericService<QuestionSet, QuestionSetEntity>));
             services.AddScoped(typeof(IGenericService<Question>), typeof(GenericService<Question, QuestionEntity>));
             services.AddScoped(typeof(IGenericService<TrueAnswer>), typeof(GenericService<TrueAnswer, TrueAnswerEntity>));

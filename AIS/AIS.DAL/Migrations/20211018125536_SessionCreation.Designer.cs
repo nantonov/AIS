@@ -4,14 +4,16 @@ using AIS.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AIS.DAL.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20211018125536_SessionCreation")]
+    partial class SessionCreation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,7 +26,6 @@ namespace AIS.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
@@ -81,82 +82,6 @@ namespace AIS.DAL.Migrations
                     b.ToTable("Interviewees");
                 });
 
-            modelBuilder.Entity("AIS.DAL.Entities.QuestionAreaEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("QuestionAreas");
-                });
-
-            modelBuilder.Entity("AIS.DAL.Entities.QuestionEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("QuestionSetId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Text")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("QuestionSetId");
-
-                    b.ToTable("Questions");
-                });
-
-            modelBuilder.Entity("AIS.DAL.Entities.QuestionSetEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("QuestionAreaId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("QuestionAreaId");
-
-                    b.ToTable("QuestionSets");
-                });
-
-            modelBuilder.Entity("AIS.DAL.Entities.TrueAnswerEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("QuestionId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Text")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("QuestionId")
-                        .IsUnique();
-
-                    b.ToTable("TrueAnswers");
-                });
-
             modelBuilder.Entity("AIS.DAL.Entities.SessionEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -170,16 +95,13 @@ namespace AIS.DAL.Migrations
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("FinishedAt")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("IntervieweeId")
                         .HasColumnType("int");
 
                     b.Property<int>("QuestionAreaId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("StartedAt")
+                    b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -242,59 +164,11 @@ namespace AIS.DAL.Migrations
                     b.Navigation("Interviewee");
                 });
 
-            modelBuilder.Entity("AIS.DAL.Entities.QuestionEntity", b =>
-                {
-                    b.HasOne("AIS.DAL.Entities.QuestionSetEntity", "QuestionSet")
-                        .WithMany("Questions")
-                        .HasForeignKey("QuestionSetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("QuestionSet");
-                });
-
-            modelBuilder.Entity("AIS.DAL.Entities.QuestionSetEntity", b =>
-                {
-                    b.HasOne("AIS.DAL.Entities.QuestionAreaEntity", "QuestionArea")
-                        .WithMany("QuestionSets")
-                        .HasForeignKey("QuestionAreaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("QuestionArea");
-                });
-
-            modelBuilder.Entity("AIS.DAL.Entities.TrueAnswerEntity", b =>
-                {
-                    b.HasOne("AIS.DAL.Entities.QuestionEntity", "Question")
-                        .WithOne("TrueAnswer")
-                        .HasForeignKey("AIS.DAL.Entities.TrueAnswerEntity", "QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Question");
-                });
-
             modelBuilder.Entity("AIS.DAL.Entities.CompanyEntity", b =>
                 {
                     b.Navigation("Employees");
 
                     b.Navigation("Interviewees");
-                });
-
-            modelBuilder.Entity("AIS.DAL.Entities.QuestionAreaEntity", b =>
-                {
-                    b.Navigation("QuestionSets");
-                });
-
-            modelBuilder.Entity("AIS.DAL.Entities.QuestionEntity", b =>
-                {
-                    b.Navigation("TrueAnswer");
-                });
-
-            modelBuilder.Entity("AIS.DAL.Entities.QuestionSetEntity", b =>
-                {
-                    b.Navigation("Questions");
                 });
 #pragma warning restore 612, 618
         }

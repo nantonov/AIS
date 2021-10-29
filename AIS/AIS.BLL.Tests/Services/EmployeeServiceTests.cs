@@ -9,7 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace AIS.BLL.Tests.Business_Logic_Layer.Servuces
+namespace AIS.BLL.Tests.Services
 {
     public class EmployeeServiceTests
     {
@@ -51,7 +51,7 @@ namespace AIS.BLL.Tests.Business_Logic_Layer.Servuces
             var service = mocker.Get<IGenericService<Employee>>();
 
             // Act
-            var actual = await service?.Add(expected,CancellationToken.None);
+            var actual = await service?.Add(expected, default);
 
             // Assert
             Assert.Equal(expected, actual);
