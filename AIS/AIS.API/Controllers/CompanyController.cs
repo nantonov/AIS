@@ -32,7 +32,7 @@ namespace AIS.API.Controllers
         [HttpGet(EndpointConstants.IdTemplate)]
         public async Task<CompanyViewModel> GetCompany(int id, CancellationToken ct)
         {
-            var company = _mapper.Map<Company, CompanyViewModel>(await _companyService.GetById(id, ct));
+            var company = _mapper.Map<CompanyViewModel>(await _companyService.GetById(id, ct));
             return company;
         }
     

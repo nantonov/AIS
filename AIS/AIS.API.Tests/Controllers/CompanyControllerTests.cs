@@ -6,10 +6,10 @@ using AutoMapper;
 using FluentAssertions;
 using FluentValidation;
 using Moq;
+using Shouldly;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Shouldly;
 using Xunit;
 
 namespace AIS.API.Tests.Controllers
@@ -158,6 +158,28 @@ namespace AIS.API.Tests.Controllers
 
             // Assert
             act.Should().NotThrow();
+        }
+
+        [Fact]
+        public async Task GetCompanyById_ValidId_ShouldReturnValidCompany()
+        {
+            var expected = new CompanyViewModel
+            {
+                Id = 3,
+                Name = "Bob"
+            };
+            var expectedCompanies = new Company
+            {
+                Id = expected.Id,
+                Name = expected.Name
+            };
+
+            _serviceMock.Setup(x => x.GetById(expected.Id, default)).ReturnsAsync(expectedCompanies);
+            _mapperMock.Setup(x => x.Map<CompanyViewModel>(It.IsAny<Company>())).Returns(expected);
+            var controller = new CompanyController(_serviceMock.Object, _mapperMock.Object, _validatorMock.Object);
+            var result = await controller.GetCompany(expected.Id, default);
+            _serviceMock.Verify(x => x.GetById(expected.Id, default), Times.Once);
+            Assert.Equal(expectedCompanies.Id, result.Id);
         }
     }
 }
