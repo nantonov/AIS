@@ -26,7 +26,7 @@ namespace AIS.API.Controllers
         [HttpGet(EndpointConstants.IdTemplate)]
         public async Task<QuestionSetViewModel> GetQuestionSet(int id, CancellationToken ct)
         {
-            var questionSet = _mapper.Map<QuestionSet, QuestionSetViewModel>(await _questionSetService.GetById(id, ct));
+            var questionSet = _mapper.Map<QuestionSetViewModel>(await _questionSetService.GetById(id, ct));
             return questionSet;
         }
 

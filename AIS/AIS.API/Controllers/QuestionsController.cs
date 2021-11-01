@@ -19,15 +19,15 @@ namespace AIS.API.Controllers
 
         public QuestionsController(IGenericService<Question> questionService, IMapper mapper)
         {
-            this._questionService = questionService;
-            this._mapper = mapper;
+            _questionService = questionService;
+            _mapper = mapper;
         }
 
         [HttpGet(EndpointConstants.IdTemplate)]
         public async Task<QuestionViewModel> GetQuestion(int id, CancellationToken ct)
         {
-            var Question = _mapper.Map<Question, QuestionViewModel>(await _questionService.GetById(id, ct));
-            return Question;
+            var question = _mapper.Map<QuestionViewModel>(await _questionService.GetById(id, ct));
+            return question;
         }
 
         [HttpGet]

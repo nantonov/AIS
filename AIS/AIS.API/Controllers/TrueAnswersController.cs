@@ -19,14 +19,14 @@ namespace AIS.API.Controllers
 
         public TrueAnswersController(IGenericService<TrueAnswer> trueAnswerService, IMapper mapper)
         {
-            this._trueAnswerService = trueAnswerService;
-            this._mapper = mapper;
+            _trueAnswerService = trueAnswerService;
+            _mapper = mapper;
         }
 
         [HttpGet(EndpointConstants.IdTemplate)]
         public async Task<TrueAnswerViewModel> GetTrueAnswer(int id, CancellationToken ct)
         {
-            var trueAnswer = _mapper.Map<TrueAnswer, TrueAnswerViewModel>(await _trueAnswerService.GetById(id, ct));
+            var trueAnswer = _mapper.Map<TrueAnswerViewModel>(await _trueAnswerService.GetById(id, ct));
             return trueAnswer;
         }
 

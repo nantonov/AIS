@@ -93,7 +93,7 @@ namespace AIS.API.Tests.Controllers
                 Id = id
             };
 
-            _mapperMock.Setup(map => map.Map<TrueAnswer, TrueAnswerViewModel>(expectedTrueAnswer)).Returns(expectedViewModel);
+            _mapperMock.Setup(map => map.Map<TrueAnswerViewModel>(expectedTrueAnswer)).Returns(expectedViewModel);
             _serviceMock.Setup(serv => serv.GetById(id, default)).ReturnsAsync(expectedTrueAnswer);
 
             var controller = new TrueAnswersController(_serviceMock.Object, _mapperMock.Object);

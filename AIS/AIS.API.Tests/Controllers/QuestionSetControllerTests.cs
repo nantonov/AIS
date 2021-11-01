@@ -93,7 +93,7 @@ namespace AIS.API.Tests.Controllers
                 Id = id
             };
 
-            _mapperMock.Setup(map => map.Map<QuestionSet, QuestionSetViewModel>(expectedQuestionSet)).Returns(expectedViewModel);
+            _mapperMock.Setup(map => map.Map<QuestionSetViewModel>(expectedQuestionSet)).Returns(expectedViewModel);
             _serviceMock.Setup(serv => serv.GetById(id, default)).ReturnsAsync(expectedQuestionSet);
 
             var controller = new QuestionSetController(_serviceMock.Object, _mapperMock.Object);
