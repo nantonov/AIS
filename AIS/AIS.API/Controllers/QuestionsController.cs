@@ -38,7 +38,7 @@ namespace AIS.API.Controllers
         }
 
         [HttpPost]
-        public async Task<QuestionViewModel> AddQuestion(QuestionViewModel Question, CancellationToken ct)
+        public async Task<QuestionViewModel> AddQuestion(QuestionAddViewModel Question, CancellationToken ct)
         {
             return _mapper.Map<QuestionViewModel>(
                 await _questionService.Add(_mapper.Map<Question>(Question), ct)

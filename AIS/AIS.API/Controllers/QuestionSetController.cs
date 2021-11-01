@@ -38,7 +38,7 @@ namespace AIS.API.Controllers
         }
 
         [HttpPost]
-        public async Task<QuestionSetViewModel> AddQuestionSet(QuestionSetViewModel questionSet, CancellationToken ct)
+        public async Task<QuestionSetViewModel> AddQuestionSet(QuestionSetAddViewModel questionSet, CancellationToken ct)
         {
             return _mapper.Map<QuestionSetViewModel>(
                 await _questionSetService.Add(_mapper.Map<QuestionSet>(questionSet), ct)
@@ -46,7 +46,7 @@ namespace AIS.API.Controllers
         }
 
         [HttpPut]
-        public async Task<QuestionSetViewModel> UpdateQuestionSet(QuestionSetViewModel questionSet, CancellationToken ct)
+        public async Task<QuestionSetViewModel> UpdateQuestionSet(QuestionSetAddViewModel questionSet, CancellationToken ct)
         {
             return _mapper.Map<QuestionSetViewModel>(
                 await _questionSetService.Put(_mapper.Map<QuestionSet>(questionSet), ct)

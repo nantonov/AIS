@@ -38,7 +38,7 @@ namespace AIS.API.Controllers
         }
 
         [HttpPost]
-        public async Task<TrueAnswerViewModel> AddTrueAnswer(TrueAnswerViewModel trueAnswer, CancellationToken ct)
+        public async Task<TrueAnswerViewModel> AddTrueAnswer(TrueAnswerAddViewModel trueAnswer, CancellationToken ct)
         {
             return _mapper.Map<TrueAnswerViewModel>(
                 await _trueAnswerService.Add(_mapper.Map<TrueAnswer>(trueAnswer), ct)

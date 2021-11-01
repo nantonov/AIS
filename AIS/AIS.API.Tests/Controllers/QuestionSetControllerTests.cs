@@ -22,7 +22,7 @@ namespace AIS.API.Tests.Controllers
         public async Task Add_WhenControllerHasData_ShouldReturnValidModel()
         {
             // Arrange
-            var inputQuestionSetViewModel = new QuestionSetViewModel()
+            var inputQuestionSetViewModel = new QuestionSetAddViewModel()
             {
                 Name = "Boba"
             };
@@ -52,7 +52,7 @@ namespace AIS.API.Tests.Controllers
         public async Task Update_WhenControllerHasData_ShouldReturnValidModel()
         {
             // Arrange
-            var inputQuestionSetViewModel = new QuestionSetViewModel
+            var inputQuestionSetViewModel = new QuestionSetAddViewModel
             {
                 Name = "Boba"
             };

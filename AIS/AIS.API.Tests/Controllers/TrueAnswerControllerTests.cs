@@ -22,7 +22,7 @@ namespace AIS.API.Tests.Controllers
         public async Task Add_WhenControllerHasData_ShouldReturnValidModel()
         {
             // Arrange
-            var inputTrueAnswerViewModel = new TrueAnswerViewModel()
+            var inputTrueAnswerViewModel = new TrueAnswerAddViewModel()
             {
                 Text = "Boba"
             };
