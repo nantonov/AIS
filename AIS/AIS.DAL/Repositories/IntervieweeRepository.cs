@@ -33,31 +33,7 @@ namespace AIS.DAL.Repositories
             return entity;
         }
 
-        public async Task<IEnumerable<IntervieweeEntity>> GetIncluded(CancellationToken ct)
-        {
-            return await Query(true).AsNoTracking().ToListAsync(ct);
-        }
-
-        public async Task<IntervieweeEntity> Update(IntervieweeEntity entity, CancellationToken ct)
-        {
-            _context.Entry(entity).State = EntityState.Modified;
-            await _context.SaveChangesAsync(ct);
-            return entity;
-        }
-
-        public async Task Delete(IntervieweeEntity entity, CancellationToken ct)
-        {
-            _context.Interviewees.Remove(entity);
-            await _context.SaveChangesAsync(ct);
-        }
-
-        public async Task Delete(int id, CancellationToken ct)
-        {
-            var entity = await _context.Interviewees.FindAsync(new object[] { id }, ct);
-            _context.Interviewees.Remove(entity);
-            await _context.SaveChangesAsync(ct);
-        }
-        protected virtual IQueryable<IntervieweeEntity> Query(bool eager = false)
+        protected override IQueryable<IntervieweeEntity> Query(bool eager = false)
         {
             var query = _context.Interviewees.AsQueryable();
             if (eager)
