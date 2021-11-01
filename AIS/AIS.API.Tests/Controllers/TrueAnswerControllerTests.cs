@@ -72,7 +72,7 @@ namespace AIS.API.Tests.Controllers
             var controller = new TrueAnswersController(_serviceMock.Object, _mapperMock.Object);
 
             // Act
-            var result = await controller.UpdateTrueAnswer(inputTrueAnswerViewModel, default);
+            var result = await controller.UpdateTrueAnswer(default, inputTrueAnswerViewModel, default);
 
             // Assert
             inputTrueAnswerViewModel.Text.ShouldBeEquivalentTo(result.Text);

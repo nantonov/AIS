@@ -72,7 +72,7 @@ namespace AIS.API.Tests.Controllers
             var controller = new QuestionAreaController(_serviceMock.Object, _mapperMock.Object);
 
             // Act
-            var result = await controller.UpdateQuestionArea(inputQuestionAreaViewModel, default);
+            var result = await controller.UpdateQuestionArea(default, inputQuestionAreaViewModel, default);
 
             // Assert
             inputQuestionAreaViewModel.Name.ShouldBeEquivalentTo(result.Name);

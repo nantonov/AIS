@@ -33,23 +33,25 @@ namespace AIS.API.Controllers
         [HttpGet]
         public async Task<IEnumerable<QuestionViewModel>> GetQuestions(CancellationToken ct)
         {
-            var Questions = await _questionService.Get(ct);
-            return _mapper.Map<IEnumerable<QuestionViewModel>>(Questions);
+            var questions = await _questionService.Get(ct);
+            return _mapper.Map<IEnumerable<QuestionViewModel>>(questions);
         }
 
         [HttpPost]
-        public async Task<QuestionViewModel> AddQuestion(QuestionAddViewModel Question, CancellationToken ct)
+        public async Task<QuestionViewModel> AddQuestion(QuestionAddViewModel question, CancellationToken ct)
         {
             return _mapper.Map<QuestionViewModel>(
-                await _questionService.Add(_mapper.Map<Question>(Question), ct)
+                await _questionService.Add(_mapper.Map<Question>(question), ct)
             );
         }
 
         [HttpPut]
-        public async Task<QuestionViewModel> UpdateQuestion(QuestionUpdateViewModel Question, CancellationToken ct)
+        public async Task<QuestionViewModel> UpdateQuestion(int id, QuestionUpdateViewModel question, CancellationToken ct)
         {
+            var inputModel = _mapper.Map<Question>(question);
+            inputModel.Id = id;
             return _mapper.Map<QuestionViewModel>(
-                await _questionService.Put(_mapper.Map<Question>(Question), ct)
+                await _questionService.Put(inputModel, ct)
             );
         }
 

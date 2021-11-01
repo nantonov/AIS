@@ -46,10 +46,12 @@ namespace AIS.API.Controllers
         }
 
         [HttpPut]
-        public async Task<QuestionAreaViewModel> UpdateQuestionArea(QuestionAreaUpdateViewModel questionArea, CancellationToken ct)
+        public async Task<QuestionAreaViewModel> UpdateQuestionArea(int id, QuestionAreaUpdateViewModel questionArea, CancellationToken ct)
         {
+            var inputModel = _mapper.Map<QuestionArea>(questionArea);
+            inputModel.Id = id;
             return _mapper.Map<QuestionAreaViewModel>(
-                await _questionAreaService.Put(_mapper.Map<QuestionArea>(questionArea), ct)
+                await _questionAreaService.Put(inputModel, ct)
             );
         }
 

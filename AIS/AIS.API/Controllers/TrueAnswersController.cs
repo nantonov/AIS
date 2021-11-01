@@ -46,10 +46,12 @@ namespace AIS.API.Controllers
         }
 
         [HttpPut]
-        public async Task<TrueAnswerViewModel> UpdateTrueAnswer(TrueAnswerUpdateViewModel trueAnswer, CancellationToken ct)
+        public async Task<TrueAnswerViewModel> UpdateTrueAnswer(int id, TrueAnswerUpdateViewModel trueAnswer, CancellationToken ct)
         {
+            var inputModel = _mapper.Map<TrueAnswer>(trueAnswer);
+            inputModel.Id = id;
             return _mapper.Map<TrueAnswerViewModel>(
-                await _trueAnswerService.Put(_mapper.Map<TrueAnswer>(trueAnswer), ct)
+                await _trueAnswerService.Put(inputModel, ct)
             );
         }
 

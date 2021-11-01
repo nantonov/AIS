@@ -13,7 +13,7 @@ using Xunit;
 
 namespace AIS.API.Tests.Controllers
 {
-    public class QuestionControllerTests
+    public class QuestionsControllerTests
     {
         private readonly Mock<IMapper> _mapperMock = new();
         private readonly Mock<IGenericService<Question>> _serviceMock = new();
@@ -72,7 +72,7 @@ namespace AIS.API.Tests.Controllers
             var controller = new QuestionsController(_serviceMock.Object, _mapperMock.Object);
 
             // Act
-            var result = await controller.UpdateQuestion(inputQuestionViewModel, default);
+            var result = await controller.UpdateQuestion(default, inputQuestionViewModel, default);
 
             // Assert
             inputQuestionViewModel.Text.ShouldBeEquivalentTo(result.Text);
@@ -177,10 +177,10 @@ namespace AIS.API.Tests.Controllers
             var controller = new QuestionsController(_serviceMock.Object, _mapperMock.Object);
 
             // Act
-            Action act = () => controller.DeleteQuestion(expected.Id, default);
+            Func<Task> act = () => controller.DeleteQuestion(expected.Id, default);
 
             // Assert
-            act.Should().NotThrow();
+            act.Should().NotThrowAsync();
         }
     }
 }
