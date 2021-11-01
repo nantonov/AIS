@@ -1,4 +1,5 @@
-﻿using AIS.BLL.Interfaces.Services;
+﻿using System;
+using AIS.BLL.Interfaces.Services;
 using AIS.BLL.Models;
 using AIS.BLL.Services;
 using AIS.DAL.Entities;
@@ -9,6 +10,7 @@ using Shouldly;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentAssertions;
 using Xunit;
 
 namespace AIS.BLL.Tests.Services
@@ -47,7 +49,8 @@ namespace AIS.BLL.Tests.Services
                     CompanyId = 1
                 }
             };
-            _mapperMock.Setup(x => x.Map<IEnumerable<Interviewee>>(It.IsAny<IEnumerable<IntervieweeEntity>>())).Returns(intervieweeList);
+            _mapperMock.Setup(x => x.Map<IEnumerable<Interviewee>>(It.IsAny<IEnumerable<IntervieweeEntity>>()))
+                .Returns(intervieweeList);
             _intervieweeRepoMock.Setup(x => x.Get(default)).ReturnsAsync(intervieweeEntityList);
             var result = await _service.Get(default);
             Assert.NotNull(result);
@@ -84,6 +87,7 @@ namespace AIS.BLL.Tests.Services
             Assert.Equal(interviewee.CompanyId, result.CompanyId);
             Assert.Equal(interviewee.Name, result.Name);
         }
+
         [Fact]
         public async Task AddInterviewee_ValidInterviewee_ReturnsInterviewee()
         {
@@ -100,7 +104,8 @@ namespace AIS.BLL.Tests.Services
                 CompanyId = 1
             };
             _mapperMock.Setup(x => x.Map<IntervieweeEntity>(It.IsAny<Interviewee>())).Returns(intervieweeEntity);
-            _intervieweeRepoMock.Setup(x => x.Add(It.IsAny<IntervieweeEntity>(), default)).ReturnsAsync(intervieweeEntity);
+            _intervieweeRepoMock.Setup(x => x.Add(It.IsAny<IntervieweeEntity>(), default))
+                .ReturnsAsync(intervieweeEntity);
             _mapperMock.Setup(x => x.Map<Interviewee>(It.IsAny<IntervieweeEntity>())).Returns(interviewee);
             // Act
             var result = await _service.Add(interviewee, default);
@@ -170,6 +175,45 @@ namespace AIS.BLL.Tests.Services
             Assert.NotNull(expected);
             Assert.Equal(interviewee, expected);
             Assert.Equal(interviewee.Name, expected.Name);
+        }
+
+        [Fact]
+        public void DeleteSession_ValidSession_ReturnsNotImplementedException()
+        {
+            var interviewee = new Interviewee()
+            {
+                Id = 1,
+                Name = "Test",
+                AppliesFor = "Test",
+                CompanyId = 1
+            };
+            Action act = () => _service.Delete(interviewee, default);
+            act.Should().Throw<NotImplementedException>();
+        }
+
+        [Fact]
+        public async Task DeleteInterviewee_ValidId_ReturnsNull()
+        {
+            var intervieweeEntity = new IntervieweeEntity()
+            {
+                Id = 1,
+                Name = "Test",
+                AppliesFor = "Test",
+                CompanyId = 1
+            };
+            var interviewee = new Interviewee()
+            {
+                Id = 1,
+                Name = "Test",
+                AppliesFor = "Test",
+                CompanyId = 1
+            };
+
+            _mapperMock.Setup(x => x.Map<IntervieweeEntity>(It.IsAny<Interviewee>())).Returns(intervieweeEntity);
+            _intervieweeRepoMock.Setup(x => x.Delete(intervieweeEntity, default));
+            _mapperMock.Setup(x => x.Map<Interviewee>(It.IsAny<Interviewee>())).Returns(interviewee);
+            _intervieweeRepoMock.Setup(x => x.GetById(interviewee.Id, default)).ReturnsAsync(intervieweeEntity);
+            await _service.Delete(interviewee.Id, default).ShouldNotThrowAsync();
         }
     }
 }
