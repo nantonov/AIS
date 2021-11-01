@@ -1,4 +1,4 @@
-﻿namespace AIS.API.ViewModels
+﻿namespace AIS.API.ViewModels.QuestionArea
 {
     public class QuestionAreaViewModel
     {

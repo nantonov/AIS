@@ -1,6 +1,6 @@
-﻿namespace AIS.API.ViewModels
+﻿namespace AIS.API.ViewModels.Question
 {
-    public class QuestionViewModel
+    public class QuestionUpdateViewModel
     {
         public int Id { get; set; }
         public string Text { get; set; }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AIS.API.Controllers;
-using AIS.API.ViewModels;
+using AIS.API.ViewModels.QuestionSet;
 using AIS.BLL.Interfaces.Services;
 using AIS.BLL.Models;
 using AutoMapper;
@@ -52,7 +52,7 @@ namespace AIS.API.Tests.Controllers
         public async Task Update_WhenControllerHasData_ShouldReturnValidModel()
         {
             // Arrange
-            var inputQuestionSetViewModel = new QuestionSetAddViewModel
+            var inputQuestionSetViewModel = new QuestionSetUpdateViewModel
             {
                 Name = "Boba"
             };

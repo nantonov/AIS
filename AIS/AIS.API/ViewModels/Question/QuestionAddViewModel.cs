@@ -1,4 +1,4 @@
-﻿namespace AIS.API.ViewModels
+﻿namespace AIS.API.ViewModels.Question
 {
     public class QuestionAddViewModel
     {

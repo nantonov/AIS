@@ -1,5 +1,4 @@
 ﻿using AIS.API.Infrastructure;
-using AIS.API.ViewModels;
 using AIS.BLL.Interfaces.Services;
 using AIS.BLL.Models;
 using AutoMapper;
@@ -7,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using AIS.API.ViewModels.QuestionSet;
 
 namespace AIS.API.Controllers
 {
@@ -46,7 +46,7 @@ namespace AIS.API.Controllers
         }
 
         [HttpPut]
-        public async Task<QuestionSetViewModel> UpdateQuestionSet(QuestionSetAddViewModel questionSet, CancellationToken ct)
+        public async Task<QuestionSetViewModel> UpdateQuestionSet(QuestionSetUpdateViewModel questionSet, CancellationToken ct)
         {
             return _mapper.Map<QuestionSetViewModel>(
                 await _questionSetService.Put(_mapper.Map<QuestionSet>(questionSet), ct)
