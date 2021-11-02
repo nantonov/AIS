@@ -6,10 +6,10 @@ using AutoMapper;
 using FluentAssertions;
 using FluentValidation;
 using Moq;
+using Shouldly;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Shouldly;
 using Xunit;
 
 namespace AIS.API.Tests.Controllers
@@ -181,6 +181,28 @@ namespace AIS.API.Tests.Controllers
 
             // Assert
             act.Should().NotThrow();
+        }
+
+        [Fact]
+        public async Task GetIntervieweeById_ValidId_ShouldReturnValidInterviewee()
+        {
+            var expected = new IntervieweeViewModel()
+            {
+                Id = 3,
+                Name = "Bob"
+            };
+            var expectedInterviewee = new Interviewee()
+            {
+                Id = expected.Id,
+                Name = expected.Name
+            };
+
+            _serviceMock.Setup(x => x.GetById(expected.Id, default)).ReturnsAsync(expectedInterviewee);
+            _mapperMock.Setup(x => x.Map<IntervieweeViewModel>(It.IsAny<Interviewee>())).Returns(expected);
+            var controller = new IntervieweeController(_serviceMock.Object, _mapperMock.Object, _validatorMock.Object);
+            var result = await controller.GetInterviewee(expected.Id, default);
+            _serviceMock.Verify(x => x.GetById(expected.Id, default), Times.Once);
+            Assert.Equal(expectedInterviewee.Id, result.Id);
         }
     }
 }

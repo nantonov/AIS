@@ -32,7 +32,7 @@ namespace AIS.API.Controllers
         [HttpGet(EndpointConstants.IdTemplate)]
         public async Task<IntervieweeViewModel> GetInterviewee(int id, CancellationToken ct)
         {
-            var interviewee = _mapper.Map<Interviewee, IntervieweeViewModel>(await _intervieweeService.GetById(id, ct));
+            var interviewee = _mapper.Map<IntervieweeViewModel>(await _intervieweeService.GetById(id, ct));
             return interviewee;
         }
     
