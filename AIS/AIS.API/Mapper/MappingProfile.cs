@@ -21,24 +21,24 @@ namespace AIS.API.Mapper
             CreateMap<ChangeIntervieweeViewModel, Interviewee>();
             CreateMap<Company, CompanyViewModel>();
             CreateMap<ChangeCompanyViewModel, Company>();
-            CreateMap<QuestionArea, QuestionAreaViewModel>();
-            CreateMap<QuestionSet, QuestionSetViewModel>();
-            CreateMap<Question, QuestionViewModel>();
-            CreateMap<TrueAnswer, TrueAnswerViewModel>();
+            CreateMap<QuestionArea, QuestionAreaViewModel>().ReverseMap();
+            CreateMap<QuestionSet, QuestionSetViewModel>().ReverseMap();
+            CreateMap<Question, QuestionViewModel>().ReverseMap();
+            CreateMap<TrueAnswer, TrueAnswerViewModel>().ReverseMap();
             CreateMap<Session, SessionViewModel>();
             CreateMap<SessionAddViewModel, Session>();
             CreateMap<SessionUpdateViewModel, Session>();
             CreateMap<Company, ShortCompanyViewModel>();
             CreateMap<Employee, ShortEmployeeViewModel>();
             CreateMap<Interviewee, ShortIntervieweeViewModel>();
-            CreateMap<QuestionAreaAddViewModel, QuestionArea>();
-            CreateMap<QuestionSetAddViewModel, QuestionSet>();
-            CreateMap<QuestionAddViewModel, Question>();
-            CreateMap<TrueAnswerAddViewModel, TrueAnswer>();
-            CreateMap<QuestionAreaUpdateViewModel, QuestionArea>();
-            CreateMap<QuestionSetUpdateViewModel, QuestionSet>();
-            CreateMap<QuestionUpdateViewModel, Question>();
-            CreateMap<TrueAnswerUpdateViewModel, TrueAnswer>();
+            CreateMap<QuestionAreaAddViewModel, QuestionArea>().ReverseMap();
+            CreateMap<QuestionSetAddViewModel, QuestionSet>().ReverseMap();
+            CreateMap<QuestionAddViewModel, Question>().ReverseMap();
+            CreateMap<TrueAnswerAddViewModel, TrueAnswer>().ReverseMap();
+            CreateMap<QuestionAreaUpdateViewModel, QuestionArea>().ReverseMap();
+            CreateMap<QuestionSetUpdateViewModel, QuestionSet>().ReverseMap();
+            CreateMap<QuestionUpdateViewModel, Question>().ReverseMap();
+            CreateMap<TrueAnswerUpdateViewModel, TrueAnswer>().ReverseMap();
         }
     }
 }
