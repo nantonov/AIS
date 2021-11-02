@@ -24,19 +24,19 @@ namespace AIS.BLL.Services
         
         public async Task<TEntity> Add(TEntity entity, CancellationToken ct)
         {
-            return _mapper.Map<TEntity>(await this._repository.Add(
+            return _mapper.Map<TEntity>(await _repository.Add(
                 _mapper.Map<TMapToEntity>(entity), ct
             ));
         }
 
         public Task Delete(TEntity entity, CancellationToken ct)
         {
-            return this._repository.Delete(_mapper.Map<TMapToEntity>(entity), ct);
+            return _repository.Delete(_mapper.Map<TMapToEntity>(entity), ct);
         }
 
         public Task Delete(int id, CancellationToken ct)
         {
-            return this._repository.Delete(id, ct);
+            return _repository.Delete(id, ct);
         }
 
         public async Task<TEntity> Put(TEntity entity, CancellationToken ct)
@@ -49,7 +49,7 @@ namespace AIS.BLL.Services
         public async Task<IEnumerable<TEntity>> Get(CancellationToken ct)
         {
             return _mapper.Map<IEnumerable<TEntity>>(
-                await _repository.Get(ct)
+                await _repository.GetIncluded(ct)
             );
         }
 

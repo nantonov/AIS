@@ -22,6 +22,11 @@ namespace AIS.DAL
         public DbSet<EmployeeEntity> Employees { get; set; }
         public DbSet<CompanyEntity> Companies { get; set; }
         public DbSet<SessionEntity> Sessions { get; set; }
+        public DbSet<QuestionAreaEntity> QuestionAreas { get; set; }
+        public DbSet<QuestionSetEntity> QuestionSets { get; set; }
+        public DbSet<QuestionEntity> Questions { get; set; }
+        public DbSet<TrueAnswerEntity> TrueAnswers { get; set; }
+
 
         //add custom field configuration via IEntityTypeConfiguration
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -9,7 +9,6 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AIS.API.ViewModels.Company;
 using Shouldly;
 using Xunit;
 
@@ -169,10 +168,10 @@ namespace AIS.API.Tests.Controllers
             var controller = new EmployeeController(_mapperMock.Object, _serviceMock.Object, _validatorMock.Object);
 
             // Act
-            Action act = () => controller.Delete(expected.Id, default);
+            Func<Task> act = async () => await controller.Delete(expected.Id, default);
 
             // Assert
-            act.Should().NotThrow();
+            act.Should().NotThrowAsync();
         }
     }
 }
