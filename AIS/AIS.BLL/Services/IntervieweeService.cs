@@ -32,7 +32,7 @@ namespace AIS.BLL.Services
         public async Task<IEnumerable<Interviewee>> Get(CancellationToken ct)
         {
             return _mapper.Map<IEnumerable<Interviewee>>(
-                await _repo.GetIncluded(ct)
+                await _repo.Get(ct)
             );
         }
 

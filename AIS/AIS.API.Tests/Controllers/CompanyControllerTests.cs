@@ -110,18 +110,18 @@ namespace AIS.API.Tests.Controllers
             };
             var expectedCompanyViewModel = new[]
             {
-                new CompanyViewModel
+                new ShortCompanyViewModel
                 {
                     Name = expected[0].Name
                 },
-                new CompanyViewModel
+                new ShortCompanyViewModel
                 {
                     Name = expected[0].Name
                 }
             };
 
             _mapperMock.Setup(map => map.Map<IEnumerable<Company>>(expected)).Returns(expectedCompanies);
-            _mapperMock.Setup(map => map.Map<IEnumerable<CompanyViewModel>>(expectedCompanies)).Returns(expectedCompanyViewModel);
+            _mapperMock.Setup(map => map.Map<IEnumerable<ShortCompanyViewModel>>(expectedCompanies)).Returns(expectedCompanyViewModel);
             _serviceMock.Setup(serv => serv.Get(default)).ReturnsAsync(expectedCompanies);
 
             var controller = new CompanyController(_serviceMock.Object, _mapperMock.Object, _validatorMock.Object);

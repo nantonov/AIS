@@ -16,6 +16,11 @@ namespace AIS.DAL.DI
             services.AddScoped<ISessionRepository, SessionRepository>();
             services.AddScoped<IGenericRepository<EmployeeEntity>, EmployeeRepository>();
             services.AddScoped<IGenericRepository<CompanyEntity>, CompanyRepository>();
+            services.AddScoped<IGenericRepository<QuestionIntervieweeAnswerEntity>, QuestionIntervieweeAnswerRepository>();
+            services.AddScoped<IGenericRepository<QuestionEntity>, QuestionRepository>();
+            services.AddScoped<IGenericRepository<QuestionAreaEntity>, QuestionAreaRepository>();
+            services.AddScoped<IGenericRepository<QuestionSetEntity>, QuestionSetRepository>();
+            services.AddScoped<IGenericRepository<TrueAnswerEntity>, TrueAnswerRepository>();
             services.AddDbContext<DatabaseContext>(op =>
                 {
                     op.UseSqlServer(config.GetConnectionString("DefaultConnection"));

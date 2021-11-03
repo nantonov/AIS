@@ -1,7 +1,7 @@
 ﻿using AIS.API.ViewModels.Interviewee;
 using FluentValidation;
 
-namespace AIS.API.Validators
+namespace AIS.API.Validators.Interviewee
 {
     public class ChangeIntervieweeViewModelValidator : AbstractValidator<ChangeIntervieweeViewModel>
     {

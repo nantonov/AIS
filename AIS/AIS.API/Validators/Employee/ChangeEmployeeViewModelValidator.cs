@@ -1,7 +1,7 @@
 ﻿using AIS.API.ViewModels.Employee;
 using FluentValidation;
 
-namespace AIS.API.Validators
+namespace AIS.API.Validators.Employee
 {
     public class ChangeEmployeeViewModelValidator : AbstractValidator<ChangeEmployeeViewModel>
     {

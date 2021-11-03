@@ -1,9 +1,9 @@
-﻿using AIS.API.Validators;
+﻿using AIS.API.Validators.Employee;
 using AIS.API.ViewModels.Employee;
 using Shouldly;
 using Xunit;
 
-namespace AIS.API.Tests.Validators
+namespace AIS.API.Tests.Validators.Employee
 {
     public class ChangeEmployeeViewModelValidatorTests
     {

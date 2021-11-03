@@ -12,7 +12,6 @@ namespace AIS.DAL.Interfaces.Repositories
         Task<IEnumerable<TEntity>> Get(CancellationToken ct);
         Task<IEnumerable<TEntity>> Get(Expression<Func<TEntity, bool>> predicate, CancellationToken ct);
         Task<TEntity> GetById(int id, CancellationToken ct);
-        Task<IEnumerable<TEntity>> GetIncluded(CancellationToken ct);
         Task<TEntity> Update(TEntity entity, CancellationToken ct);
         Task Delete(TEntity entity, CancellationToken ct);
         Task Delete(int id, CancellationToken ct);

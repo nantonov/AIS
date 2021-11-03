@@ -31,10 +31,10 @@ namespace AIS.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<TrueAnswerViewModel>> GetTrueAnswers(CancellationToken ct)
+        public async Task<IEnumerable<ShortTrueAnswerViewModel>> GetTrueAnswers(CancellationToken ct)
         {
             var trueAnswers = await _trueAnswerService.Get(ct);
-            return _mapper.Map<IEnumerable<TrueAnswerViewModel>>(trueAnswers);
+            return _mapper.Map<IEnumerable<ShortTrueAnswerViewModel>>(trueAnswers);
         }
 
         [HttpPost]

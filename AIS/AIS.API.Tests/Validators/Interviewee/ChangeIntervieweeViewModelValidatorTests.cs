@@ -1,10 +1,9 @@
-﻿using AIS.API.Validators;
-using AIS.API.ViewModels.Company;
+﻿using AIS.API.Validators.Interviewee;
 using AIS.API.ViewModels.Interviewee;
 using Shouldly;
 using Xunit;
 
-namespace AIS.API.Tests.Validators
+namespace AIS.API.Tests.Validators.Interviewee
 {
     public class ChangeIntervieweeViewModelValidatorTests
     {
@@ -30,9 +29,9 @@ namespace AIS.API.Tests.Validators
         [Fact]
         public void Validate_ModelWithoutName_ReturnsFalse()
         {
-            var validator = new ChangeCompanyViewModelValidator();
+            var validator = new ChangeIntervieweeViewModelValidator();
 
-            var model = new ChangeCompanyViewModel();
+            var model = new ChangeIntervieweeViewModel();
 
             // Act
             var result = validator.Validate(model);

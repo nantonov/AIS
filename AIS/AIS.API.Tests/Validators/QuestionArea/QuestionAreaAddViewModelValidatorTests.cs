@@ -1,20 +1,19 @@
-﻿using AIS.API.Validators;
-using AIS.API.ViewModels.Company;
+﻿using AIS.API.Validators.QuestionArea;
+using AIS.API.ViewModels.QuestionArea;
 using Shouldly;
 using Xunit;
 
-namespace AIS.API.Tests.Validators
+namespace AIS.API.Tests.Validators.QuestionArea
 {
-    public class ChangeCompanyViewModelValidatorTests
+    public class QuestionAreaAddViewModelValidatorTests
     {
         [Fact]
         public void Validate_ValidModel_ReturnsTrue()
         {
-            var validator = new ChangeCompanyViewModelValidator();
-
-            var model = new ChangeCompanyViewModel
+            var validator = new QuestionAreaAddViewModelValidator();
+            var model = new QuestionAreaAddViewModel
             {
-                Name = "asdasd"
+                Name = "setsetset"
             };
 
             // Act
@@ -25,11 +24,13 @@ namespace AIS.API.Tests.Validators
         }
 
         [Fact]
-        public void Validate_ModelWithoutName_ReturnsFalse()
+        public void Validate_TextLengthLessThanThree_ReturnsFalse()
         {
-            var validator = new ChangeCompanyViewModelValidator();
-
-            var model = new ChangeCompanyViewModel();
+            var validator = new QuestionAreaAddViewModelValidator();
+            var model = new QuestionAreaAddViewModel
+            {
+                Name = "a"
+            };
 
             // Act
             var result = validator.Validate(model);
@@ -40,13 +41,12 @@ namespace AIS.API.Tests.Validators
         }
 
         [Fact]
-        public void Validate_NameLengthLessThanThree_ReturnsFalse()
+        public void Validate_TextEqualsNull_ReturnsFalse()
         {
-            var validator = new ChangeCompanyViewModelValidator();
-
-            var model = new ChangeCompanyViewModel
+            var validator = new QuestionAreaAddViewModelValidator();
+            var model = new QuestionAreaAddViewModel
             {
-                Name = "as"
+                Name = null
             };
 
             // Act

@@ -2,6 +2,7 @@
 using AIS.API.ViewModels.Company;
 using AIS.API.ViewModels.Employee;
 using AIS.API.ViewModels.Interviewee;
+using AIS.API.ViewModels.QuestionArea;
 
 namespace AIS.API.ViewModels.Session
 {
@@ -16,5 +17,7 @@ namespace AIS.API.ViewModels.Session
         public int IntervieweeId { get; set; }
         public ShortIntervieweeViewModel Interviewee { get; set; }
         public DateTime FinishedAt { get; set; }
+        public int QuestionAreaId { get; set; }
+        public ShortQuestionAreaViewModel QuestionArea { get; set; }
     }
 }
