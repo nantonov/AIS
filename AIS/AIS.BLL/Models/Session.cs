@@ -14,5 +14,7 @@ namespace AIS.BLL.Models
         public Interviewee Interviewee { get; set; }
         public int IntervieweeId { get; set; }
         public DateTime FinishedAt { get; set; }
+        public int QuestionAreaId { get; set; }
+        public QuestionArea QuestionArea { get; set; }
     }
 }

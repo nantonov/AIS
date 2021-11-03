@@ -1,7 +1,7 @@
 ﻿using AIS.API.ViewModels.Company;
 using FluentValidation;
 
-namespace AIS.API.Validators
+namespace AIS.API.Validators.Company
 {
     public class ChangeCompanyViewModelValidator : AbstractValidator<ChangeCompanyViewModel>
     {

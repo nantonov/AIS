@@ -7,6 +7,6 @@ namespace AIS.API.ViewModels.TrueAnswer
         public int Id { get; set; }
         public string Text { get; set; }
         public int QuestionId { get; set; }
-        public QuestionViewModel Question { get; set; }
+        public ShortQuestionViewModel Question { get; set; }
     }
 }

@@ -29,14 +29,19 @@ namespace AIS.DAL.Tests.Repositories.Session
             var sessionEntity = new SessionEntity()
             {
                 CompanyId = id,
+                Company = new() { Id = id },
                 EmployeeId = id,
+                Employee = new() { Id = id },
                 IntervieweeId = id,
+                Interviewee = new() { Id = id },
+                QuestionAreaId = id,
+                QuestionArea = new() { Id = id },
                 StartedAt = DateTime.Today
             };
             var model = await _context.Sessions.AddAsync(sessionEntity);
             await _context.SaveChangesAsync();
             var session = await _repo.GetById(model.Entity.Id, default);
-            Assert.Equal(sessionEntity.EmployeeId, session.EmployeeId);
+            sessionEntity.EmployeeId.ShouldBeEquivalentTo(session.EmployeeId);
             Assert.Equal(sessionEntity.CompanyId, session.CompanyId);
             Assert.Equal(sessionEntity.IntervieweeId, session.IntervieweeId);
             await _context.Database.EnsureDeletedAsync();
@@ -59,8 +64,13 @@ namespace AIS.DAL.Tests.Repositories.Session
             {
                 Id = id,
                 CompanyId = id,
+                Company = new() { Id = id },
                 EmployeeId = id,
+                Employee = new() { Id = id },
                 IntervieweeId = id,
+                Interviewee = new() { Id = id },
+                QuestionAreaId = id,
+                QuestionArea = new() { Id = id },
                 StartedAt = DateTime.Today
             };
             await _context.Sessions.AddAsync(sessionEntity);

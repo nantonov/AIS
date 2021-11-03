@@ -31,10 +31,10 @@ namespace AIS.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<QuestionSetViewModel>> GetQuestionSets(CancellationToken ct)
+        public async Task<IEnumerable<ShortQuestionSetViewModel>> GetQuestionSets(CancellationToken ct)
         {
             var questionSets = await _questionSetService.Get(ct);
-            return _mapper.Map<IEnumerable<QuestionSetViewModel>>(questionSets);
+            return _mapper.Map<IEnumerable<ShortQuestionSetViewModel>>(questionSets);
         }
 
         [HttpPost]

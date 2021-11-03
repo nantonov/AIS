@@ -27,8 +27,7 @@ namespace AIS.DAL.Repositories
         public override async Task<IEnumerable<CompanyEntity>> Get(Expression<Func<CompanyEntity, bool>> predicate,
             CancellationToken ct)
         {
-            return await _dbSet.AsNoTracking().Include(x => x.Employees).Include(x => x.Interviewees)
-                .Where(predicate).ToListAsync(ct);
+            return await _dbSet.AsNoTracking().Include(x => x.Employees).Include(x => x.Interviewees).Where(predicate).ToListAsync(ct);
         }
 
         public override async Task<CompanyEntity> GetById(int id, CancellationToken ct)

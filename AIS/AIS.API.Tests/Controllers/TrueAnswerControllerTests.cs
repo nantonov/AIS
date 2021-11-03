@@ -133,18 +133,18 @@ namespace AIS.API.Tests.Controllers
             };
             var expectedTrueAnswerViewModel = new[]
             {
-                new TrueAnswerViewModel
+                new ShortTrueAnswerViewModel
                 {
                     Text = expected[0].Text
                 },
-                new TrueAnswerViewModel
+                new ShortTrueAnswerViewModel
                 {
                     Text = expected[0].Text
                 }
             };
 
             _mapperMock.Setup(map => map.Map<IEnumerable<TrueAnswer>>(expected)).Returns(expectedTrueAnswers);
-            _mapperMock.Setup(map => map.Map<IEnumerable<TrueAnswerViewModel>>(expectedTrueAnswers)).Returns(expectedTrueAnswerViewModel);
+            _mapperMock.Setup(map => map.Map<IEnumerable<ShortTrueAnswerViewModel>>(expectedTrueAnswers)).Returns(expectedTrueAnswerViewModel);
             _serviceMock.Setup(serv => serv.Get(default)).ReturnsAsync(expectedTrueAnswers);
 
             var controller = new TrueAnswersController(_serviceMock.Object, _mapperMock.Object);

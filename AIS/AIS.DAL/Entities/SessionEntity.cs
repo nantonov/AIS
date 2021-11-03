@@ -13,5 +13,7 @@ namespace AIS.DAL.Entities
         public int IntervieweeId { get; set; }
         public virtual IntervieweeEntity Interviewee { get; set; }
         public DateTime FinishedAt { get; set; }
+        public int QuestionAreaId { get; set; }
+        public virtual QuestionAreaEntity QuestionArea { get; set; }
     }
 }

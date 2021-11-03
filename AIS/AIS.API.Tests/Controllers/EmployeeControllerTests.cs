@@ -122,12 +122,12 @@ namespace AIS.API.Tests.Controllers
             };
             var expectedEmployeeViewModel = new[]
             {
-                new EmployeeViewModel
+                new ShortEmployeeViewModel
                 {
                     Name = expectedEmployee[0].Name,
                     CompanyId = expectedEmployee[0].CompanyId
                 },
-                new EmployeeViewModel
+                new ShortEmployeeViewModel
                 {
                     Name = expectedEmployee[1].Name,
                     CompanyId = expectedEmployee[1].CompanyId
@@ -135,7 +135,7 @@ namespace AIS.API.Tests.Controllers
             };
 
             _mapperMock.Setup(map => map.Map<IEnumerable<Employee>>(expected)).Returns(expectedEmployee);
-            _mapperMock.Setup(map => map.Map<IEnumerable<EmployeeViewModel>>(expectedEmployee)).Returns(expectedEmployeeViewModel);
+            _mapperMock.Setup(map => map.Map<IEnumerable<ShortEmployeeViewModel>>(expectedEmployee)).Returns(expectedEmployeeViewModel);
             _serviceMock.Setup(serv => serv.Get(default)).ReturnsAsync(expectedEmployee);
 
             var controller = new EmployeeController(_mapperMock.Object, _serviceMock.Object, _validatorMock.Object);

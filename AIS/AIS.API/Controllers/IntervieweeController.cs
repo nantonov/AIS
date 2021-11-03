@@ -37,10 +37,10 @@ namespace AIS.API.Controllers
         }
     
         [HttpGet]
-        public async Task<IEnumerable<IntervieweeViewModel>> GetInterviewees(CancellationToken ct)
+        public async Task<IEnumerable<ShortIntervieweeViewModel>> GetInterviewees(CancellationToken ct)
         {
             var interviewees = await _intervieweeService.Get(ct);
-            return _mapper.Map<IEnumerable<IntervieweeViewModel>>(interviewees);
+            return _mapper.Map<IEnumerable<ShortIntervieweeViewModel>>(interviewees);
         }
     
         [HttpPost]

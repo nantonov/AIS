@@ -129,13 +129,13 @@ namespace AIS.API.Tests.Controllers
             };
             var expectedIntervieweeViewModel = new[]
             {
-                new IntervieweeViewModel
+                new ShortIntervieweeViewModel
                 {
                     Name = expectedInterviewee[0].Name,
                     CompanyId = expectedInterviewee[0].CompanyId,
                     AppliesFor = expectedInterviewee[0].AppliesFor
                 },
-                new IntervieweeViewModel
+                new ShortIntervieweeViewModel
                 {
                     Name = expectedInterviewee[1].Name,
                     CompanyId = expectedInterviewee[1].CompanyId,
@@ -144,7 +144,7 @@ namespace AIS.API.Tests.Controllers
             };
 
             _mapperMock.Setup(map => map.Map<IEnumerable<Interviewee>>(expected)).Returns(expectedInterviewee);
-            _mapperMock.Setup(map => map.Map<IEnumerable<IntervieweeViewModel>>(expectedInterviewee)).Returns(expectedIntervieweeViewModel);
+            _mapperMock.Setup(map => map.Map<IEnumerable<ShortIntervieweeViewModel>>(expectedInterviewee)).Returns(expectedIntervieweeViewModel);
             _serviceMock.Setup(serv => serv.Get(default)).ReturnsAsync(expectedInterviewee);
 
             var controller = new IntervieweeController(_serviceMock.Object, _mapperMock.Object, _validatorMock.Object);

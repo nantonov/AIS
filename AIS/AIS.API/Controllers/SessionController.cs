@@ -31,10 +31,10 @@ namespace AIS.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<SessionViewModel>> GetSessions(CancellationToken ct)
+        public async Task<IEnumerable<ShortSessionViewModel>> GetSessions(CancellationToken ct)
         {
             var sessions = await _sessionService.Get(ct);
-            return _mapper.Map<IEnumerable<SessionViewModel>>(sessions);
+            return _mapper.Map<IEnumerable<ShortSessionViewModel>>(sessions);
         }
 
         [HttpPost]

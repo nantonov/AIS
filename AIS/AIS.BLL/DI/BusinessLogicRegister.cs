@@ -19,6 +19,7 @@ namespace AIS.BLL.DI
             services.AddScoped(typeof(IGenericService<QuestionSet>), typeof(GenericService<QuestionSet, QuestionSetEntity>));
             services.AddScoped(typeof(IGenericService<Question>), typeof(GenericService<Question, QuestionEntity>));
             services.AddScoped(typeof(IGenericService<TrueAnswer>), typeof(GenericService<TrueAnswer, TrueAnswerEntity>));
+            services.AddScoped(typeof(IGenericService<QuestionIntervieweeAnswer>), typeof(GenericService<QuestionIntervieweeAnswer, QuestionIntervieweeAnswerEntity>));
             services.AddDataAccess(config);
         }
     }
