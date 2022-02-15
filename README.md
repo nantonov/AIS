@@ -12,7 +12,7 @@
 
 # Work steps
 
-When you take any task you should create new branch named 'feature/WHAT_YOU_WILL_DO'.
+When you take any task you should create new branch named 'feature/what-you-will-do'.
 After creating branch you should create merge(pull) request into main.
 
 When you'll complete the task you should wait two approvers. If you have < 2 approvers you can't merge the branch.
