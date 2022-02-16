@@ -9,5 +9,6 @@ namespace AIS.DAL.Entities
         public virtual QuestionAreaEntity QuestionArea { get; set; }
         public int QuestionAreaId { get; set; }
         public virtual ICollection<QuestionEntity> Questions { get; set; }
+        public virtual ICollection<QuestionIntervieweeAnswerEntity> QuestionIntervieweeAnswer { get; set; }
     }
 }
