@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using AIS.API.ViewModels.Company;
 using AIS.API.ViewModels.Employee;
 using AIS.API.ViewModels.Interviewee;
 using AIS.API.ViewModels.QuestionArea;
+using AIS.API.ViewModels.QuestionIntervieweeAnswer;
 
 namespace AIS.API.ViewModels.Session
 {
@@ -19,5 +21,6 @@ namespace AIS.API.ViewModels.Session
         public DateTime FinishedAt { get; set; }
         public int QuestionAreaId { get; set; }
         public ShortQuestionAreaViewModel QuestionArea { get; set; }
+        public IEnumerable<ShortQuestionIntervieweeAnswerViewModel> QuestionIntervieweeAnswers { get; set; }
     }
 }

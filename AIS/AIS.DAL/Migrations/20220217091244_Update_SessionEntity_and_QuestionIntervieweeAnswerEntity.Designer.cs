@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AIS.DAL.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20220216144206_Add_Columns_Into_QuestionIntervieweeAnswerEntity")]
-    partial class Add_Columns_Into_QuestionIntervieweeAnswerEntity
+    [Migration("20220217091244_Update_SessionEntity_and_QuestionIntervieweeAnswerEntity")]
+    partial class Update_SessionEntity_and_QuestionIntervieweeAnswerEntity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -130,9 +130,6 @@ namespace AIS.DAL.Migrations
                     b.Property<int>("QuestionId")
                         .HasColumnType("int");
 
-                    b.Property<int>("QuestionSetId")
-                        .HasColumnType("int");
-
                     b.Property<int>("SessionId")
                         .HasColumnType("int");
 
@@ -145,6 +142,8 @@ namespace AIS.DAL.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("QuestionId");
+
+                    b.HasIndex("SessionId");
 
                     b.HasIndex("TrueAnswerId");
 
@@ -271,6 +270,12 @@ namespace AIS.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("AIS.DAL.Entities.SessionEntity", "Session")
+                        .WithMany("QuestionIntervieweeAnswers")
+                        .HasForeignKey("SessionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("AIS.DAL.Entities.TrueAnswerEntity", "TrueAnswer")
                         .WithMany()
                         .HasForeignKey("TrueAnswerId")
@@ -278,6 +283,8 @@ namespace AIS.DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("Question");
+
+                    b.Navigation("Session");
 
                     b.Navigation("TrueAnswer");
                 });
@@ -359,6 +366,11 @@ namespace AIS.DAL.Migrations
             modelBuilder.Entity("AIS.DAL.Entities.QuestionSetEntity", b =>
                 {
                     b.Navigation("Questions");
+                });
+
+            modelBuilder.Entity("AIS.DAL.Entities.SessionEntity", b =>
+                {
+                    b.Navigation("QuestionIntervieweeAnswers");
                 });
 #pragma warning restore 612, 618
         }
