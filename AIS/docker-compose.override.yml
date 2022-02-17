@@ -4,7 +4,7 @@ services:
   ais.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_URLS=https://+:80
       - ConnectionStrings__DefaultConnection=Server=db,1433;Database=master;User=sa;Password=Your_password123;MultipleActiveResultSets=True;Trusted_Connection=True;Integrated Security=false;TrustServerCertificate=true;
     ports:
       - 5000:80
