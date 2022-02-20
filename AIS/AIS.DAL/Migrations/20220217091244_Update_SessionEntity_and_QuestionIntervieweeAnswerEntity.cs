@@ -6,10 +6,6 @@ namespace AIS.DAL.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "QuestionSetId",
-                table: "QuestionIntervieweeAnswers");
-
             migrationBuilder.CreateIndex(
                 name: "IX_QuestionIntervieweeAnswers_SessionId",
                 table: "QuestionIntervieweeAnswers",
