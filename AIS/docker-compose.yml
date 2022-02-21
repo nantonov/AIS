@@ -1,0 +1,17 @@
+version: '3.4'
+
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server
+    ports:
+    - 1433:1433
+    environment:
+        SA_PASSWORD: "Your_password123"
+        ACCEPT_EULA: "Y"
+  ais.api:
+    image: ${DOCKER_REGISTRY-}aisapi
+    build:
+      context: .
+      dockerfile: AIS.API/Dockerfile
+    depends_on:
+            - db
