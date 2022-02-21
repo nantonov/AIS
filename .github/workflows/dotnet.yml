@@ -16,7 +16,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 5.0.x
+        dotnet-version: 6.0.x
     - name: Cache
       uses: actions/cache@v2.1.6
       with:
@@ -31,7 +31,7 @@ jobs:
     - name: Test
       run: dotnet test --no-build --configuration Release --verbosity normal AIS/AIS.sln
     - name: sonarscan-dotnet
-      uses: highbyte/sonarscan-dotnet@v2.1.1-beta
+      uses: highbyte/sonarscan-dotnet@v2.1.2
       with:
         sonarProjectKey: nantonov_AIS
         sonarProjectName: AIS
