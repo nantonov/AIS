@@ -11,5 +11,108 @@ namespace AIS.BLL.Services
         public SessionService(ISessionRepository repository, IMapper mapper) : base(repository, mapper)
         {
         }
+
+        public int MethodToTest()
+        {
+            int i = 20;
+            i = 22;
+            i = 23;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            return i;
+        }
+
+        public int MethodToTest2()
+        {
+            int i;
+            for (i = 1; i < 20; i += i % 2) { };
+            return 0;
+        }
+
+        public int MethodToTestCopy()
+        {
+            int i = 20;
+            i = 22;
+            i = 23;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            return i;
+        }
     }
 }

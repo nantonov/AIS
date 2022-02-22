@@ -274,6 +274,13 @@ namespace AIS.BLL.Tests.Services
         }
 
         [Fact]
+        public void MethodToTest2Valid()
+        {
+            var i = _service.MethodToTest();
+            i.ShouldBe(0);
+        }
+
+        [Fact]
         public void GetSessionsByPredicate_ValidPredicate_ReturnsSessionList()
         {
             var id = new Random().Next();
