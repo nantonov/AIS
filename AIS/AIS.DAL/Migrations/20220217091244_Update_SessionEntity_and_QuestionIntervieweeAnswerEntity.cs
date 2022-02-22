@@ -6,6 +6,13 @@ namespace AIS.DAL.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AddColumn<int>(
+                name: "SessionId",
+                table: "QuestionIntervieweeAnswers",
+                type: "int",
+                nullable: false,
+                defaultValue: 0);
+
             migrationBuilder.CreateIndex(
                 name: "IX_QuestionIntervieweeAnswers_SessionId",
                 table: "QuestionIntervieweeAnswers",
@@ -29,13 +36,6 @@ namespace AIS.DAL.Migrations
             migrationBuilder.DropIndex(
                 name: "IX_QuestionIntervieweeAnswers_SessionId",
                 table: "QuestionIntervieweeAnswers");
-
-            migrationBuilder.AddColumn<int>(
-                name: "QuestionSetId",
-                table: "QuestionIntervieweeAnswers",
-                type: "int",
-                nullable: false,
-                defaultValue: 0);
         }
     }
 }
