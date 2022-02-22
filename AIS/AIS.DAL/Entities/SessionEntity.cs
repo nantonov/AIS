@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace AIS.DAL.Entities
 {
@@ -15,5 +16,6 @@ namespace AIS.DAL.Entities
         public DateTime FinishedAt { get; set; }
         public int QuestionAreaId { get; set; }
         public virtual QuestionAreaEntity QuestionArea { get; set; }
+        public virtual ICollection<QuestionIntervieweeAnswerEntity> QuestionIntervieweeAnswers { get; set; }
     }
 }
