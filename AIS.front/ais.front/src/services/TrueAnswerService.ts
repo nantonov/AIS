@@ -1,12 +1,12 @@
 import { defaultTrueAnswer } from "../common/defaultDTO/defaultTrueAnswer";
+import { Config } from "../config";
 import { ITrueAnswer } from "../DTO/ITrueAnswer";
 import axiosInstance from "../utils/getAxious";
 
 
 export class TrueAnswerService {
-    static path:string = 'api/TrueAnswer';
     public static async getAll(): Promise<ITrueAnswer[]> {
-        const result = await axiosInstance.get<ITrueAnswer[]>(this.path)
+        const result = await axiosInstance.get<ITrueAnswer[]>(Config.TRUE_ANSWER_URL)
             .then((result) => result.data)
             .catch(({ response }) => console.log(response.data));
 
@@ -15,7 +15,7 @@ export class TrueAnswerService {
 
     public static async getById(trueAnswerId: number): Promise<ITrueAnswer> {
         const result = await axiosInstance.get<ITrueAnswer>(
-            this.path+`/${trueAnswerId}`)
+            Config.TRUE_ANSWER_URL+`/${trueAnswerId}`)
             .then((result) => result.data)
             .catch((err) => console.log(err));
 
@@ -24,16 +24,16 @@ export class TrueAnswerService {
 
     public static deleteById(trueAnswerId: number): Promise<any> {
         return axiosInstance.delete(
-            this.path+`/${trueAnswerId}`);
+            Config.TRUE_ANSWER_URL+`/${trueAnswerId}`);
     }
 
     public static create(trueAnswer: ITrueAnswer): Promise<any> {
         return axiosInstance.post(
-            this.path, { ...trueAnswer });
+            Config.TRUE_ANSWER_URL, { ...trueAnswer });
     }
 
     public static update(trueAnswer: ITrueAnswer): Promise<boolean> {
         return axiosInstance.put(
-            this.path , { ...trueAnswer }, { params: { id: trueAnswer.id } });
+            Config.TRUE_ANSWER_URL, { ...trueAnswer }, { params: { id: trueAnswer.id } });
     }
 }

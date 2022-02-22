@@ -1,12 +1,12 @@
 import { defaultInterviewee } from "../common/defaultDTO/defaultInterviewee";
+import { Config } from "../config";
 import { IInterviewee } from "../DTO/IInterviewee";
 import axiosInstance from "../utils/getAxious";
 
 
 export class IntervieweeService {
-    static path:string = 'api/Interviewee';
     public static async getAll(): Promise<IInterviewee[]> {
-        const result = await axiosInstance.get<IInterviewee[]>(this.path)
+        const result = await axiosInstance.get<IInterviewee[]>(Config.INTERVIEWEE_URL)
             .then((result) => result.data)
             .catch(({ response }) => console.log(response.data));
 
@@ -15,7 +15,7 @@ export class IntervieweeService {
 
     public static async getById(intervieweeId: number): Promise<IInterviewee> {
         const result = await axiosInstance.get<IInterviewee>(
-            this.path+`/${intervieweeId}`)
+            Config.INTERVIEWEE_URL+`/${intervieweeId}`)
             .then((result) => result.data)
             .catch((err) => console.log(err));
 
@@ -24,16 +24,16 @@ export class IntervieweeService {
 
     public static deleteById(intervieweeId: number): Promise<any> {
         return axiosInstance.delete(
-            this.path+`/${intervieweeId}`);
+            Config.INTERVIEWEE_URL+`/${intervieweeId}`);
     }
 
     public static create(interviewee: IInterviewee): Promise<any> {
         return axiosInstance.post(
-            this.path , { ...interviewee });
+            Config.INTERVIEWEE_URL , { ...interviewee });
     }
 
     public static update(interviewee: IInterviewee): Promise<boolean> {
         return axiosInstance.put(
-            this.path, { ...interviewee }, { params: { id: interviewee.id } });
+            Config.INTERVIEWEE_URL, { ...interviewee }, { params: { id: interviewee.id } });
     }
 }

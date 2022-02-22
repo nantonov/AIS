@@ -1,12 +1,12 @@
 import { defaultCompany } from "../common/defaultDTO/defaultCompany";
+import { Config } from "../config";
 import { ICompany } from "../DTO/ICompany";
 import axiosInstance from "../utils/getAxious";
 
 
 export class CompanyService {
-    static path:string = 'api/Company';
     public static async getAll(): Promise<ICompany[]> {
-        const result = await axiosInstance.get<ICompany[]>(this.path)
+        const result = await axiosInstance.get<ICompany[]>(Config.COMPANY_URL)
             .then((result) => result.data)
             .catch(({ response }) => console.log(response.data));
 
@@ -15,7 +15,7 @@ export class CompanyService {
 
     public static async getById(companyId: number): Promise<ICompany> {
         const result = await axiosInstance.get<ICompany>(
-            this.path+`/${companyId}`)
+            Config.COMPANY_URL+`/${companyId}`)
             .then((result) => result.data)
             .catch((err) => console.log(err));
 
@@ -24,16 +24,16 @@ export class CompanyService {
 
     public static deleteById(companyId: number): Promise<any> {
         return axiosInstance.delete(
-            this.path+`/${companyId}`);
+            Config.COMPANY_URL+`/${companyId}`);
     }
 
     public static create(company: ICompany): Promise<any> {
         return axiosInstance.post(
-            this.path, { ...company });
+            Config.COMPANY_URL, { ...company });
     }
 
     public static update(company: ICompany): Promise<boolean> {
         return axiosInstance.put(
-            this.path, { ...company }, { params: { id: company.id } });
+            Config.COMPANY_URL, { ...company }, { params: { id: company.id } });
     }
 }
