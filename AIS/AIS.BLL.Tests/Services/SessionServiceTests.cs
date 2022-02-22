@@ -276,7 +276,7 @@ namespace AIS.BLL.Tests.Services
         [Fact]
         public void MethodToTest2Valid()
         {
-            var i = _service.MethodToTest();
+            var i = _service.MethodToTest2();
             i.ShouldBe(0);
         }
 
