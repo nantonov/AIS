@@ -9,6 +9,6 @@ namespace AIS.BLL.Constants
 {
     public static class EmptyQuestion
     {
-        public static Question Empty = new() { Id = -1000};
+        public static readonly Question Empty = new() { Id = -1000};
     }
 }

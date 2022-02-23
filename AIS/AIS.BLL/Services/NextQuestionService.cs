@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -34,10 +35,10 @@ namespace AIS.BLL.Services
             var answers = (await _answers.Get(ct)).Where(item=>item.SessionId==sessionId);
 
             questions = questions.Where(question=> !answers.Any(answer=>answer.QuestionId==question.Id)).ToList();
+
             if (questions.Count > 0)
             {
-                Random rnd = new Random();
-                int index = rnd.Next(0, questions.Count);
+                int index = RandomNumberGenerator.GetInt32(0, questions.Count);
                 return _mapper.Map<Question>(questions[index]);
             }
             return EmptyQuestion.Empty;
