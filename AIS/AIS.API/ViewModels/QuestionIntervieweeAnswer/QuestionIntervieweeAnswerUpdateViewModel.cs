@@ -5,6 +5,5 @@
         public string Text { get; set; }
         public int Mark { get; set; }
         public int QuestionId { get; set; }
-        public int TrueAnswerId { get; set; }
     }
 }
