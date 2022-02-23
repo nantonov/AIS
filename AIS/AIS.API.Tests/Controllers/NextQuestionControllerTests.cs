@@ -49,7 +49,7 @@ namespace AIS.API.Tests.Controllers
             QuestionViewModel emptyQuestionViewModel = new() { Id = -1000};
             Question question = EmptyQuestion.Empty;
 
-            _serviceMock.Setup(x => x.next(1, 1, default)).ReturnsAsync(EmptyQuestion.Empty);
+            _serviceMock.Setup(x => x.next(session, set, default)).ReturnsAsync(EmptyQuestion.Empty);
             _mapperMock.Setup(x => x.Map<QuestionViewModel>(question)).Returns(emptyQuestionViewModel);
 
             var res = await _controller.next(session, set, default);
@@ -58,14 +58,14 @@ namespace AIS.API.Tests.Controllers
         }
 
         [Fact]
-        public async Task next_InvalidSession_ReturnsEmptyQuestion()
+        public async Task next_InvalidSession_ReturnsRandomQuestion()
         {
             int set = 1;
             int session = -100;
             QuestionViewModel questionViewModel = new() { Id = 1, Text = "Some question 1" };
             Question question = new() { Id = 1, Text = "Some question 1" };
 
-            _serviceMock.Setup(x => x.next(1, 1, default)).ReturnsAsync(EmptyQuestion.Empty);
+            _serviceMock.Setup(x => x.next(session, set, default)).ReturnsAsync(question);
             _mapperMock.Setup(x => x.Map<QuestionViewModel>(question)).Returns(questionViewModel);
 
             var res = await _controller.next(session, set, default);

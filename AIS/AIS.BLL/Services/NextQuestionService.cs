@@ -30,7 +30,7 @@ namespace AIS.BLL.Services
 
         public async Task<Question> next(int sessionId, int setId, CancellationToken ct)
         {
-            List<QuestionEntity> questions = (await _questions.Get(ct)).Where(item=> item.QuestionSetId == sessionId).ToList();
+            List<QuestionEntity> questions = (await _questions.Get(ct)).Where(item=> item.QuestionSetId == setId).ToList();
             var answers = (await _answers.Get(ct)).Where(item=>item.SessionId==sessionId);
 
             questions = questions.Where(question=> !answers.Any(answer=>answer.QuestionId==question.Id)).ToList();

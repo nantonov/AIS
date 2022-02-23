@@ -23,9 +23,8 @@ namespace AIS.API.Controllers
 
         [HttpGet]
         public async Task<QuestionViewModel> next(int sessionId, int setId, CancellationToken ct)
-        {
-            var i = _mapper.Map<QuestionViewModel>(await _service.next(sessionId, setId, ct));
-            return i;
+        { 
+            return _mapper.Map<QuestionViewModel>(await _service.next(sessionId, setId, ct));
         }
     }
 }
