@@ -57,6 +57,7 @@ namespace AIS.API.Mapper
             CreateMap<QuestionIntervieweeAnswerUpdateViewModel, QuestionIntervieweeAnswer>();
             CreateMap<QuestionIntervieweeAnswerAddViewModel, QuestionIntervieweeAnswer>();
             CreateMap<QuestionIntervieweeAnswer, ShortQuestionIntervieweeAnswerViewModel>();
+            CreateMap<QuestionIntervieweeAnswer, QuestionIntervieweeAnswerAddViewModel>();
         }
     }
 }
