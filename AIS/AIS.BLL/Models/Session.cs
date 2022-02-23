@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using AIS.BLL.Interfaces;
 
 namespace AIS.BLL.Models
@@ -16,5 +17,6 @@ namespace AIS.BLL.Models
         public DateTime FinishedAt { get; set; }
         public int QuestionAreaId { get; set; }
         public QuestionArea QuestionArea { get; set; }
+        public ICollection <QuestionIntervieweeAnswer> questionIntervieweeAnswers { get; set; }
     }
 }

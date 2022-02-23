@@ -1,5 +1,6 @@
 ﻿using AIS.API.ViewModels.Question;
 using AIS.API.ViewModels.TrueAnswer;
+using AIS.API.ViewModels.Session;
 
 namespace AIS.API.ViewModels.QuestionIntervieweeAnswer
 {
@@ -12,5 +13,7 @@ namespace AIS.API.ViewModels.QuestionIntervieweeAnswer
         public ShortTrueAnswerViewModel TrueAnswer { get; set; }
         public int QuestionId { get; set; }
         public ShortQuestionViewModel Question { get; set; }
+        public int? SessionId { get; set; }
+        public ShortSessionViewModel Session { get; set; }
     }
 }
