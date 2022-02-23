@@ -62,24 +62,6 @@ namespace AIS.API.Tests.Validators.QuestionIntervieweeAnswer
         }
 
         [Fact]
-        public void Validate_WithoutTrueAnswer_ReturnsFalse()
-        {
-            var validator = new QuestionIntervieweeAnswerUpdateViewModelValidator();
-            var model = new QuestionIntervieweeAnswerUpdateViewModel
-            {
-                QuestionId = 1,
-                Text = "asd",
-                Mark = 1
-            };
-
-            // Act
-            var result = validator.Validate(model);
-
-            // Assert
-            result.Errors.ShouldNotBeEmpty();
-        }
-
-        [Fact]
         public void Validate_MarkLessThanZero_ReturnsFalse()
         {
             var validator = new QuestionIntervieweeAnswerUpdateViewModelValidator();
@@ -115,24 +97,6 @@ namespace AIS.API.Tests.Validators.QuestionIntervieweeAnswer
             // Assert
             result.Errors.ShouldNotBeEmpty();
             result.Errors.ShouldContain(x => x.PropertyName == nameof(model.QuestionId));
-        }
-
-        [Fact]
-        public void Validate_TrueAnswerIdLessThanOne_ReturnsFalse()
-        {
-            var validator = new QuestionIntervieweeAnswerUpdateViewModelValidator();
-            var model = new QuestionIntervieweeAnswerUpdateViewModel
-            {
-                Mark = 1,
-                QuestionId = 1,
-                Text = "asd",
-            };
-
-            // Act
-            var result = validator.Validate(model);
-
-            // Assert
-            result.Errors.ShouldNotBeEmpty();
         }
 
         [Fact]

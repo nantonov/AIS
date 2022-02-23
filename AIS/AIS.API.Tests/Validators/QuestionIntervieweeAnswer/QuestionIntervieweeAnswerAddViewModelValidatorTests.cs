@@ -62,24 +62,6 @@ namespace AIS.API.Tests.Validators.QuestionIntervieweeAnswer
         }
 
         [Fact]
-        public void Validate_WithoutTrueAnswer_ReturnsFalse()
-        {
-            var validator = new QuestionIntervieweeAnswerAddViewModelValidator();
-            var model = new QuestionIntervieweeAnswerAddViewModel
-            {
-                QuestionId = 1,
-                Text = "asd",
-                Mark = 1
-            };
-
-            // Act
-            var result = validator.Validate(model);
-
-            // Assert
-            result.Errors.ShouldNotBeEmpty();
-        }
-
-        [Fact]
         public void Validate_MarkLessThanZero_ReturnsFalse()
         {
             var validator = new QuestionIntervieweeAnswerAddViewModelValidator();
