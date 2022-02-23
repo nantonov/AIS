@@ -8,8 +8,6 @@ using Moq;
 using Shouldly;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,13 +25,11 @@ namespace AIS.API.Tests.Controllers
             var inputViewModel = new QuestionIntervieweeAnswerAddViewModel()
             {
                 QuestionId = 1,
-                TrueAnswerId = 1,
                 Mark = 1,
                 Text = "qwe"
             };
             var inputModel = new QuestionIntervieweeAnswer
             {
-                TrueAnswerId = inputViewModel.TrueAnswerId,
                 QuestionId = inputViewModel.QuestionId,
                 Mark = inputViewModel.Mark,
                 Text = inputViewModel.Text
@@ -59,20 +55,17 @@ namespace AIS.API.Tests.Controllers
             var inputViewModel = new QuestionIntervieweeAnswerUpdateViewModel()
             {
                 QuestionId = 1,
-                TrueAnswerId = 1,
                 Mark = 1,
                 Text = "qwe"
             };
             var inputModel = new QuestionIntervieweeAnswer
             {
-                TrueAnswerId = inputViewModel.TrueAnswerId,
                 QuestionId = inputViewModel.QuestionId,
                 Mark = inputViewModel.Mark,
                 Text = inputViewModel.Text
             };
             var expected = new QuestionIntervieweeAnswerViewModel()
             {
-                TrueAnswerId = inputViewModel.TrueAnswerId,
                 QuestionId = inputViewModel.QuestionId,
                 Mark = inputViewModel.Mark,
                 Text = inputViewModel.Text
@@ -127,14 +120,12 @@ namespace AIS.API.Tests.Controllers
                 new QuestionIntervieweeAnswerViewModel()
                 {
                     QuestionId = 1,
-                    TrueAnswerId = 1,
                     Mark = 1,
                     Text = "qwe"
                 },
                 new QuestionIntervieweeAnswerViewModel()
                 {
                     QuestionId = 1,
-                    TrueAnswerId = 1,
                     Mark = 1,
                     Text = "qwe"
                 }
@@ -144,14 +135,12 @@ namespace AIS.API.Tests.Controllers
                 new QuestionIntervieweeAnswer
                 {
                     QuestionId = inputViewModel[0].QuestionId,
-                    TrueAnswerId = inputViewModel[0].TrueAnswerId,
                     Mark = inputViewModel[0].Mark,
                     Text = inputViewModel[0].Text
                 },
                 new QuestionIntervieweeAnswer
                 {
                     QuestionId = inputViewModel[1].QuestionId,
-                    TrueAnswerId = inputViewModel[1].TrueAnswerId,
                     Mark = inputViewModel[1].Mark,
                     Text = inputViewModel[1].Text
                 }
@@ -161,14 +150,12 @@ namespace AIS.API.Tests.Controllers
                 new ShortQuestionIntervieweeAnswerViewModel
                 {
                     QuestionId = inputViewModel[0].QuestionId,
-                    TrueAnswerId = inputViewModel[0].TrueAnswerId,
                     Mark = inputViewModel[0].Mark,
                     Text = inputViewModel[0].Text
                 },
                 new ShortQuestionIntervieweeAnswerViewModel
                 {
                     QuestionId = inputViewModel[1].QuestionId,
-                    TrueAnswerId = inputViewModel[1].TrueAnswerId,
                     Mark = inputViewModel[1].Mark,
                     Text = inputViewModel[1].Text
                 }
