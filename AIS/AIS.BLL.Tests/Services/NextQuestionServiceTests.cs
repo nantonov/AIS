@@ -85,7 +85,7 @@ namespace AIS.BLL.Tests.Services
             _sessionRepoMock.Setup(x => x.GetById(sessionId, default)).ReturnsAsync(sessionEntity);
             _mapperMock.Setup(x => x.Map<Question>(It.IsAny<QuestionEntity>())).Returns(question);
 
-            var result = await _service.Next(sessionId, default);
+            var result = await _service.NextQuestion(sessionId, default);
 
             result.ShouldBe(question);
         }
@@ -127,7 +127,7 @@ namespace AIS.BLL.Tests.Services
             _sessionRepoMock.Setup(x => x.GetById(sessionId, default)).ReturnsAsync(value: null);
             _mapperMock.Setup(x => x.Map<Question>(It.IsAny<QuestionEntity>())).Returns(question);
 
-            var result = await _service.Next(sessionId, default);
+            var result = await _service.NextQuestion(sessionId, default);
 
             result.ShouldBeNull();
         }
