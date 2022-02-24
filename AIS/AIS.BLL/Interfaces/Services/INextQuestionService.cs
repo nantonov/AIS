@@ -6,6 +6,6 @@ namespace AIS.BLL.Interfaces.Services
 {
     public interface INextQuestionService
     {
-        Task<Question> Next(int sessionId, CancellationToken ct);
+        Task<Question> NextQuestion(int sessionId, CancellationToken ct);
     }
 }

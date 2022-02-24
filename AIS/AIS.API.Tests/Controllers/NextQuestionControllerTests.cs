@@ -31,10 +31,10 @@ namespace AIS.API.Tests.Controllers
             QuestionViewModel questionViewModel = new() { Id = 1, Text = "Some question 1"};
             Question question = new() { Id = 1, Text = "Some question 1" };
 
-            _serviceMock.Setup(x => x.Next(session, default)).ReturnsAsync(question);
+            _serviceMock.Setup(x => x.NextQuestion(session, default)).ReturnsAsync(question);
             _mapperMock.Setup(x => x.Map<QuestionViewModel>(question)).Returns(questionViewModel);
 
-            var res = await _controller.Next(session, default);
+            var res = await _controller.NextQuestion(session, default);
 
             res.ShouldBe(questionViewModel);
         }
@@ -46,10 +46,10 @@ namespace AIS.API.Tests.Controllers
             QuestionViewModel questionViewModel = new() { Id = 1, Text = "Some question 1" };
             Question question = new() { Id = 1, Text = "Some question 1" };
 
-            _serviceMock.Setup(x => x.Next(session, default)).ReturnsAsync(question);
+            _serviceMock.Setup(x => x.NextQuestion(session, default)).ReturnsAsync(question);
             _mapperMock.Setup(x => x.Map<QuestionViewModel>(question)).Returns(questionViewModel);
 
-            var res = await _controller.Next(session, default);
+            var res = await _controller.NextQuestion(session, default);
 
             res.ShouldBe(questionViewModel);
         }

@@ -24,7 +24,7 @@ namespace AIS.BLL.Services
             _mapper = mapper;
         }
 
-        public async Task<Question> Next(int sessionId, CancellationToken ct)
+        public async Task<Question> NextQuestion(int sessionId, CancellationToken ct)
         {
             var session = await _sessions.GetById(sessionId, ct);
             var sets = session?.QuestionArea.QuestionSets;
