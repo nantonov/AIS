@@ -12,27 +12,24 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Xunit;
-using AIS.BLL.Constants;
 
 namespace AIS.BLL.Tests.Services
 {
     public class NextQuestionServiceTests
     {
         private readonly INextQuestionService _service;
-        private readonly Mock<IGenericRepository<QuestionEntity>> _questionRepoMock = new();
-        private readonly Mock<IGenericRepository<QuestionIntervieweeAnswerEntity>> _questionInterviewAnswerMock = new();
+        private readonly Mock<ISessionRepository> _sessionRepoMock = new();
         private readonly Mock<IMapper> _mapperMock = new();
 
         public NextQuestionServiceTests()
         {
-            _service = new NextQuestionService(_questionRepoMock.Object, _questionInterviewAnswerMock.Object, _mapperMock.Object);
+            _service = new NextQuestionService(_sessionRepoMock.Object, _mapperMock.Object);
         }
 
         [Fact]
-        public async Task next_ValidData_ReturnsRandomQuestion()
+        public async Task Next_ValidData_ReturnsRandomQuestion()
         {
-            int set = 1;
-            int session = 1;
+            int sessionId = 1;
             List<QuestionEntity> questionsEntities = new()
             {
                 new()
@@ -68,72 +65,35 @@ namespace AIS.BLL.Tests.Services
                         SessionId = 1
                     }
                 };
-
-            _questionInterviewAnswerMock.Setup(x => x.Get(default)).ReturnsAsync(questionIntervieweeAnswerEntities);
-            _questionRepoMock.Setup(x=> x.Get(default)).ReturnsAsync(questionsEntities);
-            _mapperMock.Setup(x => x.Map<Question>(It.IsAny<QuestionEntity>())).Returns(question);
-
-            var result = await _service.next(session, set, default);
-
-            result.ShouldBe(question);
-        }
-
-        [Fact]
-        public async Task next_InvalidSet_ReturnsEmptyQuestion()
-        {
-            int set = -100;
-            int session = 1;
-
-            List<QuestionEntity> questionsEntities = new()
+            SessionEntity sessionEntity = new()
             {
-                new()
+                Id = sessionId,
+                QuestionArea = new()
                 {
-                    Id = 1,
-                    QuestionSetId = 1,
-                    Text = " some text 1"
+                    QuestionSets = new List<QuestionSetEntity>()
+                    {
+                        new()
+                        {
+                            Id = 1,
+                            Questions = questionsEntities
+                        }
+                    }
                 },
-                new()
-                {
-                    Id = 2,
-                    QuestionSetId = 1,
-                    Text = " some text 2"
-                }
-            };
-            Question question = new()
-            {
-                Id = 2,
-                QuestionSetId = 1
-            };
-            List<QuestionIntervieweeAnswerEntity> questionIntervieweeAnswerEntities =
-                new()
-                {
-                    new()
-                    {
-                        Id = 1,
-                        QuestionId = 1,
-                        Question = new()
-                        {
-                            Id = 1,
-                            QuestionSetId = 1
-                        },
-                        SessionId = 1
-                    }
-                };
+                QuestionIntervieweeAnswers = questionIntervieweeAnswerEntities,
 
-            _questionInterviewAnswerMock.Setup(x => x.Get(default)).ReturnsAsync(questionIntervieweeAnswerEntities);
-            _questionRepoMock.Setup(x => x.Get(default)).ReturnsAsync(questionsEntities);
+            };
+            _sessionRepoMock.Setup(x => x.GetById(sessionId, default)).ReturnsAsync(sessionEntity);
             _mapperMock.Setup(x => x.Map<Question>(It.IsAny<QuestionEntity>())).Returns(question);
 
-            var result = await _service.next(session, set, default);
+            var result = await _service.Next(sessionId, default);
 
-            result.ShouldBe(EmptyQuestion.Empty);
+            result.ShouldBe(question);
         }
 
         [Fact]
-        public async Task next_InvalidSession_ReturnsRandomQuestion()
+        public async Task Next_InvalidSession_ReturnsRandomQuestion()
         {
-            int set = 1;
-            int session = -1000;
+            int sessionId = -1000;
             List<QuestionEntity> questionsEntities = new()
             {
                 new()
@@ -148,6 +108,7 @@ namespace AIS.BLL.Tests.Services
                 Id = 2,
                 QuestionSetId = 1
             };
+
             List<QuestionIntervieweeAnswerEntity> questionIntervieweeAnswerEntities =
                 new()
                 {
@@ -163,14 +124,12 @@ namespace AIS.BLL.Tests.Services
                         SessionId = 1
                     }
                 };
-
-            _questionInterviewAnswerMock.Setup(x => x.Get(default)).ReturnsAsync(questionIntervieweeAnswerEntities);
-            _questionRepoMock.Setup(x => x.Get(default)).ReturnsAsync(questionsEntities);
+            _sessionRepoMock.Setup(x => x.GetById(sessionId, default)).ReturnsAsync(value: null);
             _mapperMock.Setup(x => x.Map<Question>(It.IsAny<QuestionEntity>())).Returns(question);
 
-            var result = await _service.next(session, set, default);
+            var result = await _service.Next(sessionId, default);
 
-            result.ShouldBe(question);
+            result.ShouldBeNull();
         }
     }
 }
