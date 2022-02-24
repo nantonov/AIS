@@ -1,5 +1,4 @@
-﻿using AIS.BLL.Constants;
-using AIS.BLL.Interfaces.Services;
+﻿using AIS.BLL.Interfaces.Services;
 using AIS.BLL.Models;
 using AIS.DAL.Entities;
 using AIS.DAL.Interfaces.Repositories;
@@ -16,32 +15,42 @@ namespace AIS.BLL.Services
 {
     public class NextQuestionService: INextQuestionService
     {
-        private readonly IGenericRepository<QuestionEntity> _questions;
-        private readonly IGenericRepository<QuestionIntervieweeAnswerEntity> _answers;
+        private readonly ISessionRepository _sessions;
         private readonly IMapper _mapper;
 
-        public NextQuestionService (IGenericRepository<QuestionEntity> questions,
-            IGenericRepository<QuestionIntervieweeAnswerEntity> answers,
-            IMapper mapper)
+        public NextQuestionService (ISessionRepository sessions, IMapper mapper)
         {
-            _questions = questions;
-            _answers = answers;
+            _sessions = sessions;
             _mapper = mapper;
         }
 
-        public async Task<Question> next(int sessionId, int setId, CancellationToken ct)
+        public async Task<Question> Next(int sessionId, CancellationToken ct)
         {
-            List<QuestionEntity> questions = (await _questions.Get(ct)).Where(item=> item.QuestionSetId == setId).ToList();
-            var answers = (await _answers.Get(ct)).Where(item=>item.SessionId==sessionId);
+            var session = await _sessions.GetById(sessionId, ct);
+            var sets = session?.QuestionArea.QuestionSets;
+            var answers = session?.QuestionIntervieweeAnswers;
+            List<QuestionEntity> questions = null;
+            if (sets is null) return null;
+            if (answers.Count == 0) questions = sets.First().Questions.ToList();
+            else
+            {
+                foreach(var set in sets)
+                {
+                    if (answers.Count(answer => answer.Question.QuestionSetId == set.Id) != set.Questions.Count)
+                    {
+                        questions = set.Questions.ToList();
+                        break;
+                    }
+                }
+            }
+            questions = questions?.Where(question=>!answers.Any(answer => answer.QuestionId == question.Id)).ToList();
 
-            questions = questions.Where(question=> !answers.Any(answer=>answer.QuestionId==question.Id)).ToList();
-
-            if (questions.Count > 0)
+            if (questions is not null)
             {
                 int index = RandomNumberGenerator.GetInt32(0, questions.Count);
                 return _mapper.Map<Question>(questions[index]);
             }
-            return EmptyQuestion.Empty;
+            return null;
         }
     }
 }
