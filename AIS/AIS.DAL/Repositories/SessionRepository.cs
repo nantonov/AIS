@@ -47,6 +47,10 @@ namespace AIS.DAL.Repositories
                                      .Include(x => x.Interviewee)
                                      .Include(x => x.Company)
                                      .Include(x => x.QuestionArea)
+                                     .ThenInclude(x => x.QuestionSets)
+                                     .ThenInclude(x => x.Questions)
+                                     .Include(x => x.QuestionIntervieweeAnswers)
+                                     .ThenInclude(x => x.Question)
                                      .FirstOrDefaultAsync(x => x.Id == id, ct);
 
             return entity;
