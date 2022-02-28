@@ -21,7 +21,6 @@ namespace AIS.DAL.Repositories
         {
             var result = await _dbSet.Include(x => x.Interviewee)
                                      .Include(x => x.QuestionArea)
-                                     .Include(x => x.Company)
                                      .Include(x => x.Employee)
                                      .ToListAsync(ct);
 
@@ -34,7 +33,6 @@ namespace AIS.DAL.Repositories
             return await _dbSet.AsNoTracking()
                                .Include(x => x.Employee)
                                .Include(x => x.Interviewee)
-                               .Include(x => x.Company)
                                .Include(x => x.QuestionArea)
                                .Where(predicate)
                                .ToListAsync(ct);
@@ -45,7 +43,6 @@ namespace AIS.DAL.Repositories
             var entity = await _dbSet.AsNoTracking()
                                      .Include(x => x.Employee)
                                      .Include(x => x.Interviewee)
-                                     .Include(x => x.Company)
                                      .Include(x => x.QuestionArea)
                                      .ThenInclude(x => x.QuestionSets)
                                      .ThenInclude(x => x.Questions)

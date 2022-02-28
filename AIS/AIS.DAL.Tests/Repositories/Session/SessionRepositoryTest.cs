@@ -28,8 +28,6 @@ namespace AIS.DAL.Tests.Repositories.Session
             var id = new Random().Next();
             var sessionEntity = new SessionEntity()
             {
-                CompanyId = id,
-                Company = new() { Id = id },
                 EmployeeId = id,
                 Employee = new() { Id = id },
                 IntervieweeId = id,
@@ -42,7 +40,7 @@ namespace AIS.DAL.Tests.Repositories.Session
             await _context.SaveChangesAsync();
             var session = await _repo.GetById(model.Entity.Id, default);
             sessionEntity.EmployeeId.ShouldBeEquivalentTo(session.EmployeeId);
-            Assert.Equal(sessionEntity.CompanyId, session.CompanyId);
+            Assert.Equal(sessionEntity.Id, session.Id);
             Assert.Equal(sessionEntity.IntervieweeId, session.IntervieweeId);
             await _context.Database.EnsureDeletedAsync();
         }
@@ -63,8 +61,6 @@ namespace AIS.DAL.Tests.Repositories.Session
             var sessionEntity = new SessionEntity()
             {
                 Id = id,
-                CompanyId = id,
-                Company = new() { Id = id },
                 EmployeeId = id,
                 Employee = new() { Id = id },
                 IntervieweeId = id,
@@ -97,7 +93,6 @@ namespace AIS.DAL.Tests.Repositories.Session
             var id = new Random().Next();
             var sessionEntity = new SessionEntity()
             {
-                CompanyId = id,
                 EmployeeId = id,
                 IntervieweeId = id,
                 StartedAt = DateTime.Today
@@ -123,7 +118,6 @@ namespace AIS.DAL.Tests.Repositories.Session
             var sessionEntity = new SessionEntity()
             {
                 Id = id,
-                CompanyId = id,
                 EmployeeId = id,
                 IntervieweeId = id,
                 StartedAt = DateTime.Today
@@ -131,7 +125,6 @@ namespace AIS.DAL.Tests.Repositories.Session
             var updateEntity = new SessionEntity()
             {
                 Id = id,
-                CompanyId = 5,
                 EmployeeId = 5,
                 IntervieweeId = 5,
                 StartedAt = DateTime.Today
@@ -142,7 +135,6 @@ namespace AIS.DAL.Tests.Repositories.Session
             _context.Entry(sessionEntity).State = EntityState.Detached;
             var session = await _repo.Update(updateEntity, default);
             Assert.Equal(id, session.Id);
-            Assert.Equal(updateEntity.CompanyId, session.CompanyId);
             Assert.Equal(updateEntity.IntervieweeId, session.IntervieweeId);
 
             await _context.Database.EnsureDeletedAsync();
@@ -155,7 +147,6 @@ namespace AIS.DAL.Tests.Repositories.Session
             var sessionEntity = new SessionEntity()
             {
                 Id = id,
-                CompanyId = id,
                 EmployeeId = id,
                 IntervieweeId = id,
                 StartedAt = DateTime.Today
@@ -163,7 +154,6 @@ namespace AIS.DAL.Tests.Repositories.Session
             var updateEntity = new SessionEntity()
             {
                 Id = int.MaxValue,
-                CompanyId = 5,
                 EmployeeId = 5,
                 IntervieweeId = 5,
                 StartedAt = DateTime.Today
@@ -184,7 +174,6 @@ namespace AIS.DAL.Tests.Repositories.Session
             var sessionEntity = new SessionEntity()
             {
                 Id = id,
-                CompanyId = id,
                 EmployeeId = id,
                 IntervieweeId = id,
                 StartedAt = DateTime.Today
@@ -203,7 +192,6 @@ namespace AIS.DAL.Tests.Repositories.Session
             var sessionEntity = new SessionEntity()
             {
                 Id = id,
-                CompanyId = id,
                 EmployeeId = id,
                 IntervieweeId = id,
                 StartedAt = DateTime.Today
@@ -237,7 +225,6 @@ namespace AIS.DAL.Tests.Repositories.Session
             {
                 new()
                 {
-                    CompanyId = id,
                     EmployeeId = id,
                     IntervieweeId = id,
                     StartedAt = DateTime.Today

@@ -31,7 +31,6 @@ namespace AIS.API.Tests.Controllers
                 {
                     Id = 9,
                     StartedAt = DateTime.Today,
-                    CompanyId = 5,
                     EmployeeId = 5,
                     IntervieweeId = 5
                 }
@@ -41,7 +40,6 @@ namespace AIS.API.Tests.Controllers
                 new()
                 {
                     Id = 9,
-                    CompanyId = 5,
                     EmployeeId = 5,
                     IntervieweeId = 5
                 }
@@ -61,14 +59,12 @@ namespace AIS.API.Tests.Controllers
             {
                 Id = 9,
                 StartedAt = DateTime.Today,
-                CompanyId = 5,
                 EmployeeId = 5,
                 IntervieweeId = 5
             };
             var sessionViewModel = new SessionViewModel
             {
                 Id = 9,
-                CompanyId = 5,
                 EmployeeId = 5,
                 IntervieweeId = 5
             };
@@ -95,20 +91,17 @@ namespace AIS.API.Tests.Controllers
             {
                 Id = 5,
                 StartedAt = DateTime.Today,
-                CompanyId = 5,
                 EmployeeId = 5,
                 IntervieweeId = 5
             };
             var sessionUpdateEntity = new SessionUpdateViewModel()
             {
-                CompanyId = 5,
                 EmployeeId = 5,
                 IntervieweeId = 5
             };
             var sessionViewModel = new SessionViewModel()
             {
                 Id = 5,
-                CompanyId = 5,
                 EmployeeId = 5,
                 IntervieweeId = 5
             };
@@ -127,13 +120,11 @@ namespace AIS.API.Tests.Controllers
             var sessionEntity = new Session()
             {
                 StartedAt = DateTime.Today,
-                CompanyId = 5,
                 EmployeeId = 5,
                 IntervieweeId = 5
             };
             var sessionViewModel = new SessionViewModel()
             {
-                CompanyId = 5,
                 EmployeeId = 5,
                 IntervieweeId = 5
             };
