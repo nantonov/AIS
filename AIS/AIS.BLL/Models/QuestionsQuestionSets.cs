@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AIS.BLL.Models
 {
-    public class QuestionsQuestionSetsEntity
+    public class QuestionsQuestionSets
     {
         public int Id { get; set; }
         public int QuestionId { get; set; }

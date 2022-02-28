@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AIS.API.ViewModels.QuestionsQuestionSets
 {
-    public class QuestionsQuestionSetsEntity
+    public class QuestionsQuestionSets
     {
         public int Id { get; set; }
         public int QuestionId { get; set; }
