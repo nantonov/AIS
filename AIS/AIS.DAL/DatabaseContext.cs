@@ -27,6 +27,7 @@ namespace AIS.DAL
         public DbSet<QuestionEntity> Questions { get; set; }
         public DbSet<TrueAnswerEntity> TrueAnswers { get; set; }
         public DbSet<QuestionAreasQuestionSetsEntity> QuestionAreasQuestionSets { get; set; }
+        public DbSet<QuestionsQuestionSetsEntity> QuestionsQuestionSets { get; set; }
         public DbSet<QuestionIntervieweeAnswerEntity> QuestionIntervieweeAnswers { get; set; }
 
 
@@ -39,6 +40,11 @@ namespace AIS.DAL
             .HasMany(c => c.QuestionAreas)
             .WithMany(s => s.QuestionSets)
             .UsingEntity<QuestionAreasQuestionSetsEntity>();
+            modelBuilder
+            .Entity<QuestionEntity>()
+            .HasMany(c => c.QuestionSets)
+            .WithMany(s => s.Questions)
+            .UsingEntity<QuestionsQuestionSetsEntity>();
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(DatabaseContext).Assembly);
         }
     }

@@ -18,7 +18,6 @@ namespace AIS.API.Tests.Validators.Question
             var validator = new QuestionUpdateViewModelValidator();
             var model = new QuestionUpdateViewModel
             {
-                QuestionSetId = 1,
                 Text = "asdasdasdasd"
             };
 
@@ -35,7 +34,6 @@ namespace AIS.API.Tests.Validators.Question
             var validator = new QuestionUpdateViewModelValidator();
             var model = new QuestionUpdateViewModel
             {
-                QuestionSetId = 1
             };
 
             // Act
@@ -47,47 +45,11 @@ namespace AIS.API.Tests.Validators.Question
         }
 
         [Fact]
-        public void Validate_ModelWithoutQuestionSetId_ReturnsFalse()
-        {
-            var validator = new QuestionUpdateViewModelValidator();
-            var model = new QuestionUpdateViewModel
-            {
-                Text = "123456123456"
-            };
-
-            // Act
-            var result = validator.Validate(model);
-
-            // Assert
-            result.Errors.ShouldNotBeEmpty();
-            result.Errors.ShouldContain(x => x.PropertyName == nameof(model.QuestionSetId));
-        }
-
-        [Fact]
-        public void Validate_QuestionSetIdLessThanOne_ReturnsFalse()
-        {
-            var validator = new QuestionUpdateViewModelValidator();
-            var model = new QuestionUpdateViewModel
-            {
-                QuestionSetId = 0,
-                Text = "123123123123"
-            };
-
-            // Act
-            var result = validator.Validate(model);
-
-            // Assert
-            result.Errors.ShouldNotBeEmpty();
-            result.Errors.ShouldContain(x => x.PropertyName == nameof(model.QuestionSetId));
-        }
-
-        [Fact]
         public void Validate_TextLengthLessThanTen_ReturnsFalse()
         {
             var validator = new QuestionUpdateViewModelValidator();
             var model = new QuestionUpdateViewModel
             {
-                QuestionSetId = 1,
                 Text = "1"
             };
 
@@ -105,7 +67,6 @@ namespace AIS.API.Tests.Validators.Question
             var validator = new QuestionAddViewModelValidator();
             var model = new QuestionAddViewModel
             {
-                QuestionSetId = 1,
                 Text = null
             };
 
