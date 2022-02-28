@@ -10,8 +10,8 @@ namespace AIS.BLL.Models
     {
         public int Id { get; set; }
         public int QuestionId { get; set; }
-        public virtual Question Question { get; set; }
+        public Question Question { get; set; }
         public int QuestionSetId { get; set; }
-        public virtual QuestionSet QuestionSet { get; set; }
-}
+        public QuestionSet QuestionSet { get; set; }
+    }
 }

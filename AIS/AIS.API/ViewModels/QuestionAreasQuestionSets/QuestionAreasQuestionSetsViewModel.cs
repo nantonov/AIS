@@ -4,12 +4,12 @@ using AIS.API.ViewModels.QuestionSet;
 
 namespace AIS.API.ViewModels.QuestionAreasQuestionSets
 {
-    public class QuestionAreasQuestionSets
+    public class QuestionAreasQuestionSetsViewModel
     {
         public int Id { get; set; }
         public int QuestionAreaId { get; set; }
         public ShortQuestionAreaViewModel QuestionArea { get; set; }
         public int QuestionSetId { get; set; }
-        public virtual ShortQuestionSetViewModel QuestionSet { get; set; }
+        public ShortQuestionSetViewModel QuestionSet { get; set; }
     }
 }

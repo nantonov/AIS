@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace AIS.API.ViewModels.QuestionsQuestionSets
 {
-    public class QuestionsQuestionSets
+    public class QuestionsQuestionSetsViewModel
     {
         public int Id { get; set; }
         public int QuestionId { get; set; }
-        public virtual ShortQuestionViewModel Question { get; set; }
+        public ShortQuestionViewModel Question { get; set; }
         public int QuestionSetId { get; set; }
-        public virtual ShortQuestionSetViewModel QuestionSet { get; set; }
-}
+        public ShortQuestionSetViewModel QuestionSet { get; set; }
+    }
 }
