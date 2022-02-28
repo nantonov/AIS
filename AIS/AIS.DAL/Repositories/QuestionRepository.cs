@@ -19,7 +19,7 @@ namespace AIS.DAL.Repositories
 
         public override async Task<IEnumerable<QuestionEntity>> Get(CancellationToken ct)
         {
-            var result = await _dbSet.Include(x => x.QuestionSet).ThenInclude(x => x.QuestionArea)
+            var result = await _dbSet.Include(x => x.QuestionSet).ThenInclude(x => x.QuestionAreas)
                                      .Include(x => x.TrueAnswer).ToListAsync(ct);
 
             return result;

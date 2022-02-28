@@ -26,6 +26,7 @@ namespace AIS.DAL
         public DbSet<QuestionSetEntity> QuestionSets { get; set; }
         public DbSet<QuestionEntity> Questions { get; set; }
         public DbSet<TrueAnswerEntity> TrueAnswers { get; set; }
+        public DbSet<QuestionAreasQuestionSetsEntity> QuestionAreasQuestionSets { get; set; }
         public DbSet<QuestionIntervieweeAnswerEntity> QuestionIntervieweeAnswers { get; set; }
 
 
@@ -33,6 +34,11 @@ namespace AIS.DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder
+            .Entity<QuestionSetEntity>()
+            .HasMany(c => c.QuestionAreas)
+            .WithMany(s => s.QuestionSets)
+            .UsingEntity<QuestionAreasQuestionSetsEntity>();
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(DatabaseContext).Assembly);
         }
     }

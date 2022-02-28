@@ -3,6 +3,5 @@
     public class QuestionSetUpdateViewModel
     {
         public string Name { get; set; }
-        public int QuestionAreaId { get; set; }
     }
 }

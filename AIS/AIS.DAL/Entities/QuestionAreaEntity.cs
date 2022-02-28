@@ -6,6 +6,7 @@ namespace AIS.DAL.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public virtual ICollection<QuestionAreasQuestionSetsEntity> QuestionAreasQuestionSets { get; set; }
         public virtual ICollection<QuestionSetEntity> QuestionSets { get; set; }
     }
 }

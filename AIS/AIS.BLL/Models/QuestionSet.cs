@@ -6,8 +6,7 @@ namespace AIS.BLL.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int QuestionAreaId { get; set; }
-        public QuestionArea QuestionArea { get; set; }
+        public IEnumerable<QuestionArea> QuestionAreas { get; set; }
         public IEnumerable<Question> Questions { get; set; }
     }
 }
