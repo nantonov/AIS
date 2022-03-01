@@ -1,5 +1,6 @@
 ﻿using AIS.API.ViewModels.QuestionSet;
 using AIS.API.ViewModels.TrueAnswer;
+using System.Collections.Generic;
 
 namespace AIS.API.ViewModels.Question
 {
@@ -7,8 +8,7 @@ namespace AIS.API.ViewModels.Question
     {
         public int Id { get; set; }
         public string Text { get; set; }
-        public int QuestionSetId { get; set; }
-        public ShortQuestionSetViewModel QuestionSet { get; set; }
+        public IEnumerable<ShortQuestionSetViewModel> QuestionSets { get; set; }
         public int TrueAnswerId { get; set; }
         public ShortTrueAnswerViewModel TrueAnswer { get; set; }
     }

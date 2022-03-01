@@ -34,7 +34,6 @@ namespace AIS.BLL.Tests.Services
                 {
                     Id = 11,
                     StartedAt = DateTime.Today,
-                    CompanyId = 5,
                     EmployeeId = 5,
                     IntervieweeId = 5
                 }
@@ -45,7 +44,6 @@ namespace AIS.BLL.Tests.Services
                 {
                     Id = 11,
                     StartedAt = DateTime.Today,
-                    CompanyId = 5,
                     EmployeeId = 5,
                     IntervieweeId = 5
                 }
@@ -83,7 +81,6 @@ namespace AIS.BLL.Tests.Services
             {
                 Id = 11,
                 StartedAt = DateTime.Today,
-                CompanyId = 5,
                 EmployeeId = 5,
                 IntervieweeId = 5
             };
@@ -91,7 +88,6 @@ namespace AIS.BLL.Tests.Services
             {
                 Id = 11,
                 StartedAt = DateTime.Today,
-                CompanyId = 5,
                 EmployeeId = 5,
                 IntervieweeId = 5
             };
@@ -104,7 +100,7 @@ namespace AIS.BLL.Tests.Services
 
             // Assert
             Assert.NotNull(actual);
-            Assert.Equal(session.CompanyId, actual.CompanyId);
+            Assert.Equal(session.Id, actual.Id);
         }
 
         [Fact]
@@ -130,7 +126,6 @@ namespace AIS.BLL.Tests.Services
             {
                 Id = 6,
                 StartedAt = DateTime.Today,
-                CompanyId = 5,
                 EmployeeId = 5,
                 IntervieweeId = 5
             };
@@ -138,7 +133,6 @@ namespace AIS.BLL.Tests.Services
             {
                 Id = 6,
                 StartedAt = DateTime.Today,
-                CompanyId = 5,
                 EmployeeId = 5,
                 IntervieweeId = 5
             };
@@ -158,7 +152,6 @@ namespace AIS.BLL.Tests.Services
             {
                 Id = 6,
                 StartedAt = DateTime.Today,
-                CompanyId = 5,
                 EmployeeId = 5,
                 IntervieweeId = 5
             };
@@ -166,7 +159,6 @@ namespace AIS.BLL.Tests.Services
             {
                 Id = 6,
                 StartedAt = DateTime.Today,
-                CompanyId = 5,
                 EmployeeId = 5,
                 IntervieweeId = 5
             };
@@ -183,7 +175,6 @@ namespace AIS.BLL.Tests.Services
             {
                 Id = int.MaxValue,
                 StartedAt = DateTime.Today,
-                CompanyId = 5,
                 EmployeeId = 5,
                 IntervieweeId = 5
             };
@@ -191,7 +182,6 @@ namespace AIS.BLL.Tests.Services
             {
                 Id = int.MaxValue,
                 StartedAt = DateTime.Today,
-                CompanyId = 5,
                 EmployeeId = 5,
                 IntervieweeId = 5
             };
@@ -223,7 +213,6 @@ namespace AIS.BLL.Tests.Services
             {
                 Id = 11,
                 StartedAt = DateTime.Today,
-                CompanyId = 5,
                 EmployeeId = 5,
                 IntervieweeId = 5
             };
@@ -231,7 +220,6 @@ namespace AIS.BLL.Tests.Services
             {
                 Id = 11,
                 StartedAt = DateTime.Today,
-                CompanyId = 5,
                 EmployeeId = 5,
                 IntervieweeId = 5
             };
@@ -251,14 +239,12 @@ namespace AIS.BLL.Tests.Services
             var session = new Session()
             {
                 StartedAt = DateTime.Today,
-                CompanyId = 5,
                 EmployeeId = 5,
                 IntervieweeId = 5
             };
             var sessionEntity = new SessionEntity()
             {
                 StartedAt = DateTime.Today,
-                CompanyId = 5,
                 EmployeeId = 5,
                 IntervieweeId = 5
             };
@@ -270,7 +256,7 @@ namespace AIS.BLL.Tests.Services
 
             // Assert
             Assert.Equal(sessionEntity.EmployeeId, actual.EmployeeId);
-            Assert.Equal(session.CompanyId, actual.CompanyId);
+            Assert.Equal(session.Id, actual.Id);
         }
 
         [Fact]
@@ -281,7 +267,6 @@ namespace AIS.BLL.Tests.Services
             {
                 new()
                 {
-                    CompanyId = id,
                     EmployeeId = id,
                     IntervieweeId = id,
                     StartedAt = DateTime.Today
@@ -289,7 +274,6 @@ namespace AIS.BLL.Tests.Services
             };
             var session = new SessionEntity()
             {
-                CompanyId = id,
                 EmployeeId = id,
                 IntervieweeId = id,
                 StartedAt = DateTime.Today
@@ -297,7 +281,6 @@ namespace AIS.BLL.Tests.Services
 
             var model = new Session()
             {
-                CompanyId = id,
                 EmployeeId = id,
                 IntervieweeId = id,
                 StartedAt = DateTime.Today

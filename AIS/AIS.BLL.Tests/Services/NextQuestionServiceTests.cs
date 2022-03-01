@@ -30,25 +30,39 @@ namespace AIS.BLL.Tests.Services
         public async Task Next_ValidData_ReturnsRandomQuestion()
         {
             int sessionId = 1;
+            List<QuestionSet> sets = new()
+            {
+                new()
+                {
+                    Id = 1
+                }
+            };
+            List<QuestionSetEntity> setsEntity = new()
+            {
+                new()
+                {
+                    Id = 1
+                }
+            };
             List<QuestionEntity> questionsEntities = new()
             {
                 new()
                 {
                     Id = 1,
-                    QuestionSetId = 1,
+                    QuestionSets = setsEntity,
                     Text = " some text 1"
                 },
                 new()
                 {
                     Id = 2,
-                    QuestionSetId = 1,
+                    QuestionSets = setsEntity,
                     Text = " some text 2"
                 }
             };
             Question question = new()
             {
                 Id = 2,
-                QuestionSetId = 1
+                QuestionSets = sets
             };
             List<QuestionIntervieweeAnswerEntity> questionIntervieweeAnswerEntities =
                 new()
@@ -60,7 +74,7 @@ namespace AIS.BLL.Tests.Services
                         Question = new()
                         {
                             Id = 1,
-                            QuestionSetId = 1
+                            QuestionSets = setsEntity
                         },
                         SessionId = 1
                     }
@@ -94,38 +108,8 @@ namespace AIS.BLL.Tests.Services
         public async Task Next_InvalidSession_ReturnsRandomQuestion()
         {
             int sessionId = -1000;
-            List<QuestionEntity> questionsEntities = new()
-            {
-                new()
-                {
-                    Id = 1,
-                    QuestionSetId = 1,
-                    Text = " some text 1"
-                }
-            };
-            Question question = new()
-            {
-                Id = 2,
-                QuestionSetId = 1
-            };
 
-            List<QuestionIntervieweeAnswerEntity> questionIntervieweeAnswerEntities =
-                new()
-                {
-                    new()
-                    {
-                        Id = 1,
-                        QuestionId = 1,
-                        Question = new()
-                        {
-                            Id = 1,
-                            QuestionSetId = 1
-                        },
-                        SessionId = 1
-                    }
-                };
             _sessionRepoMock.Setup(x => x.GetById(sessionId, default)).ReturnsAsync(value: null);
-            _mapperMock.Setup(x => x.Map<Question>(It.IsAny<QuestionEntity>())).Returns(question);
 
             var result = await _service.NextQuestion(sessionId, default);
 

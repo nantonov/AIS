@@ -7,7 +7,7 @@
         public int Mark { get; set; }
         public int QuestionId { get; set; }
         public virtual QuestionEntity Question { get; set; }
-        public int? SessionId { get; set; }
+        public int SessionId { get; set; }
         public virtual SessionEntity Session { get; set; }
     }
 }

@@ -8,7 +8,6 @@ namespace AIS.API.Validators.QuestionSet
         public QuestionSetUpdateViewModelValidator()
         {
             RuleFor(x => x.Name).NotNull().MinimumLength(2);
-            RuleFor(x => x.QuestionAreaId).NotEmpty().GreaterThan(0);
         }
     }
 }

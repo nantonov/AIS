@@ -36,7 +36,7 @@ namespace AIS.BLL.Services
             {
                 foreach(var set in sets)
                 {
-                    if (answers.Count(answer => answer.Question.QuestionSetId == set.Id) != set.Questions.Count)
+                    if (answers.Count(answer => answer.Question.QuestionSets.Any(s=> s.Id == set.Id)) != set.Questions.Count)
                     {
                         questions = set.Questions.ToList();
                         break;

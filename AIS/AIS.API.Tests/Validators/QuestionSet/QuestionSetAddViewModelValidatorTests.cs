@@ -15,7 +15,6 @@ namespace AIS.API.Tests.Validators.QuestionSet
             var model = new QuestionSetAddViewModel
             {
                 Name = "Okay",
-                QuestionAreaId = 1
             };
 
             // Act
@@ -31,7 +30,6 @@ namespace AIS.API.Tests.Validators.QuestionSet
             var validator = new QuestionSetAddViewModelValidator();
             var model = new QuestionSetAddViewModel
             {
-                QuestionAreaId = 1
             };
 
             // Act
@@ -43,29 +41,11 @@ namespace AIS.API.Tests.Validators.QuestionSet
         }
 
         [Fact]
-        public void Validate_WithoutQuestionAreaId_ReturnsFalse()
-        {
-            var validator = new QuestionSetAddViewModelValidator();
-            var model = new QuestionSetAddViewModel
-            {
-                Name = "Okay"
-            };
-
-            // Act
-            var result = validator.Validate(model);
-
-            // Assert
-            result.Errors.ShouldNotBeEmpty();
-            result.Errors.ShouldContain(x => x.PropertyName == nameof(model.QuestionAreaId));
-        }
-
-        [Fact]
         public void Validate_NameLengthLessThanTwo_ReturnsFalse()
         {
             var validator = new QuestionSetAddViewModelValidator();
             var model = new QuestionSetAddViewModel
             {
-                QuestionAreaId = 1,
                 Name = "A"
             };
 
@@ -75,24 +55,6 @@ namespace AIS.API.Tests.Validators.QuestionSet
             // Assert
             result.Errors.ShouldNotBeEmpty();
             result.Errors.ShouldContain(x => x.PropertyName == nameof(model.Name));
-        }
-
-        [Fact]
-        public void Validate_QuestionAreaIdLessThanOne_ReturnsFalse()
-        {
-            var validator = new QuestionSetAddViewModelValidator();
-            var model = new QuestionSetAddViewModel
-            {
-                QuestionAreaId = 0,
-                Name = "Okay"
-            };
-
-            // Act
-            var result = validator.Validate(model);
-
-            // Assert
-            result.Errors.ShouldNotBeEmpty();
-            result.Errors.ShouldContain(x => x.PropertyName == nameof(model.QuestionAreaId));
         }
     }
 }

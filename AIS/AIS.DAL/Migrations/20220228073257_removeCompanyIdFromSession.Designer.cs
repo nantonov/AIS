@@ -4,6 +4,7 @@ using AIS.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AIS.DAL.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20220228073257_removeCompanyIdFromSession")]
+    partial class removeCompanyIdFromSession
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -102,29 +104,6 @@ namespace AIS.DAL.Migrations
                     b.ToTable("QuestionAreas");
                 });
 
-            modelBuilder.Entity("AIS.DAL.Entities.QuestionAreasQuestionSetsEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("QuestionAreaId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("QuestionSetId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("QuestionAreaId");
-
-                    b.HasIndex("QuestionSetId");
-
-                    b.ToTable("QuestionAreasQuestionSets");
-                });
-
             modelBuilder.Entity("AIS.DAL.Entities.QuestionEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -133,10 +112,15 @@ namespace AIS.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("QuestionSetId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("QuestionSetId");
 
                     b.ToTable("Questions");
                 });
@@ -155,7 +139,7 @@ namespace AIS.DAL.Migrations
                     b.Property<int>("QuestionId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SessionId")
+                    b.Property<int?>("SessionId")
                         .HasColumnType("int");
 
                     b.Property<string>("Text")
@@ -181,32 +165,14 @@ namespace AIS.DAL.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("QuestionAreaId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("QuestionAreaId");
 
                     b.ToTable("QuestionSets");
-                });
-
-            modelBuilder.Entity("AIS.DAL.Entities.QuestionsQuestionSetsEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("QuestionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("QuestionSetId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("QuestionId");
-
-                    b.HasIndex("QuestionSetId");
-
-                    b.ToTable("QuestionsQuestionSets");
                 });
 
             modelBuilder.Entity("AIS.DAL.Entities.SessionEntity", b =>
@@ -287,21 +253,13 @@ namespace AIS.DAL.Migrations
                     b.Navigation("Company");
                 });
 
-            modelBuilder.Entity("AIS.DAL.Entities.QuestionAreasQuestionSetsEntity", b =>
+            modelBuilder.Entity("AIS.DAL.Entities.QuestionEntity", b =>
                 {
-                    b.HasOne("AIS.DAL.Entities.QuestionAreaEntity", "QuestionArea")
-                        .WithMany("QuestionAreasQuestionSets")
-                        .HasForeignKey("QuestionAreaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("AIS.DAL.Entities.QuestionSetEntity", "QuestionSet")
-                        .WithMany("QuestionAreasQuestionSets")
+                        .WithMany("Questions")
                         .HasForeignKey("QuestionSetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("QuestionArea");
 
                     b.Navigation("QuestionSet");
                 });
@@ -316,32 +274,22 @@ namespace AIS.DAL.Migrations
 
                     b.HasOne("AIS.DAL.Entities.SessionEntity", "Session")
                         .WithMany("QuestionIntervieweeAnswers")
-                        .HasForeignKey("SessionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SessionId");
 
                     b.Navigation("Question");
 
                     b.Navigation("Session");
                 });
 
-            modelBuilder.Entity("AIS.DAL.Entities.QuestionsQuestionSetsEntity", b =>
+            modelBuilder.Entity("AIS.DAL.Entities.QuestionSetEntity", b =>
                 {
-                    b.HasOne("AIS.DAL.Entities.QuestionEntity", "Question")
-                        .WithMany("QuestionsQuestionSets")
-                        .HasForeignKey("QuestionId")
+                    b.HasOne("AIS.DAL.Entities.QuestionAreaEntity", "QuestionArea")
+                        .WithMany("QuestionSets")
+                        .HasForeignKey("QuestionAreaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AIS.DAL.Entities.QuestionSetEntity", "QuestionSet")
-                        .WithMany("QuestionsQuestionSets")
-                        .HasForeignKey("QuestionSetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Question");
-
-                    b.Navigation("QuestionSet");
+                    b.Navigation("QuestionArea");
                 });
 
             modelBuilder.Entity("AIS.DAL.Entities.SessionEntity", b =>
@@ -391,21 +339,17 @@ namespace AIS.DAL.Migrations
 
             modelBuilder.Entity("AIS.DAL.Entities.QuestionAreaEntity", b =>
                 {
-                    b.Navigation("QuestionAreasQuestionSets");
+                    b.Navigation("QuestionSets");
                 });
 
             modelBuilder.Entity("AIS.DAL.Entities.QuestionEntity", b =>
                 {
-                    b.Navigation("QuestionsQuestionSets");
-
                     b.Navigation("TrueAnswer");
                 });
 
             modelBuilder.Entity("AIS.DAL.Entities.QuestionSetEntity", b =>
                 {
-                    b.Navigation("QuestionAreasQuestionSets");
-
-                    b.Navigation("QuestionsQuestionSets");
+                    b.Navigation("Questions");
                 });
 
             modelBuilder.Entity("AIS.DAL.Entities.SessionEntity", b =>

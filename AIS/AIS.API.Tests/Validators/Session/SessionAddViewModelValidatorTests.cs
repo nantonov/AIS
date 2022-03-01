@@ -19,7 +19,6 @@ namespace AIS.API.Tests.Validators.Session
             var model = new SessionAddViewModel
             {
                 QuestionAreaId = 1,
-                CompanyId = 1,
                 EmployeeId = 1,
                 IntervieweeId = 1
             };
@@ -37,7 +36,6 @@ namespace AIS.API.Tests.Validators.Session
             var validator = new SessionAddViewModelValidator();
             var model = new SessionAddViewModel
             {
-                CompanyId = 1,
                 EmployeeId = 1,
                 IntervieweeId = 1
             };
@@ -51,32 +49,12 @@ namespace AIS.API.Tests.Validators.Session
         }
 
         [Fact]
-        public void Validate_WithoutCompanyId_ReturnsFalse()
-        {
-            var validator = new SessionAddViewModelValidator();
-            var model = new SessionAddViewModel
-            {
-                QuestionAreaId = 1,
-                EmployeeId = 1,
-                IntervieweeId = 1
-            };
-
-            // Act
-            var result = validator.Validate(model);
-
-            // Assert
-            result.Errors.ShouldNotBeEmpty();
-            result.Errors.ShouldContain(x => x.PropertyName == nameof(model.CompanyId));
-        }
-
-        [Fact]
         public void Validate_WithoutEmployeeId_ReturnsFalse()
         {
             var validator = new SessionAddViewModelValidator();
             var model = new SessionAddViewModel
             {
                 QuestionAreaId = 1,
-                CompanyId = 1,
                 IntervieweeId = 1
             };
 
@@ -95,7 +73,6 @@ namespace AIS.API.Tests.Validators.Session
             var model = new SessionAddViewModel
             {
                 QuestionAreaId = 1,
-                CompanyId = 1,
                 EmployeeId = 1
             };
 
@@ -114,7 +91,6 @@ namespace AIS.API.Tests.Validators.Session
             var model = new SessionAddViewModel
             {
                 QuestionAreaId = 0,
-                CompanyId = 1,
                 EmployeeId = 1,
                 IntervieweeId = 1
             };
@@ -128,33 +104,12 @@ namespace AIS.API.Tests.Validators.Session
         }
 
         [Fact]
-        public void Validate_CompanyIdLessThanOne_ReturnsFalse()
-        {
-            var validator = new SessionAddViewModelValidator();
-            var model = new SessionAddViewModel
-            {
-                QuestionAreaId = 1,
-                CompanyId = 0,
-                EmployeeId = 1,
-                IntervieweeId = 1
-            };
-
-            // Act
-            var result = validator.Validate(model);
-
-            // Assert
-            result.Errors.ShouldNotBeEmpty();
-            result.Errors.ShouldContain(x => x.PropertyName == nameof(model.CompanyId));
-        }
-
-        [Fact]
         public void Validate_EmployeeIdLessThanOne_ReturnsFalse()
         {
             var validator = new SessionAddViewModelValidator();
             var model = new SessionAddViewModel
             {
                 QuestionAreaId = 1,
-                CompanyId = 1,
                 EmployeeId = 0,
                 IntervieweeId = 1
             };
@@ -174,7 +129,6 @@ namespace AIS.API.Tests.Validators.Session
             var model = new SessionAddViewModel
             {
                 QuestionAreaId = 1,
-                CompanyId = 1,
                 EmployeeId = 1,
                 IntervieweeId = 0
             };

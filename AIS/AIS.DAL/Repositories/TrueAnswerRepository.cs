@@ -27,12 +27,12 @@ namespace AIS.DAL.Repositories
 
         public override async Task<IEnumerable<TrueAnswerEntity>> Get(Expression<Func<TrueAnswerEntity, bool>> predicate, CancellationToken ct)
         {
-            return await _dbSet.AsNoTracking().Include(x => x.Question).ThenInclude(x => x.QuestionSet).Where(predicate).ToListAsync(ct);
+            return await _dbSet.AsNoTracking().Include(x => x.Question).ThenInclude(x => x.QuestionSets).Where(predicate).ToListAsync(ct);
         }
 
         public override async Task<TrueAnswerEntity> GetById(int id, CancellationToken ct)
         {
-            var entity = await _dbSet.AsNoTracking().Include(x => x.Question).ThenInclude(x => x.QuestionSet).FirstOrDefaultAsync(x => x.Id == id, ct);
+            var entity = await _dbSet.AsNoTracking().Include(x => x.Question).ThenInclude(x => x.QuestionSets).FirstOrDefaultAsync(x => x.Id == id, ct);
 
             return entity;
         }

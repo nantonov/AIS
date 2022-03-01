@@ -19,7 +19,7 @@ namespace AIS.DAL.Repositories
 
         public override async Task<IEnumerable<QuestionIntervieweeAnswerEntity>> Get(CancellationToken ct)
         {
-            var result = await _dbSet.Include(x => x.Question).ThenInclude(x => x.QuestionSet).ToListAsync();
+            var result = await _dbSet.Include(x => x.Question).ThenInclude(x => x.QuestionSets).ToListAsync();
 
             return result;
         }
@@ -32,7 +32,7 @@ namespace AIS.DAL.Repositories
 
         public override async Task<QuestionIntervieweeAnswerEntity> GetById(int id, CancellationToken ct)
         {
-            var entity = await _dbSet.AsNoTracking().Include(x => x.Question).ThenInclude(x => x.QuestionSet).FirstOrDefaultAsync(x => x.Id == id, ct);
+            var entity = await _dbSet.AsNoTracking().Include(x => x.Question).ThenInclude(x => x.QuestionSets).FirstOrDefaultAsync(x => x.Id == id, ct);
 
             return entity;
         }

@@ -19,7 +19,7 @@ namespace AIS.DAL.Repositories
 
         public override async Task<IEnumerable<QuestionEntity>> Get(CancellationToken ct)
         {
-            var result = await _dbSet.Include(x => x.QuestionSet).ThenInclude(x => x.QuestionArea)
+            var result = await _dbSet.Include(x => x.QuestionSets).ThenInclude(x => x.QuestionAreas)
                                      .Include(x => x.TrueAnswer).ToListAsync(ct);
 
             return result;
@@ -28,12 +28,12 @@ namespace AIS.DAL.Repositories
         public override async Task<IEnumerable<QuestionEntity>> Get(Expression<Func<QuestionEntity, bool>> predicate,
             CancellationToken ct)
         {
-            return await _dbSet.AsNoTracking().Include(x => x.QuestionSet).Include(x => x.TrueAnswer).Where(predicate).ToListAsync(ct);
+            return await _dbSet.AsNoTracking().Include(x => x.QuestionSets).Include(x => x.TrueAnswer).Where(predicate).ToListAsync(ct);
         }
 
         public override async Task<QuestionEntity> GetById(int id, CancellationToken ct)
         {
-            var entity = await _dbSet.AsNoTracking().Include(x => x.QuestionSet).Include(x => x.TrueAnswer).FirstOrDefaultAsync(x => x.Id == id, ct);
+            var entity = await _dbSet.AsNoTracking().Include(x => x.QuestionSets).Include(x => x.TrueAnswer).FirstOrDefaultAsync(x => x.Id == id, ct);
 
             return entity;
         }
