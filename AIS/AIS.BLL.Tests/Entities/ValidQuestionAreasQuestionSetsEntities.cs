@@ -1,11 +1,12 @@
 ﻿using AIS.DAL.Entities;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace AIS.BLL.Tests.Entities
 {
     public static class ValidQuestionAreasQuestionSetsEntities
     {
-        public static List<QuestionAreasQuestionSetsEntity> questionAreasQuestionSetsEntitiesGet = new()
+        public static readonly ImmutableList<QuestionAreasQuestionSetsEntity> questionAreasQuestionSetsEntitiesGet = new List<QuestionAreasQuestionSetsEntity>()
         {
             new()
             {
@@ -23,8 +24,9 @@ namespace AIS.BLL.Tests.Entities
                     Name = "C# questions set"
                 }
             }
-        };
-        public static QuestionAreasQuestionSetsEntity questionAreasQuestionSetsEntityGetById = new()
+        }.ToImmutableList();
+
+        public static readonly QuestionAreasQuestionSetsEntity questionAreasQuestionSetsEntityGetById = new()
         {
             Id = 6,
             QuestionSetId = 1,
@@ -41,7 +43,7 @@ namespace AIS.BLL.Tests.Entities
             }
         };
 
-        public static QuestionAreasQuestionSetsEntity questionAreasQuestionSetsEntityDelete = new()
+        public static readonly QuestionAreasQuestionSetsEntity questionAreasQuestionSetsEntityDelete = new()
         {
             Id = 6,
             QuestionSetId = 1,
@@ -58,7 +60,7 @@ namespace AIS.BLL.Tests.Entities
             }
         };
 
-        public static QuestionAreasQuestionSetsEntity questionAreasQuestionSetsEntityPut = new()
+        public static readonly QuestionAreasQuestionSetsEntity questionAreasQuestionSetsEntityPut = new()
         {
             Id = 6,
             QuestionSetId = 1,
@@ -75,7 +77,7 @@ namespace AIS.BLL.Tests.Entities
             }
         };
 
-        public static QuestionAreasQuestionSetsEntity questionAreasQuestionSetsEntityAdd = new()
+        public static readonly QuestionAreasQuestionSetsEntity questionAreasQuestionSetsEntityAdd = new()
         {
             QuestionSetId = 1,
             QuestionAreaId = 1,
@@ -91,7 +93,7 @@ namespace AIS.BLL.Tests.Entities
             }
         };
 
-        public static QuestionAreasQuestionSetsEntity questionAreasQuestionSetsEntityAddWithId = new()
+        public static readonly QuestionAreasQuestionSetsEntity questionAreasQuestionSetsEntityAddWithId = new()
         {
             Id = 1,
             QuestionSetId = 1,
@@ -108,7 +110,7 @@ namespace AIS.BLL.Tests.Entities
             }
         };
 
-        public static List<QuestionAreasQuestionSetsEntity> questionAreasQuestionSetsEntitiesGetByPredicate = new()
+        public static readonly ImmutableList<QuestionAreasQuestionSetsEntity> questionAreasQuestionSetsEntitiesGetByPredicate = new List<QuestionAreasQuestionSetsEntity>()
         {
             new()
             {
@@ -142,6 +144,6 @@ namespace AIS.BLL.Tests.Entities
                     Name = "C# questions set"
                 }
             }
-        };
+        }.ToImmutableList();
     }
 }

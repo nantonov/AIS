@@ -1,11 +1,12 @@
 ﻿using AIS.BLL.Models;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace AIS.BLL.Tests.Models
 {
     public static class ValidQuestionsQuestionSetsModels
     {
-        public static List<QuestionsQuestionSets> questionsQuestionSetsModelsGet = new()
+        public static readonly ImmutableList<QuestionsQuestionSets> questionsQuestionSetsModelsGet = new List<QuestionsQuestionSets>()
         {
             new()
             {
@@ -23,24 +24,9 @@ namespace AIS.BLL.Tests.Models
                     Name = "c#"
                 }
             }
-        };
-        public static QuestionsQuestionSets questionsQuestionSetsModelGetById = new()
-        {
-            Id = 6,
-            QuestionSetId = 1,
-            QuestionId = 1,
-            Question = new()
-            {
-                Id = 1,
-                Text = "What is class ?"
-            },
-            QuestionSet = new()
-            {
-                Id = 1,
-                Name = "c#"
-            }
-        };
-        public static QuestionsQuestionSets questionsQuestionSetsModelDelete = new()
+        }.ToImmutableList();
+
+        public static readonly QuestionsQuestionSets questionsQuestionSetsModelGetById = new()
         {
             Id = 6,
             QuestionSetId = 1,
@@ -57,7 +43,7 @@ namespace AIS.BLL.Tests.Models
             }
         };
 
-        public static QuestionsQuestionSets questionsQuestionSetsModelPut = new()
+        public static readonly QuestionsQuestionSets questionsQuestionSetsModelDelete = new()
         {
             Id = 6,
             QuestionSetId = 1,
@@ -73,7 +59,8 @@ namespace AIS.BLL.Tests.Models
                 Name = "c#"
             }
         };
-        public static QuestionsQuestionSets questionsQuestionSetsModelWithIdAdd = new()
+
+        public static readonly QuestionsQuestionSets questionsQuestionSetsModelPut = new()
         {
             Id = 6,
             QuestionSetId = 1,
@@ -89,7 +76,25 @@ namespace AIS.BLL.Tests.Models
                 Name = "c#"
             }
         };
-        public static QuestionsQuestionSets questionsQuestionSetsModelAdd = new()
+
+        public static readonly QuestionsQuestionSets questionsQuestionSetsModelWithIdAdd = new()
+        {
+            Id = 6,
+            QuestionSetId = 1,
+            QuestionId = 1,
+            Question = new()
+            {
+                Id = 1,
+                Text = "What is class ?"
+            },
+            QuestionSet = new()
+            {
+                Id = 1,
+                Name = "c#"
+            }
+        };
+
+        public static readonly QuestionsQuestionSets questionsQuestionSetsModelAdd = new()
         {
             QuestionSetId = 1,
             QuestionId = 1,
@@ -105,7 +110,7 @@ namespace AIS.BLL.Tests.Models
             }
         };
 
-        public static List<QuestionsQuestionSets> questionsQuestionSetsModelsGetByPredicate = new()
+        public static readonly ImmutableList<QuestionsQuestionSets> questionsQuestionSetsModelsGetByPredicate = new List<QuestionsQuestionSets>()
         {
             new()
             {
@@ -139,6 +144,6 @@ namespace AIS.BLL.Tests.Models
                     Name = "c#"
                 }
             }
-        };
+        }.ToImmutableList();
     }
 }

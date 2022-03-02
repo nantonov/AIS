@@ -1,11 +1,12 @@
 ﻿using AIS.BLL.Models;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace AIS.BLL.Tests.Models
 {
     public static class ValidQuestionAreasQuestionSetsModels
     {
-        public static List<QuestionAreasQuestionSets> questionAreasQuestionSetsModelsGet = new()
+        public static readonly ImmutableList<QuestionAreasQuestionSets> questionAreasQuestionSetsModelsGet = new List<QuestionAreasQuestionSets>()
         {
             new()
             {
@@ -23,8 +24,9 @@ namespace AIS.BLL.Tests.Models
                     Name = "C# questions set"
                 }
             }
-        };
-        public static QuestionAreasQuestionSets questionAreasQuestionSetsModelGetById = new()
+        }.ToImmutableList();
+
+        public static readonly QuestionAreasQuestionSets questionAreasQuestionSetsModelGetById = new()
         {
             Id = 6,
             QuestionSetId = 1,
@@ -41,7 +43,7 @@ namespace AIS.BLL.Tests.Models
             }
         };
 
-        public static QuestionAreasQuestionSets questionAreasQuestionSetsModelDelete = new()
+        public static readonly QuestionAreasQuestionSets questionAreasQuestionSetsModelDelete = new()
         {
             Id = 6,
             QuestionSetId = 1,
@@ -58,7 +60,7 @@ namespace AIS.BLL.Tests.Models
             }
         };
 
-        public static QuestionAreasQuestionSets questionAreasQuestionSetsModelPut = new()
+        public static readonly QuestionAreasQuestionSets questionAreasQuestionSetsModelPut = new()
         {
             Id = 6,
             QuestionSetId = 1,
@@ -75,7 +77,7 @@ namespace AIS.BLL.Tests.Models
             }
         };
 
-        public static QuestionAreasQuestionSets questionAreasQuestionSetsModelAdd = new()
+        public static readonly QuestionAreasQuestionSets questionAreasQuestionSetsModelAdd = new()
         {
             QuestionSetId = 1,
             QuestionAreaId = 1,
@@ -91,7 +93,7 @@ namespace AIS.BLL.Tests.Models
             }
         };
 
-        public static QuestionAreasQuestionSets questionAreasQuestionSetsModelAddWithId = new()
+        public static readonly QuestionAreasQuestionSets questionAreasQuestionSetsModelAddWithId = new()
         {
             Id = 1,
             QuestionSetId = 1,
@@ -108,7 +110,7 @@ namespace AIS.BLL.Tests.Models
             }
         };
 
-        public static List<QuestionAreasQuestionSets> questionAreasQuestionSetsModelsGetByPredicate = new()
+        public static readonly ImmutableList<QuestionAreasQuestionSets> questionAreasQuestionSetsModelsGetByPredicate = new List<QuestionAreasQuestionSets>()
         {
             new()
             {
@@ -142,6 +144,6 @@ namespace AIS.BLL.Tests.Models
                     Name = "C# questions set"
                 }
             }
-        };
+        }.ToImmutableList();
     }
 }
