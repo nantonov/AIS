@@ -21,6 +21,8 @@ namespace AIS.DAL.DI
             services.AddScoped<IGenericRepository<QuestionAreaEntity>, QuestionAreaRepository>();
             services.AddScoped<IGenericRepository<QuestionSetEntity>, QuestionSetRepository>();
             services.AddScoped<IGenericRepository<TrueAnswerEntity>, TrueAnswerRepository>();
+            services.AddScoped<IGenericRepository<QuestionsQuestionSetsEntity>, QuestionsQuestionSetsRepository>();
+            services.AddScoped<IGenericRepository<QuestionsQuestionSetsEntity>, QuestionsQuestionSetsRepository>();
             services.AddDbContext<DatabaseContext>(op =>
                 {
                     op.UseSqlServer(config.GetConnectionString("DefaultConnection"));
