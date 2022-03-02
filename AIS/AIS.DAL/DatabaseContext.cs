@@ -35,16 +35,6 @@ namespace AIS.DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder
-            .Entity<QuestionSetEntity>()
-            .HasMany(c => c.QuestionAreas)
-            .WithMany(s => s.QuestionSets)
-            .UsingEntity<QuestionAreasQuestionSetsEntity>();
-            modelBuilder
-            .Entity<QuestionEntity>()
-            .HasMany(c => c.QuestionSets)
-            .WithMany(s => s.Questions)
-            .UsingEntity<QuestionsQuestionSetsEntity>();
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(DatabaseContext).Assembly);
         }
     }
