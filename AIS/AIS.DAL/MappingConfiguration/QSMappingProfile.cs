@@ -10,6 +10,9 @@ namespace AIS.DAL.MappingConfiguration
         {
             builder.HasKey(a => a.Id);
             builder.Property(a => a.Id).ValueGeneratedOnAdd();
+            builder.HasMany(c => c.QuestionAreas)
+            .WithMany(s => s.QuestionSets)
+            .UsingEntity<QuestionAreasQuestionSetsEntity>();
         }
     }
 }
