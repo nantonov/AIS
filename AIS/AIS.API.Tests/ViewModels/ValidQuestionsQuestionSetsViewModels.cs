@@ -54,5 +54,33 @@ namespace AIS.API.Tests.Controllers.ViewModels
             QuestionId = 1,
             QuestionSetId = 1
         };
+
+        public static readonly ChangeQuestionsQuestionSetsViewModel questionsQuestionSetsViewModelValid = new()
+        {
+            QuestionSetId = 1,
+            QuestionId = 1
+        };
+
+        public static readonly ChangeQuestionsQuestionSetsViewModel questionsQuestionSetsViewModelSetIdLessThenOne = new()
+        {
+            QuestionSetId = -11,
+            QuestionId = 1
+        };
+
+        public static readonly ChangeQuestionsQuestionSetsViewModel questionsQuestionSetsViewModelValidModelQuestionIdLessThenOne = new()
+        {
+            QuestionSetId = 1,
+            QuestionId = -11
+        };
+
+        public static readonly ChangeQuestionsQuestionSetsViewModel questionsQuestionSetsViewModelWithoutSetId = new()
+        {
+            QuestionId = 1
+        };
+
+        public static readonly ChangeQuestionsQuestionSetsViewModel questionsQuestionSetsViewModelWithoutQuestionId = new()
+        {
+            QuestionSetId = 1
+        };
     }
 }
