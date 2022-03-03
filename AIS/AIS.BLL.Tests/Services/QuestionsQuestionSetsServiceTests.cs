@@ -1,6 +1,8 @@
 ﻿using AIS.BLL.Interfaces.Services;
 using AIS.BLL.Models;
 using AIS.BLL.Services;
+using AIS.BLL.Tests.Entities;
+using AIS.BLL.Tests.Models;
 using AIS.DAL.Entities;
 using AIS.DAL.Interfaces.Repositories;
 using AutoMapper;
@@ -10,7 +12,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -30,44 +31,9 @@ namespace AIS.BLL.Tests.Services
         [Fact]
         public async Task GetQuestionsQuestionSets_HasData_ReturnQuestionsQuestionSetsList()
         {
-            List<QuestionsQuestionSetsEntity> questionsQuestionSetsEntities = new()
-            {
-                new()
-                {
-                    Id = 1,
-                    QuestionSetId = 1,
-                    QuestionId = 1,
-                    Question = new()
-                    {
-                        Id = 1,
-                        Text = "sssss"
-                    },
-                    QuestionSet = new()
-                    {
-                        Id = 1,
-                        Name = "ddddd"
-                    }
-                }
-            };
-            List<QuestionsQuestionSets> questionsQuestionSetsModels = new()
-            {
-                new()
-                {
-                    Id = 1,
-                    QuestionSetId = 1,
-                    QuestionId = 1,
-                    Question = new()
-                    {
-                        Id = 1,
-                        Text = "sssss"
-                    },
-                    QuestionSet = new()
-                    {
-                        Id = 1,
-                        Name = "ddddd"
-                    }
-                }
-            };
+            var questionsQuestionSetsEntities = ValidQuestionsQuestionSetsEntities.questionsQuestionSetsEntitiesGet;
+            var questionsQuestionSetsModels = ValidQuestionsQuestionSetsModels.questionsQuestionSetsModelsGet;
+
             _mapperMock.Setup(x => x.Map<IEnumerable<QuestionsQuestionSets>>(It.IsAny<IEnumerable<QuestionsQuestionSetsEntity>>()))
                 .Returns(questionsQuestionSetsModels);
             _repoMock.Setup(x => x.Get(default)).ReturnsAsync(questionsQuestionSetsEntities);
@@ -91,38 +57,8 @@ namespace AIS.BLL.Tests.Services
         [Fact]
         public async Task GetQuestionsQuestionSetsById_ValidId_ReturnsQuestionsQuestionSetsById()
         {
-            QuestionsQuestionSetsEntity questionsQuestionSetsEntity = new()
-            {
-                Id = 6,
-                QuestionSetId = 1,
-                QuestionId = 1,
-                Question = new()
-                {
-                    Id = 1,
-                    Text = "sssss"
-                },
-                QuestionSet = new()
-                {
-                    Id = 1,
-                    Name = "ddddd"
-                }
-            };
-            QuestionsQuestionSets questionsQuestionSets = new()
-            {
-                Id = 6,
-                QuestionSetId = 1,
-                QuestionId = 1,
-                Question = new()
-                {
-                    Id = 1,
-                    Text = "sssss"
-                },
-                QuestionSet = new()
-                {
-                    Id = 1,
-                    Name = "ddddd"
-                }
-            };
+            var questionsQuestionSetsEntity = ValidQuestionsQuestionSetsEntities.questionsQuestionSetsEntityGetById;
+            var questionsQuestionSets = ValidQuestionsQuestionSetsModels.questionsQuestionSetsModelGetById;
 
             _repoMock.Setup(x => x.GetById(6, default)).ReturnsAsync(questionsQuestionSetsEntity);
             _mapperMock.Setup(x => x.Map<QuestionsQuestionSets>(It.IsAny<QuestionsQuestionSetsEntity>())).Returns(questionsQuestionSets);
@@ -162,65 +98,21 @@ namespace AIS.BLL.Tests.Services
         [Fact]
         public async Task DeleteQuestionsQuestionSets_ValidQuestionsQuestionSets_ReturnsNull()
         {
-            QuestionsQuestionSetsEntity questionsQuestionSetsEntity = new()
-            {
-                Id = 6,
-                QuestionSetId = 1,
-                QuestionId = 1,
-                Question = new()
-                {
-                    Id = 1,
-                    Text = "sssss"
-                },
-                QuestionSet = new()
-                {
-                    Id = 1,
-                    Name = "ddddd"
-                }
-            };
+            var questionsQuestionSetsEntity = ValidQuestionsQuestionSetsEntities.questionsQuestionSetsEntityDelete;
+            var questionsQuestionSets = ValidQuestionsQuestionSetsModels.questionsQuestionSetsModelDelete;
 
             _mapperMock.Setup(x => x.Map<QuestionsQuestionSetsEntity>(It.IsAny<QuestionsQuestionSets>()))
                 .Returns(questionsQuestionSetsEntity);
             _repoMock.Setup(x => x.Delete(questionsQuestionSetsEntity, default));
 
-            await _service.Delete(20, default).ShouldNotThrowAsync();
+            await _service.Delete(questionsQuestionSets, default).ShouldNotThrowAsync();
         }
 
         [Fact]
         public async Task PutQuestionsQuestionSets_ValidQuestionsQuestionSets_ReturnsQuestionsQuestionSets()
         {
-            QuestionsQuestionSetsEntity questionsQuestionSetsEntity = new()
-            {
-                Id = 6,
-                QuestionSetId = 1,
-                QuestionId = 1,
-                Question = new()
-                {
-                    Id = 1,
-                    Text = "sssss"
-                },
-                QuestionSet = new()
-                {
-                    Id = 1,
-                    Name = "ddddd"
-                }
-            };
-            QuestionsQuestionSets questionsQuestionSets = new()
-            {
-                Id = 6,
-                QuestionSetId = 1,
-                QuestionId = 1,
-                Question = new()
-                {
-                    Id = 1,
-                    Text = "sssss"
-                },
-                QuestionSet = new()
-                {
-                    Id = 1,
-                    Name = "ddddd"
-                }
-            };
+            var questionsQuestionSetsEntity = ValidQuestionsQuestionSetsEntities.questionsQuestionSetsEntityPut;
+            var questionsQuestionSets = ValidQuestionsQuestionSetsModels.questionsQuestionSetsModelPut;
 
             _mapperMock.Setup(x => x.Map<QuestionsQuestionSetsEntity>(It.IsAny<QuestionsQuestionSets>()))
                 .Returns(questionsQuestionSetsEntity);
@@ -247,68 +139,11 @@ namespace AIS.BLL.Tests.Services
         [Fact]
         public async Task AddQuestionsQuestionSets_ValidQuestionsQuestionSets_ReturnsQuestionsQuestionSets()
         {
-            QuestionsQuestionSetsEntity questionsQuestionSetsEntity = new()
-            {
-                QuestionSetId = 1,
-                QuestionId = 1,
-                Question = new()
-                {
-                    Id = 1,
-                    Text = "sssss"
-                },
-                QuestionSet = new()
-                {
-                    Id = 1,
-                    Name = "ddddd"
-                }
-            };
-            QuestionsQuestionSets questionsQuestionSets = new()
-            {
-                QuestionSetId = 1,
-                QuestionId = 1,
-                Question = new()
-                {
-                    Id = 1,
-                    Text = "sssss"
-                },
-                QuestionSet = new()
-                {
-                    Id = 1,
-                    Name = "ddddd"
-                }
-            };
-            QuestionsQuestionSetsEntity questionsQuestionSetsEntityWithId = new()
-            {
-                Id = 6,
-                QuestionSetId = 1,
-                QuestionId = 1,
-                Question = new()
-                {
-                    Id = 1,
-                    Text = "sssss"
-                },
-                QuestionSet = new()
-                {
-                    Id = 1,
-                    Name = "ddddd"
-                }
-            };
-            QuestionsQuestionSets questionsQuestionSetsWithId = new()
-            {
-                Id = 6,
-                QuestionSetId = 1,
-                QuestionId = 1,
-                Question = new()
-                {
-                    Id = 1,
-                    Text = "sssss"
-                },
-                QuestionSet = new()
-                {
-                    Id = 1,
-                    Name = "ddddd"
-                }
-            };
+            var questionsQuestionSetsEntity = ValidQuestionsQuestionSetsEntities.questionsQuestionSetsEntityAdd;
+            var questionsQuestionSets = ValidQuestionsQuestionSetsModels.questionsQuestionSetsModelAdd;
+            var questionsQuestionSetsEntityWithId = ValidQuestionsQuestionSetsEntities.questionsQuestionSetsEntityAdd;
+            var questionsQuestionSetsWithId = ValidQuestionsQuestionSetsModels.questionsQuestionSetsModelWithIdAdd;
+
             _mapperMock.Setup(x => x.Map<QuestionsQuestionSetsEntity>(It.IsAny<QuestionsQuestionSets>()))
                 .Returns(questionsQuestionSetsEntity);
             _repoMock.Setup(x => x.Add(It.IsAny<QuestionsQuestionSetsEntity>(), default)).ReturnsAsync(questionsQuestionSetsEntityWithId);
@@ -324,76 +159,8 @@ namespace AIS.BLL.Tests.Services
         [Fact]
         public void GetQuestionsQuestionSetsByPredicate_ValidPredicate_ReturnsQuestionsQuestionSetsList()
         {
-            List<QuestionsQuestionSetsEntity> questionsQuestionSetsEntities = new()
-            {
-                new()
-                {
-                    Id = 1,
-                    QuestionSetId = 1,
-                    QuestionId = 1,
-                    Question = new()
-                    {
-                        Id = 1,
-                        Text = "sssss"
-                    },
-                    QuestionSet = new()
-                    {
-                        Id = 1,
-                        Name = "ddddd"
-                    }
-                },
-                new()
-                {
-                    Id = 2,
-                    QuestionSetId = 1,
-                    QuestionId = 2,
-                    Question = new()
-                    {
-                        Id = 1,
-                        Text = "sssss"
-                    },
-                    QuestionSet = new()
-                    {
-                        Id = 1,
-                        Name = "ddddd"
-                    }
-                }
-            };
-            List<QuestionsQuestionSets> questionsQuestionSetsModels = new()
-            {
-                new()
-                {
-                    Id = 1,
-                    QuestionSetId = 1,
-                    QuestionId = 1,
-                    Question = new()
-                    {
-                        Id = 1,
-                        Text = "sssss"
-                    },
-                    QuestionSet = new()
-                    {
-                        Id = 1,
-                        Name = "ddddd"
-                    }
-                },
-                new()
-                {
-                    Id = 2,
-                    QuestionSetId = 1,
-                    QuestionId = 2,
-                    Question = new()
-                    {
-                        Id = 1,
-                        Text = "sssss"
-                    },
-                    QuestionSet = new()
-                    {
-                        Id = 1,
-                        Name = "ddddd"
-                    }
-                }
-            };
+            var questionsQuestionSetsEntities = ValidQuestionsQuestionSetsEntities.questionsQuestionSetsEntitiesGetByPredicate;
+            var questionsQuestionSetsModels = ValidQuestionsQuestionSetsModels.questionsQuestionSetsModelsGetByPredicate;
 
             _repoMock.Setup(x => x.Get(It.IsAny<Expression<Func<QuestionsQuestionSetsEntity, bool>>>(), default)).ReturnsAsync(questionsQuestionSetsEntities);
             _mapperMock.Setup(x => x.Map<IEnumerable<QuestionsQuestionSets>>(It.IsAny<IEnumerable<QuestionsQuestionSetsEntity>>()))
