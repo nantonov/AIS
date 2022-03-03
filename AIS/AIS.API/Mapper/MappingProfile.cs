@@ -3,8 +3,10 @@ using AIS.API.ViewModels.Employee;
 using AIS.API.ViewModels.Interviewee;
 using AIS.API.ViewModels.Question;
 using AIS.API.ViewModels.QuestionArea;
+using AIS.API.ViewModels.QuestionAreasQuestionSets;
 using AIS.API.ViewModels.QuestionIntervieweeAnswer;
 using AIS.API.ViewModels.QuestionSet;
+using AIS.API.ViewModels.QuestionsQuestionSets;
 using AIS.API.ViewModels.Session;
 using AIS.API.ViewModels.TrueAnswer;
 using AIS.BLL.Models;
@@ -59,6 +61,14 @@ namespace AIS.API.Mapper
             CreateMap<QuestionIntervieweeAnswer, QuestionIntervieweeAnswerAddViewModel>();
             CreateMap<QuestionIntervieweeAnswer, ShortQuestionIntervieweeAnswerViewModel>();
             CreateMap<QuestionIntervieweeAnswer, QuestionIntervieweeAnswerAddViewModel>();
+
+            CreateMap<QuestionAreasQuestionSets, QuestionAreasQuestionSetsViewModel>();
+            CreateMap<QuestionAreasQuestionSets, ShortQuestionAreasQuestionSetsViewModel>();
+            CreateMap<ChangeQuestionAreasQuestionSetsViewModel, QuestionAreasQuestionSets>();
+
+            CreateMap<QuestionsQuestionSets, QuestionsQuestionSetsViewModel>();
+            CreateMap<QuestionsQuestionSets, ShortQuestionsQuestionSetsViewModel>();
+            CreateMap<ChangeQuestionsQuestionSetsViewModel, QuestionsQuestionSets>();
         }
     }
 }
