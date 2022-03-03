@@ -58,7 +58,7 @@ namespace AIS.API.Tests.Controllers
             _validatorMock.Setup(valid => valid.Validate(questionAreasQuestionSetsViewModel));
             _mapperMock.Setup(map => map.Map<QuestionAreasQuestionSets>(questionAreasQuestionSetsViewModel)).Returns(questionAreasQuestionSetsModel);
             _mapperMock.Setup(map => map.Map<QuestionAreasQuestionSetsViewModel>(questionAreasQuestionSetsModelWithId)).Returns(questionAreasQuestionSetsViewModelWithId);
-            _serviceMock.Setup(serv => serv.Put(It.IsAny<QuestionAreasQuestionSets>(), default)).ReturnsAsync(questionAreasQuestionSetsModel);
+            _serviceMock.Setup(serv => serv.Put(It.IsAny<QuestionAreasQuestionSets>(), default)).ReturnsAsync(questionAreasQuestionSetsModelWithId);
 
             var controller = new QuestionAreasQuestionSetsController(_serviceMock.Object, _mapperMock.Object, _validatorMock.Object);
 
