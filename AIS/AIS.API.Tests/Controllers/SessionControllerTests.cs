@@ -23,7 +23,7 @@ namespace AIS.API.Tests.Controllers
         }
 
         [Fact]
-        public async void GetSessions_HasData_ReturnsSessionList()
+        public async Task GetSessions_HasData_ReturnsSessionList()
         {
             IEnumerable<Session> sessionsList = new List<Session>()
             {

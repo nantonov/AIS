@@ -36,7 +36,6 @@ namespace AIS.API.Tests.Validators.Employee
             };
 
             // Act
-            //var result = validator.Validate(model);
 
             var result = validator.Validate(model);
 
