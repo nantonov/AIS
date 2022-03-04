@@ -12,10 +12,19 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import {To, useNavigate} from "react-router-dom";
+import {MainRoutes} from "../../static/mainRoutes";
 
-const pages = ['Sessions', 'Question_Area'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-
+const pagesAppBar = [
+    {
+        label: 'Question Area',
+        link: MainRoutes.questionArea
+    },
+    {
+        label: 'Sessions',
+        link: MainRoutes.sessions
+    },
+]
 const Header = () => {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -35,9 +44,9 @@ const Header = () => {
         setAnchorElUser(null);
     };
 
-    let navigate = useNavigate();
+    const navigate = useNavigate();
 
-    function routeChange(path: string) {
+    const routeChange = (path: string) => () => {
         navigate(path);
     }
 
@@ -83,9 +92,9 @@ const Header = () => {
                                 display: {xs: 'block', md: 'none'},
                             }}
                         >
-                            {pages.map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{page}</Typography>
+                            {pagesAppBar.map((page) => (
+                                <MenuItem key={page.label} onClick={handleCloseNavMenu}>
+                                    <Typography textAlign="center">{page.label}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
@@ -99,13 +108,13 @@ const Header = () => {
                         LOGO
                     </Typography>
                     <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
-                        {pages.map((page) => (
+                        {pagesAppBar.map((page) => (
                             <Button
-                                key={page}
-                                onClick={ () => routeChange(page)}
-                                sx={{my: 2, color: 'white', display: 'block'}}
+                                key={page.label}
+                                onClick={routeChange(page.link)}
+                                sx={{my: 2, color: 'white', display: 'block', textTransform: 'capitalize'}}
                             >
-                                {page}
+                                {page.label}
                             </Button>
                         ))}
                     </Box>
