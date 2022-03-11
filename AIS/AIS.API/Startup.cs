@@ -46,7 +46,13 @@ namespace AIS.API
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AIS.API v1"));
             }
             app.UseHttpsRedirection();
-
+            app.UseCors(op =>
+            {
+                op.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .WithExposedHeaders("X-Pagination");
+            });
             app.UseRouting();
 
             app.UseAuthorization();

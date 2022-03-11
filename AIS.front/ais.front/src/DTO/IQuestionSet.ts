@@ -5,6 +5,6 @@ export interface IQuestionSet{
     id: number,
     name: string,
     questionAreaId: number,
-    questionArea: IQuestionArea | null,
+    questionAreas: IQuestionArea[] | null,
     questions: IQuestion []
 }

@@ -1,7 +1,8 @@
 import { defaultSession } from "../common/defaultDTO/defaultSession";
-import { Config } from "../config";
 import { ISession } from "../DTO/ISession";
 import axiosInstance from "../utils/getAxious";
+import {SESSION_URL} from "../static/UrlConstants";
+import {Config} from "../config";
 
 
 export class SessionService {

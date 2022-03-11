@@ -1,7 +1,8 @@
 import { defaultCompany } from "../common/defaultDTO/defaultCompany";
-import { Config } from "../config";
 import { ICompany } from "../DTO/ICompany";
 import axiosInstance from "../utils/getAxious";
+import {COMPANY_URL} from "../static/UrlConstants";
+import {Config} from "../config";
 
 
 export class CompanyService {
@@ -16,7 +17,7 @@ export class CompanyService {
     public static async getById(companyId: number): Promise<ICompany> {
         const result = await axiosInstance.get<ICompany>(
             Config.COMPANY_URL+`/${companyId}`)
-            .then((result) => result.data)
+            .then((result: { data: any; }) => result.data)
             .catch((err) => console.log(err));
 
         return result || defaultCompany;

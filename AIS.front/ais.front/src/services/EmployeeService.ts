@@ -1,7 +1,8 @@
 import { defaultEmployee } from "../common/defaultDTO/defaultEmployee";
-import { Config } from "../config";
 import { IEmployee } from "../DTO/IEmployee";
 import axiosInstance from "../utils/getAxious";
+import {EMPLOYEE_URL} from "../static/UrlConstants";
+import {Config} from "../config";
 
 
 export class EmployeeService {
