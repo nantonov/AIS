@@ -367,6 +367,32 @@ namespace AIS.DAL.Tests.Repositories.QuestionsQuestionSets
             _repository = new(context);
             await _repository.Delete(-1, default).ShouldThrowAsync(typeof(ArgumentNullException));
         }
+        [Fact]
+        public async Task DeleteQuestionsQuestionSets_ValidIds_NotThrow()
+        {
+            var set = new QuestionSetEntity
+            {
+                Name = "OOP"
+            };
+            var question = new QuestionEntity
+            {
+                Text = "OOP"
+            };
 
+            var model = new QuestionsQuestionSetsEntity()
+            {
+                QuestionId = 1,
+                QuestionSetId = 1
+            };
+            await using DatabaseContext context = new(_options);
+            _repository = new(context);
+            context.QuestionSets.Add(set);
+            context.Questions.Add(question);
+            context.QuestionsQuestionSets.Add(model);
+
+            await context.SaveChangesAsync();
+
+            await _repository.Delete(1,1, default).ShouldNotThrowAsync();
+        }
     }
 }

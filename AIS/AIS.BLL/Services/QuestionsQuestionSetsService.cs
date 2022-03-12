@@ -15,9 +15,9 @@ namespace AIS.BLL.Services
         {
             _repo = repository;
         }
-        public async Task Delete(int questionSetId, int questionId, CancellationToken ct)
+        public Task Delete(int questionSetId, int questionId, CancellationToken ct)
         {
-            await _repo.Delete(questionSetId, questionId, ct);
+            return _repo.Delete(questionSetId, questionId, ct);
         }
     }
 }

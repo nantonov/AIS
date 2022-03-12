@@ -6,6 +6,6 @@ namespace AIS.DAL.Interfaces.Repositories
 {
     public interface IQuestionAreasQuestionSetsRepository: IGenericRepository<QuestionAreasQuestionSetsEntity>
     {
-        Task DeleteByQuestionAreaIdAndQuestionSetId(int questionAreaId, int questionSetId, CancellationToken ct);
+        Task Delete(int questionAreaId, int questionSetId, CancellationToken ct);
     }
 }

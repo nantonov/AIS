@@ -6,6 +6,6 @@ namespace AIS.BLL.Interfaces.Services
 {
     public interface IQuestionAreasQuestionSetsService: IGenericService<QuestionAreasQuestionSets>
     {
-        Task DeleteByQuestionSetIdAndQuestionAreaId(int questionSetId, int questionAreaId, CancellationToken ct);
+        Task Delete(int questionSetId, int questionAreaId, CancellationToken ct);
     }
 }

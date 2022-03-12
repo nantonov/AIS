@@ -66,9 +66,9 @@ namespace AIS.API.Controllers
             return _questionsQuestionSetsService.Delete(id, ct);
         }
         [HttpDelete(EndpointConstants.DeleteByTwoIds)]
-        public async Task DeleteEndpoitRoute(int questionSetId, int questionId, CancellationToken ct)
+        public Task Delete(int questionSetId, int questionId, CancellationToken ct)
         {
-            await _questionsQuestionSetsService.Delete(questionSetId, questionId, ct);
+            return _questionsQuestionSetsService.Delete(questionSetId, questionId, ct);
         }
     }
 }

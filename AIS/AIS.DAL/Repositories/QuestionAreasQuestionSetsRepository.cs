@@ -36,7 +36,7 @@ namespace AIS.DAL.Repositories
             return entity;
         }
 
-        public async Task DeleteByQuestionAreaIdAndQuestionSetId(int questionAreaId, int questionSetId, CancellationToken ct)
+        public async Task Delete(int questionAreaId, int questionSetId, CancellationToken ct)
         {
             var entity = await _dbSet.FirstOrDefaultAsync(x => x.QuestionAreaId == questionAreaId && x.QuestionSetId == questionSetId, ct);
             if(entity is not null){

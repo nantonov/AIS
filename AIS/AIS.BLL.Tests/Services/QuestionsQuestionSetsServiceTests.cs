@@ -168,5 +168,13 @@ namespace AIS.BLL.Tests.Services
             var result = _service.Get(x => x.QuestionSetId == 1, default);
             result.ShouldNotBeNull();
         }
+
+        [Fact]
+        public async Task DeleteQuestionQuestionSets_ValidIds_ReturnsNull()
+        {
+            _repoMock.Setup(x => x.Delete(int.MaxValue, int.MaxValue, default));
+
+            await _service.Delete(5, 10, default).ShouldNotThrowAsync();
+        }
     }
 }
