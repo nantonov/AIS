@@ -24,6 +24,14 @@ const pagesAppBar = [
         label: 'Sessions',
         link: MainRoutes.sessions
     },
+    {
+        label: 'Question Sets',
+        link: MainRoutes.questionSet
+    },
+    {
+        label: 'Add question set',
+        link: MainRoutes.addQuestionSet
+    }
 ]
 const Header = () => {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);

@@ -20,7 +20,7 @@ namespace AIS.BLL.Tests.Services
     public class QuestionsQuestionSetsServiceTests
     {
         private readonly IQuestionsQuestionSetsService _service;
-        private readonly Mock<IGenericRepository<QuestionsQuestionSetsEntity>> _repoMock = new();
+        private readonly Mock<IQuestionsQuestionSetsRepository> _repoMock = new();
         private readonly Mock<IMapper> _mapperMock = new();
 
         public QuestionsQuestionSetsServiceTests()
