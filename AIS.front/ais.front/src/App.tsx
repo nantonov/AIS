@@ -23,7 +23,6 @@ function App() {
             </div>
             </ConnectedRouter>
         </Provider>
-    )
-}
+    )}
 
 export default App;
