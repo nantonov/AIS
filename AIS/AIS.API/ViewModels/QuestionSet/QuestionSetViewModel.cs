@@ -9,6 +9,6 @@ namespace AIS.API.ViewModels.QuestionSet
         public int Id { get; set; }
         public string Name { get; set; }
         public IEnumerable<ShortQuestionAreaViewModel> QuestionAreas { get; set; }
-        public IEnumerable<ShortQuestionViewModel> Questions { get; set; }
+        public IEnumerable<QuestionViewModel> Questions { get; set; }
     }
 }

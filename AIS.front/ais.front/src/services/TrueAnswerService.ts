@@ -1,7 +1,7 @@
 import { defaultTrueAnswer } from "../common/defaultDTO/defaultTrueAnswer";
-import { Config } from "../config";
 import { ITrueAnswer } from "../DTO/ITrueAnswer";
 import axiosInstance from "../utils/getAxious";
+import {Config} from "../config";
 
 
 export class TrueAnswerService {

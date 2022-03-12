@@ -1,7 +1,8 @@
 import { defaultQuestionIntervieweeAnswer } from "../common/defaultDTO/defaultIQuestionIntervieweeAnswer";
-import { Config } from "../config";
 import { IQuestionIntervieweeAnswer } from "../DTO/IQuestionIntervieweeAnswer";
 import axiosInstance from "../utils/getAxious";
+import {QUESTION_INTERVIEWEE_ANSWER_URL} from "../static/UrlConstants";
+import {Config} from "../config";
 
 
 export class QuestionIntervieweeAnswer {

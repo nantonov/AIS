@@ -1,7 +1,8 @@
 import { defaultInterviewee } from "../common/defaultDTO/defaultInterviewee";
-import { Config } from "../config";
 import { IInterviewee } from "../DTO/IInterviewee";
 import axiosInstance from "../utils/getAxious";
+import {INTERVIEWEE_URL} from "../static/UrlConstants";
+import {Config} from "../config";
 
 
 export class IntervieweeService {

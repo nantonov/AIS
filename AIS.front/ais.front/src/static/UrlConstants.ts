@@ -1,0 +1,9 @@
+export const COMPANY_URL = 'api/Company';
+export const EMPLOYEE_URL = 'api/Employee';
+export const INTERVIEWEE_URL = 'api/Interviewee';
+export const QUESTION_URL = 'api/Question';
+export const QUESTION_AREA_URL = 'api/QuestionsSets';
+export const QUESTION_INTERVIEWEE_ANSWER_URL = 'api/QuestionIntervieweeAnswer';
+export const QUESTION_SET_URL = 'api/QuestionSet';
+export const SESSION_URL = 'api/Session';
+export const TRUE_ANSWER_URL = 'api/TrueAnswer';
