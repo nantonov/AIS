@@ -1,12 +1,11 @@
 import {Routes, Route} from "react-router-dom";
-import LeftSideBar from "../QuestionArea/QuestionArea";
+import LeftSideBar from "../QuestionsSets/QuestionsSets";
 import Sessions from "../Session/Session";
 import React from 'react';
 import {MainRoutes} from "../../static/mainRoutes";
 import QuestionsSets from "../QuestionsSets/QuestionsSets";
 import QuestionSetDescription from "../QuestionSet/QuestionSetDescription";
 import AddQuestionSet from "../QuestionSet/QuestionSetAdd";
-
 export default function Main() {
     return (
         <Routes>

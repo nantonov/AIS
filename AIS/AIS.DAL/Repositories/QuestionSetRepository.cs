@@ -32,7 +32,7 @@ namespace AIS.DAL.Repositories
 
         public override async Task<QuestionSetEntity> GetById(int id, CancellationToken ct)
         {
-            var entity = await _dbSet.AsNoTracking().Include(x => x.QuestionAreas).Include(x => x.Questions).FirstOrDefaultAsync(x => x.Id == id, ct);
+            var entity = await _dbSet.AsNoTracking().Include(x => x.QuestionAreas).Include(x => x.Questions).ThenInclude(x=> x.TrueAnswer).FirstOrDefaultAsync(x => x.Id == id, ct);
 
             return entity;
         }

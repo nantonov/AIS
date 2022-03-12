@@ -1,7 +1,8 @@
 import { defaultQuestionArea } from "../common/defaultDTO/defaultQuestionArea";
-import { Config } from "../config";
 import { IQuestionArea } from "../DTO/IQuestionArea";
 import axiosInstance from "../utils/getAxious";
+import {QUESTION_AREA_URL} from "../static/UrlConstants";
+import {Config} from "../config";
 
 
 export class QuestionAreaService {

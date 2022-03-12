@@ -22,6 +22,7 @@ const QuestionSetDescription: React.FC<Props> = ({questionSet, getById}: Props) 
       max-width: 1170px;
       margin: auto;
     `
+
     let {id} = useParams();
 
     useEffect(() => {
@@ -39,6 +40,8 @@ const QuestionSetDescription: React.FC<Props> = ({questionSet, getById}: Props) 
             getById(Number(id));
         })
     }
+
+    console.log(questionSet)
 
     return (
         <GridContainer>

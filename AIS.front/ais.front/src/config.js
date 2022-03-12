@@ -1,13 +1,13 @@
 const config = {};
 
-if (process.env.APP_ENV === 'development'){
+/*if (process.env.APP_ENV === 'development'){
   const devConfig = require('./config.dev.js').default;
   Object.assign(config, devConfig);
 }
-else {
-  const localConfig = require('./config.local.js').default;
-  Object.assign(config, localConfig);
-}
+else {*/
+const localConfig = require('./config.local.js').default;
+Object.assign(config, localConfig);
+//}
 config.COMPANY_URL = 'api/Company';
 config.EMPLOYEE_URL = 'api/Employee';
 config.INTERVIEWEE_URL = 'api/Interviewee';

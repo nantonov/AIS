@@ -1,7 +1,8 @@
 import { defaultQuestion } from "../common/defaultDTO/defaultQuestion";
-import { Config } from "../config";
 import { IQuestion } from "../DTO/IQuestion";
 import axiosInstance from "../utils/getAxious";
+import {QUESTION_URL} from "../static/UrlConstants";
+import {Config} from "../config";
 
 
 export class QuestionService {
