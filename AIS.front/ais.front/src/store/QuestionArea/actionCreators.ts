@@ -1,6 +1,6 @@
 import { IQuestionArea} from '../../DTO/IQuestionArea'
 import { QuestionAreaService } from '../../services/QuestionAreaService';
-import { ApplicationDispatch } from '../typings';
+import { ApplicationDispatch } from '../typing';
 import { fetchAll, fetchById} from './actions';
 import { questionAreasActions } from './reducer';
 
