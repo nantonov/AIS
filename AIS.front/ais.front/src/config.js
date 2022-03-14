@@ -17,4 +17,6 @@ config.QUESTION_INTERVIEWEE_ANSWER_URL = 'api/QuestionIntervieweeAnswer';
 config.QUESTION_SET_URL = 'api/QuestionSet';
 config.SESSION_URL = 'api/Session';
 config.TRUE_ANSWER_URL = 'api/TrueAnswer';
+config.DELETE_BY_TWO_IDS_QUESTION_AREA = 'api/QuestionAreasQuestionSets/deleteByTwoIds'
+config.DELETE_BY_TWO_IDS_QUESTION = 'api/QuestionsQuestionSets/deleteByTwoIds'
 export const Config = config;

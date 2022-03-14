@@ -129,5 +129,20 @@ namespace AIS.API.Tests.Controllers
             // Assert
             act.ShouldNotThrowAsync();
         }
+
+        [Fact]
+        public void DeleteByTwo1Ids_WhenControllerHasData_NoReturn()
+        {
+            var questionSetId = 1;
+            var questionId = 5;
+
+            _serviceMock.Setup(serv => serv.Delete(questionSetId, questionId, default));
+
+            var controller = new QuestionsQuestionSetsController(_serviceMock.Object, _mapperMock.Object, _validatorMock.Object);
+
+            Func<Task> act = async() => await controller.Delete(questionSetId, questionId, default);
+
+            act.ShouldNotThrowAsync();
+        }
     }
 }

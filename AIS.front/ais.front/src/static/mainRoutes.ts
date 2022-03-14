@@ -3,5 +3,6 @@ export enum MainRoutes {
     sessions = 'sessions',
     questionSet = 'questionSet',
     questionSets = 'questionSets',
-    questionSetDescription = 'questionSet/:id'
+    questionSetDescription = 'questionSet/:id',
+    addQuestionSet='addQuestionSet'
 }

@@ -7,5 +7,6 @@
         public const string DeleteEndpoitRoute = "delete";
         public const string UpdateEndpoitRoute = "update";
         public const string IdTemplate = "{id}";
+        public const string DeleteByTwoIds = "deleteByTwoIds";
     }
 }
