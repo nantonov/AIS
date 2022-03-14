@@ -3,14 +3,23 @@ using AIS.BLL.Models;
 using AIS.DAL.Entities;
 using AIS.DAL.Interfaces.Repositories;
 using AutoMapper;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace AIS.BLL.Services
 {
     public class QuestionAreasQuestionSetsService : GenericService<QuestionAreasQuestionSets, QuestionAreasQuestionSetsEntity>, IQuestionAreasQuestionSetsService
     {
-        public QuestionAreasQuestionSetsService(IGenericRepository<QuestionAreasQuestionSetsEntity> repository, IMapper mapper)
+        private readonly IQuestionAreasQuestionSetsRepository _repo;
+        public QuestionAreasQuestionSetsService(IQuestionAreasQuestionSetsRepository repository, IMapper mapper)
             : base(repository, mapper)
         {
+            _repo = repository;
+        }
+
+        public Task Delete(int questionAreaId, int questionSetId, CancellationToken ct)
+        {
+            return _repo.Delete(questionAreaId, questionSetId, ct);
         }
     }
 }

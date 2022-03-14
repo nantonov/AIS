@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -35,6 +34,15 @@ namespace AIS.DAL.Repositories
             var entity = await _dbSet.AsNoTracking().Include(x => x.QuestionSet).Include(x => x.QuestionArea).FirstOrDefaultAsync(x => x.Id == id, ct);
 
             return entity;
+        }
+
+        public async Task Delete(int questionAreaId, int questionSetId, CancellationToken ct)
+        {
+            var entity = await _dbSet.FirstOrDefaultAsync(x => x.QuestionAreaId == questionAreaId && x.QuestionSetId == questionSetId, ct);
+            if(entity is not null){
+                _dbSet.Remove(entity);
+                await _context.SaveChangesAsync(ct);
+            }
         }
     }
 }

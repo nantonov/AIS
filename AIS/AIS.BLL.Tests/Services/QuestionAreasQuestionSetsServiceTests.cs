@@ -20,7 +20,7 @@ namespace AIS.BLL.Tests.Services
     public class QuestionAreasQuestionSetsServiceTests
     {
         private readonly IQuestionAreasQuestionSetsService _service;
-        private readonly Mock<IGenericRepository<QuestionAreasQuestionSetsEntity>> _repoMock = new();
+        private readonly Mock<IQuestionAreasQuestionSetsRepository> _repoMock = new();
         private readonly Mock<IMapper> _mapperMock = new();
 
         public QuestionAreasQuestionSetsServiceTests()
@@ -166,6 +166,14 @@ namespace AIS.BLL.Tests.Services
                 .Returns(questionAreasQuestionSetsModels);
             var result = _service.Get(x => x.QuestionSetId == 1, default);
             result.ShouldNotBeNull();
+        }
+
+        [Fact]
+        public async Task DeleteQuestionAreasQuestionSets_ValidIds_ReturnsNull()
+        {
+            _repoMock.Setup(x => x.Delete(int.MaxValue,int.MaxValue, default));
+
+            await _service.Delete(5,10, default).ShouldNotThrowAsync();
         }
     }
 }

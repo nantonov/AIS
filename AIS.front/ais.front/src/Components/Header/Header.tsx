@@ -31,6 +31,11 @@ const pagesAppBar = [
     {
         label: 'Question Area Form',
         link: MainRoutes.questionAreaForm
+     },
+     {
+        label: 'Add question set',
+        link: MainRoutes.addQuestionSet
+     }
     }
 ]
 const Header = () => {

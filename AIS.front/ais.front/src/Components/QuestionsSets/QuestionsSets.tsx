@@ -5,6 +5,9 @@ import {connect} from "react-redux";
 import {questionSetActionCreators} from "../../store/QuestionSets";
 import styled from "styled-components";
 import {QuestionSetItem} from '../QuestionSetItem/QuestionSetItem'
+import {Button} from "@mui/material";
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import QuestionSetAdd from "../QuestionSet/QuestionSetAdd";
 
 
 const QuestionsSets: React.FC<Props> = ({questionSets, getAllData}) => {
@@ -13,6 +16,14 @@ const QuestionsSets: React.FC<Props> = ({questionSets, getAllData}) => {
       max-width: 1170px;
       margin: auto;
     `;
+
+    const CircleIconContainer = styled(AddCircleIcon)`
+          color: #1976d2;
+          fontSize: "large";
+          font-size: 3.0rem;
+          display: flex;
+          align-items: flex-start;
+        `;
 
     const QuestionSetItems = styled.div`
       display: flex;
@@ -24,12 +35,14 @@ const QuestionsSets: React.FC<Props> = ({questionSets, getAllData}) => {
     }, []);
 
     return (
-        <Container>
+        <Container >
             <QuestionSetItems>
                 {questionSets.map(item => {
-                    return <QuestionSetItem key={item.id} item={item} />
+                    return <QuestionSetItem key={item.id} item={item}/>
                 })}
             </QuestionSetItems>
+            {/*<Button onClick={OpenFromAddQuestionSet}>Test</Button>*/}
+            {/*<CircleIconContainer onClick={OpenFromAddQuestionSet}/>*/}
         </Container>
     )
 }

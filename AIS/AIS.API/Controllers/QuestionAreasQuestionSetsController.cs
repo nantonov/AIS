@@ -4,7 +4,6 @@ using AIS.BLL.Interfaces.Services;
 using AIS.BLL.Models;
 using AutoMapper;
 using FluentValidation;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading;
@@ -65,6 +64,12 @@ namespace AIS.API.Controllers
         public Task Delete(int id, CancellationToken ct)
         {
             return _questionAreasQuestionSetsService.Delete(id, ct);
+        }
+
+        [HttpDelete(EndpointConstants.DeleteByTwoIds)]
+        public Task Delete(int questionAreaId, int questionSetId, CancellationToken ct)
+        {
+            return _questionAreasQuestionSetsService.Delete(questionAreaId, questionSetId, ct);
         }
     }
 }

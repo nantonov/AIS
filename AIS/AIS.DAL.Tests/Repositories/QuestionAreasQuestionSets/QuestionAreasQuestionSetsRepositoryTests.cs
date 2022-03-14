@@ -270,7 +270,7 @@ namespace AIS.DAL.Tests.Repositories.QuestionAreasQuestionSets
 
             await context.SaveChangesAsync();
 
-            await _repository.Delete(model, default).ShouldNotThrowAsync(); 
+            await _repository.Delete(model, default).ShouldNotThrowAsync();
         }
 
         [Fact]
@@ -367,5 +367,32 @@ namespace AIS.DAL.Tests.Repositories.QuestionAreasQuestionSets
             await _repository.Delete(-1, default).ShouldThrowAsync(typeof(ArgumentNullException));
         }
 
+        [Fact]
+        public async Task DeleteQuestionAreasQuestionSets_ValidIds_NotThrow()
+        {
+            var set = new QuestionSetEntity
+            {
+                Name = "asd"
+            };
+            var area = new QuestionAreaEntity
+            {
+                Name = "das"
+            };
+
+            var model = new QuestionAreasQuestionSetsEntity()
+            {
+                QuestionAreaId = 1,
+                QuestionSetId = 1
+            };
+            await using DatabaseContext context = new(_options);
+            _repository = new(context);
+            context.QuestionSets.Add(set);
+            context.QuestionAreas.Add(area);
+            context.QuestionAreasQuestionSets.Add(model);
+
+            await context.SaveChangesAsync();
+
+            await _repository.Delete(1,1, default).ShouldNotThrowAsync();
+        }
     }
 }
