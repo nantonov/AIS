@@ -7,10 +7,8 @@ import {questionSetActionCreators} from "../../store/QuestionSets";
 import {useParams} from "react-router-dom";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import {QuestionService} from "../../services/QuestionService";
 import Typography from "@mui/material/Typography";
 import styled from "@emotion/styled";
-import {QuestionAreaService} from "../../services/QuestionAreaService";
 import {QuestionAreasQuestionSetsService} from "../../services/QuestionAreasQuestionSetsService";
 import {QuestionsQuestionSetsService} from "../../services/QuestionsQuestionSetsService";
 

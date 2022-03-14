@@ -14,24 +14,28 @@ interface propsFromComponent {
 
 interface propsFromDispatch {
 }
+
 type Props = propsFromComponent & propsFromDispatch;
 
 export const QuestionSetItem: React.FC<Props> = ({item}: Props) => {
-  //  const history = useHistory();
     let navigate = useNavigate();
     const routeChange = (id: number) => {
         let path = '/questionSet/' + id;
-    //    history.push('/questionSet/' + id);
         navigate(path);
     }
 
     const QuestionSetContainer = styled.div`
-      background-color: #eeeeee;
+      background-color: #ffffff;
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
       padding: 10px;
       margin: 15px;
       cursor: pointer;
       flex: 0 0 25%;
+      opacity: 1;
+
+      &:hover {
+        background-color: #c5bebe;
+      }
     `;
 
     const QuestionSetFigure = styled.figure`
@@ -49,6 +53,7 @@ export const QuestionSetItem: React.FC<Props> = ({item}: Props) => {
     const QuestionSetDescriptionDiv = styled.div`
       display: flex;
       justify-content: space-between;
+   
     `;
 
     const QuestionSetNameText = styled.text``;
@@ -61,12 +66,13 @@ export const QuestionSetItem: React.FC<Props> = ({item}: Props) => {
     `;
 
     return (
-        <QuestionSetContainer onClick={()=>{routeChange(item.id)}}>
+        <QuestionSetContainer onClick={() => {
+            routeChange(item.id)
+        }}>
             <QuestionSetHeader>{item.name}</QuestionSetHeader>
             <QuestionSetDescriptionDiv>
                 <QuestionSetNameText>{item.name}</QuestionSetNameText>
             </QuestionSetDescriptionDiv>
-            <Button variant="contained" onClick={()=> {routeChange(item.id)}}>Description</Button>
         </QuestionSetContainer>
     )
 }

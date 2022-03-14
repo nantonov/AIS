@@ -10,7 +10,6 @@ export class QuestionService {
         const result = await axiosInstance.get<IQuestion[]>(Config.QUESTION_URL)
             .then((result) => result.data)
             .catch(({ response }) => console.log(response.data));
-
         return result || [];
     }
 
