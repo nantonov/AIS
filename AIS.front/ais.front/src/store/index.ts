@@ -30,7 +30,7 @@ const rootReducer = (history: BrowserHistory) =>
     combineReducers<ApplicationState>({
         router: connectRouter(history),
         questionSets: questionSetReducer,
-        questionAreas: questionAreasReducer
+        questionAreas: questionAreasReducer,
         questions: questionReducer,
     });
 

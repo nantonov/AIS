@@ -27,7 +27,6 @@ const pagesAppBar = [
     {
         label: 'Question Sets',
         link: MainRoutes.questionSet
-    }
     },
     {
         label: 'Question Area Form',
@@ -37,8 +36,8 @@ const pagesAppBar = [
         label: 'Add question set',
         link: MainRoutes.addQuestionSet
      }
-    }
 ]
+
 const Header = () => {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
