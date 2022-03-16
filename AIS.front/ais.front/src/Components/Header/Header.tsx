@@ -27,10 +27,6 @@ const pagesAppBar = [
     {
         label: 'Question Sets',
         link: MainRoutes.questionSet
-    },
-    {
-        label: 'Add question set',
-        link: MainRoutes.addQuestionSet
     }
 ]
 const Header = () => {

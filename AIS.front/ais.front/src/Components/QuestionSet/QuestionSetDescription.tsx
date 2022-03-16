@@ -12,14 +12,14 @@ import styled from "@emotion/styled";
 import {QuestionAreasQuestionSetsService} from "../../services/QuestionAreasQuestionSetsService";
 import {QuestionsQuestionSetsService} from "../../services/QuestionsQuestionSetsService";
 
-const QuestionSetDescription: React.FC<Props> = ({questionSet, getById}: Props) => {
-
-    const GridContainer = styled(Grid)
+const GridContainer = styled(Grid)
     `
       width: 100%;
       max-width: 1170px;
       margin: auto;
-    `
+    `;
+
+const QuestionSetDescription: React.FC<Props> = ({questionSet, getById}: Props) => {
 
     let {id} = useParams();
 
@@ -38,8 +38,6 @@ const QuestionSetDescription: React.FC<Props> = ({questionSet, getById}: Props) 
             getById(Number(id));
         })
     }
-
-    console.log(questionSet)
 
     return (
         <GridContainer>

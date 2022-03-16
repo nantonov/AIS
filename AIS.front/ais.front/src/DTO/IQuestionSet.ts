@@ -8,3 +8,8 @@ export interface IQuestionSet{
     questionAreas: IQuestionArea[] | null,
     questions: IQuestion []
 }
+export interface IQuestionSetAdd {
+    name: string,
+    questionAreaIds: number[],
+    questionIds: number[]
+}

@@ -3,19 +3,19 @@ import {ActionType, getType} from 'typesafe-actions';
 import * as actions from '../Questions/action'
 import {IQuestion} from "../../DTO/IQuestion";
 
-export type QuestionsState = Readonly<{
+export type QuestionState = Readonly<{
     questions: IQuestion[]
 }>;
 
-const initialState: QuestionsState = {
+const initialState: QuestionState = {
     questions: []
 };
 
-export type QuestionsActions = ActionType<typeof actions>;
+export type QuestionActions = ActionType<typeof actions>;
 
-export const questionsReducer = combineReducers<
-    QuestionsState,
-    QuestionsActions
+export const questionReducer = combineReducers<
+    QuestionState,
+    QuestionActions
     >({
     questions: (state = initialState.questions, action) => {
         switch (action.type) {

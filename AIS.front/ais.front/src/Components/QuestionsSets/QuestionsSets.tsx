@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {bindActionCreators, Dispatch} from 'redux';
 import {ApplicationState} from "../../store/typing";
 import {connect} from "react-redux";
@@ -7,58 +7,47 @@ import styled from "styled-components";
 import {QuestionSetItem} from '../QuestionSetItem/QuestionSetItem'
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Typography from "@mui/material/Typography";
-import {Box, Grid, MenuItem, Modal, TextField, Tooltip} from "@mui/material";
+import {Grid, Tooltip} from "@mui/material";
 import {questionsActionCreators} from "../../store/Questions";
+import {useNavigate} from "react-router-dom";
 
+const Container = styled.div`
+  width: 100%;
+  max-width: 1170px;
+  margin: auto;
+`;
 
-const QuestionsSets: React.FC<Props> = ({questionSets, getAllData, questions,getQuestions}) => {
+const CircleIconContainer = styled(AddCircleIcon)`
+  color: #1976d2;
+  fontSize: "large";
+  font-size: 3.5rem;
+  display: flex;
+  padding-left: 90%;
+  opacity: 1;
 
-    const [getOpenAddMenu, setOpenAddMenu] = useState(false);
+  &:hover {
+    color: #0d4f91;
+  }`;
 
-    const Container = styled.div`
-      width: 100%;
-      max-width: 1170px;
-      margin: auto;
-    `;
+const QuestionSetItems = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
 
-    const CircleIconContainer = styled(AddCircleIcon)`
-      color: #1976d2;
-      fontSize: "large";
-      font-size: 3.5rem;
-      display: flex;
-      padding-left: 90%;
-      opacity: 1;
+const ToolTipContainer = styled(Tooltip)`
+  display: flex;
+`
+const TypographyContainer = styled(Typography)`
+  display: flex;
+  align-items: center;
+`;
 
-      &:hover {
-        color: #0d4f91;
-      }`;
-
-    const QuestionSetItems = styled.div`
-      display: flex;
-      flex-wrap: wrap;
-    `;
-    const TypographyContainer = styled(Typography)`
-      align: "center";
-      variant: "h3"
-    `
-    const ToolTipContainer = styled(Tooltip)`
-      display: flex;
-    `
-    function openAddMenu(){
-        setOpenAddMenu(true);
+const QuestionsSets: React.FC<Props> = ({questionSets, getAllData, questions, getQuestions}) => {
+    let navigate = useNavigate();
+    const routeChange = () => {
+        let path = '/addQuestionSet';
+        navigate(path);
     }
-    const handleClose = () => setOpenAddMenu(false);
-    const style = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: 400,
-        bgcolor: 'background.paper',
-        border: '2px solid #000',
-        boxShadow: 24,
-        p: 4,
-    };
 
     useEffect(() => {
         getAllData();
@@ -79,65 +68,17 @@ const QuestionsSets: React.FC<Props> = ({questionSets, getAllData, questions,get
             </Grid>
             <Grid item>
                 <ToolTipContainer title="Add question set" placement="left-start">
-                    <CircleIconContainer onClick={openAddMenu}/>
+                    <CircleIconContainer onClick={routeChange}/>
                 </ToolTipContainer>
-            </Grid>
-            <Grid item>
-                <Modal
-                    open={getOpenAddMenu}
-                    onClose={handleClose}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                >
-                    <Box sx={style}>
-                        <TextField
-                            required
-                            id="outlined-required"
-                            label="Required"
-                        />
-                        <TextField
-                            id="outlined-select-question-area"
-                            select
-                            label="Select"
-                            // value={currency}
-                            // onChange={handleChange}
-                            helperText="Please select question area"
-                        >
-                            {questionSets.map((option) => (
-                                <MenuItem key={option.id} value={option.name}>
-                                    {option.name}
-                                </MenuItem>
-                            ))}
-                        </TextField>
-                        <TextField
-                            id="outlined-select-question-area"
-                            select
-                            label="Select"
-                            // value={currency}
-                            // onChange={handleChange}
-                            helperText="Please select question area"
-                        >
-                            {questions.questions.map((question) => (
-                                <MenuItem key={question.id}>
-                                    {question.text}
-                                </MenuItem>
-                            ))}
-                        </TextField>
-                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                        </Typography>
-                    </Box>
-                </Modal>
             </Grid>
         </Grid>
     )
 }
 
-
 const mapStateToProps = (state: ApplicationState) => ({
     router: state.router,
     questionSets: state.questionSets.questionSets,
-    questions: state.questions
+    questions: state.questions.questions
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
@@ -145,7 +86,6 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
         getAllData: questionSetActionCreators.getAllData,
         getQuestions: questionsActionCreators.getAllData
     }, dispatch);
-
 
 type Props = ReturnType<typeof mapStateToProps> &
     ReturnType<typeof mapDispatchToProps>;
