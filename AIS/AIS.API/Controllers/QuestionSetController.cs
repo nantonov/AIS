@@ -14,10 +14,10 @@ namespace AIS.API.Controllers
     [ApiController]
     public class QuestionSetController : ControllerBase
     {
-        private readonly IGenericService<QuestionSet> _questionSetService;
+        private readonly IQuestionSetService _questionSetService;
         private readonly IMapper _mapper;
 
-        public QuestionSetController(IGenericService<QuestionSet> questionSetService, IMapper mapper)
+        public QuestionSetController(IQuestionSetService questionSetService, IMapper mapper)
         {
             _questionSetService = questionSetService;
             _mapper = mapper;
@@ -40,9 +40,9 @@ namespace AIS.API.Controllers
         [HttpPost]
         public async Task<QuestionSetViewModel> AddQuestionSet(QuestionSetAddViewModel questionSet, CancellationToken ct)
         {
-            return _mapper.Map<QuestionSetViewModel>(
-                await _questionSetService.Add(_mapper.Map<QuestionSet>(questionSet), ct)
-            );
+            var mappedObject = _mapper.Map<QuestionSet>(questionSet);
+            var result = await _questionSetService.Add(mappedObject, ct);
+            return _mapper.Map<QuestionSetViewModel>(result);
         }
 
         [HttpPut]

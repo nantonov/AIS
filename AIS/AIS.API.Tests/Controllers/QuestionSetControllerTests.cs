@@ -16,7 +16,7 @@ namespace AIS.API.Tests.Controllers
     public class QuestionSetControllerTests
     {
         private readonly Mock<IMapper> _mapperMock = new();
-        private readonly Mock<IGenericService<QuestionSet>> _serviceMock = new();
+        private readonly Mock<IQuestionSetService> _serviceMock = new();
 
         [Fact]
         public async Task Add_WhenControllerHasData_ShouldReturnValidModel()

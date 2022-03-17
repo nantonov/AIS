@@ -22,7 +22,7 @@ namespace AIS.BLL.Services
             _mapper = mapper;
         }
         
-        public async Task<TEntity> Add(TEntity entity, CancellationToken ct)
+        public virtual async Task<TEntity> Add(TEntity entity, CancellationToken ct)
         {
             return _mapper.Map<TEntity>(await _repository.Add(
                 _mapper.Map<TMapToEntity>(entity), ct
