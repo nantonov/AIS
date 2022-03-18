@@ -43,7 +43,7 @@ namespace AIS.BLL.Services
             if (questionIds != null)
                 foreach (var item in questionIds)
                 {
-                    questionQuestionSetEntity.QuestionSetId = item;
+                    questionQuestionSetEntity.QuestionId = item;
                     await _questionsQuestionSetsRepository.Add(questionQuestionSetEntity, ct);
                 }
 
