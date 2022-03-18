@@ -4,6 +4,7 @@ namespace AIS.BLL.Models
 {
     public class QuestionSet
     {
+#nullable disable
         public int Id { get; set; }
         public string Name { get; set; }
         public IEnumerable<QuestionArea> QuestionAreas { get; set; }

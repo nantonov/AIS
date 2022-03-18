@@ -10,7 +10,7 @@ namespace AIS.BLL.Services
 {
     public class QuestionsQuestionSetsService : GenericService<QuestionsQuestionSets, QuestionsQuestionSetsEntity>, IQuestionsQuestionSetsService
     {
-        public IQuestionsQuestionSetsRepository _repo;
+        private readonly IQuestionsQuestionSetsRepository _repo;
         public QuestionsQuestionSetsService(IQuestionsQuestionSetsRepository repository, IMapper mapper) : base(repository, mapper)
         {
             _repo = repository;

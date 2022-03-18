@@ -1,4 +1,3 @@
-using AIS.API.MiddleWare;
 using AIS.BLL.DI;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;

@@ -3,7 +3,7 @@ using AIS.BLL.Models;
 using AIS.DAL.Entities;
 using AIS.DAL.Interfaces.Repositories;
 using AutoMapper;
-using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -23,34 +23,31 @@ namespace AIS.BLL.Services
             _questionAreasQuestionSetsRepository = questionAreasQuestionSetsRepository;
             _questionsQuestionSetsRepository = questionsQuestionSetsRepository;
         }
+
         public override async Task<QuestionSet> Add(QuestionSet entity, CancellationToken ct)
         {
-            var questionAreaIds = ConvertToList(entity);
-            var questionIds = ConvertToList(entity);
+            var questionAreaIds = entity.QuestionAreaIds?.ToList();
+            var questionIds = entity.QuestionIds?.ToList();
             var res = await _questionSetRepository.Add(_mapper.Map<QuestionSetEntity>(entity), ct);
-            questionAreaIds.ForEach(x => _questionAreasQuestionSetsRepository.Add(
-                new QuestionAreasQuestionSetsEntity{
-                    QuestionAreaId = x, 
-                    QuestionSetId=res.Id
-                }, ct));
-            questionIds.ForEach(x => _questionsQuestionSetsRepository.Add(
-                new QuestionsQuestionSetsEntity
-            {
-                QuestionSetId = res.Id,
-                QuestionId = x
-            }, ct));
+
+            var areaQuestionSetEntity = new QuestionAreasQuestionSetsEntity { QuestionSetId = res.Id };
+            var questionQuestionSetEntity = new QuestionsQuestionSetsEntity { QuestionSetId = res.Id };
+
+            if (questionAreaIds != null)
+                foreach (var item in questionAreaIds)
+                {
+                    areaQuestionSetEntity.QuestionAreaId = item;
+                    await _questionAreasQuestionSetsRepository.Add(areaQuestionSetEntity, ct);
+                }
+
+            if (questionIds != null)
+                foreach (var item in questionIds)
+                {
+                    questionQuestionSetEntity.QuestionSetId = item;
+                    await _questionsQuestionSetsRepository.Add(questionQuestionSetEntity, ct);
+                }
 
             return _mapper.Map<QuestionSet>(res);
-        }
-
-        private static List<int> ConvertToList(QuestionSet entity)
-        {
-            var ids = new List<int>();
-            foreach (var item in entity.QuestionIds)
-            {
-                ids.Add(item);
-            }
-            return ids;
         }
     }
 }

@@ -67,9 +67,9 @@ namespace AIS.API.Controllers
         }
 
         [HttpDelete(EndpointConstants.DeleteByTwoIds)]
-        public Task Delete(int questionAreaId, int questionSetId, CancellationToken ct)
+        public Task Delete(int areaId, int questionSetId, CancellationToken ct)
         {
-            return _questionAreasQuestionSetsService.Delete(questionAreaId, questionSetId, ct);
+            return _questionAreasQuestionSetsService.Delete(areaId, questionSetId, ct);
         }
     }
 }
