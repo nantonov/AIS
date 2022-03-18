@@ -15,7 +15,6 @@ export const getAllData = () => {
 export const getById = (id: number) => {
     return async (dispatch: ApplicationDispatch<QuestionSetActions>) => {
         const questionSet = await QuestionSetService.getById(id);
-        console.log(questionSet);
         if (questionSet) {
             dispatch(getQuestionSetById(questionSet));
         }

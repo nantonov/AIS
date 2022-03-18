@@ -23,6 +23,7 @@ export const questionSetReducer = combineReducers<
     questionSets: (state = initialState.questionSets, action) => {
         switch (action.type) {
             case getType(actions.fetchAll): {
+                console.log(...action.payload)
                 return [...action.payload];
             }
             default:

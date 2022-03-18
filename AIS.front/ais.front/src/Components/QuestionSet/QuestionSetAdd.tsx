@@ -1,56 +1,203 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
+import {Autocomplete, Box, Button, FormControl, Grid, MenuItem, TextField} from "@mui/material";
+import Typography from "@mui/material/Typography";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
-import {Grid, Input, TextField} from '@mui/material';
+import {ApplicationState} from "../../store/typing";
+import {bindActionCreators, Dispatch} from "redux";
+import {questionSetActionCreators} from "../../store/QuestionSets";
+import {questionsActionCreators} from "../../store/Questions";
+import {connect} from "react-redux";
+import {IQuestionSetAdd} from "../../DTO/IQuestionSet";
+import {IQuestionSetAddDefault} from "../../common/defaultDTO/defaultQuestionSet";
+import {QuestionSetService} from "../../services/QuestionSetService";
+import {useNavigate} from "react-router-dom";
 
-const Container = styled.div`
-      width: 100%;
-      max-width: 1170px;
-      margin: auto;
-    `;
 
-const TextFieldContainer = styled(TextField)`
-    required: true;
-    id:"outlined-required";
-    label:"Required";
-    defaultValue:"Name";
-`
+const BoxContainer = styled(Box)`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding-top: 20px;
+`;
 
-export default function AddQuestionSet() {
-    // const [open, setOpen] = React.useState(false);
-    // const handleOpen = () => setOpen(true);
-    // const handleClose = () => setOpen(false);
-    const GridContainer = styled(Grid)
-        `
-      width: 100%;
-      max-width: 1170px;
-      margin: auto;
-    `
+const GridContainer = styled(Grid)`
+  width: 100%;
+  max-width: 1170px;
+  margin: auto;
+`;
+
+const ButtonContainer = styled(Button)`
+  left: 90%
+`;
+
+function QuestionSetAdd({questionSets, questions, getAllData, getQuestions}: Props) {
+
+    const [questionSetModel, setQuestionSetModel] = useState<IQuestionSetAdd>(IQuestionSetAddDefault)
+    let navigate = useNavigate();
+    const routeChange = () => {
+        let path = '/questionSet';
+        navigate(path);
+    }
+
+    function saveAction() {
+        QuestionSetService.addQuestionSet(questionSetModel).then(() => {
+            routeChange()
+        });
+        routeChange()
+    }
+
+    const changeNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setQuestionSetModel({
+            ...questionSetModel,
+            name: e.target.value
+        });
+    }
+
+    useEffect(() => {
+        getAllData();
+        getQuestions();
+    }, []);
+
+    function addEmptyQuestionIdsArray() {
+        const previousQuestionArray = [...questionSetModel.questionIds];
+        previousQuestionArray.push(0);
+        setQuestionSetModel({
+            ...questionSetModel,
+            questionIds: previousQuestionArray
+        })
+    }
+
+    function getQuestionAreaOptions(id: number) {
+        const idsQuestionAreas = new Set([...questionSetModel.questionAreaIds]);
+        return questionSets.filter((item) => {
+            return !idsQuestionAreas.has(item.id) || item.id === id;
+        })
+    }
+
+    function getQuestionOptions(id: number) {
+        const idsSet = new Set([...questionSetModel.questionIds]);
+        return questions.filter((item) => {
+            return !idsSet.has(item.id) || item.id === id;
+        });
+    }
+
+    function changeQuestionHandler(index: number, id: number) {
+        const array = [...questionSetModel.questionIds];
+        array[index] = id;
+        setQuestionSetModel({
+            ...questionSetModel,
+            questionIds: array
+        })
+    }
+
+    function addEmptyQuestionArea() {
+        const previousQuestionAreasIdsArray = [...questionSetModel.questionAreaIds];
+        previousQuestionAreasIdsArray.push(0);
+        setQuestionSetModel({
+            ...questionSetModel,
+            questionAreaIds: previousQuestionAreasIdsArray
+        })
+    }
+
+    function changeQuestionAreaHandler(index: number, id: number) {
+        const array = [...questionSetModel.questionAreaIds];
+        array[index] = id;
+        setQuestionSetModel({
+            ...questionSetModel,
+            questionAreaIds: array
+        })
+    }
+
     return (
+        <GridContainer>
+            <Grid item>
+                <BoxContainer>
+                    <Typography>Question set name: </Typography>
+                    <FormControl>
+                        <TextField
+                            required
+                            id="outlined-required"
+                            label="Required"
+                            sx={{width: 180}}
+                            value={questionSetModel.name}
+                            onChange={changeNameHandler}
+                        />
+                    </FormControl>
+                </BoxContainer>
 
-        <Container>
-          Name:<TextFieldContainer/>
-        </Container>
-        // <div>
-        //     <Button onClick={handleOpen}>Open modal</Button>
-        //     <Modal
-        //         open={open}
-        //         onClose={handleClose}
-        //         aria-labelledby="modal-modal-title"
-        //         aria-describedby="modal-modal-description"
-        //     >
-        //         <Box sx={style}>
-        //             <Typography id="modal-modal-title" variant="h6" component="h2">
-        //                 Text in a modal
-        //             </Typography>
-        //             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-        //                 Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-        //             </Typography>
-        //         </Box>
-        //     </Modal>
-        // </div>
-    );
+            </Grid>
+            <Grid item>
+                {questionSetModel.questionAreaIds.map((item, index) => (
+                    <BoxContainer key={item}>
+                        <Typography>Select question area: </Typography>
+                        <TextField
+                            id="outlined-select-question-area"
+                            select
+                            label="Select"
+                            helperText="Please select question area"
+                            value={item}
+                            onChange={(e) =>
+                                changeQuestionAreaHandler(index, Number(e.target.value))
+                            }>
+                            {getQuestionAreaOptions(item).map((questionArea) => (
+                                <MenuItem key={questionArea.id} value={questionArea.id}>
+                                    {questionArea.name}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+                    </BoxContainer>
+                ))}
+                <ButtonContainer disabled={questionSets.length <= questionSetModel.questionAreaIds.length}
+                                 variant="contained" onClick={addEmptyQuestionArea}>Add question area</ButtonContainer>
+            </Grid>
+
+            <Grid item>
+                {questionSetModel.questionIds.map((item, index) => (
+                    <BoxContainer key={item}>
+                        <Typography>Select question: </Typography>
+                        <TextField
+                            id="outlined-select-question"
+                            select
+                            label="Select"
+                            helperText="Please select question"
+                            value={item}
+                            defaultValue={questionSetModel.questionIds[0]}
+                            onChange={(e) =>
+                                changeQuestionHandler(index, Number(e.target.value))
+                            }
+                        >
+                            {getQuestionOptions(item).map((question) => (
+                                <MenuItem key={question.id} value={question.id}>
+                                    {question.text}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+                    </BoxContainer>
+                ))}
+                <ButtonContainer disabled={questions.length <= questionSetModel.questionIds.length}
+                                 variant="contained" onClick={addEmptyQuestionIdsArray}>Add
+                    question</ButtonContainer>
+            </Grid>
+            <Grid item>
+                <ButtonContainer variant="contained" onClick={saveAction}>Add question set</ButtonContainer>
+            </Grid>
+        </GridContainer>
+    )
 }
+
+const mapStateToProps = (state: ApplicationState) => ({
+    router: state.router,
+    questionSets: state.questionSets.questionSets,
+    questions: state.questions.questions
+});
+
+const mapDispatchToProps = (dispatch: Dispatch) =>
+    bindActionCreators({
+        getAllData: questionSetActionCreators.getAllData,
+        getQuestions: questionsActionCreators.getAllData
+    }, dispatch);
+
+type Props = ReturnType<typeof mapStateToProps> &
+    ReturnType<typeof mapDispatchToProps>;
+
+export default connect(mapStateToProps, mapDispatchToProps)(QuestionSetAdd);
