@@ -41,9 +41,7 @@ function QuestionSetAdd({questionSets, questions, getAllData, getQuestions, ques
     }
 
     function saveAction() {
-        QuestionSetService.addQuestionSet(questionSetModel).then(() => {
-            routeChange()
-        });
+        QuestionSetService.addQuestionSet(questionSetModel);
         routeChange()
     }
 
@@ -68,8 +66,6 @@ function QuestionSetAdd({questionSets, questions, getAllData, getQuestions, ques
             questionIds: previousQuestionArray
         })
     }
-
-    console.log(questionAreas);
 
     function getQuestionAreaOptions(id: number) {
         const idsQuestionAreas = new Set([...questionSetModel.questionAreaIds]);
