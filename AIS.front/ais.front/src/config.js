@@ -11,6 +11,8 @@ else {*/
 config.COMPANY_URL = 'api/Company';
 config.EMPLOYEE_URL = 'api/Employee';
 config.INTERVIEWEE_URL = 'api/Interviewee';
+config.QUESTION_URL = 'api/Questions';
+config.QUESTION_AREA_URL = 'api/QuestionArea';
 config.QUESTION_URL = 'api/Question';
 config.QUESTION_AREA_URL = 'api/QuestionsSets';
 config.QUESTION_INTERVIEWEE_ANSWER_URL = 'api/QuestionIntervieweeAnswer';

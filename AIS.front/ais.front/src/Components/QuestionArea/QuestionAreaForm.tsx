@@ -4,7 +4,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { IQuestionArea } from "../../DTO/IQuestionArea";
-import { ApplicationState } from "../../store/typings";
+import { ApplicationState } from "../../store/typing";
 import { connect } from "react-redux";
 import { questionAreasActionCreators } from "../../store/QuestionArea";
 import {bindActionCreators, Dispatch } from "redux";

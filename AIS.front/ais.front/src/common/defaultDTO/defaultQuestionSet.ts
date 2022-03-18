@@ -7,3 +7,8 @@ export const defaultQuestionSet: IQuestionSet = {
     questionAreas: null,
     questions: []
 }
+export const IQuestionSetAddDefault = {
+    name: "",
+    questionAreaIds: [0],
+    questionIds: [0]
+};

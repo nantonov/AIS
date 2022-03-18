@@ -7,21 +7,19 @@ import {questionSetActionCreators} from "../../store/QuestionSets";
 import {useParams} from "react-router-dom";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import {QuestionService} from "../../services/QuestionService";
 import Typography from "@mui/material/Typography";
 import styled from "@emotion/styled";
-import {QuestionAreaService} from "../../services/QuestionAreaService";
 import {QuestionAreasQuestionSetsService} from "../../services/QuestionAreasQuestionSetsService";
 import {QuestionsQuestionSetsService} from "../../services/QuestionsQuestionSetsService";
 
-const QuestionSetDescription: React.FC<Props> = ({questionSet, getById}: Props) => {
-
-    const GridContainer = styled(Grid)
+const GridContainer = styled(Grid)
     `
       width: 100%;
       max-width: 1170px;
       margin: auto;
-    `
+    `;
+
+const QuestionSetDescription: React.FC<Props> = ({questionSet, getById}: Props) => {
 
     let {id} = useParams();
 
@@ -40,8 +38,6 @@ const QuestionSetDescription: React.FC<Props> = ({questionSet, getById}: Props) 
             getById(Number(id));
         })
     }
-
-    console.log(questionSet)
 
     return (
         <GridContainer>
