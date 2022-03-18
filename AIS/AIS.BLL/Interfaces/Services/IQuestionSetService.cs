@@ -6,6 +6,6 @@ namespace AIS.BLL.Interfaces.Services
 {
     public interface IQuestionSetService : IGenericService<QuestionSet>
     {
-        Task<QuestionSet> Add(QuestionSet entity, CancellationToken ct);
+        new Task<QuestionSet> Add(QuestionSet entity, CancellationToken ct);
     }
 }
