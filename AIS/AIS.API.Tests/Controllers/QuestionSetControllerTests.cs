@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Threading.Tasks;
 using AIS.API.Controllers;
+using AIS.API.Tests.Models;
 using AIS.API.ViewModels.QuestionSet;
 using AIS.BLL.Interfaces.Services;
 using AIS.BLL.Models;
@@ -22,60 +24,45 @@ namespace AIS.API.Tests.Controllers
         public async Task Add_WhenControllerHasData_ShouldReturnValidModel()
         {
             // Arrange
-            var inputQuestionSetViewModel = new QuestionSetAddViewModel()
-            {
-                Name = "Boba"
-            };
-            var inputQuestionSetModel = new QuestionSet
-            {
-                Name = inputQuestionSetViewModel.Name,
-            };
-            var expectedModel = new QuestionSetViewModel
-            {
-                Name = inputQuestionSetViewModel.Name,
-            };
+            var addQuestionSetViewModel = ValidQuestionSetModels.questionSetAddViewModel;
+            var expectedQuestionSetModel = ValidQuestionSetModels.questionSetModel;
+            var expectedQuestionSetViewModel = ValidQuestionSetModels.questionSetViewModel;
 
-            _mapperMock.Setup(map => map.Map<QuestionSet>(inputQuestionSetViewModel)).Returns(inputQuestionSetModel);
-            _mapperMock.Setup(map => map.Map<QuestionSetViewModel>(inputQuestionSetModel)).Returns(expectedModel);
-            _serviceMock.Setup(serv => serv.Add(_mapperMock.Object.Map<QuestionSet>(inputQuestionSetViewModel), default)).ReturnsAsync(inputQuestionSetModel);
+            _mapperMock.Setup(map => map.Map<QuestionSet>(addQuestionSetViewModel)).Returns(expectedQuestionSetModel);
+            _mapperMock.Setup(map => map.Map<QuestionSetViewModel>(expectedQuestionSetModel)).Returns(expectedQuestionSetViewModel);
+            _serviceMock.Setup(serv => serv.Add(_mapperMock.Object.Map<QuestionSet>(addQuestionSetViewModel), default))
+                .ReturnsAsync(expectedQuestionSetModel);
 
             var controller = new QuestionSetController(_serviceMock.Object, _mapperMock.Object);
 
             // Act
-            var result = await controller.AddQuestionSet(inputQuestionSetViewModel, default);
+            var result = await controller.AddQuestionSet(addQuestionSetViewModel, default);
 
             // Assert
-            inputQuestionSetViewModel.Name.ShouldBeEquivalentTo(result.Name);
+            addQuestionSetViewModel.Name.ShouldBeEquivalentTo(result.Name);
         }
 
         [Fact]
         public async Task Update_WhenControllerHasData_ShouldReturnValidModel()
         {
             // Arrange
-            var inputQuestionSetViewModel = new QuestionSetUpdateViewModel
-            {
-                Name = "Boba"
-            };
-            var inputQuestionSetModel = new QuestionSet
-            {
-                Name = inputQuestionSetViewModel.Name
-            };
-            var expectedModel = new QuestionSetViewModel
-            {
-                Name = inputQuestionSetModel.Name
-            };
 
-            _mapperMock.Setup(map => map.Map<QuestionSet>(inputQuestionSetViewModel)).Returns(inputQuestionSetModel);
-            _mapperMock.Setup(map => map.Map<QuestionSetViewModel>(inputQuestionSetModel)).Returns(expectedModel);
-            _serviceMock.Setup(serv => serv.Put(_mapperMock.Object.Map<QuestionSet>(inputQuestionSetViewModel), default)).ReturnsAsync(inputQuestionSetModel);
+            var updateQuestionSetViewModel = ValidQuestionSetModels.questionSetUpdateViewModel;
+            var expectedQuestionSetViewModel = ValidQuestionSetModels.questionSetViewModel;
+            var expectedQuestionSetModel = ValidQuestionSetModels.questionSetModel;
+
+
+            _mapperMock.Setup(map => map.Map<QuestionSet>(updateQuestionSetViewModel)).Returns(expectedQuestionSetModel);
+            _mapperMock.Setup(map => map.Map<QuestionSetViewModel>(expectedQuestionSetModel)).Returns(expectedQuestionSetViewModel);
+            _serviceMock.Setup(serv => serv.Put(_mapperMock.Object.Map<QuestionSet>(updateQuestionSetViewModel), default)).ReturnsAsync(expectedQuestionSetModel);
 
             var controller = new QuestionSetController(_serviceMock.Object, _mapperMock.Object);
 
             // Act
-            var result = await controller.UpdateQuestionSet(default, inputQuestionSetViewModel, default);
+            var result = await controller.UpdateQuestionSet(default, updateQuestionSetViewModel, default);
 
             // Assert
-            inputQuestionSetViewModel.Name.ShouldBeEquivalentTo(result.Name);
+            expectedQuestionSetViewModel.Name.ShouldBeEquivalentTo(result.Name);
         }
 
         [Fact]
@@ -84,17 +71,11 @@ namespace AIS.API.Tests.Controllers
             // Arrange
 
             var id = new Random().Next();
-            var expectedQuestionSet = new QuestionSet()
-            {
-                Id = id,
-            };
-            var expectedViewModel = new QuestionSetViewModel()
-            {
-                Id = id
-            };
+            var questionSetModel = ValidQuestionSetModels.questionSetModel;
+            var expectedQuestionSetViewModel = ValidQuestionSetModels.questionSetViewModel;
 
-            _mapperMock.Setup(map => map.Map<QuestionSetViewModel>(expectedQuestionSet)).Returns(expectedViewModel);
-            _serviceMock.Setup(serv => serv.GetById(id, default)).ReturnsAsync(expectedQuestionSet);
+            _mapperMock.Setup(map => map.Map<QuestionSetViewModel>(questionSetModel)).Returns(expectedQuestionSetViewModel);
+            _serviceMock.Setup(serv => serv.GetById(id, default)).ReturnsAsync(questionSetModel);
 
             var controller = new QuestionSetController(_serviceMock.Object, _mapperMock.Object);
 
@@ -102,50 +83,14 @@ namespace AIS.API.Tests.Controllers
             var result = await controller.GetQuestionSet(id, default);
 
             // Assert
-            expectedViewModel.ShouldBeEquivalentTo(result);
+            expectedQuestionSetViewModel.ShouldBeEquivalentTo(result);
         }
 
         [Fact]
         public async Task GetAll_WhenControllerHasData_ShouldReturnValidModel()
         {
             // Arrange
-            var expected = new[]
-            {
-                new QuestionSetViewModel()
-                {
-                    Name = "Boba"
-                },
-                new QuestionSetViewModel()
-                {
-                    Name = "Dida"
-                }
-            };
-            var expectedQuestionSets = new[]
-            {
-                new QuestionSet
-                {
-                    Name = expected[0].Name
-                },
-                new QuestionSet
-                {
-                    Name = expected[1].Name
-                }
-            };
-            var expectedQuestionSetViewModel = new[]
-            {
-                new ShortQuestionSetViewModel
-                {
-                    Name = expected[0].Name
-                },
-                new ShortQuestionSetViewModel
-                {
-                    Name = expected[0].Name
-                }
-            };
-
-            _mapperMock.Setup(map => map.Map<IEnumerable<QuestionSet>>(expected)).Returns(expectedQuestionSets);
-            _mapperMock.Setup(map => map.Map<IEnumerable<ShortQuestionSetViewModel>>(expectedQuestionSets)).Returns(expectedQuestionSetViewModel);
-            _serviceMock.Setup(serv => serv.Get(default)).ReturnsAsync(expectedQuestionSets);
+            var expectedQuestionSetShortViewModelList = ValidQuestionSetModels.questionSetEmptyShortList;
 
             var controller = new QuestionSetController(_serviceMock.Object, _mapperMock.Object);
 
@@ -153,34 +98,47 @@ namespace AIS.API.Tests.Controllers
             var result = await controller.GetQuestionSets(default);
 
             // Assert
-            expectedQuestionSetViewModel.ShouldBeEquivalentTo(result);
+            expectedQuestionSetShortViewModelList.ToImmutableList().ShouldBeEquivalentTo(result.ToImmutableList());
         }
 
         [Fact]
         public void Delete_WhenContollerHasData_NoReturn()
         {
             // Arrange
-            var expected = new QuestionSetViewModel
-            {
-                Id = 3,
-                Name = "Bob"
-            };
-            var expectedQuestionSets = new QuestionSet
-            {
-                Id = expected.Id,
-                Name = expected.Name
-            };
+            var questionSetViewModel = ValidQuestionSetModels.questionSetViewModel;
+            var expectedQuestionSetModel = ValidQuestionSetModels.questionSetModel;
 
-            _mapperMock.Setup(map => map.Map<QuestionSet>(expected)).Returns(expectedQuestionSets);
-            _serviceMock.Setup(serv => serv.Delete(expectedQuestionSets, default));
+            _mapperMock.Setup(map => map.Map<QuestionSet>(questionSetViewModel)).Returns(expectedQuestionSetModel);
+            _serviceMock.Setup(serv => serv.Delete(expectedQuestionSetModel, default));
 
             var controller = new QuestionSetController(_serviceMock.Object, _mapperMock.Object);
 
             // Act
-            Action act = () => controller.DeleteQuestionSet(expected.Id, default);
+            Action act = () => controller.DeleteQuestionSet(questionSetViewModel.Id, default);
 
             // Assert
             act.Should().NotThrow();
+        }
+
+        [Fact]
+        public async Task Add_WhenControllerHasDataAndQuestionAreaIdsAndQuestionIds_ShouldReturnValidModel()
+        {
+            // Arrange
+            var addQuestionSetViewModel = ValidQuestionSetModels.questionSetAddViewModel;
+            var questionSetModel = ValidQuestionSetModels.questionSetModel;
+            var expectedModel = ValidQuestionSetModels.questionSetViewModel;
+
+            _mapperMock.Setup(map => map.Map<QuestionSet>(addQuestionSetViewModel)).Returns(questionSetModel);
+            _mapperMock.Setup(map => map.Map<QuestionSetViewModel>(questionSetModel)).Returns(expectedModel);
+            _serviceMock.Setup(serv => serv.Add(_mapperMock.Object.Map<QuestionSet>(addQuestionSetViewModel), default)).ReturnsAsync(questionSetModel);
+
+            var controller = new QuestionSetController(_serviceMock.Object, _mapperMock.Object);
+
+            // Act
+            var result = await controller.AddQuestionSet(addQuestionSetViewModel, default);
+
+            // Assert
+            expectedModel.Name.ShouldBeEquivalentTo(result.Name);
         }
     }
 }
