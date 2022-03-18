@@ -11,6 +11,7 @@ import {IQuestionSetAdd} from "../../DTO/IQuestionSet";
 import {IQuestionSetAddDefault} from "../../common/defaultDTO/defaultQuestionSet";
 import {QuestionSetService} from "../../services/QuestionSetService";
 import {useNavigate} from "react-router-dom";
+import {questionAreasActionCreators} from "../../store/QuestionArea";
 
 
 const BoxContainer = styled(Box)`
@@ -30,7 +31,7 @@ const ButtonContainer = styled(Button)`
   left: 90%
 `;
 
-function QuestionSetAdd({questionSets, questions, getAllData, getQuestions}: Props) {
+function QuestionSetAdd({questionSets, questions, getAllData, getQuestions, questionAreas, fetchQuestionArea}: Props) {
 
     const [questionSetModel, setQuestionSetModel] = useState<IQuestionSetAdd>(IQuestionSetAddDefault)
     let navigate = useNavigate();
@@ -56,6 +57,7 @@ function QuestionSetAdd({questionSets, questions, getAllData, getQuestions}: Pro
     useEffect(() => {
         getAllData();
         getQuestions();
+        fetchQuestionArea();
     }, []);
 
     function addEmptyQuestionIdsArray() {
@@ -67,9 +69,12 @@ function QuestionSetAdd({questionSets, questions, getAllData, getQuestions}: Pro
         })
     }
 
+    console.log(questionAreas);
+
     function getQuestionAreaOptions(id: number) {
         const idsQuestionAreas = new Set([...questionSetModel.questionAreaIds]);
-        return questionSets.filter((item) => {
+        return questionAreas.filter((item) => {
+
             return !idsQuestionAreas.has(item.id) || item.id === id;
         })
     }
@@ -188,13 +193,15 @@ function QuestionSetAdd({questionSets, questions, getAllData, getQuestions}: Pro
 const mapStateToProps = (state: ApplicationState) => ({
     router: state.router,
     questionSets: state.questionSets.questionSets,
-    questions: state.questions.questions
+    questions: state.questions.questions,
+    questionAreas: state.questionAreas.questionAreas
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
     bindActionCreators({
         getAllData: questionSetActionCreators.getAllData,
-        getQuestions: questionsActionCreators.getAllData
+        getQuestions: questionsActionCreators.getAllData,
+        fetchQuestionArea: questionAreasActionCreators.fetchAllQuestionAreas
     }, dispatch);
 
 type Props = ReturnType<typeof mapStateToProps> &
