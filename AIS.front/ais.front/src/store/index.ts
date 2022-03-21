@@ -14,6 +14,9 @@ import {
 import { toastMiddleware } from './toastMiddleware/toastMiddleware';
 import {ApplicationState} from "./typing";
 import {questionSetReducer} from "./QuestionSets/reducer";
+import { questionReducer } from "./Questions";
+import {reducer as formReducer} from "redux-form"
+
 
 export const browserHistory = createBrowserHistory();
 
@@ -27,6 +30,8 @@ const rootReducer = (history: BrowserHistory) =>
     combineReducers<ApplicationState>({
         router: connectRouter(history),
         questionSets: questionSetReducer,
+        questions:questionReducer,
+        form:formReducer
     });
 
 export const store = createStore<ApplicationState, AnyAction, unknown, unknown>(
