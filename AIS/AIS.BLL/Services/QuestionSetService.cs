@@ -30,22 +30,17 @@ namespace AIS.BLL.Services
             var questionIds = entity.QuestionIds?.ToList();
             var res = await _questionSetRepository.Add(_mapper.Map<QuestionSetEntity>(entity), ct);
 
-            var areaQuestionSetEntity = new QuestionAreasQuestionSetsEntity { QuestionSetId = res.Id };
-            var questionQuestionSetEntity = new QuestionsQuestionSetsEntity { QuestionSetId = res.Id };
+            if (questionIds is not null)
+            {
+                var questionsList = questionIds.Select(id => new QuestionsQuestionSetsEntity { QuestionId = id, QuestionSetId = res.Id }).ToList();
+                await _questionsQuestionSetsRepository.AddRange(questionsList.ToList(), ct);
+            }
 
-            if (questionAreaIds != null)
-                foreach (var item in questionAreaIds)
-                {
-                    areaQuestionSetEntity.QuestionAreaId = item;
-                    await _questionAreasQuestionSetsRepository.Add(areaQuestionSetEntity, ct);
-                }
-
-            if (questionIds != null)
-                foreach (var item in questionIds)
-                {
-                    questionQuestionSetEntity.QuestionId = item;
-                    await _questionsQuestionSetsRepository.Add(questionQuestionSetEntity, ct);
-                }
+            if (questionAreaIds is not null)
+            {
+                var areasList = questionAreaIds.Select(id => new QuestionAreasQuestionSetsEntity { QuestionAreaId = id, QuestionSetId = res.Id }).ToList();
+                await _questionAreasQuestionSetsRepository.AddRange(areasList, ct);
+            }
 
             return _mapper.Map<QuestionSet>(res);
         }
