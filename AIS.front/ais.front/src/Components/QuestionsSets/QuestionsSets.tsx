@@ -22,12 +22,13 @@ const CircleIconContainer = styled(AddCircleIcon)`
   fontSize: "large";
   font-size: 3.5rem;
   display: flex;
-  padding-left: 90%;
+  margin-left: 90%;
   opacity: 1;
 
   &:hover {
     color: #0d4f91;
-  }`;
+  }
+`;
 
 const QuestionSetItems = styled.div`
   display: flex;
