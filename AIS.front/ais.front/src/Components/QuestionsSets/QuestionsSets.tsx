@@ -37,13 +37,14 @@ const QuestionSetItems = styled.div`
 
 const ToolTipContainer = styled(Tooltip)`
   display: flex;
-`
+`;
+
 const TypographyContainer = styled(Typography)`
   display: flex;
   align-items: center;
 `;
 
-const QuestionsSets: React.FC<Props> = ({questionSets, getAllData, questions, getQuestions}) => {
+const QuestionsSets: React.FC<Props> = ({questionSets, getAllData, getQuestions}) => {
     let navigate = useNavigate();
     const routeChange = () => {
         let path = '/addQuestionSet';

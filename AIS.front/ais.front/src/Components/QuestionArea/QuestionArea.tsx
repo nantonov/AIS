@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import {FormControl, Grid, IconButton, styled, Typography} from "@mui/material";
+import {Grid, IconButton, styled, Typography} from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -8,10 +8,8 @@ import { ApplicationState } from "../../store/typing";
 import { connect } from "react-redux";
 import { questionAreasActionCreators } from "../../store/QuestionArea";
 import {bindActionCreators, Dispatch } from "redux";
-import {To, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {MainRoutes} from "../../static/mainRoutes";
-
-// eslint-disable-next-line react-hooks/rules-of-hooks
 
 const QuestionArea: React.FC<Props> = (props) =>{
     useEffect(() => {
@@ -53,8 +51,6 @@ const QuestionAreaTableHeader: React.FC = () =>{
 interface  IRowProps{
     qArea: IQuestionArea,
     onEdit: (id: number)=>void,
-    /*
-    onDelete: ()=>void*/
 }
 const QuestionAreaTableRow: React.FC<IRowProps> = ({qArea, onEdit}) =>{
 
