@@ -44,5 +44,11 @@ namespace AIS.DAL.Repositories
                 await _context.SaveChangesAsync(ct);
             }
         }
+
+        public async Task AddRange(IEnumerable<QuestionsQuestionSetsEntity> questionsList, CancellationToken ct)
+        {
+            await _context.AddRangeAsync(questionsList, ct);
+            await _context.SaveChangesAsync(ct);
+        }
     }
 }

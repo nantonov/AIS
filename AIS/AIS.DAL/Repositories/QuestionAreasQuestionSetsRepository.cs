@@ -36,13 +36,20 @@ namespace AIS.DAL.Repositories
             return entity;
         }
 
-        public async Task Delete(int questionAreaId, int questionSetId, CancellationToken ct)
+        public async Task Delete(int areaId, int setId, CancellationToken ct)
         {
-            var entity = await _dbSet.FirstOrDefaultAsync(x => x.QuestionAreaId == questionAreaId && x.QuestionSetId == questionSetId, ct);
-            if(entity is not null){
+            var entity = await _dbSet.FirstOrDefaultAsync(x => x.QuestionAreaId == areaId && x.QuestionSetId == setId, ct);
+            if (entity is not null)
+            {
                 _dbSet.Remove(entity);
                 await _context.SaveChangesAsync(ct);
             }
+        }
+
+        public async Task AddRange(IEnumerable<QuestionAreasQuestionSetsEntity> areasList, CancellationToken ct)
+        {
+            await _context.AddRangeAsync(areasList, ct);
+            await _context.SaveChangesAsync(ct);
         }
     }
 }

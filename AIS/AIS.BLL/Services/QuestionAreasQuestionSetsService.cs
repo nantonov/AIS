@@ -17,9 +17,9 @@ namespace AIS.BLL.Services
             _repo = repository;
         }
 
-        public Task Delete(int questionAreaId, int questionSetId, CancellationToken ct)
+        public Task Delete(int areaId, int setId, CancellationToken ct)
         {
-            return _repo.Delete(questionAreaId, questionSetId, ct);
+            return _repo.Delete(areaId, setId, ct);
         }
     }
 }
