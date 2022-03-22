@@ -33,7 +33,7 @@ namespace AIS.BLL.Services
             if (questionIds is not null)
             {
                 var questionsList = questionIds.Select(id => new QuestionsQuestionSetsEntity { QuestionId = id, QuestionSetId = res.Id }).ToList();
-                await _questionsQuestionSetsRepository.AddRange(questionsList.ToList(), ct);
+                await _questionsQuestionSetsRepository.AddRange(questionsList, ct);
             }
 
             if (questionAreaIds is not null)
