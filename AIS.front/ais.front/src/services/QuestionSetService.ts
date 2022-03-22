@@ -2,7 +2,6 @@ import {defaultQuestionSet} from "../common/defaultDTO/defaultQuestionSet";
 import {IQuestionSet, IQuestionSetAdd} from "../DTO/IQuestionSet";
 import axiosInstance from "../utils/getAxious";
 import {QUESTION_SET_URL} from "../static/UrlConstants";
-import {Config} from "../config";
 
 export class QuestionSetService {
     public static async getAll(): Promise<IQuestionSet[]> {
@@ -39,7 +38,7 @@ export class QuestionSetService {
 
     public static addQuestionSet(questionSetAdd: IQuestionSetAdd): Promise<any>{
         return axiosInstance.post(
-            Config.QUESTION_SET_URL, {}, {params: {questionSetAdd}}
+            QUESTION_SET_URL, {...questionSetAdd}, {params: {questionSetAdd}}
         )
     }
 }
