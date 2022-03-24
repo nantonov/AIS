@@ -1,6 +1,6 @@
-import { ISession } from "../../DTO/ISession";
+import { Session } from "../../interfaces/session";
 
-export const defaultSession: ISession = {
+export const defaultSession: Session = {
     id: 0,
     startedAt: "",
     companyId: 0,

@@ -1,20 +1,20 @@
-import { defaultQuestionIntervieweeAnswer } from "../common/defaultDTO/defaultIQuestionIntervieweeAnswer";
-import { IQuestionIntervieweeAnswer } from "../DTO/IQuestionIntervieweeAnswer";
+import { defaultQuestionIntervieweeAnswer } from "../../core/common/defaultDTO/defaultQuestionIntervieweeAnswer";
+import { QuestionIntervieweeAnswer } from "../interfaces/questionIntervieweeAnswer";
 import axiosInstance from "../../config/getAxious";
 import {QUESTION_INTERVIEWEE_ANSWER_URL} from "../constants/UrlConstants";
 
 
-export class QuestionIntervieweeAnswer {
-    public static async getAll(): Promise<IQuestionIntervieweeAnswer []> {
-        const result = await axiosInstance.get<IQuestionIntervieweeAnswer[]>(QUESTION_INTERVIEWEE_ANSWER_URL)
+export class QuestionIntervieweeAnswerServer {
+    public static async getAll(): Promise<QuestionIntervieweeAnswer []> {
+        const result = await axiosInstance.get<QuestionIntervieweeAnswer[]>(QUESTION_INTERVIEWEE_ANSWER_URL)
             .then((result) => result.data)
             .catch(({ response }) => console.log(response.data));
 
         return result || [];
     }
 
-    public static async getById(questionIntervieweeAnswerId: number): Promise<IQuestionIntervieweeAnswer> {
-        const result = await axiosInstance.get<IQuestionIntervieweeAnswer>(
+    public static async getById(questionIntervieweeAnswerId: number): Promise<QuestionIntervieweeAnswer> {
+        const result = await axiosInstance.get<QuestionIntervieweeAnswer>(
             QUESTION_INTERVIEWEE_ANSWER_URL+`/${questionIntervieweeAnswerId}`)
             .then((result) => result.data)
             .catch((err) => console.log(err));
@@ -27,12 +27,12 @@ export class QuestionIntervieweeAnswer {
             QUESTION_INTERVIEWEE_ANSWER_URL+`/${questionIntervieweeAnswerId}`);
     }
 
-    public static create(questionIntervieweeAnswer: IQuestionIntervieweeAnswer): Promise<any> {
+    public static create(questionIntervieweeAnswer: QuestionIntervieweeAnswer): Promise<any> {
         return axiosInstance.post(
             QUESTION_INTERVIEWEE_ANSWER_URL, { ...questionIntervieweeAnswer });
     }
 
-    public static update(questionIntervieweeAnswer: IQuestionIntervieweeAnswer): Promise<boolean> {
+    public static update(questionIntervieweeAnswer: QuestionIntervieweeAnswer): Promise<boolean> {
         return axiosInstance.put(
             QUESTION_INTERVIEWEE_ANSWER_URL, { ...questionIntervieweeAnswer }, { params: { id: questionIntervieweeAnswer.id } });
     }

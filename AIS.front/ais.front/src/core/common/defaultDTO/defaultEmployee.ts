@@ -1,6 +1,6 @@
-import { IEmployee } from "../../DTO/IEmployee";
+import { Employee } from "../../interfaces/employee";
 
-export const defaultEmployee: IEmployee = {
+export const defaultEmployee: Employee = {
     id: 0,
     name: "",
     companyId: 0,

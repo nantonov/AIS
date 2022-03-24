@@ -1,6 +1,6 @@
-import { IQuestion } from "../../DTO/IQuestion";
+import { Question } from "../../interfaces/question";
 
-export const defaultQuestion: IQuestion = {
+export const defaultQuestion: Question = {
     id: 0,
     text: "",
     questionSetid: 0,

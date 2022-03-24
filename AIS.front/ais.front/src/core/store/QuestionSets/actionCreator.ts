@@ -1,4 +1,4 @@
-import {QuestionSetService} from "../../services/QuestionSetService";
+import {QuestionSetService} from "../../services/questionSetService";
 import {ApplicationDispatch} from "../typing";
 import {QuestionSetActions} from "./reducer";
 import {fetchAll, getQuestionSetById} from "./action";

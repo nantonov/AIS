@@ -1,6 +1,6 @@
 import {createAction} from "typesafe-actions";
-import {IQuestion} from "../../DTO/IQuestion";
+import {Question} from "../../interfaces/question";
 
 const FETCH_ALL="QUESTIONS/FETCH_ALL"
 
-export const fetchAll = createAction(FETCH_ALL)<IQuestion[]>();
+export const fetchAll = createAction(FETCH_ALL)<Question[]>();

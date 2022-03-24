@@ -1,6 +1,6 @@
-import { IInterviewee } from "../../DTO/IInterviewee";
+import { Interviewee } from "../../interfaces/interviewee";
 
-export const defaultInterviewee: IInterviewee = {
+export const defaultInterviewee: Interviewee = {
     id: 0,
     name: "",
     appliesFor: "",

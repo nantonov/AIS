@@ -1,19 +1,19 @@
 import { defaultQuestion } from "../common/defaultDTO/defaultQuestion";
-import { IQuestion } from "../DTO/IQuestion";
+import { Question } from "../interfaces/question";
 import axiosInstance from "../../config/getAxious";
 import {QUESTION_URL} from "../constants/UrlConstants";
 
 
 export class QuestionService {
-    public static async getAll(): Promise<IQuestion[]> {
-        const result = await axiosInstance.get<IQuestion[]>(QUESTION_URL)
+    public static async getAll(): Promise<Question[]> {
+        const result = await axiosInstance.get<Question[]>(QUESTION_URL)
             .then((result) => result.data)
             .catch(({ response }) => console.log(response.data));
         return result || [];
     }
 
-    public static async getById(questionId: number): Promise<IQuestion> {
-        const result = await axiosInstance.get<IQuestion>(
+    public static async getById(questionId: number): Promise<Question> {
+        const result = await axiosInstance.get<Question>(
             QUESTION_URL+`/${questionId}`)
             .then((result) => result.data)
             .catch((err) => console.log(err));
@@ -26,12 +26,12 @@ export class QuestionService {
             QUESTION_URL+`/${questionId}`);
     }
 
-    public static create(question: IQuestion): Promise<any> {
+    public static create(question: Question): Promise<any> {
         return axiosInstance.post(
             QUESTION_URL, { ...question });
     }
 
-    public static update(question: IQuestion): Promise<boolean> {
+    public static update(question: Question): Promise<boolean> {
         return axiosInstance.put(
             QUESTION_URL, { ...question }, { params: { id: question.id } });
     }

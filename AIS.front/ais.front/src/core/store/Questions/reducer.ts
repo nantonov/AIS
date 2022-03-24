@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import {ActionType, getType} from 'typesafe-actions';
 import * as actions from '../Questions/action'
-import {IQuestion} from "../../DTO/IQuestion";
+import {Question} from "../../interfaces/question";
 
 export type QuestionState = Readonly<{
-    questions: IQuestion[]
+    questions: Question[]
 }>;
 
 const initialState: QuestionState = {

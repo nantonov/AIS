@@ -1,12 +1,12 @@
 import {combineReducers} from 'redux';
-import {IQuestionArea} from '../../DTO/IQuestionArea'
+import {QuestionArea} from '../../interfaces/questionArea'
 import {ActionType, getType} from 'typesafe-actions';
 
 import * as actions from './actions';
 
 export type QuestionAreasState = Readonly<{
-    questionAreas: IQuestionArea[],
-    questionArea: IQuestionArea | null
+    questionAreas: QuestionArea[],
+    questionArea: QuestionArea | null
 }>;
 
 const initialState: QuestionAreasState = {

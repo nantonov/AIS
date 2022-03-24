@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import { ActionType, getType } from 'typesafe-actions';
-import { IToastMessage } from '../../DTO/IToastMessage';
+import { ToastMessage } from '../../interfaces/toastMessage';
 import * as actions from './actions';
 
 export type ToastState = Readonly<{
-  toastMessage: IToastMessage;
+  toastMessage: ToastMessage;
 }>;
 
 const initialState: ToastState = {

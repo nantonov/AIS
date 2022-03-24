@@ -1,6 +1,6 @@
 import React from 'react';
-import Main from "./pages/MainPage/MainPage";
-import Header from "./pages/Header/Header";
+import Main from "./pages/mainPage/MainPage";
+import Header from "./pages/header/Header";
 import {Provider} from 'react-redux';
 import { browserHistory, store } from './core/store/index';
 import { ConnectedRouter } from 'connected-react-router';

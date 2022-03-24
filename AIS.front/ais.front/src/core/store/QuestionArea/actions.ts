@@ -1,6 +1,6 @@
 import { createAction } from 'typesafe-actions';
-import { IQuestionArea} from '../../DTO/IQuestionArea'
+import { QuestionArea} from '../../interfaces/questionArea'
 import { FETCH_ALL, FETCH_BY_ID} from './constants';
 
-export const fetchAll = createAction(FETCH_ALL)<IQuestionArea[]>();
-export const fetchById = createAction(FETCH_BY_ID)<IQuestionArea>();
+export const fetchAll = createAction(FETCH_ALL)<QuestionArea[]>();
+export const fetchById = createAction(FETCH_BY_ID)<QuestionArea>();

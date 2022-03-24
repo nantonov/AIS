@@ -9,8 +9,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Typography from "@mui/material/Typography";
 import styled from "@emotion/styled";
-import {QuestionAreasQuestionSetsService} from "../../core/services/QuestionAreasQuestionSetsService";
-import {QuestionsQuestionSetsService} from "../../core/services/QuestionsQuestionSetsService";
+import {QuestionAreasQuestionSetsService} from "../../core/services/questionAreasQuestionSetsService";
+import {QuestionsQuestionSetsService} from "../../core/services/questionsQuestionSetsService";
 
 const GridContainer = styled(Grid)`
   width: 100%;

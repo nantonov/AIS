@@ -4,7 +4,7 @@ import {ApplicationState} from "../../core/store/typing";
 import {connect} from "react-redux";
 import {questionSetActionCreators} from "../../core/store/QuestionSets";
 import styled from "styled-components";
-import {IQuestionSet} from "../../core/DTO/IQuestionSet";
+import {QuestionSet} from "../../core/interfaces/questionSet";
 import {useNavigate} from "react-router-dom";
 
 const QuestionSetContainer = styled.div`
@@ -34,7 +34,7 @@ const QuestionSetNameText = styled.text``;
 
 
 interface propsFromComponent {
-    item: IQuestionSet;
+    item: QuestionSet;
 }
 
 interface propsFromDispatch {

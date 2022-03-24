@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {Typography, Button, Box} from "@mui/material";
-import { IQuestionArea } from "../../core/DTO/IQuestionArea";
+import { QuestionArea } from "../../core/interfaces/questionArea";
 import { ApplicationState } from "../../core/store/typing";
 import { connect } from "react-redux";
 import { questionAreasActionCreators } from "../../core/store/QuestionArea";
@@ -10,7 +10,7 @@ import { defaultQuestionArea } from "../../core/common/defaultDTO/defaultQuestio
 
 const QuestionAreasForm: React.FC<Props> = (props) =>{
     let { id } = useParams();
-    const [item, setItem] = useState<IQuestionArea>(props.questionAreas.questionArea || defaultQuestionArea);
+    const [item, setItem] = useState<QuestionArea>(props.questionAreas.questionArea || defaultQuestionArea);
     useEffect(() => {
         props.fetchQuestionAreaById(Number(id));
     }, []);

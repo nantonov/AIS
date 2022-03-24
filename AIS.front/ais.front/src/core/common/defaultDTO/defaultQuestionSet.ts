@@ -1,6 +1,6 @@
-import { IQuestionSet } from "../../DTO/IQuestionSet";
+import { QuestionSet } from "../../interfaces/questionSet";
 
-export const defaultQuestionSet: IQuestionSet = {
+export const defaultQuestionSet: QuestionSet = {
     id: 0,
     name: "",
     questionAreaId: 0,

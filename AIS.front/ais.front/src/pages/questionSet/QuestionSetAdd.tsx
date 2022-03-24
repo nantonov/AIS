@@ -7,9 +7,9 @@ import {bindActionCreators, Dispatch} from "redux";
 import {questionSetActionCreators} from "../../core/store/QuestionSets";
 import {questionsActionCreators} from "../../core/store/Questions";
 import {connect} from "react-redux";
-import {IQuestionSetAdd} from "../../core/DTO/IQuestionSet";
+import {QuestionSetAddState} from "../../core/interfaces/questionSet";
 import {IQuestionSetAddDefault} from "../../core/common/defaultDTO/defaultQuestionSet";
-import {QuestionSetService} from "../../core/services/QuestionSetService";
+import {QuestionSetService} from "../../core/services/questionSetService";
 import {useNavigate} from "react-router-dom";
 import {questionAreasActionCreators} from "../../core/store/QuestionArea";
 
@@ -33,7 +33,7 @@ const ButtonContainer = styled(Button)`
 
 function QuestionSetAdd({questionSets, questions, getAllData, getQuestions, questionAreas, fetchQuestionArea}: Props) {
 
-    const [questionSetModel, setQuestionSetModel] = useState<IQuestionSetAdd>(IQuestionSetAddDefault)
+    const [questionSetModel, setQuestionSetModel] = useState<QuestionSetAddState>(IQuestionSetAddDefault)
     let navigate = useNavigate();
     const routeChange = () => {
         let path = '/questionSet';

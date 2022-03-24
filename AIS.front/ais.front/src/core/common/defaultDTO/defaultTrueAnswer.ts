@@ -1,6 +1,6 @@
-import { ITrueAnswer } from "../../DTO/ITrueAnswer";
+import { TrueAnswer } from "../../interfaces/trueAnswer";
 
-export const defaultTrueAnswer: ITrueAnswer = {
+export const defaultTrueAnswer: TrueAnswer = {
     id: 0,
     text: "",
     questionId: 0,

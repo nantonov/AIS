@@ -1,6 +1,6 @@
-import { ICompany } from "../../DTO/ICompany";
+import { Company } from "../../interfaces/company";
 
-export const defaultCompany: ICompany = {
+export const defaultCompany: Company = {
     id: 0,
     name: "",
     employees: null,
