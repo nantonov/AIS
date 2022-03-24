@@ -28,7 +28,7 @@ const GridContainer = styled(Grid)`
 `;
 
 const ButtonContainer = styled(Button)`
-  left: 90%
+  left: 90%;
 `;
 
 function QuestionSetAdd({questionSets, questions, getAllData, getQuestions, questionAreas, fetchQuestionArea}: Props) {

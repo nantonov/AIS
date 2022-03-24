@@ -5,7 +5,7 @@ import React from "react"
 
 const QuestionAreaTableHeader: React.FC = () =>{
     return (
-        <React.Fragment>
+        <>
             <Grid item  container justifyContent = 'space-between'>
                 <Grid item xs={1}><Typography>Id</Typography></Grid>
                 <Grid item xs><Typography>Name</Typography></Grid>
@@ -13,7 +13,7 @@ const QuestionAreaTableHeader: React.FC = () =>{
                 <Grid item xs={1}><Typography>Edit</Typography></Grid>
                 <Grid item xs={1}><Typography>Delete</Typography></Grid>
             </Grid>
-        </React.Fragment>
+        </>
     );
 };
 export default QuestionAreaTableHeader

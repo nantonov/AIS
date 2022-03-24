@@ -1,16 +1,16 @@
-import React, { useEffect } from "react";
+import React, {useEffect} from "react";
 import {Grid, IconButton, styled, Typography} from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { connect } from "react-redux";
-import {bindActionCreators, Dispatch } from "redux";
+import {connect} from "react-redux";
+import {bindActionCreators, Dispatch} from "redux";
 import {useNavigate} from "react-router-dom";
 import {MainRoutes} from "../../core/constants/mainRoutes";
 import QuestionAreaTableHeader from "./components/questionAreaTableHeader/QuestionAreaTableHeader";
 import QuestionAreaTableRow from "./components/questionAreaTableRow/QuestionAreaTableRow";
-import { questionAreasActionCreators } from "../../core/store/QuestionArea";
-import { ApplicationState } from "../../core/store/typing";
+import {questionAreasActionCreators} from "../../core/store/QuestionArea";
+import {ApplicationState} from "../../core/store/typing";
 
-const QuestionArea: React.FC<Props> = (props) =>{
+const QuestionArea: React.FC<Props> = (props) => {
     useEffect(() => {
         props.fetchQuestionAreas();
     }, []);
@@ -18,19 +18,19 @@ const QuestionArea: React.FC<Props> = (props) =>{
     const navigate = useNavigate();
     const edit = (id: number) => {
         props.fetchQuestionAreaById(id);
-        navigate('/'+MainRoutes.questionAreaForm+`/${id}`);
+        navigate('/' + MainRoutes.questionAreaForm + `/${id}`);
     }
 
     const [expanded, setExpanded] = React.useState<boolean>(false);
-    let handleExpandClick = ()=>setExpanded(!expanded);
+    let handleExpandClick = () => setExpanded(!expanded);
     return (
-                    <Grid container justifyContent="space=between"
-                          alignItems="center">
-                        <QuestionAreaTableHeader/>
-                        {props.questionAreas.questionAreas.map((item)=>
-                            <QuestionAreaTableRow key={item.id} qArea={item} onEdit={edit.bind(this)}/>
-                        )}
-                    </Grid>
+        <Grid container justifyContent="space=between"
+              alignItems="center">
+            <QuestionAreaTableHeader/>
+            {props.questionAreas.questionAreas.map((item) =>
+                <QuestionAreaTableRow key={item.id} qArea={item} onEdit={edit.bind(this)}/>
+            )}
+        </Grid>
     );
 };
 
