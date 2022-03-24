@@ -12,12 +12,10 @@ import styled from "@emotion/styled";
 import {QuestionAreasQuestionSetsService} from "../../services/QuestionAreasQuestionSetsService";
 import {QuestionsQuestionSetsService} from "../../services/QuestionsQuestionSetsService";
 
-const GridContainer = styled(Grid)
-    `
-      width: 100%;
-      max-width: 1170px;
-      margin: auto;
-    `;
+const GridContainer = styled(Grid)`
+  width: 100%;
+  max-width: 1170px;
+  margin: auto;`;
 
 const QuestionSetDescription: React.FC<Props> = ({questionSet, getById}: Props) => {
 
@@ -28,13 +26,13 @@ const QuestionSetDescription: React.FC<Props> = ({questionSet, getById}: Props) 
     }, []);
 
     function DeleteQuestion(questionSetId: number, questionId: number) {
-        QuestionsQuestionSetsService.deleteByTwoIds(questionSetId,questionId ).then(() => {
+        QuestionsQuestionSetsService.deleteByTwoIds(questionSetId, questionId).then(() => {
             getById(Number(id));
         }).catch((e) => console.log(e))
     }
 
-    function DeleteQuestionArea(questionAreaId: number, questionSetId: number){
-        QuestionAreasQuestionSetsService.deleteByTwoIds(questionAreaId,questionSetId).then(()=>{
+    function DeleteQuestionArea(questionAreaId: number, questionSetId: number) {
+        QuestionAreasQuestionSetsService.deleteByTwoIds(questionAreaId, questionSetId).then(() => {
             getById(Number(id));
         })
     }
@@ -45,7 +43,8 @@ const QuestionSetDescription: React.FC<Props> = ({questionSet, getById}: Props) 
                 <Typography variant="h4" component="h5"> Question set: {questionSet.name}</Typography>
             </Grid>
             <Grid item>
-                <Typography variant="h5" component="h6" marginTop="10px" marginBottom="10px">Question areas: </Typography>
+                <Typography variant="h5" component="h6" marginTop="10px" marginBottom="10px">Question
+                    areas: </Typography>
                 <TableContainer component={Paper}>
                     <Table sx={{minWidth: 650}} aria-label="simple table">
                         <TableHead>
@@ -55,13 +54,14 @@ const QuestionSetDescription: React.FC<Props> = ({questionSet, getById}: Props) 
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                         {questionSet.questionAreas?.map((questionArea)=> (
-                             <TableRow key={questionArea.id} sx={{'&:last-child td, &:last-child th': {border: 0}}}>
-                             <TableCell component="th" scope="row">{questionArea.name}</TableCell>
-                             <TableCell align="right"><Button endIcon={<EditIcon/>}/><Button
-                             endIcon={<DeleteIcon/>} onClick={() => DeleteQuestionArea(questionArea.id, questionSet.id)}/></TableCell>
-                             </TableRow>
-                         ))}
+                            {questionSet.questionAreas?.map((questionArea) => (
+                                <TableRow key={questionArea.id} sx={{'&:last-child td, &:last-child th': {border: 0}}}>
+                                    <TableCell component="th" scope="row">{questionArea.name}</TableCell>
+                                    <TableCell align="right"><Button endIcon={<EditIcon/>}/><Button
+                                        endIcon={<DeleteIcon/>}
+                                        onClick={() => DeleteQuestionArea(questionArea.id, questionSet.id)}/></TableCell>
+                                </TableRow>
+                            ))}
                         </TableBody>
                     </Table>
                 </TableContainer>
@@ -87,7 +87,8 @@ const QuestionSetDescription: React.FC<Props> = ({questionSet, getById}: Props) 
                                     <TableCell component="th" scope="row">{question.text}</TableCell>
                                     <TableCell component="th" scope="row">{question.trueAnswer?.text}</TableCell>
                                     <TableCell align="right"><Button endIcon={<EditIcon/>}/><Button
-                                        endIcon={<DeleteIcon/>} onClick={() => DeleteQuestion(Number(id), question.id)}/></TableCell>
+                                        endIcon={<DeleteIcon/>}
+                                        onClick={() => DeleteQuestion(Number(id), question.id)}/></TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

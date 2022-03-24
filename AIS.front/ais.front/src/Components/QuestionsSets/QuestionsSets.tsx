@@ -22,12 +22,13 @@ const CircleIconContainer = styled(AddCircleIcon)`
   fontSize: "large";
   font-size: 3.5rem;
   display: flex;
-  padding-left: 90%;
+  margin-left: 90%;
   opacity: 1;
 
   &:hover {
     color: #0d4f91;
-  }`;
+  }
+`;
 
 const QuestionSetItems = styled.div`
   display: flex;
@@ -36,13 +37,14 @@ const QuestionSetItems = styled.div`
 
 const ToolTipContainer = styled(Tooltip)`
   display: flex;
-`
+`;
+
 const TypographyContainer = styled(Typography)`
   display: flex;
   align-items: center;
 `;
 
-const QuestionsSets: React.FC<Props> = ({questionSets, getAllData, questions, getQuestions}) => {
+const QuestionsSets: React.FC<Props> = ({questionSets, getAllData, getQuestions}) => {
     let navigate = useNavigate();
     const routeChange = () => {
         let path = '/addQuestionSet';

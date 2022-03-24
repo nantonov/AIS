@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {FormControl, Grid, IconButton, styled, Typography, Input, Button, Box} from "@mui/material";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
+import {Typography, Button, Box} from "@mui/material";
 import { IQuestionArea } from "../../DTO/IQuestionArea";
 import { ApplicationState } from "../../store/typing";
 import { connect } from "react-redux";

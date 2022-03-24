@@ -28,7 +28,6 @@ const QuestionSetHeader = styled.h1`
 const QuestionSetDescriptionDiv = styled.div`
   display: flex;
   justify-content: space-between;
-
 `;
 
 const QuestionSetNameText = styled.text``;
@@ -60,7 +59,6 @@ export const QuestionSetItem: React.FC<Props> = ({item}: Props) => {
         </QuestionSetContainer>
     )
 }
-
 
 const mapStateToProps = (state: ApplicationState) => ({
     router: state.router,

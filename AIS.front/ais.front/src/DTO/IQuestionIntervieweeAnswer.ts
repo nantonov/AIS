@@ -1,6 +1,5 @@
 import { IQuestion } from "./IQuestion";
 import { ISession } from "./ISession";
-import { ITrueAnswer } from "./ITrueAnswer";
 
 export interface IQuestionIntervieweeAnswer{
     id: number,
