@@ -1,2 +1,0 @@
-export const SET_TOAST_MESSAGE = 'toast/SET_TOAST_MESSAGE';
-export const GLOBAL_SET_TOAST_MESSAGE = 'global/SET_TOAST_MESSAGE';
