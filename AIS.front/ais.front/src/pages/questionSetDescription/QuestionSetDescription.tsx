@@ -17,21 +17,21 @@ const GridContainer = styled(Grid)`
   max-width: 1170px;
   margin: auto;`;
 
-const QuestionSetDescription: React.FC<Props> = ({questionSet, getById}: Props) => {
+const QuestionSetDescription: React.FC<Props> = ({questionSet, getById}) => {
 
-    let {id} = useParams();
+    const {id} = useParams();
 
     useEffect(() => {
         getById(Number(id));
     }, []);
 
-    function DeleteQuestion(questionSetId: number, questionId: number) {
+    const DeleteQuestion = (questionSetId: number, questionId: number) => {
         QuestionsQuestionSetsService.deleteByTwoIds(questionSetId, questionId).then(() => {
             getById(Number(id));
         }).catch((e) => console.log(e))
     }
 
-    function DeleteQuestionArea(questionAreaId: number, questionSetId: number) {
+    const DeleteQuestionArea = (questionAreaId: number, questionSetId: number) => {
         QuestionAreasQuestionSetsService.deleteByTwoIds(questionAreaId, questionSetId).then(() => {
             getById(Number(id));
         })

@@ -1,6 +1,6 @@
 import {Box, Button, FormControl, Grid, MenuItem, TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
-import React, {useEffect, useState} from "react";
+import React, {FC, useEffect, useState} from "react";
 import styled from "styled-components";
 import {ApplicationState} from "../../core/store/typing";
 import {bindActionCreators, Dispatch} from "redux";
@@ -30,7 +30,7 @@ const ButtonContainer = styled(Button)`
   left: 90%;
 `;
 
-function QuestionSetAdd({questionSets, questions, getAllData, getQuestions, questionAreas, fetchQuestionArea}: Props) {
+const QuestionSetAdd: React.FC<Props> = ({questionSets, questions, getAllData, getQuestions, questionAreas, fetchQuestionArea}) => {
 
     const [questionSetModel, setQuestionSetModel] = useState<QuestionSetAddState>(IQuestionSetAddDefault)
     const navigate = useNavigate();
@@ -39,7 +39,7 @@ function QuestionSetAdd({questionSets, questions, getAllData, getQuestions, ques
         navigate(path);
     }
 
-    function saveAction() {
+    const saveAction = () => {
         QuestionSetService.addQuestionSet(questionSetModel);
         routeChange()
     }
@@ -57,7 +57,7 @@ function QuestionSetAdd({questionSets, questions, getAllData, getQuestions, ques
         fetchQuestionArea();
     }, []);
 
-    function addEmptyQuestionIdsArray() {
+    const addEmptyQuestionIdsArray = () => {
         const previousQuestionArray = [...questionSetModel.questionIds];
         previousQuestionArray.push(0);
         setQuestionSetModel({
@@ -66,7 +66,7 @@ function QuestionSetAdd({questionSets, questions, getAllData, getQuestions, ques
         })
     }
 
-    function getQuestionAreaOptions(id: number) {
+    const getQuestionAreaOptions = (id: number) => {
         const idsQuestionAreas = new Set([...questionSetModel.questionAreaIds]);
         return questionAreas.filter((item) => {
 
@@ -74,14 +74,14 @@ function QuestionSetAdd({questionSets, questions, getAllData, getQuestions, ques
         })
     }
 
-    function getQuestionOptions(id: number) {
+    const getQuestionOptions = (id: number) => {
         const idsSet = new Set([...questionSetModel.questionIds]);
         return questions.filter((item) => {
             return !idsSet.has(item.id) || item.id === id;
         });
     }
 
-    function changeQuestionHandler(index: number, id: number) {
+    const changeQuestionHandler = (index: number, id: number) => {
         const array = [...questionSetModel.questionIds];
         array[index] = id;
         setQuestionSetModel({
@@ -90,7 +90,7 @@ function QuestionSetAdd({questionSets, questions, getAllData, getQuestions, ques
         })
     }
 
-    function addEmptyQuestionArea() {
+    const addEmptyQuestionArea = () => {
         const previousQuestionAreasIdsArray = [...questionSetModel.questionAreaIds];
         previousQuestionAreasIdsArray.push(0);
         setQuestionSetModel({
@@ -99,7 +99,7 @@ function QuestionSetAdd({questionSets, questions, getAllData, getQuestions, ques
         })
     }
 
-    function changeQuestionAreaHandler(index: number, id: number) {
+    const changeQuestionAreaHandler = (index: number, id: number) => {
         const array = [...questionSetModel.questionAreaIds];
         array[index] = id;
         setQuestionSetModel({

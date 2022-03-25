@@ -5,7 +5,7 @@ import {Provider} from 'react-redux';
 import { browserHistory, store } from './core/store/index';
 import { ConnectedRouter } from 'connected-react-router';
 
-function App() {
+const App: React.FC = () => {
     return (
         <Provider store={store}>
             <ConnectedRouter history={browserHistory}>
