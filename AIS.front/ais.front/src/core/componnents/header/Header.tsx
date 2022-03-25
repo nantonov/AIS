@@ -12,7 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import {useNavigate} from "react-router-dom";
-import {MainRoutes} from "../../core/constants/mainRoutes";
+import {MainRoutes} from "../../constants/mainRoutes";
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 const pagesAppBar = [
