@@ -4,14 +4,16 @@ import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import {ApplicationState} from "../../core/store/typing";
 import {bindActionCreators, Dispatch} from "redux";
-import {questionSetActionCreators} from "../../core/store/questionSets";
-import {questionsActionCreators} from "../../core/store/questions";
-import {connect} from "react-redux";
-import {QuestionSetAddState} from "../../core/interfaces/questionSet";
+import {connect, useDispatch} from "react-redux";
+import {QuestionSet, QuestionSetAddState} from "../../core/interfaces/questionSet";
 import {IQuestionSetAddDefault} from "../../core/common/defaultDTO/defaultQuestionSet";
 import {QuestionSetService} from "../../core/services/questionSetService";
 import {useNavigate} from "react-router-dom";
-import {questionAreasActionCreators} from "../../core/store/questionArea";
+import {Question} from "../../core/interfaces/question";
+import {QuestionArea} from "../../core/interfaces/questionArea";
+import {getAllData} from "../../core/store/questionSets/actionCreator";
+import {getAllData as getQuestions} from "../../core/store/questions/actionCreator"
+import {fetchAllQuestionAreas} from "../../core/store/questionArea/actionCreators";
 
 const BoxContainer = styled(Box)`
   display: flex;
@@ -30,10 +32,18 @@ const ButtonContainer = styled(Button)`
   left: 90%;
 `;
 
-function QuestionSetAdd({questionSets, questions, getAllData, getQuestions, questionAreas, fetchQuestionArea}: Props) {
+interface RowProps{
+    questionSets: QuestionSet[],
+    questions: Question[],
+    questionAreas: QuestionArea[]
+}
+
+const QuestionSetAdd: React.FC<RowProps> = ({questionSets, questions,questionAreas}) => {
 
     const [questionSetModel, setQuestionSetModel] = useState<QuestionSetAddState>(IQuestionSetAddDefault)
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
     const routeChange = () => {
         const path = '/questionSetDescription';
         navigate(path);
@@ -52,9 +62,9 @@ function QuestionSetAdd({questionSets, questions, getAllData, getQuestions, ques
     }
 
     useEffect(() => {
-        getAllData();
-        getQuestions();
-        fetchQuestionArea();
+        dispatch(getAllData());
+        dispatch(getQuestions());
+        dispatch(fetchAllQuestionAreas());
     }, []);
 
     function addEmptyQuestionIdsArray() {
@@ -194,12 +204,6 @@ const mapStateToProps = (state: ApplicationState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
     bindActionCreators({
-        getAllData: questionSetActionCreators.getAllData,
-        getQuestions: questionsActionCreators.getAllData,
-        fetchQuestionArea: questionAreasActionCreators.fetchAllQuestionAreas
     }, dispatch);
-
-type Props = ReturnType<typeof mapStateToProps> &
-    ReturnType<typeof mapDispatchToProps>;
 
 export default connect(mapStateToProps, mapDispatchToProps)(QuestionSetAdd);

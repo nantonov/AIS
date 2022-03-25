@@ -1,22 +1,29 @@
 import React, {useEffect} from "react";
 import {Grid} from "@mui/material";
-import {connect} from "react-redux";
+import {connect, useDispatch} from "react-redux";
 import {bindActionCreators, Dispatch} from "redux";
 import {useNavigate} from "react-router-dom";
 import {MainRoutes} from "../../core/constants/mainRoutes";
 import QuestionAreaTableHeader from "./components/questionAreaTableHeader/QuestionAreaTableHeader";
 import QuestionAreaTableRow from "./components/questionAreaTableRow/QuestionAreaTableRow";
-import {questionAreasActionCreators} from "../../core/store/questionArea";
 import {ApplicationState} from "../../core/store/typing";
+import {fetchAllQuestionAreas, fetchQuestionAreaById} from "../../core/store/questionArea/actionCreators";
+import {QuestionArea as questionArea} from "../../core/interfaces/questionArea";
 
-const QuestionArea: React.FC<Props> = (props) => {
+interface Props{
+    questionAreas: questionArea[]
+}
+
+const QuestionArea: React.FC<Props> = ({questionAreas}) => {
+    const dispatch = useDispatch();
+
     useEffect(() => {
-        props.fetchQuestionAreas();
+        dispatch(fetchAllQuestionAreas());
     }, []);
 
     const navigate = useNavigate();
     const edit = (id: number) => {
-        props.fetchQuestionAreaById(id);
+        fetchQuestionAreaById(id);
         navigate(`/${MainRoutes.questionAreaForm}/${id}`);
     }
 
@@ -24,7 +31,7 @@ const QuestionArea: React.FC<Props> = (props) => {
         <Grid container justifyContent="space=between"
               alignItems="center">
             <QuestionAreaTableHeader/>
-            {props.questionAreas.questionAreas.map((item) =>
+            {questionAreas.map((item) =>
                 <QuestionAreaTableRow key={item.id} qArea={item} onEdit={edit.bind(this)}/>
             )}
         </Grid>
@@ -33,19 +40,11 @@ const QuestionArea: React.FC<Props> = (props) => {
 
 
 const mapStateToProps = (state: ApplicationState) => ({
-    questionAreas: state.questionAreas
+    questionAreas: state.questionAreas.questionAreas
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
     bindActionCreators({
-        createQuestionArea: questionAreasActionCreators.createQuestionArea,
-        editQuestionArea: questionAreasActionCreators.editQuestionArea,
-        deleteQuestionArea: questionAreasActionCreators.deleteQuestionArea,
-        fetchQuestionAreaById: questionAreasActionCreators.fetchQuestionAreaById,
-        fetchQuestionAreas: questionAreasActionCreators.fetchAllQuestionAreas,
     }, dispatch);
-
-type Props = ReturnType<typeof mapStateToProps> &
-    ReturnType<typeof mapDispatchToProps>;
 
 export default connect(mapStateToProps, mapDispatchToProps)(QuestionArea);

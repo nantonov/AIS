@@ -2,7 +2,6 @@ import React from 'react';
 import {bindActionCreators, Dispatch} from 'redux';
 import {ApplicationState} from "../../../core/store/typing";
 import {connect} from "react-redux";
-import {questionSetActionCreators} from "../../../core/store/questionSets";
 import styled from "styled-components";
 import {QuestionSet} from "../../../core/interfaces/questionSet";
 import {useNavigate} from "react-router-dom";
@@ -37,12 +36,7 @@ interface propsFromComponent {
     item: QuestionSet;
 }
 
-interface propsFromDispatch {
-}
-
-type Props = propsFromComponent & propsFromDispatch;
-
-export const QuestionSetItem: React.FC<Props> = ({item}: Props) => {
+export const QuestionSetItem: React.FC<propsFromComponent> = ({item}) => {
     const navigate = useNavigate();
     const routeChange = (id: number) => {
         const path = `/questionSetDescription/${id}`;
@@ -67,7 +61,6 @@ const mapStateToProps = (state: ApplicationState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
     bindActionCreators({
-        getAllData: questionSetActionCreators.getAllData
     }, dispatch);
 
 connect(mapStateToProps, mapDispatchToProps)(QuestionSetItem);

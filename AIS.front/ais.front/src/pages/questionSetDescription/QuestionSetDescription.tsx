@@ -2,8 +2,7 @@ import React, {useEffect} from 'react';
 import {bindActionCreators, Dispatch} from 'redux';
 import {Button, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import {ApplicationState} from "../../core/store/typing";
-import {connect} from "react-redux";
-import {questionSetActionCreators} from "../../core/store/questionSets";
+import {connect, useDispatch} from "react-redux";
 import {useParams} from "react-router-dom";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -11,18 +10,25 @@ import Typography from "@mui/material/Typography";
 import styled from "@emotion/styled";
 import {QuestionAreasQuestionSetsService} from "../../core/services/questionAreasQuestionSetsService";
 import {QuestionsQuestionSetsService} from "../../core/services/questionsQuestionSetsService";
+import {QuestionSet} from "../../core/interfaces/questionSet";
+import {getById} from "../../core/store/questionSets/actionCreator";
 
 const GridContainer = styled(Grid)`
   width: 100%;
   max-width: 1170px;
   margin: auto;`;
 
-const QuestionSetDescription: React.FC<Props> = ({questionSet, getById}: Props) => {
+interface RowProps {
+    questionSet: QuestionSet,
+}
+
+const QuestionSetDescription: React.FC<RowProps> = ({questionSet}) => {
 
     let {id} = useParams();
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        getById(Number(id));
+        dispatch(getById(Number(id)));
     }, []);
 
     function DeleteQuestion(questionSetId: number, questionId: number) {
@@ -107,10 +113,6 @@ const mapStateToProps = (state: ApplicationState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
     bindActionCreators({
-        getById: questionSetActionCreators.getById
     }, dispatch);
-
-type Props = ReturnType<typeof mapStateToProps> &
-    ReturnType<typeof mapDispatchToProps>;
 
 export default connect(mapStateToProps, mapDispatchToProps)(QuestionSetDescription);

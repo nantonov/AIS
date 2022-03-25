@@ -1,15 +1,16 @@
 import React, {useEffect} from 'react';
 import {bindActionCreators, Dispatch} from 'redux';
 import {ApplicationState} from "../../core/store/typing";
-import {connect} from "react-redux";
-import {questionSetActionCreators} from "../../core/store/questionSets";
+import {connect, useDispatch} from "react-redux";
 import styled from "styled-components";
 import {QuestionSetItem} from "./questionSetItem/QuestionSetItem";
+import {getAllData} from '../../core/store/questionSets/actionCreator';
+import {getAllData as getQuestions} from '../../core/store/questions/actionCreator';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Typography from "@mui/material/Typography";
 import {Grid, Tooltip} from "@mui/material";
-import {questionsActionCreators} from "../../core/store/questions";
 import {useNavigate} from "react-router-dom";
+import {QuestionSet} from "../../core/interfaces/questionSet";
 
 const Container = styled.div`
   width: 100%;
@@ -44,16 +45,21 @@ const TypographyContainer = styled(Typography)`
   align-items: center;
 `;
 
-const QuestionsSets: React.FC<Props> = ({questionSets, getAllData, getQuestions}) => {
+interface Props {
+    questionSets: QuestionSet[]
+}
+
+const QuestionsSets: React.FC<Props> = ({questionSets}) => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const routeChange = () => {
         const path = '/addQuestionSet';
         navigate(path);
     }
 
     useEffect(() => {
-        getAllData();
-        getQuestions();
+        dispatch(getAllData());
+        dispatch(getQuestions());
     }, []);
 
     return (
@@ -84,12 +90,6 @@ const mapStateToProps = (state: ApplicationState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
-    bindActionCreators({
-        getAllData: questionSetActionCreators.getAllData,
-        getQuestions: questionsActionCreators.getAllData
-    }, dispatch);
-
-type Props = ReturnType<typeof mapStateToProps> &
-    ReturnType<typeof mapDispatchToProps>;
+    bindActionCreators({}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(QuestionsSets);

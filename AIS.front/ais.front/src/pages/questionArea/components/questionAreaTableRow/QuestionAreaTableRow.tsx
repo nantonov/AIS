@@ -1,9 +1,9 @@
 import { Grid, IconButton, Typography } from '@mui/material';
-import react from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { QuestionArea } from "../../../../core/interfaces/questionArea";
+import React from "react";
 
 interface  IRowProps{
     qArea: QuestionArea,
