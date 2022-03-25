@@ -47,9 +47,11 @@ namespace AIS.API
             app.UseHttpsRedirection();
             app.UseCors(op =>
             {
-                op.AllowAnyOrigin()
-                    .AllowAnyMethod()
+                op.WithOrigins(
+                        "http://localhost:3000"
+                    )
                     .AllowAnyHeader()
+                    .AllowAnyMethod()
                     .WithExposedHeaders("X-Pagination");
             });
             app.UseRouting();
