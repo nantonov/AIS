@@ -3,7 +3,7 @@ import {Typography, Button, Box} from "@mui/material";
 import { QuestionArea } from "../../core/interfaces/questionArea";
 import { ApplicationState } from "../../core/store/typing";
 import { connect } from "react-redux";
-import { questionAreasActionCreators } from "../../core/store/QuestionArea";
+import { questionAreasActionCreators } from "../../core/store/questionArea";
 import {bindActionCreators, Dispatch } from "redux";
 import { useParams } from "react-router-dom";
 import { defaultQuestionArea } from "../../core/common/defaultDTO/defaultQuestionArea";

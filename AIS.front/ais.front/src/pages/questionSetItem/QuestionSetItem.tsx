@@ -2,7 +2,7 @@ import React from 'react';
 import {bindActionCreators, Dispatch} from 'redux';
 import {ApplicationState} from "../../core/store/typing";
 import {connect} from "react-redux";
-import {questionSetActionCreators} from "../../core/store/QuestionSets";
+import {questionSetActionCreators} from "../../core/store/questionSets";
 import styled from "styled-components";
 import {QuestionSet} from "../../core/interfaces/questionSet";
 import {useNavigate} from "react-router-dom";
@@ -45,7 +45,7 @@ type Props = propsFromComponent & propsFromDispatch;
 export const QuestionSetItem: React.FC<Props> = ({item}: Props) => {
     let navigate = useNavigate();
     const routeChange = (id: number) => {
-        let path = '/questionSet/' + id;
+        let path = '/questionSetDescription/' + id;
         navigate(path);
     }
     return (

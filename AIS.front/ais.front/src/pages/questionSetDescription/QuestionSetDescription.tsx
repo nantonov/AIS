@@ -3,7 +3,7 @@ import {bindActionCreators, Dispatch} from 'redux';
 import {Button, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import {ApplicationState} from "../../core/store/typing";
 import {connect} from "react-redux";
-import {questionSetActionCreators} from "../../core/store/QuestionSets";
+import {questionSetActionCreators} from "../../core/store/questionSets";
 import {useParams} from "react-router-dom";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';

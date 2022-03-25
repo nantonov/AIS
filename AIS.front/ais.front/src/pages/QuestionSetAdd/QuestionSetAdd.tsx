@@ -4,15 +4,14 @@ import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import {ApplicationState} from "../../core/store/typing";
 import {bindActionCreators, Dispatch} from "redux";
-import {questionSetActionCreators} from "../../core/store/QuestionSets";
-import {questionsActionCreators} from "../../core/store/Questions";
+import {questionSetActionCreators} from "../../core/store/questionSets";
+import {questionsActionCreators} from "../../core/store/questions";
 import {connect} from "react-redux";
 import {QuestionSetAddState} from "../../core/interfaces/questionSet";
 import {IQuestionSetAddDefault} from "../../core/common/defaultDTO/defaultQuestionSet";
 import {QuestionSetService} from "../../core/services/questionSetService";
 import {useNavigate} from "react-router-dom";
-import {questionAreasActionCreators} from "../../core/store/QuestionArea";
-
+import {questionAreasActionCreators} from "../../core/store/questionArea";
 
 const BoxContainer = styled(Box)`
   display: flex;
@@ -36,7 +35,7 @@ function QuestionSetAdd({questionSets, questions, getAllData, getQuestions, ques
     const [questionSetModel, setQuestionSetModel] = useState<QuestionSetAddState>(IQuestionSetAddDefault)
     let navigate = useNavigate();
     const routeChange = () => {
-        let path = '/questionSet';
+        let path = '/questionSetDescription';
         navigate(path);
     }
 
