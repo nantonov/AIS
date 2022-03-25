@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import {ActionType, getType} from 'typesafe-actions';
-import * as actions from '../questionSets/action';
+import * as actions from './action';
 import {QuestionSet} from "../../interfaces/questionSet";
 import {defaultQuestionSet} from "../../common/defaultDTO/defaultQuestionSet";
 

@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import {ActionType, getType} from 'typesafe-actions';
-import * as actions from '../questions/action'
+import * as actions from './action'
 import {Question} from "../../interfaces/question";
 
 export type QuestionState = Readonly<{

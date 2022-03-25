@@ -13,9 +13,9 @@ import {
 } from 'redux';
 import { toastMiddleware } from './toastMiddleware/toastMiddleware';
 import {ApplicationState} from "./typing";
-import {questionSetReducer} from "./QuestionSets/reducer";
-import { questionAreasReducer } from "./QuestionArea";
-import {questionReducer} from "./Questions/reducer";
+import {questionSetReducer} from "./questionSets/reducer";
+import { questionAreasReducer } from "./questionArea/reducer";
+import {questionReducer} from "./questions/reducer";
 
 
 export const browserHistory = createBrowserHistory();

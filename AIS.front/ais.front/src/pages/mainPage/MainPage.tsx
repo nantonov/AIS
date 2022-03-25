@@ -6,7 +6,7 @@ import {MainRoutes} from "../../core/constants/mainRoutes";
 import QuestionsSets from "../questionsSets/QuestionsSets";
 import QuestionSetDescription from "../questionSetDescription/QuestionSetDescription";
 import QuestionAreaForm from "../questionArea/QuestionAreaForm";
-import AddQuestionSet from "../QuestionSetAdd/QuestionSetAdd";
+import AddQuestionSet from "../questionSetAdd/QuestionSetAdd";
 
 export default function Main() {
     return (

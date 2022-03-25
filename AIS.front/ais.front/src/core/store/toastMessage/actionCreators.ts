@@ -1,7 +1,7 @@
 import { ToastMessage } from '../../interfaces/toastMessage';
 import { ApplicationDispatch } from '../typing';
-import { setToast } from './actions';
 import { ToastActions } from './reducer';
+import { setToast } from './actions';
 
 export const setToastMessage = (error: ToastMessage) => {
   return async (dispatch: ApplicationDispatch<ToastActions>) => {
