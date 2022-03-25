@@ -9,7 +9,7 @@ import { useParams } from "react-router-dom";
 import { defaultQuestionArea } from "../../core/common/defaultDTO/defaultQuestionArea";
 
 const QuestionAreasForm: React.FC<Props> = (props) =>{
-    let { id } = useParams();
+    const { id } = useParams();
     const [item, setItem] = useState<QuestionArea>(props.questionAreas.questionArea || defaultQuestionArea);
     useEffect(() => {
         props.fetchQuestionAreaById(Number(id));
@@ -19,7 +19,7 @@ const QuestionAreasForm: React.FC<Props> = (props) =>{
         setItem(props.questionAreas.questionArea || defaultQuestionArea);
     }
     const change = (e: React.ChangeEvent<HTMLInputElement>) => {
-        let copy = Object.assign({}, item);
+        const copy = Object.assign({}, item);
         copy.name = e.target.value;
         setItem(copy);
     };

@@ -33,9 +33,9 @@ const ButtonContainer = styled(Button)`
 function QuestionSetAdd({questionSets, questions, getAllData, getQuestions, questionAreas, fetchQuestionArea}: Props) {
 
     const [questionSetModel, setQuestionSetModel] = useState<QuestionSetAddState>(IQuestionSetAddDefault)
-    let navigate = useNavigate();
+    const navigate = useNavigate();
     const routeChange = () => {
-        let path = '/questionSetDescription';
+        const path = '/questionSetDescription';
         navigate(path);
     }
 

@@ -43,9 +43,9 @@ interface propsFromDispatch {
 type Props = propsFromComponent & propsFromDispatch;
 
 export const QuestionSetItem: React.FC<Props> = ({item}: Props) => {
-    let navigate = useNavigate();
+    const navigate = useNavigate();
     const routeChange = (id: number) => {
-        let path = '/questionSetDescription/' + id;
+        const path = `/questionSetDescription/${id}`;
         navigate(path);
     }
     return (

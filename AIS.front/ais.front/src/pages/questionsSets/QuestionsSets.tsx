@@ -45,9 +45,9 @@ const TypographyContainer = styled(Typography)`
 `;
 
 const QuestionsSets: React.FC<Props> = ({questionSets, getAllData, getQuestions}) => {
-    let navigate = useNavigate();
+    const navigate = useNavigate();
     const routeChange = () => {
-        let path = '/addQuestionSet';
+        const path = '/addQuestionSet';
         navigate(path);
     }
 
