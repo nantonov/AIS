@@ -5,7 +5,7 @@ import React from 'react';
 import {MainRoutes} from "../../core/constants/mainRoutes";
 import QuestionsSets from "../questionsSets/QuestionsSets";
 import QuestionSetDescription from "../questionSetDescription/QuestionSetDescription";
-import QuestionAreaForm from "../questionArea/QuestionAreaForm";
+import QuestionAreaForm from "../questionAreaForm/QuestionAreaForm";
 import AddQuestionSet from "../questionSetAdd/QuestionSetAdd";
 
 export default function Main() {
