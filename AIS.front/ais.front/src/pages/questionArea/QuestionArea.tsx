@@ -17,11 +17,9 @@ const QuestionArea: React.FC<Props> = (props) => {
     const navigate = useNavigate();
     const edit = (id: number) => {
         props.fetchQuestionAreaById(id);
-        navigate('/' + MainRoutes.questionAreaForm + `/${id}`);
+        navigate(`/${MainRoutes.questionAreaForm}/${id}`);
     }
 
-    const [expanded, setExpanded] = React.useState<boolean>(false);
-    let handleExpandClick = () => setExpanded(!expanded);
     return (
         <Grid container justifyContent="space=between"
               alignItems="center">
