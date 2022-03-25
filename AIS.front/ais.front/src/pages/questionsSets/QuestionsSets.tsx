@@ -4,7 +4,7 @@ import {ApplicationState} from "../../core/store/typing";
 import {connect} from "react-redux";
 import {questionSetActionCreators} from "../../core/store/questionSets";
 import styled from "styled-components";
-import {QuestionSetItem} from "../questionSetItem/QuestionSetItem";
+import {QuestionSetItem} from "./questionSetItem/QuestionSetItem";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Typography from "@mui/material/Typography";
 import {Grid, Tooltip} from "@mui/material";

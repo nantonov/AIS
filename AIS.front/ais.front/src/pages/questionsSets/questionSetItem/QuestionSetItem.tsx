@@ -1,10 +1,10 @@
 import React from 'react';
 import {bindActionCreators, Dispatch} from 'redux';
-import {ApplicationState} from "../../core/store/typing";
+import {ApplicationState} from "../../../core/store/typing";
 import {connect} from "react-redux";
-import {questionSetActionCreators} from "../../core/store/questionSets";
+import {questionSetActionCreators} from "../../../core/store/questionSets";
 import styled from "styled-components";
-import {QuestionSet} from "../../core/interfaces/questionSet";
+import {QuestionSet} from "../../../core/interfaces/questionSet";
 import {useNavigate} from "react-router-dom";
 
 const QuestionSetContainer = styled.div`
