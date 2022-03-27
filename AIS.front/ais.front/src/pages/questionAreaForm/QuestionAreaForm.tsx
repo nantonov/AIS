@@ -1,9 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Typography, Button, Box} from "@mui/material";
 import {QuestionArea} from "../../core/interfaces/questionArea";
-import {ApplicationState} from "../../core/store/typing";
-import {connect, useDispatch} from "react-redux";
-import {bindActionCreators, Dispatch} from "redux";
+import {useDispatch} from "react-redux";
 import {useParams} from "react-router-dom";
 import {defaultQuestionArea} from "../../core/common/defaultDTO/defaultQuestionArea";
 import {
@@ -38,9 +36,5 @@ const QuestionAreasForm: React.FC = () => {
         </Box>
     );
 };
-
-const mapStateToProps = () => ({});
-
-const mapDispatchToProps = () => ({});
 
 export default QuestionAreasForm;

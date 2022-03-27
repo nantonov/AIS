@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {bindActionCreators, Dispatch} from 'redux';
 import {Button, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import {ApplicationState} from "../../core/store/typing";
@@ -12,19 +12,21 @@ import {QuestionAreasQuestionSetsService} from "../../core/services/questionArea
 import {QuestionsQuestionSetsService} from "../../core/services/questionsQuestionSetsService";
 import {QuestionSet} from "../../core/interfaces/questionSet";
 import {getById} from "../../core/store/questionSets/actionCreator";
+import {defaultQuestionSet} from "../../core/common/defaultDTO/defaultQuestionSet";
 
 const GridContainer = styled(Grid)`
   width: 100%;
   max-width: 1170px;
   margin: auto;`;
 
-interface RowProps {
+interface Props {
     questionSet: QuestionSet,
 }
 
-const QuestionSetDescription: React.FC<RowProps> = ({questionSet}) => {
+const QuestionSetDescription: React.FC = () => {
 
     let {id} = useParams();
+    const [questionSet] = useState<QuestionSet>(defaultQuestionSet);
     const dispatch = useDispatch();
 
     useEffect(() => {

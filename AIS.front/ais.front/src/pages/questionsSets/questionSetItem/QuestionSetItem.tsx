@@ -32,11 +32,11 @@ const QuestionSetDescriptionDiv = styled.div`
 const QuestionSetNameText = styled.text``;
 
 
-interface propsFromComponent {
+interface Props {
     item: QuestionSet;
 }
 
-export const QuestionSetItem: React.FC<propsFromComponent> = ({item}) => {
+export const QuestionSetItem: React.FC<Props> = ({item}) => {
     const navigate = useNavigate();
     const routeChange = (id: number) => {
         const path = `/questionSetDescription/${id}`;
@@ -53,14 +53,3 @@ export const QuestionSetItem: React.FC<propsFromComponent> = ({item}) => {
         </QuestionSetContainer>
     )
 }
-
-const mapStateToProps = (state: ApplicationState) => ({
-    router: state.router,
-    questionSets: state.questionSets.questionSets
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) =>
-    bindActionCreators({
-    }, dispatch);
-
-connect(mapStateToProps, mapDispatchToProps)(QuestionSetItem);

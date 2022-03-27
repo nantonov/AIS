@@ -4,7 +4,7 @@ import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import {ApplicationState} from "../../core/store/typing";
 import {bindActionCreators, Dispatch} from "redux";
-import {connect, useDispatch} from "react-redux";
+import {useDispatch} from "react-redux";
 import {QuestionSet, QuestionSetAddState} from "../../core/interfaces/questionSet";
 import {IQuestionSetAddDefault} from "../../core/common/defaultDTO/defaultQuestionSet";
 import {QuestionSetService} from "../../core/services/questionSetService";
@@ -32,15 +32,19 @@ const ButtonContainer = styled(Button)`
   left: 90%;
 `;
 
-interface RowProps{
+interface Props{
     questionSets: QuestionSet[],
     questions: Question[],
     questionAreas: QuestionArea[]
 }
 
-const QuestionSetAdd: React.FC<RowProps> = ({questionSets, questions,questionAreas}) => {
+const QuestionSetAdd: React.FC = () => {
 
     const [questionSetModel, setQuestionSetModel] = useState<QuestionSetAddState>(IQuestionSetAddDefault)
+    const [questionSets] = useState<QuestionSet[]>([]);
+    const [questions] = useState<Question[]>([]);
+    const questionAreas = useState<QuestionArea[]>([]);
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -80,7 +84,7 @@ const QuestionSetAdd: React.FC<RowProps> = ({questionSets, questions,questionAre
         const idsQuestionAreas = new Set([...questionSetModel.questionAreaIds]);
         return questionAreas.filter((item) => {
 
-            return !idsQuestionAreas.has(item.id) || item.id === id;
+          //  return !idsQuestionAreas.has(item.id) || item.id === id;
         })
     }
 
@@ -149,11 +153,11 @@ const QuestionSetAdd: React.FC<RowProps> = ({questionSets, questions,questionAre
                             onChange={(e) =>
                                 changeQuestionAreaHandler(index, Number(e.target.value))
                             }>
-                            {getQuestionAreaOptions(item).map((questionArea) => (
-                                <MenuItem key={questionArea.id} value={questionArea.id}>
-                                    {questionArea.name}
-                                </MenuItem>
-                            ))}
+                            {/*{getQuestionAreaOptions(item).map((questionArea) => (*/}
+                            {/*    <MenuItem key={questionArea.id} value={questionArea.id}>*/}
+                            {/*        {questionArea.}*/}
+                            {/*    </MenuItem>*/}
+                            {/*))}*/}
                         </TextField>
                     </BoxContainer>
                 ))}
@@ -206,4 +210,4 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
     bindActionCreators({
     }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(QuestionSetAdd);
+export default QuestionSetAdd;

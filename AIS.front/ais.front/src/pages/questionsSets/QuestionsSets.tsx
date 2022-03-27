@@ -1,7 +1,5 @@
-import React, {useEffect} from 'react';
-import {bindActionCreators, Dispatch} from 'redux';
-import {ApplicationState} from "../../core/store/typing";
-import {connect, useDispatch} from "react-redux";
+import React, {useEffect, useState} from 'react';
+import {useDispatch} from "react-redux";
 import styled from "styled-components";
 import {QuestionSetItem} from "./questionSetItem/QuestionSetItem";
 import {getAllData} from '../../core/store/questionSets/actionCreator';
@@ -49,7 +47,8 @@ interface Props {
     questionSets: QuestionSet[]
 }
 
-const QuestionsSets: React.FC<Props> = ({questionSets}) => {
+const QuestionsSets: React.FC = () => {
+    const[questionSets] = useState<QuestionSet[]>([]);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const routeChange = () => {
@@ -83,13 +82,4 @@ const QuestionsSets: React.FC<Props> = ({questionSets}) => {
     )
 }
 
-const mapStateToProps = (state: ApplicationState) => ({
-    router: state.router,
-    questionSets: state.questionSets.questionSets,
-    questions: state.questions.questions
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) =>
-    bindActionCreators({}, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(QuestionsSets);
+export default QuestionsSets;
