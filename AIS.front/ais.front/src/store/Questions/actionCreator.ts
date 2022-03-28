@@ -14,10 +14,18 @@ export const getAllData = () => {
 };
 
 export const deleteQuestion = (id: number) => {
-    console.log("emit")
+    console.log("delete id "+id)
     return async (dispatch: ApplicationDispatch<QuestionActions>) => {
         await QuestionService.deleteById(id)
         dispatch(getAllData());
     };
   };
+
+export const editQuestion = (question: IQuestion) => {
+    console.log("update question text: "+question.text)
+  return async (dispatch: ApplicationDispatch<QuestionActions>) => {
+    const result = await QuestionService.update(question);
+    if (result) dispatch(getAllData());
+  };
+};
 

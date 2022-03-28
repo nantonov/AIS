@@ -1,58 +1,80 @@
-import React from 'react';
-import './style.css';
+import React, { useState } from 'react';
+//import './style.css';
 import Typography from '@mui/material/Typography';
 import { IQuestion } from '../../DTO/IQuestion';
-import {Button} from "@mui/material";
+import {Button, TextField} from "@mui/material";
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import ReduxFormInput from './ReduxFormInput';
+import { InputField } from './Input';
+import { Save } from '@material-ui/icons';
+import { ITrueAnswer } from '../../DTO/ITrueAnswer';
+import { defaultTrueAnswer } from '../../common/defaultDTO/defaultTrueAnswer';
+import styled from "styled-components";
 
 interface propsFromComponent {
     item: IQuestion;
-    deleteQuestion: (id :number) => void;
+    deleteQuestion: (id :number) => void,
+    updateQuestion:(question :IQuestion) =>void
 }
 interface propsFromDispatch { 
 }
 
 type Props = propsFromComponent & propsFromDispatch;
 
-const QuestionForm: React.FC<Props & InjectedFormProps<IQuestion,Props>> 
-= ({item,deleteQuestion,handleSubmit}) => {
+export const QuestionForm: React.FC<Props> = ({item,deleteQuestion,updateQuestion}) => {
+  const [question, setQuestion] = useState<IQuestion>(item);
+  const [trueAnswer, setTrueAnswer] = useState<ITrueAnswer>(item.trueAnswer || defaultTrueAnswer);
+
+  const ButtonsContainer = styled.div`
+      margin-top: 1em;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+    `;
+
+  const saveAction = () => {
+    updateQuestion(question);
+    //alert('Question: '+question.text+" Answer: "+trueAnswer.text);
+    // const action = isEdit ? UserProjectService.update : UserProjectService.create;
+    // action(projectInfo)
+    //   .then(() => {
+    //     setToastMessage({ text: `Проект ${isEdit ? 'изменен' : 'добавлен'}`, severity: 'success', visible: true });
+    //     history.push('/myProject');
+    //   })
+    //   .catch(({ response }) => {
+    //     setErrorInfo(response.data);
+    //   });
+  }
+
+  const handlerClickDelete = () =>{
+    deleteQuestion(question.id);
+  }
     return (
-      <form onSubmit={handleSubmit}>
+      <div>
             <Typography> Update Question</Typography>
 
-            <Field name="text" component={ReduxFormInput} type="text" defaultValue={item.text} />
-            {/* <Field
-                  name="text"
-                  type="text"
-                  component="textarea"
-                  defaultValue={item.text}
-                /> */}
+              <TextField fullWidth
+                type='text'
+                value={question.text}
+                onChange={(event) => {
+                  setQuestion((prev: IQuestion) => ({ ...prev, text: event.target.value }))
+                }}
+              />
   
             <Typography pt={2}> True Answer</Typography>
-
-            <Field
-                  type="text"
-                  name="trueAnswer"
-                  component={ReduxFormInput}
-                  externalValue={item.trueAnswer?.text}
-                />
-                
-            {/* <Field
-                  name="trueAnswer"
-                  type="text"
-                  component={InputField}
-                  value={props.item.trueAnswer?.text}
-                /> */}
             
-            <div className='container'>
-              <Button variant="contained" type="submit"> Confirm</Button>
-              <Button variant="contained" onClick={() => {deleteQuestion(item.id);}}>Delete</Button>
-            </div>
-      </form>
+            <TextField fullWidth
+                type='text'
+                value={trueAnswer.text}
+                onChange={(event) => {
+                  setTrueAnswer((prev: ITrueAnswer) => ({ ...prev, text: event.target.value }))
+                }}
+              />
+            
+            <ButtonsContainer>
+              <Button variant="contained" onClick={saveAction}> Confirm</Button>
+              <Button variant="contained" onClick={handlerClickDelete}>Delete</Button>
+            </ButtonsContainer>
+      </div>
     )
 }
-
-export const QuestionReduxForm = reduxForm<IQuestion, Props>({
-    form:"questionUpdate"
-  })(QuestionForm);
