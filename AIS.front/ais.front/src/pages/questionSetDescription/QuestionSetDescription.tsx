@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {bindActionCreators, Dispatch} from 'redux';
 import {Button, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
-import {ApplicationState} from "../../core/store/typing";
-import {connect, useDispatch} from "react-redux";
+import {useDispatch} from "react-redux";
 import {useParams} from "react-router-dom";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -26,7 +24,7 @@ interface Props {
 const QuestionSetDescription: React.FC = () => {
 
     let {id} = useParams();
-    const [questionSet] = useState<QuestionSet>(defaultQuestionSet);
+    const [questionSet, setQuestionSet] = useState<QuestionSet>(defaultQuestionSet);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -107,14 +105,4 @@ const QuestionSetDescription: React.FC = () => {
     )
 }
 
-
-const mapStateToProps = (state: ApplicationState) => ({
-    router: state.router,
-    questionSet: state.questionSets.questionSet,
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) =>
-    bindActionCreators({
-    }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(QuestionSetDescription);
+export default QuestionSetDescription;

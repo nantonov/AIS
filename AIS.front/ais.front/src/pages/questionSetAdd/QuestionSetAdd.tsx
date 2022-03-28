@@ -2,8 +2,6 @@ import {Box, Button, FormControl, Grid, MenuItem, TextField} from "@mui/material
 import Typography from "@mui/material/Typography";
 import React, {useEffect, useState} from "react";
 import styled from "styled-components";
-import {ApplicationState} from "../../core/store/typing";
-import {bindActionCreators, Dispatch} from "redux";
 import {useDispatch} from "react-redux";
 import {QuestionSet, QuestionSetAddState} from "../../core/interfaces/questionSet";
 import {IQuestionSetAddDefault} from "../../core/common/defaultDTO/defaultQuestionSet";
@@ -41,9 +39,9 @@ interface Props{
 const QuestionSetAdd: React.FC = () => {
 
     const [questionSetModel, setQuestionSetModel] = useState<QuestionSetAddState>(IQuestionSetAddDefault)
-    const [questionSets] = useState<QuestionSet[]>([]);
-    const [questions] = useState<Question[]>([]);
-    const questionAreas = useState<QuestionArea[]>([]);
+    const [questionSets, setQuestionSets] = useState<QuestionSet[]>([]);
+    const [questions, setQuestions] = useState<Question[]>([]);
+    const [questionAreas, setQuestionAreas] = useState<QuestionArea[]>([]);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -84,7 +82,7 @@ const QuestionSetAdd: React.FC = () => {
         const idsQuestionAreas = new Set([...questionSetModel.questionAreaIds]);
         return questionAreas.filter((item) => {
 
-          //  return !idsQuestionAreas.has(item.id) || item.id === id;
+            return !idsQuestionAreas.has(item.id) || item.id === id;
         })
     }
 
@@ -153,11 +151,11 @@ const QuestionSetAdd: React.FC = () => {
                             onChange={(e) =>
                                 changeQuestionAreaHandler(index, Number(e.target.value))
                             }>
-                            {/*{getQuestionAreaOptions(item).map((questionArea) => (*/}
-                            {/*    <MenuItem key={questionArea.id} value={questionArea.id}>*/}
-                            {/*        {questionArea.}*/}
-                            {/*    </MenuItem>*/}
-                            {/*))}*/}
+                            {getQuestionAreaOptions(item).map((questionArea) => (
+                                <MenuItem key={questionArea.id} value={questionArea.id}>
+                                    {questionArea.name}
+                                </MenuItem>
+                            ))}
                         </TextField>
                     </BoxContainer>
                 ))}
@@ -198,16 +196,5 @@ const QuestionSetAdd: React.FC = () => {
         </GridContainer>
     )
 }
-
-const mapStateToProps = (state: ApplicationState) => ({
-    router: state.router,
-    questionSets: state.questionSets.questionSets,
-    questions: state.questions.questions,
-    questionAreas: state.questionAreas.questionAreas
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) =>
-    bindActionCreators({
-    }, dispatch);
 
 export default QuestionSetAdd;

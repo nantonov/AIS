@@ -48,7 +48,7 @@ interface Props {
 }
 
 const QuestionsSets: React.FC = () => {
-    const[questionSets] = useState<QuestionSet[]>([]);
+    const[questionSets, setQuestionSets] = useState<QuestionSet[]>([]);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const routeChange = () => {
@@ -67,7 +67,7 @@ const QuestionsSets: React.FC = () => {
                 <Container>
                     <QuestionSetItems>
                         {(questionSets.length !== 0) ? questionSets.map(item => {
-                            return <QuestionSetItem key={item.id} item={item}/>
+                            return <QuestionSetItem key={item.id} questionSet={item}/>
                         }) : <TypographyContainer align="center" variant="h3">Something went wrong. Please refresh
                             page!!!.</TypographyContainer>}
                     </QuestionSetItems>

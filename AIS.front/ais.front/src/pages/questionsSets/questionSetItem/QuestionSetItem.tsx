@@ -1,7 +1,4 @@
 import React from 'react';
-import {bindActionCreators, Dispatch} from 'redux';
-import {ApplicationState} from "../../../core/store/typing";
-import {connect} from "react-redux";
 import styled from "styled-components";
 import {QuestionSet} from "../../../core/interfaces/questionSet";
 import {useNavigate} from "react-router-dom";
@@ -31,12 +28,11 @@ const QuestionSetDescriptionDiv = styled.div`
 
 const QuestionSetNameText = styled.text``;
 
-
 interface Props {
-    item: QuestionSet;
+    questionSet: QuestionSet;
 }
 
-export const QuestionSetItem: React.FC<Props> = ({item}) => {
+export const QuestionSetItem: React.FC<Props> = ({questionSet}) => {
     const navigate = useNavigate();
     const routeChange = (id: number) => {
         const path = `/questionSetDescription/${id}`;
@@ -44,11 +40,11 @@ export const QuestionSetItem: React.FC<Props> = ({item}) => {
     }
     return (
         <QuestionSetContainer onClick={() => {
-            routeChange(item.id)
+            routeChange(questionSet.id)
         }}>
-            <QuestionSetHeader>{item.name}</QuestionSetHeader>
+            <QuestionSetHeader>{questionSet.name}</QuestionSetHeader>
             <QuestionSetDescriptionDiv>
-                <QuestionSetNameText>{item.name}</QuestionSetNameText>
+                <QuestionSetNameText>{questionSet.name}</QuestionSetNameText>
             </QuestionSetDescriptionDiv>
         </QuestionSetContainer>
     )

@@ -14,7 +14,7 @@ interface Props{
 
 const QuestionArea: React.FC = () => {
     const dispatch = useDispatch();
-    const [questionArea] = useState<questionArea[]>([]);
+    const [questionArea, setQuestionArea] = useState<questionArea[]>([]);
 
     useEffect(() => {
         dispatch(fetchAllQuestionAreas());
