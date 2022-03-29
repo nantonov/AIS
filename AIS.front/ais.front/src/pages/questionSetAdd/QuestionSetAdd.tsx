@@ -1,6 +1,6 @@
 import {Box, Button, FormControl, Grid, MenuItem, TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
-import React, {useEffect, useState} from "react";
+import React, {FC, useEffect, useState} from "react";
 import styled from "styled-components";
 import {useDispatch} from "react-redux";
 import {QuestionSet, QuestionSetAddState} from "../../core/interfaces/questionSet";
@@ -30,11 +30,7 @@ const ButtonContainer = styled(Button)`
   left: 90%;
 `;
 
-interface Props{
-    questionSets: QuestionSet[],
-    questions: Question[],
-    questionAreas: QuestionArea[]
-}
+function QuestionSetAdd({questionSets, questions, getAllData, getQuestions, questionAreas, fetchQuestionArea}: Props) {
 
 const QuestionSetAdd: React.FC = () => {
 
@@ -51,7 +47,7 @@ const QuestionSetAdd: React.FC = () => {
         navigate(path);
     }
 
-    function saveAction() {
+    const saveAction = () => {
         QuestionSetService.addQuestionSet(questionSetModel);
         routeChange()
     }
@@ -69,7 +65,7 @@ const QuestionSetAdd: React.FC = () => {
         dispatch(fetchAllQuestionAreas());
     }, []);
 
-    function addEmptyQuestionIdsArray() {
+    const addEmptyQuestionIdsArray = () => {
         const previousQuestionArray = [...questionSetModel.questionIds];
         previousQuestionArray.push(0);
         setQuestionSetModel({
@@ -78,7 +74,7 @@ const QuestionSetAdd: React.FC = () => {
         })
     }
 
-    function getQuestionAreaOptions(id: number) {
+    const getQuestionAreaOptions = (id: number) => {
         const idsQuestionAreas = new Set([...questionSetModel.questionAreaIds]);
         return questionAreas.filter((item) => {
 
@@ -86,14 +82,14 @@ const QuestionSetAdd: React.FC = () => {
         })
     }
 
-    function getQuestionOptions(id: number) {
+    const getQuestionOptions = (id: number) => {
         const idsSet = new Set([...questionSetModel.questionIds]);
         return questions.filter((item) => {
             return !idsSet.has(item.id) || item.id === id;
         });
     }
 
-    function changeQuestionHandler(index: number, id: number) {
+    const changeQuestionHandler = (index: number, id: number) => {
         const array = [...questionSetModel.questionIds];
         array[index] = id;
         setQuestionSetModel({
@@ -102,7 +98,7 @@ const QuestionSetAdd: React.FC = () => {
         })
     }
 
-    function addEmptyQuestionArea() {
+    const addEmptyQuestionArea = () => {
         const previousQuestionAreasIdsArray = [...questionSetModel.questionAreaIds];
         previousQuestionAreasIdsArray.push(0);
         setQuestionSetModel({
@@ -111,7 +107,7 @@ const QuestionSetAdd: React.FC = () => {
         })
     }
 
-    function changeQuestionAreaHandler(index: number, id: number) {
+    const changeQuestionAreaHandler = (index: number, id: number) => {
         const array = [...questionSetModel.questionAreaIds];
         array[index] = id;
         setQuestionSetModel({

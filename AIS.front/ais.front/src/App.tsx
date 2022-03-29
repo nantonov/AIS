@@ -11,7 +11,7 @@ import QuestionSetDescription from "./pages/questionSetDescription/QuestionSetDe
 import QuestionAreaForm from "./pages/questionAreaForm/QuestionAreaForm";
 import AddQuestionSet from "./pages/questionSetAdd/QuestionSetAdd";
 
-function App() {
+const App: React.FC = () => {
     return (
         <Provider store={store}>
                 <Header/>

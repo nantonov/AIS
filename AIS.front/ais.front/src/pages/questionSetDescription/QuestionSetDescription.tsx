@@ -31,13 +31,13 @@ const QuestionSetDescription: React.FC = () => {
         dispatch(getById(Number(id)));
     }, []);
 
-    function DeleteQuestion(questionSetId: number, questionId: number) {
+    const DeleteQuestion = (questionSetId: number, questionId: number) => {
         QuestionsQuestionSetsService.deleteByTwoIds(questionSetId, questionId).then(() => {
             getById(Number(id));
         }).catch((e) => console.log(e))
     }
 
-    function DeleteQuestionArea(questionAreaId: number, questionSetId: number) {
+    const DeleteQuestionArea = (questionAreaId: number, questionSetId: number) => {
         QuestionAreasQuestionSetsService.deleteByTwoIds(questionAreaId, questionSetId).then(() => {
             getById(Number(id));
         })
