@@ -8,10 +8,6 @@ import QuestionAreaTableRow from "./components/questionAreaTableRow/QuestionArea
 import {fetchAllQuestionAreas, fetchQuestionAreaById} from "../../core/store/questionArea/actionCreators";
 import {QuestionArea as questionArea} from "../../core/interfaces/questionArea";
 
-interface Props {
-    questionAreas: questionArea[]
-}
-
 const QuestionArea: React.FC = () => {
     const dispatch = useDispatch();
     const [questionArea, setQuestionArea] = useState<questionArea[]>([]);

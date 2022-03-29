@@ -43,10 +43,6 @@ const TypographyContainer = styled(Typography)`
   align-items: center;
 `;
 
-interface Props {
-    questionSets: QuestionSet[]
-}
-
 const QuestionsSets: React.FC = () => {
     const[questionSets, setQuestionSets] = useState<QuestionSet[]>([]);
     const navigate = useNavigate();

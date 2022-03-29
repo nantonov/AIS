@@ -17,10 +17,6 @@ const GridContainer = styled(Grid)`
   max-width: 1170px;
   margin: auto;`;
 
-interface Props {
-    questionSet: QuestionSet,
-}
-
 const QuestionSetDescription: React.FC = () => {
 
     let {id} = useParams();

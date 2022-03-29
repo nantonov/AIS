@@ -20,14 +20,19 @@ const QuestionAreasForm: React.FC = () => {
     }, []);
 
     const change = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const copy = Object.assign({}, item);
-        copy.name = e.target.value;
-        setItem(copy);
+        setItem((oldItem) => {
+            return {...oldItem, name: e.target.value};
+        });
     };
+
     const submit = () => {
-        if (id) dispatch(editQuestionArea(item));
-        else dispatch(createQuestionArea(item));
+        if (id) {
+            dispatch(editQuestionArea(item));
+        } else {
+            dispatch(createQuestionArea(item));
+        }
     }
+
     return (
         <Box>
             <Typography>{item.name}</Typography>

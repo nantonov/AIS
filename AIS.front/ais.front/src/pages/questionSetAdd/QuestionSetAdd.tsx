@@ -1,6 +1,6 @@
 import {Box, Button, FormControl, Grid, MenuItem, TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
-import React, {FC, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import {useDispatch} from "react-redux";
 import {QuestionSet, QuestionSetAddState} from "../../core/interfaces/questionSet";
@@ -29,8 +29,6 @@ const GridContainer = styled(Grid)`
 const ButtonContainer = styled(Button)`
   left: 90%;
 `;
-
-function QuestionSetAdd({questionSets, questions, getAllData, getQuestions, questionAreas, fetchQuestionArea}: Props) {
 
 const QuestionSetAdd: React.FC = () => {
 
