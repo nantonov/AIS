@@ -8,7 +8,7 @@ import QuestionAreaTableRow from "./components/questionAreaTableRow/QuestionArea
 import {fetchAllQuestionAreas, fetchQuestionAreaById} from "../../core/store/questionArea/actionCreators";
 import {QuestionArea as questionArea} from "../../core/interfaces/questionArea";
 
-interface Props{
+interface Props {
     questionAreas: questionArea[]
 }
 
