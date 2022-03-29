@@ -1,17 +1,19 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {Grid} from "@mui/material";
-import {connect} from "react-redux";
-import {bindActionCreators, Dispatch} from "redux";
+import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {MainRoutes} from "../../core/constants/mainRoutes";
 import QuestionAreaTableHeader from "./components/questionAreaTableHeader/QuestionAreaTableHeader";
 import QuestionAreaTableRow from "./components/questionAreaTableRow/QuestionAreaTableRow";
-import {questionAreasActionCreators} from "../../core/store/questionArea";
-import {ApplicationState} from "../../core/store/typing";
+import {fetchAllQuestionAreas, fetchQuestionAreaById} from "../../core/store/questionArea/actionCreators";
+import {QuestionArea as questionArea} from "../../core/interfaces/questionArea";
 
-const QuestionArea: React.FC<Props> = ({fetchQuestionAreas, fetchQuestionAreaById, questionAreas}) => {
+const QuestionArea: React.FC = () => {
+    const dispatch = useDispatch();
+    const [questionArea, setQuestionArea] = useState<questionArea[]>([]);
+
     useEffect(() => {
-        fetchQuestionAreas();
+        dispatch(fetchAllQuestionAreas());
     }, []);
 
     const navigate = useNavigate();
@@ -24,25 +26,11 @@ const QuestionArea: React.FC<Props> = ({fetchQuestionAreas, fetchQuestionAreaByI
         <Grid container justifyContent="space=between"
               alignItems="center">
             <QuestionAreaTableHeader/>
-            {questionAreas.map((item) =>
+            {questionArea.map((item) =>
                 <QuestionAreaTableRow key={item.id} qArea={item} onEdit={edit.bind(this)}/>
             )}
         </Grid>
     );
 };
 
-
-const mapStateToProps = (state: ApplicationState) => ({
-    questionAreas: state.questionAreas.questionAreas
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) =>
-    bindActionCreators({
-        fetchQuestionAreaById: questionAreasActionCreators.fetchQuestionAreaById,
-        fetchQuestionAreas: questionAreasActionCreators.fetchAllQuestionAreas,
-    }, dispatch);
-
-type Props = ReturnType<typeof mapStateToProps> &
-    ReturnType<typeof mapDispatchToProps>;
-
-export default connect(mapStateToProps, mapDispatchToProps)(QuestionArea);
+export default QuestionArea;

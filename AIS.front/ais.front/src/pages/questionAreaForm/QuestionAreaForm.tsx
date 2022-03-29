@@ -1,53 +1,45 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import {Typography, Button, Box} from "@mui/material";
-import { QuestionArea } from "../../core/interfaces/questionArea";
-import { ApplicationState } from "../../core/store/typing";
-import { connect } from "react-redux";
-import { questionAreasActionCreators } from "../../core/store/questionArea";
-import {bindActionCreators, Dispatch } from "redux";
-import { useParams } from "react-router-dom";
-import { defaultQuestionArea } from "../../core/common/defaultDTO/defaultQuestionArea";
+import {QuestionArea} from "../../core/interfaces/questionArea";
+import {useDispatch} from "react-redux";
+import {useParams} from "react-router-dom";
+import {defaultQuestionArea} from "../../core/common/defaultDTO/defaultQuestionArea";
+import {
+    createQuestionArea,
+    editQuestionArea,
+    fetchQuestionAreaById
+} from "../../core/store/questionArea/actionCreators";
 
-const QuestionAreasForm: React.FC<Props> = ({createQuestionArea, editQuestionArea, fetchQuestionAreaById, questionAreas}) =>{
-    const { id } = useParams();
-    const [item, setItem] = useState<QuestionArea>(questionAreas.questionArea || defaultQuestionArea);
+const QuestionAreasForm: React.FC = () => {
+    const {id} = useParams();
+    const dispatch = useDispatch();
+    const [item, setItem] = useState<QuestionArea>(defaultQuestionArea);
+
     useEffect(() => {
-        fetchQuestionAreaById(Number(id));
+        dispatch(fetchQuestionAreaById(Number(id)));
     }, []);
 
-    const load = () => {
-        setItem(questionAreas.questionArea || defaultQuestionArea);
-    }
     const change = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const copy = Object.assign({}, item);
-        copy.name = e.target.value;
-        setItem(copy);
+        setItem((oldItem) => {
+            return {...oldItem, name: e.target.value};
+        });
     };
-    const submit = () =>{
-        if(id) editQuestionArea(item);
-        else createQuestionArea(item);
+
+    const submit = () => {
+        if (id) {
+            dispatch(editQuestionArea(item));
+        } else {
+            dispatch(createQuestionArea(item));
+        }
     }
+
     return (
-            <Box>
-                <Typography>{item.name}</Typography>
-                <input value={item.name} onChange={change}/>
-                <Button onClick={submit}> Send</Button>
-            </Box>
+        <Box>
+            <Typography>{item.name}</Typography>
+            <input value={item.name} onChange={change}/>
+            <Button onClick={submit}> Send</Button>
+        </Box>
     );
 };
 
-const mapStateToProps = (state: ApplicationState) => ({
-    questionAreas: state.questionAreas
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) =>
-    bindActionCreators({
-        createQuestionArea: questionAreasActionCreators.createQuestionArea,
-        editQuestionArea: questionAreasActionCreators.editQuestionArea,
-        fetchQuestionAreaById: questionAreasActionCreators.fetchQuestionAreaById,
-    }, dispatch);
-
-type Props = ReturnType<typeof mapStateToProps> &
-    ReturnType<typeof mapDispatchToProps>;
-
-export default connect(mapStateToProps, mapDispatchToProps)(QuestionAreasForm);
+export default QuestionAreasForm;
