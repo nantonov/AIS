@@ -8,7 +8,7 @@ import QuestionSetDescription from "../questionSetDescription/QuestionSetDescrip
 import QuestionAreaForm from "../questionAreaForm/QuestionAreaForm";
 import AddQuestionSet from "../questionSetAdd/QuestionSetAdd";
 
-export default function Main() {
+ const Main: React.FC = () => {
     return (
         <Routes>
             <Route path={MainRoutes.questionArea} element={<QuestionArea/>}/>
@@ -21,3 +21,5 @@ export default function Main() {
         </Routes>
     )
 }
+
+export default Main;

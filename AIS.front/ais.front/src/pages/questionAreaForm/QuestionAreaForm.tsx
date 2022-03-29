@@ -8,15 +8,15 @@ import {bindActionCreators, Dispatch } from "redux";
 import { useParams } from "react-router-dom";
 import { defaultQuestionArea } from "../../core/common/defaultDTO/defaultQuestionArea";
 
-const QuestionAreasForm: React.FC<Props> = (props) =>{
+const QuestionAreasForm: React.FC<Props> = ({createQuestionArea, editQuestionArea, fetchQuestionAreaById, questionAreas}) =>{
     const { id } = useParams();
-    const [item, setItem] = useState<QuestionArea>(props.questionAreas.questionArea || defaultQuestionArea);
+    const [item, setItem] = useState<QuestionArea>(questionAreas.questionArea || defaultQuestionArea);
     useEffect(() => {
-        props.fetchQuestionAreaById(Number(id));
+        fetchQuestionAreaById(Number(id));
     }, []);
 
     const load = () => {
-        setItem(props.questionAreas.questionArea || defaultQuestionArea);
+        setItem(questionAreas.questionArea || defaultQuestionArea);
     }
     const change = (e: React.ChangeEvent<HTMLInputElement>) => {
         const copy = Object.assign({}, item);
@@ -24,8 +24,8 @@ const QuestionAreasForm: React.FC<Props> = (props) =>{
         setItem(copy);
     };
     const submit = () =>{
-        if(id) props.editQuestionArea(item);
-        else props.createQuestionArea(item);
+        if(id) editQuestionArea(item);
+        else createQuestionArea(item);
     }
     return (
             <Box>
