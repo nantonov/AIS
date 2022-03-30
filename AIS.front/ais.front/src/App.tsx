@@ -10,6 +10,7 @@ import QuestionsSets from "./pages/questionsSets/QuestionsSets";
 import QuestionSetDescription from "./pages/questionSetDescription/QuestionSetDescription";
 import QuestionAreaForm from "./pages/questionAreaForm/QuestionAreaForm";
 import AddQuestionSet from "./pages/questionSetAdd/QuestionSetAdd";
+import Questions from './pages/questions/Questions';
 
 const App: React.FC = () => {
     return (
@@ -23,6 +24,7 @@ const App: React.FC = () => {
                     <Route path={`${MainRoutes.questionAreaForm}/:id`} element={<QuestionAreaForm/>}/>
                     <Route path={MainRoutes.questionAreaForm} element={<QuestionAreaForm/>}/>
                     <Route path={MainRoutes.addQuestionSet} element ={<AddQuestionSet/>}/>
+                    <Route path={MainRoutes.questions} element ={<Questions/>}/>
                 </Routes>
         </Provider>
     )}
