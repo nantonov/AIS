@@ -7,6 +7,7 @@ import QuestionsSets from "../questionsSets/QuestionsSets";
 import QuestionSetDescription from "../questionSetDescription/QuestionSetDescription";
 import QuestionAreaForm from "../questionAreaForm/QuestionAreaForm";
 import AddQuestionSet from "../questionSetAdd/QuestionSetAdd";
+import Questions from "../questions/Questions";
 
 export default function Main() {
     return (
@@ -18,6 +19,7 @@ export default function Main() {
             <Route path={`${MainRoutes.questionAreaForm}/:id`} element={<QuestionAreaForm/>}/>
             <Route path={MainRoutes.questionAreaForm} element={<QuestionAreaForm/>}/>
             <Route path={MainRoutes.addQuestionSet} element ={<AddQuestionSet/>}/>
+            <Route path={MainRoutes.questions} element={<Questions/>}/>
         </Routes>
     )
 }

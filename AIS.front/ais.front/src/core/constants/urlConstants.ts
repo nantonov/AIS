@@ -6,4 +6,4 @@ export const QUESTION_AREA_URL = 'api/QuestionArea';
 export const QUESTION_INTERVIEWEE_ANSWER_URL = 'api/QuestionIntervieweeAnswer';
 export const QUESTION_SET_URL = 'api/QuestionSet';
 export const SESSION_URL = 'api/Session';
-export const TRUE_ANSWER_URL = 'api/TrueAnswer';
+export const TRUE_ANSWER_URL = 'api/TrueAnswers';

@@ -6,4 +6,5 @@ export enum MainRoutes {
     questionSetDescription = 'questionSet/:id',
     questionAreaForm = 'questionAreaForm',
     addQuestionSet='addQuestionSet',
+    questions = 'questions',
 }

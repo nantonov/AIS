@@ -1,3 +1,4 @@
+import { trueAnswerReducer } from './trueAnswer/reducer';
 import thunk from "redux-thunk";
 import {
     connectRouter,
@@ -32,6 +33,7 @@ const rootReducer = (history: BrowserHistory) =>
         questionSets: questionSetReducer,
         questionAreas: questionAreasReducer,
         questions: questionReducer,
+        trueAnswers:trueAnswerReducer
     });
 
 export const store = createStore<ApplicationState, AnyAction, unknown, unknown>(
