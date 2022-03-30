@@ -1,9 +1,6 @@
-import React, {useEffect} from 'react';
-import {bindActionCreators, Dispatch} from 'redux';
+import React, {useEffect, useState} from 'react';
 import {Button, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
-import {ApplicationState} from "../../core/store/typing";
-import {connect} from "react-redux";
-import {questionSetActionCreators} from "../../core/store/questionSets";
+import {useDispatch} from "react-redux";
 import {useParams} from "react-router-dom";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -11,27 +8,32 @@ import Typography from "@mui/material/Typography";
 import styled from "@emotion/styled";
 import {QuestionAreasQuestionSetsService} from "../../core/services/questionAreasQuestionSetsService";
 import {QuestionsQuestionSetsService} from "../../core/services/questionsQuestionSetsService";
+import {QuestionSet} from "../../core/interfaces/questionSet";
+import {getById} from "../../core/store/questionSets/actionCreator";
+import {defaultQuestionSet} from "../../core/common/defaultDTO/defaultQuestionSet";
 
 const GridContainer = styled(Grid)`
   width: 100%;
   max-width: 1170px;
   margin: auto;`;
 
-const QuestionSetDescription: React.FC<Props> = ({questionSet, getById}: Props) => {
+const QuestionSetDescription: React.FC = () => {
 
     let {id} = useParams();
+    const [questionSet, setQuestionSet] = useState<QuestionSet>(defaultQuestionSet);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        getById(Number(id));
+        dispatch(getById(Number(id)));
     }, []);
 
-    function DeleteQuestion(questionSetId: number, questionId: number) {
+    const DeleteQuestion = (questionSetId: number, questionId: number) => {
         QuestionsQuestionSetsService.deleteByTwoIds(questionSetId, questionId).then(() => {
             getById(Number(id));
         }).catch((e) => console.log(e))
     }
 
-    function DeleteQuestionArea(questionAreaId: number, questionSetId: number) {
+    const DeleteQuestionArea = (questionAreaId: number, questionSetId: number) => {
         QuestionAreasQuestionSetsService.deleteByTwoIds(questionAreaId, questionSetId).then(() => {
             getById(Number(id));
         })
@@ -99,18 +101,4 @@ const QuestionSetDescription: React.FC<Props> = ({questionSet, getById}: Props) 
     )
 }
 
-
-const mapStateToProps = (state: ApplicationState) => ({
-    router: state.router,
-    questionSet: state.questionSets.questionSet,
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) =>
-    bindActionCreators({
-        getById: questionSetActionCreators.getById
-    }, dispatch);
-
-type Props = ReturnType<typeof mapStateToProps> &
-    ReturnType<typeof mapDispatchToProps>;
-
-export default connect(mapStateToProps, mapDispatchToProps)(QuestionSetDescription);
+export default QuestionSetDescription;

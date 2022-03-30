@@ -1,15 +1,14 @@
-import React, {useEffect} from 'react';
-import {bindActionCreators, Dispatch} from 'redux';
-import {ApplicationState} from "../../core/store/typing";
-import {connect} from "react-redux";
-import {questionSetActionCreators} from "../../core/store/questionSets";
+import React, {useEffect, useState} from 'react';
+import {useDispatch} from "react-redux";
 import styled from "styled-components";
 import {QuestionSetItem} from "./questionSetItem/QuestionSetItem";
+import {getAllData} from '../../core/store/questionSets/actionCreator';
+import {getAllData as getQuestions} from '../../core/store/questions/actionCreator';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Typography from "@mui/material/Typography";
 import {Grid, Tooltip} from "@mui/material";
-import {questionsActionCreators} from "../../core/store/questions";
 import {useNavigate} from "react-router-dom";
+import {QuestionSet} from "../../core/interfaces/questionSet";
 
 const Container = styled.div`
   width: 100%;
@@ -44,16 +43,18 @@ const TypographyContainer = styled(Typography)`
   align-items: center;
 `;
 
-const QuestionsSets: React.FC<Props> = ({questionSets, getAllData, getQuestions}) => {
+const QuestionsSets: React.FC = () => {
+    const[questionSets, setQuestionSets] = useState<QuestionSet[]>([]);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const routeChange = () => {
         const path = '/addQuestionSet';
         navigate(path);
     }
 
     useEffect(() => {
-        getAllData();
-        getQuestions();
+        dispatch(getAllData());
+        dispatch(getQuestions());
     }, []);
 
     return (
@@ -62,7 +63,7 @@ const QuestionsSets: React.FC<Props> = ({questionSets, getAllData, getQuestions}
                 <Container>
                     <QuestionSetItems>
                         {(questionSets.length !== 0) ? questionSets.map(item => {
-                            return <QuestionSetItem key={item.id} item={item}/>
+                            return <QuestionSetItem key={item.id} questionSet={item}/>
                         }) : <TypographyContainer align="center" variant="h3">Something went wrong. Please refresh
                             page!!!.</TypographyContainer>}
                     </QuestionSetItems>
@@ -77,19 +78,4 @@ const QuestionsSets: React.FC<Props> = ({questionSets, getAllData, getQuestions}
     )
 }
 
-const mapStateToProps = (state: ApplicationState) => ({
-    router: state.router,
-    questionSets: state.questionSets.questionSets,
-    questions: state.questions.questions
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) =>
-    bindActionCreators({
-        getAllData: questionSetActionCreators.getAllData,
-        getQuestions: questionsActionCreators.getAllData
-    }, dispatch);
-
-type Props = ReturnType<typeof mapStateToProps> &
-    ReturnType<typeof mapDispatchToProps>;
-
-export default connect(mapStateToProps, mapDispatchToProps)(QuestionsSets);
+export default QuestionsSets;

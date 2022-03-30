@@ -16,4 +16,3 @@ export interface ApplicationState {
 
 export type ApplicationDispatch<T extends Action> = ThunkDispatch<ApplicationState, unknown, T>;
 
-export type GetState = () => ApplicationState;

@@ -1,8 +1,4 @@
 import React from 'react';
-import {bindActionCreators, Dispatch} from 'redux';
-import {ApplicationState} from "../../../core/store/typing";
-import {connect} from "react-redux";
-import {questionSetActionCreators} from "../../../core/store/questionSets";
 import styled from "styled-components";
 import {QuestionSet} from "../../../core/interfaces/questionSet";
 import {useNavigate} from "react-router-dom";
@@ -32,17 +28,11 @@ const QuestionSetDescriptionDiv = styled.div`
 
 const QuestionSetNameText = styled.text``;
 
-
-interface propsFromComponent {
-    item: QuestionSet;
+interface Props {
+    questionSet: QuestionSet;
 }
 
-interface propsFromDispatch {
-}
-
-type Props = propsFromComponent & propsFromDispatch;
-
-export const QuestionSetItem: React.FC<Props> = ({item}: Props) => {
+export const QuestionSetItem: React.FC<Props> = ({questionSet}) => {
     const navigate = useNavigate();
     const routeChange = (id: number) => {
         const path = `/questionSetDescription/${id}`;
@@ -50,24 +40,12 @@ export const QuestionSetItem: React.FC<Props> = ({item}: Props) => {
     }
     return (
         <QuestionSetContainer onClick={() => {
-            routeChange(item.id)
+            routeChange(questionSet.id)
         }}>
-            <QuestionSetHeader>{item.name}</QuestionSetHeader>
+            <QuestionSetHeader>{questionSet.name}</QuestionSetHeader>
             <QuestionSetDescriptionDiv>
-                <QuestionSetNameText>{item.name}</QuestionSetNameText>
+                <QuestionSetNameText>{questionSet.name}</QuestionSetNameText>
             </QuestionSetDescriptionDiv>
         </QuestionSetContainer>
     )
 }
-
-const mapStateToProps = (state: ApplicationState) => ({
-    router: state.router,
-    questionSets: state.questionSets.questionSets
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) =>
-    bindActionCreators({
-        getAllData: questionSetActionCreators.getAllData
-    }, dispatch);
-
-connect(mapStateToProps, mapDispatchToProps)(QuestionSetItem);
