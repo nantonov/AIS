@@ -64,9 +64,7 @@ const QuestionsSets: React.FC = () => {
         <Container>
           <QuestionSetItems>
             {questionSets.length !== 0 ? (
-              questionSets.map((item) => (
-                <QuestionSetItem key={item.id} questionSet={item} />
-              ))
+              questionSets.map((item) => <QuestionSetItem key={item.id} questionSet={item} />)
             ) : (
               <TypographyContainer align="center" variant="h3">
                 Something went wrong. Please refresh page!!!.

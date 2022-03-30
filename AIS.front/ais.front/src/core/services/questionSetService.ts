@@ -1,8 +1,5 @@
 import { defaultQuestionSet } from '../common/defaultDTO/defaultQuestionSet';
-import {
-  QuestionSet,
-  QuestionSetAddState,
-} from '../interfaces/questionSet/questionSet';
+import { QuestionSet, QuestionSetAddState } from '../interfaces/questionSet/questionSet';
 import axiosInstance from '../../config/getAxious';
 import Config from '../../config/config';
 
@@ -39,9 +36,7 @@ class QuestionSetService {
     );
   }
 
-  public static addQuestionSet(
-    questionSetAdd: QuestionSetAddState
-  ): Promise<any> {
+  public static addQuestionSet(questionSetAdd: QuestionSetAddState): Promise<any> {
     return axiosInstance.post(
       Config.QUESTION_SET_URL,
       { ...questionSetAdd },

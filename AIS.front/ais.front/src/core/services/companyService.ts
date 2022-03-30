@@ -5,9 +5,7 @@ import Config from '../../config/config';
 
 class CompanyService {
   public static async getAll(): Promise<Company[]> {
-    const result = await axiosInstance
-      .get<Company[]>(Config.COMPANY_URL)
-      .then((res) => res.data);
+    const result = await axiosInstance.get<Company[]>(Config.COMPANY_URL).then((res) => res.data);
 
     return result || [];
   }
@@ -29,11 +27,7 @@ class CompanyService {
   }
 
   public static update(company: Company): Promise<boolean> {
-    return axiosInstance.put(
-      Config.COMPANY_URL,
-      { ...company },
-      { params: { id: company.id } }
-    );
+    return axiosInstance.put(Config.COMPANY_URL, { ...company }, { params: { id: company.id } });
   }
 }
 

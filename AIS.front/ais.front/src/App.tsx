@@ -18,18 +18,9 @@ const App: React.FC = () => (
       <Route path={MainRoutes.questionArea} element={<QuestionArea />} />
       <Route path={MainRoutes.sessions} element={<Sessions />} />
       <Route path={MainRoutes.questionSet} element={<QuestionsSets />} />
-      <Route
-        path={MainRoutes.questionSetDescription}
-        element={<QuestionSetDescription />}
-      />
-      <Route
-        path={`${MainRoutes.questionAreaForm}/:id`}
-        element={<QuestionAreaForm />}
-      />
-      <Route
-        path={MainRoutes.questionAreaForm}
-        element={<QuestionAreaForm />}
-      />
+      <Route path={MainRoutes.questionSetDescription} element={<QuestionSetDescription />} />
+      <Route path={`${MainRoutes.questionAreaForm}/:id`} element={<QuestionAreaForm />} />
+      <Route path={MainRoutes.questionAreaForm} element={<QuestionAreaForm />} />
       <Route path={MainRoutes.addQuestionSet} element={<AddQuestionSet />} />
     </Routes>
   </Provider>

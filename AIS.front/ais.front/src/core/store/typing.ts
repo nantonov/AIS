@@ -12,8 +12,4 @@ export interface ApplicationState {
   router: RouterState;
 }
 
-export type ApplicationDispatch<T extends Action> = ThunkDispatch<
-  ApplicationState,
-  unknown,
-  T
->;
+export type ApplicationDispatch<T extends Action> = ThunkDispatch<ApplicationState, unknown, T>;

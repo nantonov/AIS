@@ -16,10 +16,7 @@ const initialState: QuestionSetState = {
 
 export type QuestionSetActions = ActionType<typeof actions>;
 
-export const questionSetReducer = combineReducers<
-  QuestionSetState,
-  QuestionSetActions
->({
+export const questionSetReducer = combineReducers<QuestionSetState, QuestionSetActions>({
   // eslint-disable-next-line @typescript-eslint/default-param-last
   questionSets: (state = initialState.questionSets, action) => {
     switch (action.type) {

@@ -5,9 +5,7 @@ import Config from '../../config/config';
 
 class QuestionService {
   public static async getAll(): Promise<Question[]> {
-    const result = await axiosInstance
-      .get<Question[]>(Config.QUESTION_URL)
-      .then((res) => res.data);
+    const result = await axiosInstance.get<Question[]>(Config.QUESTION_URL).then((res) => res.data);
 
     return result || [];
   }
@@ -29,11 +27,7 @@ class QuestionService {
   }
 
   public static update(question: Question): Promise<boolean> {
-    return axiosInstance.put(
-      Config.QUESTION_URL,
-      { ...question },
-      { params: { id: question.id } }
-    );
+    return axiosInstance.put(Config.QUESTION_URL, { ...question }, { params: { id: question.id } });
   }
 }
 

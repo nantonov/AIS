@@ -31,8 +31,7 @@ const GridContainer = styled(Grid)`
 const QuestionSetDescription: React.FC = () => {
   const { id } = useParams();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [questionSet, setQuestionSet] =
-    useState<QuestionSet>(defaultQuestionSet);
+  const [questionSet, setQuestionSet] = useState<QuestionSet>(defaultQuestionSet);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -40,21 +39,13 @@ const QuestionSetDescription: React.FC = () => {
   }, []);
 
   const DeleteQuestion = (questionSetId: number, questionId: number) => {
-    QuestionsQuestionSetsService.deleteByTwoIds(questionSetId, questionId).then(
-      () => {
-        getById(Number(id));
-      }
-    );
+    QuestionsQuestionSetsService.deleteByTwoIds(questionSetId, questionId).then(() => {
+      getById(Number(id));
+    });
   };
 
-  const DeleteQuestionArea = (
-    questionAreaId: number,
-    questionSetId: number
-  ) => {
-    QuestionAreasQuestionSetsService.deleteByTwoIds(
-      questionAreaId,
-      questionSetId
-    ).then(() => {
+  const DeleteQuestionArea = (questionAreaId: number, questionSetId: number) => {
+    QuestionAreasQuestionSetsService.deleteByTwoIds(questionAreaId, questionSetId).then(() => {
       getById(Number(id));
     });
   };
@@ -68,12 +59,7 @@ const QuestionSetDescription: React.FC = () => {
         </Typography>
       </Grid>
       <Grid item>
-        <Typography
-          variant="h5"
-          component="h6"
-          marginTop="10px"
-          marginBottom="10px"
-        >
+        <Typography variant="h5" component="h6" marginTop="10px" marginBottom="10px">
           Question areas:{' '}
         </Typography>
         <TableContainer component={Paper}>
@@ -97,9 +83,7 @@ const QuestionSetDescription: React.FC = () => {
                     <Button endIcon={<EditIcon />} />
                     <Button
                       endIcon={<DeleteIcon />}
-                      onClick={() =>
-                        DeleteQuestionArea(questionArea.id, questionSet.id)
-                      }
+                      onClick={() => DeleteQuestionArea(questionArea.id, questionSet.id)}
                     />
                   </TableCell>
                 </TableRow>
@@ -110,12 +94,7 @@ const QuestionSetDescription: React.FC = () => {
       </Grid>
 
       <Grid item>
-        <Typography
-          variant="h5"
-          component="h6"
-          marginTop="10px"
-          marginBottom="10px"
-        >
+        <Typography variant="h5" component="h6" marginTop="10px" marginBottom="10px">
           Questions
         </Typography>
         <TableContainer component={Paper}>

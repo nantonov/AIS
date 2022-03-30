@@ -1,16 +1,7 @@
 import thunk from 'redux-thunk';
-import {
-  connectRouter,
-  routerMiddleware as createRouterMiddleware,
-} from 'connected-react-router';
+import { connectRouter, routerMiddleware as createRouterMiddleware } from 'connected-react-router';
 import { BrowserHistory, createBrowserHistory } from 'history';
-import {
-  createStore,
-  applyMiddleware,
-  combineReducers,
-  AnyAction,
-  compose,
-} from 'redux';
+import { createStore, applyMiddleware, combineReducers, AnyAction, compose } from 'redux';
 import toastMiddleware from './toastMiddleware/toastMiddleware';
 import { ApplicationState } from './typing';
 import { questionSetReducer } from './questionSets/reducer';

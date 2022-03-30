@@ -8,8 +8,7 @@ const config = {
   QUESTION_SET_URL: 'api/QuestionSets',
   SESSION_URL: 'api/Session',
   TRUE_ANSWER_URL: 'api/TrueAnswer',
-  DELETE_BY_TWO_IDS_QUESTION_AREA:
-    'api/QuestionAreasQuestionSets/deleteByTwoIds',
+  DELETE_BY_TWO_IDS_QUESTION_AREA: 'api/QuestionAreasQuestionSets/deleteByTwoIds',
   DELETE_BY_TWO_IDS_QUESTION: 'api/QuestionsQuestionSets/deleteByTwoIds',
 };
 

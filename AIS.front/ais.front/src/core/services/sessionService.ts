@@ -5,9 +5,7 @@ import Config from '../../config/config';
 
 class SessionService {
   public static async getAll(): Promise<Session[]> {
-    const result = await axiosInstance
-      .get<Session[]>(Config.SESSION_URL)
-      .then((res) => res.data);
+    const result = await axiosInstance.get<Session[]>(Config.SESSION_URL).then((res) => res.data);
 
     return result || [];
   }
@@ -28,11 +26,7 @@ class SessionService {
   }
 
   public static update(session: Session): Promise<boolean> {
-    return axiosInstance.put(
-      Config.SESSION_URL,
-      { ...session },
-      { params: { id: session.id } }
-    );
+    return axiosInstance.put(Config.SESSION_URL, { ...session }, { params: { id: session.id } });
   }
 }
 

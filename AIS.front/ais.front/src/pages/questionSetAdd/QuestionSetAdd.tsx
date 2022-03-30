@@ -1,20 +1,10 @@
-import {
-  Box,
-  Button,
-  FormControl,
-  Grid,
-  MenuItem,
-  TextField,
-} from '@mui/material';
+import { Box, Button, FormControl, Grid, MenuItem, TextField } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import {
-  QuestionSet,
-  QuestionSetAddState,
-} from '../../core/interfaces/questionSet/questionSet';
+import { QuestionSet, QuestionSetAddState } from '../../core/interfaces/questionSet/questionSet';
 import { IQuestionSetAddDefault } from '../../core/common/defaultDTO/defaultQuestionSet';
 import QuestionSetService from '../../core/services/questionSetService';
 import { Question } from '../../core/interfaces/question/question';
@@ -41,9 +31,8 @@ const ButtonContainer = styled(Button)`
 `;
 
 const QuestionSetAdd: React.FC = () => {
-  const [questionSetModel, setQuestionSetModel] = useState<QuestionSetAddState>(
-    IQuestionSetAddDefault
-  );
+  const [questionSetModel, setQuestionSetModel] =
+    useState<QuestionSetAddState>(IQuestionSetAddDefault);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [questionSets, setQuestionSets] = useState<QuestionSet[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -88,9 +77,7 @@ const QuestionSetAdd: React.FC = () => {
 
   const getQuestionAreaOptions = (id: number) => {
     const idsQuestionAreas = new Set([...questionSetModel.questionAreaIds]);
-    return questionAreas.filter(
-      (item) => !idsQuestionAreas.has(item.id) || item.id === id
-    );
+    return questionAreas.filter((item) => !idsQuestionAreas.has(item.id) || item.id === id);
   };
 
   const getQuestionOptions = (id: number) => {
@@ -152,9 +139,7 @@ const QuestionSetAdd: React.FC = () => {
               label="Select"
               helperText="Please select question area"
               value={item}
-              onChange={(e) =>
-                changeQuestionAreaHandler(index, Number(e.target.value))
-              }
+              onChange={(e) => changeQuestionAreaHandler(index, Number(e.target.value))}
             >
               {getQuestionAreaOptions(item).map((questionArea) => (
                 <MenuItem key={questionArea.id} value={questionArea.id}>
@@ -165,9 +150,7 @@ const QuestionSetAdd: React.FC = () => {
           </BoxContainer>
         ))}
         <ButtonContainer
-          disabled={
-            questionSets.length <= questionSetModel.questionAreaIds.length
-          }
+          disabled={questionSets.length <= questionSetModel.questionAreaIds.length}
           variant="contained"
           onClick={addEmptyQuestionArea}
         >
@@ -186,9 +169,7 @@ const QuestionSetAdd: React.FC = () => {
               helperText="Please select question"
               value={item}
               defaultValue={questionSetModel.questionIds[0]}
-              onChange={(e) =>
-                changeQuestionHandler(index, Number(e.target.value))
-              }
+              onChange={(e) => changeQuestionHandler(index, Number(e.target.value))}
             >
               {getQuestionOptions(item).map((question) => (
                 <MenuItem key={question.id} value={question.id}>

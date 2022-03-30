@@ -11,29 +11,25 @@ export const fetchAllQuestionAreas =
   };
 
 export const fetchQuestionAreaById =
-  (id: number) =>
-  async (dispatch: ApplicationDispatch<QuestionAreasActions>) => {
+  (id: number) => async (dispatch: ApplicationDispatch<QuestionAreasActions>) => {
     const questionArea = await QuestionAreaService.getById(id);
     dispatch(fetchById(questionArea));
   };
 
 export const createQuestionArea =
-  (businessDomain: QuestionArea) =>
-  async (dispatch: ApplicationDispatch<QuestionAreasActions>) => {
+  (businessDomain: QuestionArea) => async (dispatch: ApplicationDispatch<QuestionAreasActions>) => {
     const result = await QuestionAreaService.create(businessDomain);
     if (result) dispatch(fetchAllQuestionAreas());
   };
 
 export const editQuestionArea =
-  (businessDomain: QuestionArea) =>
-  async (dispatch: ApplicationDispatch<QuestionAreasActions>) => {
+  (businessDomain: QuestionArea) => async (dispatch: ApplicationDispatch<QuestionAreasActions>) => {
     const result = await QuestionAreaService.update(businessDomain);
     if (result) dispatch(fetchAllQuestionAreas());
   };
 
 export const deleteQuestionArea =
-  (businessDomain: QuestionArea) =>
-  async (dispatch: ApplicationDispatch<QuestionAreasActions>) => {
+  (businessDomain: QuestionArea) => async (dispatch: ApplicationDispatch<QuestionAreasActions>) => {
     await QuestionAreaService.deleteById(businessDomain.id).then(() =>
       dispatch(fetchAllQuestionAreas())
     );

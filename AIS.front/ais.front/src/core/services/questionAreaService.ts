@@ -21,9 +21,7 @@ class QuestionAreaService {
   }
 
   public static deleteById(questionAreaId: number): Promise<any> {
-    return axiosInstance.delete(
-      `${Config.QUESTION_AREA_URL}/${questionAreaId}`
-    );
+    return axiosInstance.delete(`${Config.QUESTION_AREA_URL}/${questionAreaId}`);
   }
 
   public static create(questionArea: QuestionArea): Promise<any> {

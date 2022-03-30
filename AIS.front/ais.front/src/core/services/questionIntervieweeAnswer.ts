@@ -30,17 +30,13 @@ class QuestionIntervieweeAnswerServer {
     );
   }
 
-  public static create(
-    questionIntervieweeAnswer: QuestionIntervieweeAnswer
-  ): Promise<any> {
+  public static create(questionIntervieweeAnswer: QuestionIntervieweeAnswer): Promise<any> {
     return axiosInstance.post(Config.QUESTION_INTERVIEWEE_ANSWER_URL, {
       ...questionIntervieweeAnswer,
     });
   }
 
-  public static update(
-    questionIntervieweeAnswer: QuestionIntervieweeAnswer
-  ): Promise<boolean> {
+  public static update(questionIntervieweeAnswer: QuestionIntervieweeAnswer): Promise<boolean> {
     return axiosInstance.put(
       Config.QUESTION_INTERVIEWEE_ANSWER_URL,
       { ...questionIntervieweeAnswer },
