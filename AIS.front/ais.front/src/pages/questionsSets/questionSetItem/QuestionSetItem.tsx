@@ -1,7 +1,7 @@
 import React from 'react';
-import styled from "styled-components";
-import {QuestionSet} from "../../../core/interfaces/questionSet";
-import {useNavigate} from "react-router-dom";
+import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import { QuestionSet } from '../../../core/interfaces/questionSet/questionSet';
 
 const QuestionSetContainer = styled.div`
   background-color: #ffffff;
@@ -29,23 +29,27 @@ const QuestionSetDescriptionDiv = styled.div`
 const QuestionSetNameText = styled.text``;
 
 interface Props {
-    questionSet: QuestionSet;
+  questionSet: QuestionSet;
 }
 
-export const QuestionSetItem: React.FC<Props> = ({questionSet}) => {
-    const navigate = useNavigate();
-    const routeChange = (id: number) => {
-        const path = `/questionSetDescription/${id}`;
-        navigate(path);
-    }
-    return (
-        <QuestionSetContainer onClick={() => {
-            routeChange(questionSet.id)
-        }}>
-            <QuestionSetHeader>{questionSet.name}</QuestionSetHeader>
-            <QuestionSetDescriptionDiv>
-                <QuestionSetNameText>{questionSet.name}</QuestionSetNameText>
-            </QuestionSetDescriptionDiv>
-        </QuestionSetContainer>
-    )
-}
+const QuestionSetItem: React.FC<Props> = ({ questionSet }) => {
+  const navigate = useNavigate();
+  const routeChange = (id: number) => {
+    const path = `/questionSetDescription/${id}`;
+    navigate(path);
+  };
+  return (
+    <QuestionSetContainer
+      onClick={() => {
+        routeChange(questionSet.id);
+      }}
+    >
+      <QuestionSetHeader>{questionSet.name}</QuestionSetHeader>
+      <QuestionSetDescriptionDiv>
+        <QuestionSetNameText>{questionSet.name}</QuestionSetNameText>
+      </QuestionSetDescriptionDiv>
+    </QuestionSetContainer>
+  );
+};
+
+export default QuestionSetItem;

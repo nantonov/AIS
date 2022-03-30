@@ -1,38 +1,40 @@
-import { defaultEmployee } from "../common/defaultDTO/defaultEmployee";
-import { Employee } from "../interfaces/employee";
-import axiosInstance from "../../config/getAxious";
-import {EMPLOYEE_URL} from "../constants/urlConstants";
+import defaultEmployee from '../common/defaultDTO/defaultEmployee';
+import { Employee } from '../interfaces/employee/employee';
+import axiosInstance from '../../config/getAxious';
+import Config from '../../config/config';
 
+class EmployeeService {
+  public static async getAll(): Promise<Employee[]> {
+    const result = await axiosInstance
+      .get<Employee[]>(Config.EMPLOYEE_URL)
+      .then((res) => res.data);
 
-export class EmployeeService {
-    public static async getAll(): Promise<Employee[]> {
-        const result = await axiosInstance.get<Employee[]>(EMPLOYEE_URL)
-            .then((result) => result.data)
-            .catch(({ response }) => console.log(response.data));
-        return result || [];
-    }
+    return result || [];
+  }
 
-    public static async getById(companyId: number): Promise<Employee> {
-        const result = await axiosInstance.get<Employee>(
-            EMPLOYEE_URL+`/${companyId}`)
-            .then((result) => result.data)
-            .catch((err) => console.log(err));
+  public static async getById(companyId: number): Promise<Employee> {
+    const result = await axiosInstance
+      .get<Employee>(`${Config.EMPLOYEE_URL}/${companyId}`)
+      .then((res) => res.data);
 
-        return result || defaultEmployee;
-    }
+    return result || defaultEmployee;
+  }
 
-    public static deleteById(companyId: number): Promise<any> {
-        return axiosInstance.delete(
-            EMPLOYEE_URL+`/${companyId}`);
-    }
+  public static deleteById(companyId: number): Promise<any> {
+    return axiosInstance.delete(`${Config.EMPLOYEE_URL}/${companyId}`);
+  }
 
-    public static create(company: Employee): Promise<any> {
-        return axiosInstance.post(
-            EMPLOYEE_URL, { ...company });
-    }
+  public static create(company: Employee): Promise<any> {
+    return axiosInstance.post(Config.EMPLOYEE_URL, { ...company });
+  }
 
-    public static update(company: Employee): Promise<boolean> {
-        return axiosInstance.put(
-            EMPLOYEE_URL, { ...company }, { params: { id: company.id } });
-    }
+  public static update(company: Employee): Promise<boolean> {
+    return axiosInstance.put(
+      Config.EMPLOYEE_URL,
+      { ...company },
+      { params: { id: company.id } }
+    );
+  }
 }
+
+export default EmployeeService;

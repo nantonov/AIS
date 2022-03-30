@@ -1,14 +1,14 @@
-import { QuestionSet } from "../../interfaces/questionSet";
+import { QuestionSet } from '../../interfaces/questionSet/questionSet';
 
 export const defaultQuestionSet: QuestionSet = {
-    id: 0,
-    name: "",
-    questionAreaId: 0,
-    questionAreas: null,
-    questions: []
-}
+  id: 0,
+  name: '',
+  questionAreaId: 0,
+  questionAreas: null,
+  questions: [],
+};
 export const IQuestionSetAddDefault = {
-    name: "",
-    questionAreaIds: [0],
-    questionIds: [0]
+  name: '',
+  questionAreaIds: [0],
+  questionIds: [0],
 };

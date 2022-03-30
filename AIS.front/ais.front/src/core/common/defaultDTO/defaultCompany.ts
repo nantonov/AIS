@@ -1,8 +1,10 @@
-import { Company } from "../../interfaces/company";
+import { Company } from '../../interfaces/company/company';
 
-export const defaultCompany: Company = {
-    id: 0,
-    name: "",
-    employees: null,
-    interviewees: null
-}
+const defaultCompany: Company = {
+  id: 0,
+  name: '',
+  employees: null,
+  interviewees: null,
+};
+
+export default defaultCompany;

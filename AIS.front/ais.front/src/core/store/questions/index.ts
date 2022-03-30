@@ -1,4 +1,5 @@
 import * as actionCreators from './actionCreator';
 
-export const questionsActionCreators = actionCreators;
+const questionsActionCreators = actionCreators;
 
+export default questionsActionCreators;

@@ -1,9 +1,11 @@
-import { Interviewee } from "../../interfaces/interviewee";
+import { Interviewee } from '../../interfaces/interviewee/interviewee';
 
-export const defaultInterviewee: Interviewee = {
-    id: 0,
-    name: "",
-    appliesFor: "",
-    companyId: 0,
-    company: null
-}
+const defaultInterviewee: Interviewee = {
+  id: 0,
+  name: '',
+  appliesFor: '',
+  companyId: 0,
+  company: null,
+};
+
+export default defaultInterviewee;

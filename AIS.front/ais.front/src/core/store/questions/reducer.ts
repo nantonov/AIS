@@ -1,29 +1,27 @@
 import { combineReducers } from 'redux';
-import {ActionType, getType} from 'typesafe-actions';
-import * as actions from './action'
-import {Question} from "../../interfaces/question";
+import { ActionType, getType } from 'typesafe-actions';
+import * as actions from './action';
+import { Question } from '../../interfaces/question/question';
 
 export type QuestionState = Readonly<{
-    questions: Question[]
+  questions: Question[];
 }>;
 
 const initialState: QuestionState = {
-    questions: []
+  questions: [],
 };
 
 export type QuestionActions = ActionType<typeof actions>;
 
-export const questionReducer = combineReducers<
-    QuestionState,
-    QuestionActions
-    >({
-    questions: (state = initialState.questions, action) => {
-        switch (action.type) {
-            case getType(actions.fetchAll): {
-                return [...action.payload];
-            }
-            default:
-                return state;
-        }
-    },
+export const questionReducer = combineReducers<QuestionState, QuestionActions>({
+  // eslint-disable-next-line @typescript-eslint/default-param-last
+  questions: (state = initialState.questions, action) => {
+    switch (action.type) {
+      case getType(actions.fetchAll): {
+        return [...action.payload];
+      }
+      default:
+        return state;
+    }
+  },
 });

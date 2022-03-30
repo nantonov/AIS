@@ -1,11 +1,13 @@
-import { QuestionIntervieweeAnswer } from "../../interfaces/questionIntervieweeAnswer";
+import { QuestionIntervieweeAnswer } from '../../interfaces/questionIntervieweeAnswer/questionIntervieweeAnswer';
 
-export const defaultQuestionIntervieweeAnswer: QuestionIntervieweeAnswer = {
-    id: 0,
-    text: "",
-    mark: 0,
-    sessionId: 0,
-    session: null,
-    questionId: 0,
-    question: null
-}
+const defaultQuestionIntervieweeAnswer: QuestionIntervieweeAnswer = {
+  id: 0,
+  text: '',
+  mark: 0,
+  sessionId: 0,
+  session: null,
+  questionId: 0,
+  question: null,
+};
+
+export default defaultQuestionIntervieweeAnswer;
