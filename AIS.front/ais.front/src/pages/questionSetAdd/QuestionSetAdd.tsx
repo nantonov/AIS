@@ -11,23 +11,11 @@ import { getAllData } from '../../core/store/questionSets/actionCreator';
 import { getAllData as getQuestions } from '../../core/store/questions/actionCreator';
 import { fetchAllQuestionAreas } from '../../core/store/questionArea/actionCreators';
 import { useTypedSelector } from '../../core/hooks/useTypedSelector';
-
-const BoxContainer = styled(Box)`
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  padding-top: 20px;
-`;
-
-const GridContainer = styled(Grid)`
-  width: 100%;
-  max-width: 1170px;
-  margin: auto;
-`;
-
-const ButtonContainer = styled(Button)`
-  left: 90%;
-`;
+import { QuestionArea } from '../../core/interfaces/questionArea/questionArea';
+import GridContainer from '../../core/components/gridContainer/GridContainer';
+import BoxContainer from '../../core/components/boxContainer/BoxContainer';
+import ButtonContainer from '../../core/components/buttonContainer/ButtonContainer';
+import MainRoutes from '../../core/constants/mainRoutes'
 
 const QuestionSetAdd: React.FC = () => {
   const [questionSetModel, setQuestionSetModel] =
@@ -40,7 +28,7 @@ const QuestionSetAdd: React.FC = () => {
   const dispatch = useDispatch();
 
   const routeChange = () => {
-    const path = '/questionSetDescription';
+    const path = `/${MainRoutes}`;
     navigate(path);
   };
 
