@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { QuestionSet } from '../../../core/interfaces/questionSet/questionSet';
 import QuestionSetContainer from '../../../core/components/itemContainer/ItemContainer';
@@ -17,9 +16,7 @@ const QuestionSetItem: React.FC<Props> = ({ questionSet }) => {
     navigate(path);
   };
   return (
-    <QuestionSetContainer
-      onClick={routeChange(questionSet.id)}
-    >
+    <QuestionSetContainer onClick={routeChange(questionSet.id)}>
       <QuestionSetHeader>{questionSet.name}</QuestionSetHeader>
       <QuestionSetDescriptionDiv>
         <QuestionSetNameText>{questionSet.name}</QuestionSetNameText>

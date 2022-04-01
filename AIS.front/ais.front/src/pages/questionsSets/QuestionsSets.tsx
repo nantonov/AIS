@@ -1,19 +1,15 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import Typography from '@mui/material/Typography';
-import { Grid, Tooltip } from '@mui/material';
+import { Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { getAllData } from '../../core/store/questionSets/actionCreator';
 import QuestionSetItem from './questionSetItem/QuestionSetItem';
 import { useTypedSelector } from '../../core/hooks/useTypedSelector';
-import { QuestionSet } from '../../core/interfaces/questionSet/questionSet';
 import QuestionSetItems from '../../core/components/itemsContainer/ItemsContainer';
 import Container from '../../core/components/container/Container';
 import CircleIconContainer from '../../core/components/circleIconContainer/CircleIconContainer';
 import ToolTipContainer from '../../core/components/toolTipContainer/ToolTipContainer';
 import TypographyContainer from '../../core/components/typographyContainer/TypographyContainer';
-
 
 const QuestionsSets: React.FC = () => {
   const questionSets = useTypedSelector((state) => state.questionSets.questionSets);

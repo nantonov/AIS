@@ -15,12 +15,10 @@ import { useParams } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Typography from '@mui/material/Typography';
-import styled from '@emotion/styled';
 import QuestionAreasQuestionSetsService from '../../core/services/questionAreasQuestionSetsService';
 import QuestionsQuestionSetsService from '../../core/services/questionsQuestionSetsService';
 import { getById } from '../../core/store/questionSets/actionCreator';
 import { useTypedSelector } from '../../core/hooks/useTypedSelector';
-import { QuestionArea } from '../../core/interfaces/questionArea/questionArea';
 import GridContainer from '../../core/components/gridContainer/GridContainer';
 
 const QuestionSetDescription: React.FC = () => {

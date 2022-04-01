@@ -1,7 +1,6 @@
-import { Box, Button, FormControl, Grid, MenuItem, TextField } from '@mui/material';
+import { FormControl, Grid, MenuItem, TextField } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { QuestionSetAddState } from '../../core/interfaces/questionSet/questionSet';
@@ -11,11 +10,10 @@ import { getAllData } from '../../core/store/questionSets/actionCreator';
 import { getAllData as getQuestions } from '../../core/store/questions/actionCreator';
 import { fetchAllQuestionAreas } from '../../core/store/questionArea/actionCreators';
 import { useTypedSelector } from '../../core/hooks/useTypedSelector';
-import { QuestionArea } from '../../core/interfaces/questionArea/questionArea';
 import GridContainer from '../../core/components/gridContainer/GridContainer';
 import BoxContainer from '../../core/components/boxContainer/BoxContainer';
 import ButtonContainer from '../../core/components/buttonContainer/ButtonContainer';
-import MainRoutes from '../../core/constants/mainRoutes'
+import MainRoutes from '../../core/constants/mainRoutes';
 
 const QuestionSetAdd: React.FC = () => {
   const [questionSetModel, setQuestionSetModel] =
@@ -68,14 +66,15 @@ const QuestionSetAdd: React.FC = () => {
     return questions.filter((item) => !idsSet.has(item.id) || item.id === id);
   };
 
-  const changeQuestionHandler = (index: number) => (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const array = [...questionSetModel.questionIds];
-    array[index] = Number(event.target.value);
-    setQuestionSetModel({
-      ...questionSetModel,
-      questionIds: array,
-    });
-  };
+  const changeQuestionHandler =
+    (index: number) => (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const array = [...questionSetModel.questionIds];
+      array[index] = Number(event.target.value);
+      setQuestionSetModel({
+        ...questionSetModel,
+        questionIds: array,
+      });
+    };
 
   const addEmptyQuestionArea = () => {
     const previousQuestionAreasIdsArray = [...questionSetModel.questionAreaIds, 0];
@@ -85,14 +84,15 @@ const QuestionSetAdd: React.FC = () => {
     });
   };
 
-  const changeQuestionAreaHandler = (index: number) => ( event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const array = [...questionSetModel.questionAreaIds];
-    array[index] = Number(event.target.value);
-    setQuestionSetModel({
-      ...questionSetModel,
-      questionAreaIds: array,
-    });
-  };
+  const changeQuestionAreaHandler =
+    (index: number) => (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const array = [...questionSetModel.questionAreaIds];
+      array[index] = Number(event.target.value);
+      setQuestionSetModel({
+        ...questionSetModel,
+        questionAreaIds: array,
+      });
+    };
 
   return (
     <GridContainer>
