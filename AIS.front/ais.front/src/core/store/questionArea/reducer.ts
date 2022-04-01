@@ -17,7 +17,6 @@ const initialState: QuestionAreasState = {
 export type QuestionAreasActions = ActionType<typeof actions>;
 
 export const questionAreasReducer = combineReducers<QuestionAreasState, QuestionAreasActions>({
-  // eslint-disable-next-line @typescript-eslint/default-param-last
   questionAreas: (state = initialState.questionAreas, action) => {
     switch (action.type) {
       case getType(actions.fetchAll): {
@@ -27,7 +26,6 @@ export const questionAreasReducer = combineReducers<QuestionAreasState, Question
         return state;
     }
   },
-  // eslint-disable-next-line @typescript-eslint/default-param-last
   questionArea: (state = initialState.questionArea, action) => {
     switch (action.type) {
       case getType(actions.fetchById): {

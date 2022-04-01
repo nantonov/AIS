@@ -1,5 +1,3 @@
 import * as actionCreators from './actionCreator';
 
-const questionSetActionCreators = actionCreators;
-
-export default questionSetActionCreators;
+export const questionSetActionCreators = actionCreators;

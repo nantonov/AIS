@@ -7,10 +7,9 @@ import { QuestionArea } from '../../../../core/interfaces/questionArea/questionA
 
 interface Props {
   qArea: QuestionArea;
-  onEdit: (id: number) => void;
 }
 
-const QuestionAreaTableRow: React.FC<Props> = ({ qArea, onEdit }) => (
+const QuestionAreaTableRow: React.FC<Props> = ({ qArea }) => (
   <Grid item container justifyContent="space-between">
     <Grid item xs={1}>
       <Typography>{qArea?.id}</Typography>
@@ -24,7 +23,7 @@ const QuestionAreaTableRow: React.FC<Props> = ({ qArea, onEdit }) => (
       </IconButton>
     </Grid>
     <Grid item xs={1}>
-      <IconButton onClick={() => onEdit(qArea?.id)}>
+      <IconButton>
         <EditIcon />
       </IconButton>
     </Grid>

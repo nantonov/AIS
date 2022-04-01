@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   Button,
   Grid,
@@ -18,9 +18,8 @@ import Typography from '@mui/material/Typography';
 import styled from '@emotion/styled';
 import QuestionAreasQuestionSetsService from '../../core/services/questionAreasQuestionSetsService';
 import QuestionsQuestionSetsService from '../../core/services/questionsQuestionSetsService';
-import { QuestionSet } from '../../core/interfaces/questionSet/questionSet';
 import { getById } from '../../core/store/questionSets/actionCreator';
-import { defaultQuestionSet } from '../../core/common/defaultDTO/defaultQuestionSet';
+import { useTypedSelector } from '../../core/hooks/useTypedSelector';
 
 const GridContainer = styled(Grid)`
   width: 100%;
@@ -30,21 +29,20 @@ const GridContainer = styled(Grid)`
 
 const QuestionSetDescription: React.FC = () => {
   const { id } = useParams();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [questionSet, setQuestionSet] = useState<QuestionSet>(defaultQuestionSet);
+  const questionSet = useTypedSelector((state) => state.questionSets.questionSet);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getById(Number(id)));
-  }, []);
+  }, [dispatch, id]);
 
-  const DeleteQuestion = (questionSetId: number, questionId: number) => {
+  const DeleteQuestion = (questionSetId: number, questionId: number) => () => {
     QuestionsQuestionSetsService.deleteByTwoIds(questionSetId, questionId).then(() => {
       getById(Number(id));
     });
   };
 
-  const DeleteQuestionArea = (questionAreaId: number, questionSetId: number) => {
+  const DeleteQuestionArea = (questionAreaId: number, questionSetId: number) => () => {
     QuestionAreasQuestionSetsService.deleteByTwoIds(questionAreaId, questionSetId).then(() => {
       getById(Number(id));
     });
@@ -83,7 +81,7 @@ const QuestionSetDescription: React.FC = () => {
                     <Button endIcon={<EditIcon />} />
                     <Button
                       endIcon={<DeleteIcon />}
-                      onClick={() => DeleteQuestionArea(questionArea.id, questionSet.id)}
+                      onClick={DeleteQuestionArea(questionArea.id, questionSet.id)}
                     />
                   </TableCell>
                 </TableRow>
@@ -120,7 +118,7 @@ const QuestionSetDescription: React.FC = () => {
                     <Button endIcon={<EditIcon />} />
                     <Button
                       endIcon={<DeleteIcon />}
-                      onClick={() => DeleteQuestion(Number(id), question.id)}
+                      onClick={DeleteQuestion(Number(id), question.id)}
                     />
                   </TableCell>
                 </TableRow>

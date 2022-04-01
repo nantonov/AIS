@@ -4,14 +4,13 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { QuestionSet, QuestionSetAddState } from '../../core/interfaces/questionSet/questionSet';
+import { QuestionSetAddState } from '../../core/interfaces/questionSet/questionSet';
 import { IQuestionSetAddDefault } from '../../core/common/defaultDTO/defaultQuestionSet';
 import QuestionSetService from '../../core/services/questionSetService';
-import { Question } from '../../core/interfaces/question/question';
 import { getAllData } from '../../core/store/questionSets/actionCreator';
 import { getAllData as getQuestions } from '../../core/store/questions/actionCreator';
 import { fetchAllQuestionAreas } from '../../core/store/questionArea/actionCreators';
-import { QuestionArea } from '../../core/interfaces/questionArea/questionArea';
+import { useTypedSelector } from '../../core/hooks/useTypedSelector';
 
 const BoxContainer = styled(Box)`
   display: flex;
@@ -33,12 +32,9 @@ const ButtonContainer = styled(Button)`
 const QuestionSetAdd: React.FC = () => {
   const [questionSetModel, setQuestionSetModel] =
     useState<QuestionSetAddState>(IQuestionSetAddDefault);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [questionSets, setQuestionSets] = useState<QuestionSet[]>([]);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [questions, setQuestions] = useState<Question[]>([]);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [questionAreas, setQuestionAreas] = useState<QuestionArea[]>([]);
+  const questionAreas = useTypedSelector((state) => state.questionAreas.questionAreas);
+  const questionSets = useTypedSelector((state) => state.questionSets.questionSets);
+  const questions = useTypedSelector((state) => state.questions.questions);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -64,11 +60,10 @@ const QuestionSetAdd: React.FC = () => {
     dispatch(getAllData());
     dispatch(getQuestions());
     dispatch(fetchAllQuestionAreas());
-  }, []);
+  }, [dispatch]);
 
   const addEmptyQuestionIdsArray = () => {
-    const previousQuestionArray = [...questionSetModel.questionIds];
-    previousQuestionArray.push(0);
+    const previousQuestionArray = [...questionSetModel.questionIds, 0];
     setQuestionSetModel({
       ...questionSetModel,
       questionIds: previousQuestionArray,
@@ -85,9 +80,9 @@ const QuestionSetAdd: React.FC = () => {
     return questions.filter((item) => !idsSet.has(item.id) || item.id === id);
   };
 
-  const changeQuestionHandler = (index: number, id: number) => {
+  const changeQuestionHandler = (index: number) => (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const array = [...questionSetModel.questionIds];
-    array[index] = id;
+    array[index] = Number(event.target.value);
     setQuestionSetModel({
       ...questionSetModel,
       questionIds: array,
@@ -95,17 +90,16 @@ const QuestionSetAdd: React.FC = () => {
   };
 
   const addEmptyQuestionArea = () => {
-    const previousQuestionAreasIdsArray = [...questionSetModel.questionAreaIds];
-    previousQuestionAreasIdsArray.push(0);
+    const previousQuestionAreasIdsArray = [...questionSetModel.questionAreaIds, 0];
     setQuestionSetModel({
       ...questionSetModel,
       questionAreaIds: previousQuestionAreasIdsArray,
     });
   };
 
-  const changeQuestionAreaHandler = (index: number, id: number) => {
+  const changeQuestionAreaHandler = (index: number) => ( event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const array = [...questionSetModel.questionAreaIds];
-    array[index] = id;
+    array[index] = Number(event.target.value);
     setQuestionSetModel({
       ...questionSetModel,
       questionAreaIds: array,
@@ -139,7 +133,7 @@ const QuestionSetAdd: React.FC = () => {
               label="Select"
               helperText="Please select question area"
               value={item}
-              onChange={(e) => changeQuestionAreaHandler(index, Number(e.target.value))}
+              onChange={changeQuestionAreaHandler(index)}
             >
               {getQuestionAreaOptions(item).map((questionArea) => (
                 <MenuItem key={questionArea.id} value={questionArea.id}>
@@ -169,7 +163,7 @@ const QuestionSetAdd: React.FC = () => {
               helperText="Please select question"
               value={item}
               defaultValue={questionSetModel.questionIds[0]}
-              onChange={(e) => changeQuestionHandler(index, Number(e.target.value))}
+              onChange={changeQuestionHandler(index)}
             >
               {getQuestionOptions(item).map((question) => (
                 <MenuItem key={question.id} value={question.id}>

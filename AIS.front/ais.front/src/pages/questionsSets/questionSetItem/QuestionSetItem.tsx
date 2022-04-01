@@ -26,7 +26,7 @@ const QuestionSetDescriptionDiv = styled.div`
   justify-content: space-between;
 `;
 
-const QuestionSetNameText = styled.text``;
+const QuestionSetNameText = styled.div``;
 
 interface Props {
   questionSet: QuestionSet;
@@ -34,15 +34,13 @@ interface Props {
 
 const QuestionSetItem: React.FC<Props> = ({ questionSet }) => {
   const navigate = useNavigate();
-  const routeChange = (id: number) => {
+  const routeChange = (id: number) => () => {
     const path = `/questionSetDescription/${id}`;
     navigate(path);
   };
   return (
     <QuestionSetContainer
-      onClick={() => {
-        routeChange(questionSet.id);
-      }}
+      onClick={routeChange(questionSet.id)}
     >
       <QuestionSetHeader>{questionSet.name}</QuestionSetHeader>
       <QuestionSetDescriptionDiv>

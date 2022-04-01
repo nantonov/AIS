@@ -9,6 +9,6 @@ export const defaultQuestionSet: QuestionSet = {
 };
 export const IQuestionSetAddDefault = {
   name: '',
-  questionAreaIds: [0],
-  questionIds: [0],
+  questionAreaIds: [],
+  questionIds: [],
 };

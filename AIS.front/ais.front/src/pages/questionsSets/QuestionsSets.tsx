@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Typography from '@mui/material/Typography';
 import { Grid, Tooltip } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { getAllData as getQuestions } from '../../core/store/questions/actionCreator';
 import { getAllData } from '../../core/store/questionSets/actionCreator';
 import QuestionSetItem from './questionSetItem/QuestionSetItem';
-import { QuestionSet } from '../../core/interfaces/questionSet/questionSet';
+import { useTypedSelector } from '../../core/hooks/useTypedSelector';
 
 const Container = styled.div`
   width: 100%;
@@ -44,8 +43,7 @@ const TypographyContainer = styled(Typography)`
 `;
 
 const QuestionsSets: React.FC = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [questionSets, setQuestionSets] = useState<QuestionSet[]>([]);
+  const questionSets = useTypedSelector((state) => state.questionSets.questionSets);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const routeChange = () => {
@@ -55,8 +53,7 @@ const QuestionsSets: React.FC = () => {
 
   useEffect(() => {
     dispatch(getAllData());
-    dispatch(getQuestions());
-  }, []);
+  }, [dispatch]);
 
   return (
     <Grid>

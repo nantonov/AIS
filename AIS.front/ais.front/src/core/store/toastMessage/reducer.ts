@@ -14,7 +14,6 @@ const initialState: ToastState = {
 export type ToastActions = ActionType<typeof actions>;
 
 export const toastReducer = combineReducers<ToastState, ToastActions>({
-  // eslint-disable-next-line @typescript-eslint/default-param-last
   toastMessage: (state = initialState.toastMessage, action) => {
     switch (action.type) {
       case getType(actions.setToast): {

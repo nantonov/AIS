@@ -17,7 +17,7 @@ const QuestionAreasForm: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchQuestionAreaById(Number(id)));
-  }, []);
+  }, [dispatch, id]);
 
   const change = (e: React.ChangeEvent<HTMLInputElement>) => {
     setItem((oldItem) => ({ ...oldItem, name: e.target.value }));

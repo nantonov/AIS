@@ -12,31 +12,8 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from 'react-router-dom';
-import MainRoutes from '../../constants/mainRoutes';
-
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-const pagesAppBar = [
-  {
-    label: 'Question Area',
-    link: MainRoutes.questionArea,
-  },
-  {
-    label: 'Sessions',
-    link: MainRoutes.sessions,
-  },
-  {
-    label: 'Question Sets',
-    link: MainRoutes.questionSet,
-  },
-  {
-    label: 'Question Area Form',
-    link: MainRoutes.questionAreaForm,
-  },
-  {
-    label: 'Add question set',
-    link: MainRoutes.addQuestionSet,
-  },
-];
+import PagesAppBar from '../../constants/pagesAppBar';
+import Settings from '../../constants/headerSettings';
 
 const Header: React.FC = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -105,7 +82,7 @@ const Header: React.FC = () => {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pagesAppBar.map((page) => (
+              {PagesAppBar.map((page) => (
                 <MenuItem key={page.label} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">{page.label}</Typography>
                 </MenuItem>
@@ -121,7 +98,7 @@ const Header: React.FC = () => {
             LOGO
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pagesAppBar.map((page) => (
+            {PagesAppBar.map((page) => (
               <Button
                 key={page.label}
                 onClick={routeChange(page.link)}
@@ -159,7 +136,7 @@ const Header: React.FC = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
+              {Settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>

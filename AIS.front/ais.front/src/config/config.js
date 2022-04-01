@@ -5,7 +5,7 @@ const config = {
   QUESTION_URL: 'api/Questions',
   QUESTION_AREA_URL: 'api/QuestionArea',
   QUESTION_INTERVIEWEE_ANSWER_URL: 'api/QuestionIntervieweeAnswer',
-  QUESTION_SET_URL: 'api/QuestionSets',
+  QUESTION_SET_URL: 'api/QuestionSet',
   SESSION_URL: 'api/Session',
   TRUE_ANSWER_URL: 'api/TrueAnswer',
   DELETE_BY_TWO_IDS_QUESTION_AREA: 'api/QuestionAreasQuestionSets/deleteByTwoIds',
