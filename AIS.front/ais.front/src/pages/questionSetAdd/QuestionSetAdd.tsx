@@ -26,7 +26,7 @@ const QuestionSetAdd: React.FC = () => {
   const dispatch = useDispatch();
 
   const routeChange = () => {
-    const path = `/${MainRoutes}`;
+    const path = `/${MainRoutes.questionSets}`;
     navigate(path);
   };
 
@@ -35,10 +35,10 @@ const QuestionSetAdd: React.FC = () => {
     routeChange();
   };
 
-  const changeNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const changeNameHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setQuestionSetModel({
       ...questionSetModel,
-      name: e.target.value,
+      name: event.target.value,
     });
   };
 

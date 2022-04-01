@@ -3,7 +3,7 @@ enum MainRoutes {
   sessions = 'sessions',
   questionSet = 'questionSet',
   questionSets = 'questionSets',
-  questionSetDescription = 'questionSet/:id',
+  questionSetDescription = 'questionSet',
   questionAreaForm = 'questionAreaForm',
   addQuestionSet = 'addQuestionSet',
 }

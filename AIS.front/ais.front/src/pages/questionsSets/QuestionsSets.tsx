@@ -10,13 +10,14 @@ import Container from '../../core/components/container/Container';
 import CircleIconContainer from '../../core/components/circleIconContainer/CircleIconContainer';
 import ToolTipContainer from '../../core/components/toolTipContainer/ToolTipContainer';
 import TypographyContainer from '../../core/components/typographyContainer/TypographyContainer';
+import MainRoutes from '../../core/constants/mainRoutes';
 
 const QuestionsSets: React.FC = () => {
   const questionSets = useTypedSelector((state) => state.questionSets.questionSets);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const routeChange = () => {
-    const path = '/addQuestionSet';
+    const path = `/${MainRoutes.addQuestionSet}`;
     navigate(path);
   };
 
