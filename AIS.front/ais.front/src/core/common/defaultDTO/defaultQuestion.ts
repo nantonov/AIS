@@ -1,9 +1,11 @@
-import { Question } from "../../interfaces/question";
+import { Question } from '../../interfaces/question/question';
 
-export const defaultQuestion: Question = {
-    id: 0,
-    text: "",
-    questionSetid: 0,
-    questionSet: null,
-    trueAnswer: null
-}
+const defaultQuestion: Question = {
+  id: 0,
+  text: '',
+  questionSetid: 0,
+  questionSet: null,
+  trueAnswer: null,
+};
+
+export default defaultQuestion;

@@ -1,8 +1,10 @@
-import { Employee } from "../../interfaces/employee";
+import { Employee } from '../../interfaces/employee/employee';
 
-export const defaultEmployee: Employee = {
-    id: 0,
-    name: "",
-    companyId: 0,
-    company: null
-}
+const defaultEmployee: Employee = {
+  id: 0,
+  name: '',
+  companyId: 0,
+  company: null,
+};
+
+export default defaultEmployee;

@@ -8,7 +8,7 @@ export type ToastState = Readonly<{
 }>;
 
 const initialState: ToastState = {
-  toastMessage: { text: '', visible: false, severity: "success" },
+  toastMessage: { text: '', visible: false, severity: 'success' },
 };
 
 export type ToastActions = ActionType<typeof actions>;
