@@ -3,7 +3,7 @@ import MainRoutes from './mainRoutes';
 const PagesAppBar = [
   {
     label: 'Question Area',
-    link: MainRoutes.questionArea,
+    link: MainRoutes.questionAreas,
   },
   {
     label: 'Sessions',
@@ -11,7 +11,7 @@ const PagesAppBar = [
   },
   {
     label: 'Question Sets',
-    link: MainRoutes.questionSet,
+    link: MainRoutes.questionSets,
   },
   {
     label: 'Question Area Form',

@@ -1,9 +1,9 @@
 enum MainRoutes {
   questionArea = 'questionArea',
+  questionAreas = 'questionAreas',
   sessions = 'sessions',
   questionSet = 'questionSet',
   questionSets = 'questionSets',
-  questionSetDescription = 'questionSet',
   questionAreaForm = 'questionAreaForm',
   addQuestionSet = 'addQuestionSet',
 }

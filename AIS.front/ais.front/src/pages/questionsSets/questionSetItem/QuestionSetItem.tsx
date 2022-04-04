@@ -12,7 +12,7 @@ interface Props {
 const QuestionSetItem: React.FC<Props> = ({ questionSet }) => {
   const navigate = useNavigate();
   const routeChange = (id: number) => () => {
-    const path = `/${MainRoutes.questionSetDescription}/${id}`;
+    const path = `/${MainRoutes.questionSet}/${id}`;
     navigate(path);
   };
   return (
