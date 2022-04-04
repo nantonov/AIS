@@ -30,7 +30,7 @@ const QuestionsSets: React.FC = () => {
       <Grid item>
         <Container>
           <QuestionSetItems>
-            {questionSets.length !== 0 ? (
+            {questionSets.length ? (
               questionSets.map((item) => <QuestionSetItem key={item.id} questionSet={item} />)
             ) : (
               <TypographyContainer align="center" variant="h3">

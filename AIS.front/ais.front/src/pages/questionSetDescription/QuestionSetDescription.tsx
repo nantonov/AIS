@@ -46,13 +46,12 @@ const QuestionSetDescription: React.FC = () => {
     <GridContainer>
       <Grid item>
         <Typography variant="h4" component="h5">
-          {' '}
           Question set: {questionSet.name}
         </Typography>
       </Grid>
       <Grid item>
         <Typography variant="h5" component="h6" marginTop="10px" marginBottom="10px">
-          Question areas:{' '}
+          Question areas:
         </Typography>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
