@@ -5,3 +5,8 @@ export interface QuestionArea {
   name: string;
   questionSets: ShortQuestionSet[];
 }
+
+export interface QuestionAreaAdd {
+  name: string;
+  questionSetsIds: number[];
+}
