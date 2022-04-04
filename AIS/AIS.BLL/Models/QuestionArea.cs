@@ -7,5 +7,7 @@ namespace AIS.BLL.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public IEnumerable<QuestionSet> QuestionSets { get; set; }
+#nullable enable
+        public IEnumerable<int>? QuestionSetsIds { get; set; }
     }
 }
