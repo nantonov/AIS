@@ -22,5 +22,6 @@
   "account": "Account",
   "dashboard": "Dashboard",
   "logout": "Logout",
-  "questionAreaForm": "Question area form"
+  "questionAreaForm": "Question area form",
+  "chooseQuestionSet": "Choose question set"
 }

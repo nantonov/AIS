@@ -58,7 +58,7 @@ const QuestionAreaDescription: React.FC = () => {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Question sets</TableCell>
+                <TableCell>{t(`questionSets`)}</TableCell>
                 <TableCell />
               </TableRow>
             </TableHead>
