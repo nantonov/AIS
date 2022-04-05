@@ -19,6 +19,7 @@ import QuestionAreasQuestionSetsService from '../../core/services/questionAreasQ
 import { fetchQuestionAreaById } from '../../core/store/questionArea/actionCreators';
 import GridContainer from '../../core/components/gridContainer/GridContainer';
 import { useTypedSelector } from '../../core/hooks/useTypedSelector';
+import MainRoutes from '../../core/constants/mainRoutes';
 
 const QuestionAreaDescription: React.FC = () => {
   const { id } = useParams();
@@ -29,8 +30,8 @@ const QuestionAreaDescription: React.FC = () => {
   useEffect(() => {
     dispatch(fetchQuestionAreaById(Number(id)));
   }, [dispatch, id]);
-  const routeChangeSet = (changeId: Number) => {
-    const path = `/questionSet/${changeId}`;
+  const routeChangeSet = (changeId: Number) => () => {
+    const path = `/${MainRoutes.questionSet}/${changeId}`;
     navigate(path);
   };
   const DeleteQuestionSet = (questionAreaId: number, questionSetId: number) => () => {
@@ -69,12 +70,12 @@ const QuestionAreaDescription: React.FC = () => {
                   </TableCell>
                   <TableCell align="right">
                     <Button
-                      onClick={() => routeChangeSet(questionSet.id)}
+                      onClick={routeChangeSet(questionSet.id)}
                       endIcon={<ExpandMore />}
                     />
                     <Button
                       endIcon={<DeleteIcon />}
-                      onClick={() => DeleteQuestionSet(Number(id), questionSet.id)}
+                      onClick={DeleteQuestionSet(Number(id), questionSet.id)}
                     />
                   </TableCell>
                 </TableRow>

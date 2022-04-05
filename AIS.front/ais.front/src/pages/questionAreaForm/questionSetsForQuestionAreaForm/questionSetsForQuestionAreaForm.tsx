@@ -49,9 +49,6 @@ const QuestionSets: React.FC<QuestionAreaProps> = ({ questionArea, setItem }) =>
 
   return (
     <Grid item>
-      <Typography variant="h5" component="h6" marginTop="10px" marginBottom="10px">
-        Question sets:{' '}
-      </Typography>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
