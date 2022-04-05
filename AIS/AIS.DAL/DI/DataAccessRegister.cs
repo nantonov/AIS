@@ -18,7 +18,7 @@ namespace AIS.DAL.DI
             services.AddScoped<IGenericRepository<CompanyEntity>, CompanyRepository>();
             services.AddScoped<IGenericRepository<QuestionIntervieweeAnswerEntity>, QuestionIntervieweeAnswerRepository>();
             services.AddScoped<IGenericRepository<QuestionEntity>, QuestionRepository>();
-            services.AddScoped<IGenericRepository<QuestionAreaEntity>, QuestionAreaRepository>();
+            services.AddScoped<IQuestionAreaRepository, QuestionAreaRepository>();
             services.AddScoped<IQuestionSetRepository, QuestionSetRepository>();
             services.AddScoped<IGenericRepository<TrueAnswerEntity>, TrueAnswerRepository>();
             services.AddScoped<IQuestionsQuestionSetsRepository, QuestionsQuestionSetsRepository>();

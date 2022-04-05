@@ -14,10 +14,10 @@ namespace AIS.API.Controllers
     [ApiController]
     public class QuestionAreaController : ControllerBase
     {
-        private readonly IGenericService<QuestionArea> _questionAreaService;
+        private readonly IQuestionAreaService _questionAreaService;
         private readonly IMapper _mapper;
 
-        public QuestionAreaController(IGenericService<QuestionArea> questionAreaService, IMapper mapper)
+        public QuestionAreaController(IQuestionAreaService questionAreaService, IMapper mapper)
         {
             _questionAreaService = questionAreaService;
             _mapper = mapper;
