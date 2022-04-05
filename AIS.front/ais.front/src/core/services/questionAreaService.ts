@@ -1,5 +1,5 @@
 import defaultQuestionArea from '../common/defaultDTO/defaultQuestionArea';
-import { QuestionArea } from '../interfaces/questionArea/questionArea';
+import { QuestionArea, QuestionAreaAdd } from '../interfaces/questionArea/questionArea';
 import axiosInstance from '../../config/getAxious';
 import Config from '../../config/config';
 
@@ -24,7 +24,7 @@ class QuestionAreaService {
     return axiosInstance.delete(`${Config.QUESTION_AREA_URL}/${questionAreaId}`);
   }
 
-  public static create(questionArea: QuestionArea): Promise<any> {
+  public static create(questionArea: QuestionAreaAdd): Promise<any> {
     return axiosInstance.post(Config.QUESTION_AREA_URL, { ...questionArea });
   }
 

@@ -1,4 +1,4 @@
-import { QuestionArea } from '../../interfaces/questionArea/questionArea';
+import { QuestionArea, QuestionAreaAdd } from '../../interfaces/questionArea/questionArea';
 import QuestionAreaService from '../../services/questionAreaService';
 import { ApplicationDispatch } from '../typing';
 import { fetchAll, fetchById } from './actions';
@@ -17,20 +17,21 @@ export const fetchQuestionAreaById =
   };
 
 export const createQuestionArea =
-  (businessDomain: QuestionArea) => async (dispatch: ApplicationDispatch<QuestionAreasActions>) => {
-    const result = await QuestionAreaService.create(businessDomain);
+  (questionArea: QuestionAreaAdd) =>
+  async (dispatch: ApplicationDispatch<QuestionAreasActions>) => {
+    const result = await QuestionAreaService.create(questionArea);
     if (result) dispatch(fetchAllQuestionAreas());
   };
 
 export const editQuestionArea =
-  (businessDomain: QuestionArea) => async (dispatch: ApplicationDispatch<QuestionAreasActions>) => {
-    const result = await QuestionAreaService.update(businessDomain);
+  (questionArea: QuestionArea) => async (dispatch: ApplicationDispatch<QuestionAreasActions>) => {
+    const result = await QuestionAreaService.update(questionArea);
     if (result) dispatch(fetchAllQuestionAreas());
   };
 
 export const deleteQuestionArea =
-  (businessDomain: QuestionArea) => async (dispatch: ApplicationDispatch<QuestionAreasActions>) => {
-    await QuestionAreaService.deleteById(businessDomain.id).then(() =>
+  (questionArea: QuestionArea) => async (dispatch: ApplicationDispatch<QuestionAreasActions>) => {
+    await QuestionAreaService.deleteById(questionArea.id).then(() =>
       dispatch(fetchAllQuestionAreas())
     );
   };
