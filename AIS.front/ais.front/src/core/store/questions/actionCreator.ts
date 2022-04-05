@@ -27,3 +27,10 @@ export const editQuestion = (question: Question) => {
   };
 };
 
+export const createQuestion = (question: Question) => {
+  return async (dispatch: ApplicationDispatch<QuestionActions>) => {
+    const result = await QuestionService.create(question);
+    if (result) dispatch(getAllData());
+  };
+};
+
