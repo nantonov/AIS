@@ -2,7 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import Header from './core/components/header/Header';
-import { store } from './core/store/index';
+import { store } from './core/redux/store';
 import MainRoutes from './core/constants/mainRoutes';
 import Sessions from './pages/session/Session';
 import QuestionsSets from './pages/questionsSets/QuestionsSets';

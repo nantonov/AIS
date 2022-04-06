@@ -17,7 +17,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useTranslation } from 'react-i18next';
 import { useTypedSelector } from '../../../core/hooks/useTypedSelector';
 import { QuestionAreaAdd } from '../../../core/interfaces/questionArea/questionArea';
-import { getAllData } from '../../../core/store/questionSets/actionCreator';
+import { getAllQuestionSets } from '../../../core/redux/thunk/questionSetThunk';
+import questionSetSelector from '../../../core/redux/selectors/questionSetSelector';
 
 interface QuestionAreaProps {
   questionArea: QuestionAreaAdd;
@@ -25,7 +26,7 @@ interface QuestionAreaProps {
 }
 const QuestionSets: React.FC<QuestionAreaProps> = ({ questionArea, setItem }) => {
   const dispatch = useDispatch();
-  const questionSets = useTypedSelector((state) => state.questionSets.questionSets);
+  const { questionSets } = useTypedSelector(questionSetSelector);
   const [QuestionSetsIds, setQuestionSetsIds] = useState<number[]>(questionArea.questionSetsIds);
 
   const { t } = useTranslation();
@@ -46,7 +47,7 @@ const QuestionSets: React.FC<QuestionAreaProps> = ({ questionArea, setItem }) =>
     setItem({ ...questionArea, questionSetsIds: QuestionSetsIds });
   };
   useEffect(() => {
-    dispatch(getAllData());
+    dispatch(getAllQuestionSets());
   }, [dispatch]);
 
   return (

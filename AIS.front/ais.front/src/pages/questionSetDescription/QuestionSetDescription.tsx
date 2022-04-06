@@ -18,30 +18,31 @@ import Typography from '@mui/material/Typography';
 import { useTranslation } from 'react-i18next';
 import QuestionAreasQuestionSetsService from '../../core/services/questionAreasQuestionSetsService';
 import QuestionsQuestionSetsService from '../../core/services/questionsQuestionSetsService';
-import { getById } from '../../core/store/questionSets/actionCreator';
+import { getQuestionSetById } from '../../core/redux/thunk/questionSetThunk';
 import { useTypedSelector } from '../../core/hooks/useTypedSelector';
 import GridContainer from '../../core/components/gridContainer/GridContainer';
+import questionSetSelector from '../../core/redux/selectors/questionSetSelector';
 
 const QuestionSetDescription: React.FC = () => {
   const { id } = useParams();
-  const questionSet = useTypedSelector((state) => state.questionSets.questionSet);
+  const { questionSet } = useTypedSelector(questionSetSelector);
   const dispatch = useDispatch();
 
   const { t } = useTranslation();
 
   useEffect(() => {
-    dispatch(getById(Number(id)));
+    dispatch(getQuestionSetById(Number(id)));
   }, [dispatch, id]);
 
   const DeleteQuestion = (questionSetId: number, questionId: number) => () => {
     QuestionsQuestionSetsService.deleteByTwoIds(questionSetId, questionId).then(() => {
-      getById(Number(id));
+      getQuestionSetById(Number(id));
     });
   };
 
   const DeleteQuestionArea = (questionAreaId: number, questionSetId: number) => () => {
     QuestionAreasQuestionSetsService.deleteByTwoIds(questionAreaId, questionSetId).then(() => {
-      getById(Number(id));
+      getQuestionSetById(Number(id));
     });
   };
 
@@ -49,7 +50,7 @@ const QuestionSetDescription: React.FC = () => {
     <GridContainer>
       <Grid item>
         <Typography variant="h4" component="h5">
-          {t('questionSet:')} {questionSet.name}
+          {t('questionSet:')} {questionSet?.name}
         </Typography>
       </Grid>
       <Grid item>
@@ -65,7 +66,7 @@ const QuestionSetDescription: React.FC = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {questionSet.questionAreas?.map((questionArea) => (
+              {questionSet?.questionAreas?.map((questionArea) => (
                 <TableRow
                   key={questionArea.id}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -101,7 +102,7 @@ const QuestionSetDescription: React.FC = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {questionSet.questions.map((question) => (
+              {questionSet?.questions.map((question) => (
                 <TableRow
                   key={question.id}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

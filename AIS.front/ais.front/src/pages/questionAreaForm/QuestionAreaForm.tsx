@@ -4,10 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { QuestionAreaAdd } from '../../core/interfaces/questionArea/questionArea';
-import {
-  createQuestionArea,
-  fetchQuestionAreaById,
-} from '../../core/store/questionArea/actionCreators';
+import { postQuestionArea, getQuestionAreaById } from '../../core/redux/thunk/questionAreaThunk';
 import { defaultQuestionAreaAdd } from '../../core/common/defaultDTO/defaultQuestionArea';
 import GridContainer from '../../core/components/gridContainer/GridContainer';
 import QuestionSets from './questionSetsForQuestionAreaForm/questionSetsForQuestionAreaForm';
@@ -20,7 +17,7 @@ const QuestionAreaForm: React.FC = () => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    dispatch(fetchQuestionAreaById(Number(id)));
+    dispatch(getQuestionAreaById(Number(id)));
   }, [dispatch, id]);
 
   const change = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,7 +26,7 @@ const QuestionAreaForm: React.FC = () => {
   };
 
   const submit = () => {
-    dispatch(createQuestionArea(item));
+    dispatch(postQuestionArea(item));
   };
   return (
     <GridContainer>
