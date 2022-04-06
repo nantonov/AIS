@@ -1,10 +1,6 @@
 import * as React from 'react';
+import { t } from 'i18next';
 
-const Sessions: React.FC = () => {
-
-    return (
-        <h1>Sessions</h1>
-    );
-}
+const Sessions: React.FC = () => <h1>{t('sessions')}</h1>;
 
 export default Sessions;

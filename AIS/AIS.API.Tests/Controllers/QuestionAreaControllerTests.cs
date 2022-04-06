@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AIS.API.Controllers;
+using AIS.API.Tests.Models;
+using AIS.API.Tests.ViewModels;
 using AIS.API.ViewModels.QuestionArea;
 using AIS.BLL.Interfaces.Services;
 using AIS.BLL.Models;
@@ -16,24 +18,15 @@ namespace AIS.API.Tests.Controllers
     public class QuestionAreaControllerTests
     {
         private readonly Mock<IMapper> _mapperMock = new();
-        private readonly Mock<IGenericService<QuestionArea>> _serviceMock = new();
+        private readonly Mock<IQuestionAreaService> _serviceMock = new();
 
         [Fact]
         public async Task Add_WhenControllerHasData_ShouldReturnValidModel()
         {
             // Arrange
-            var inputQuestionAreaViewModel = new QuestionAreaAddViewModel()
-            {
-                Name = "Boba"
-            };
-            var inputQuestionAreaModel = new QuestionArea
-            {
-                Name = inputQuestionAreaViewModel.Name,
-            };
-            var expectedModel = new QuestionAreaViewModel
-            {
-                Name = inputQuestionAreaViewModel.Name,
-            };
+            var inputQuestionAreaViewModel = ValidQuestionAreaViewModels.questionAreaAddViewModel;
+            var inputQuestionAreaModel = ValidQuestionAreaModels.questionAreaModel;
+            var expectedModel = ValidQuestionAreaViewModels.questionAreaViewModel;
 
             _mapperMock.Setup(map => map.Map<QuestionArea>(inputQuestionAreaViewModel)).Returns(inputQuestionAreaModel);
             _mapperMock.Setup(map => map.Map<QuestionAreaViewModel>(inputQuestionAreaModel)).Returns(expectedModel);
@@ -52,18 +45,9 @@ namespace AIS.API.Tests.Controllers
         public async Task Update_WhenControllerHasData_ShouldReturnValidModel()
         {
             // Arrange
-            var inputQuestionAreaViewModel = new QuestionAreaUpdateViewModel
-            {
-                Name = "Boba"
-            };
-            var inputQuestionAreaModel = new QuestionArea
-            {
-                Name = inputQuestionAreaViewModel.Name
-            };
-            var expectedModel = new QuestionAreaViewModel
-            {
-                Name = inputQuestionAreaModel.Name
-            };
+            var inputQuestionAreaViewModel = ValidQuestionAreaViewModels.questionAreaUpdateViewModel;
+            var inputQuestionAreaModel = ValidQuestionAreaModels.questionAreaModel;
+            var expectedModel = ValidQuestionAreaViewModels.questionAreaViewModel;
 
             _mapperMock.Setup(map => map.Map<QuestionArea>(inputQuestionAreaViewModel)).Returns(inputQuestionAreaModel);
             _mapperMock.Setup(map => map.Map<QuestionAreaViewModel>(inputQuestionAreaModel)).Returns(expectedModel);
@@ -84,14 +68,8 @@ namespace AIS.API.Tests.Controllers
             // Arrange
             
             var id = new Random().Next();
-            var expectedQuestionArea = new QuestionArea()
-            {
-                Id = id,
-            };
-            var expectedViewModel = new QuestionAreaViewModel()
-            {
-                Id = id
-            };
+            var expectedQuestionArea = ValidQuestionAreaModels.questionAreaModel;
+            var expectedViewModel = ValidQuestionAreaViewModels.questionAreaViewModel;
 
             _mapperMock.Setup(map => map.Map<QuestionAreaViewModel>(expectedQuestionArea)).Returns(expectedViewModel);
             _serviceMock.Setup(serv => serv.GetById(id, default)).ReturnsAsync(expectedQuestionArea);
@@ -109,41 +87,9 @@ namespace AIS.API.Tests.Controllers
         public async Task GetAll_WhenControllerHasData_ShouldReturnValidModel()
         {
             // Arrange
-            var expected = new[]
-            {
-                new QuestionAreaViewModel()
-                {
-                    Name = "Boba"
-                },
-                new QuestionAreaViewModel()
-                {
-                    Name = "Dida"
-                }
-            };
-            var expectedQuestionAreas = new[]
-            {
-                new QuestionArea
-                {
-                    Name = expected[0].Name
-                },
-                new QuestionArea
-                {
-                    Name = expected[1].Name
-                }
-            };
-            var expectedQuestionAreaViewModel = new[]
-            {
-                new ShortQuestionAreaViewModel
-                {
-                    Name = expected[0].Name
-                },
-                new ShortQuestionAreaViewModel
-                {
-                    Name = expected[0].Name
-                }
-            };
+            var expectedQuestionAreas = ValidQuestionAreaModels.questionAreasList;
+            var expectedQuestionAreaViewModel = ValidQuestionAreaViewModels.questionAreasList;
 
-            _mapperMock.Setup(map => map.Map<IEnumerable<QuestionArea>>(expected)).Returns(expectedQuestionAreas);
             _mapperMock.Setup(map => map.Map<IEnumerable<ShortQuestionAreaViewModel>>(expectedQuestionAreas)).Returns(expectedQuestionAreaViewModel);
             _serviceMock.Setup(serv => serv.Get(default)).ReturnsAsync(expectedQuestionAreas);
 
@@ -160,16 +106,8 @@ namespace AIS.API.Tests.Controllers
         public void Delete_WhenContollerHasData_NoReturn()
         {
             // Arrange
-            var expected = new QuestionAreaViewModel
-            {
-                Id = 3,
-                Name = "Bob"
-            };
-            var expectedQuestionAreas = new QuestionArea
-            {
-                Id = expected.Id,
-                Name = expected.Name
-            };
+            var expectedQuestionAreas = ValidQuestionAreaModels.deleteQuestionAreaModel;
+            var expected = ValidQuestionAreaViewModels.deleteQuestionAreaViewModel;
 
             _mapperMock.Setup(map => map.Map<QuestionArea>(expected)).Returns(expectedQuestionAreas);
             _serviceMock.Setup(serv => serv.Delete(expectedQuestionAreas, default));

@@ -1,39 +1,38 @@
-import {combineReducers} from 'redux';
-import {QuestionArea} from '../../interfaces/questionArea'
-import {ActionType, getType} from 'typesafe-actions';
+import { combineReducers } from 'redux';
+import { ActionType, getType } from 'typesafe-actions';
+import { QuestionArea } from '../../interfaces/questionArea/questionArea';
 
 import * as actions from './actions';
 
 export type QuestionAreasState = Readonly<{
-    questionAreas: QuestionArea[],
-    questionArea: QuestionArea | null
+  questionAreas: QuestionArea[];
+  questionArea: QuestionArea | null;
 }>;
 
 const initialState: QuestionAreasState = {
-    questionAreas: [],
-    questionArea: null
+  questionAreas: [],
+  questionArea: null,
 };
 
-export type questionAreasActions = ActionType<typeof actions>;
+export type QuestionAreasActions = ActionType<typeof actions>;
 
-export const questionAreasReducer = combineReducers<QuestionAreasState,
-    questionAreasActions>({
-    questionAreas: (state = initialState.questionAreas, action) => {
-        switch (action.type) {
-            case getType(actions.fetchAll): {
-                return [...action.payload];
-            }
-            default:
-                return state;
-        }
-    },
-    questionArea: (state = initialState.questionArea, action) => {
-        switch (action.type) {
-            case getType(actions.fetchById): {
-                return action.payload;
-            }
-            default:
-                return state;
-        }
-    },
-    });
+export const questionAreasReducer = combineReducers<QuestionAreasState, QuestionAreasActions>({
+  questionAreas: (state = initialState.questionAreas, action) => {
+    switch (action.type) {
+      case getType(actions.fetchAll): {
+        return [...action.payload];
+      }
+      default:
+        return state;
+    }
+  },
+  questionArea: (state = initialState.questionArea, action) => {
+    switch (action.type) {
+      case getType(actions.fetchById): {
+        return action.payload;
+      }
+      default:
+        return state;
+    }
+  },
+});

@@ -1,10 +1,12 @@
-export enum MainRoutes {
-    questionArea = 'questionArea',
-    sessions = 'sessions',
-    questionSet = 'questionSet',
-    questionSets = 'questionSets',
-    questionSetDescription = 'questionSet/:id',
-    questionAreaForm = 'questionAreaForm',
-    addQuestionSet='addQuestionSet',
+enum MainRoutes {
+  questionArea = 'questionArea',
+  questionAreas = 'questionAreas',
+  sessions = 'sessions',
+  questionSet = 'questionSet',
+  questionSets = 'questionSets',
+  questionAreaForm = 'questionAreaForm',
+  addQuestionSet = 'addQuestionSet',
     questions = 'questions',
 }
+
+export default MainRoutes;

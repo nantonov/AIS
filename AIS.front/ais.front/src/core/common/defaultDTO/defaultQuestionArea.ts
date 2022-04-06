@@ -1,7 +1,14 @@
-import { QuestionArea } from "../../interfaces/questionArea";
+import { QuestionArea, QuestionAreaAdd } from '../../interfaces/questionArea/questionArea';
 
-export const defaultQuestionArea: QuestionArea = {
-    id: 0,
-    name: "",
-    questionSets: []
-}
+const defaultQuestionArea: QuestionArea = {
+  id: 0,
+  name: '',
+  questionSets: [],
+};
+
+export const defaultQuestionAreaAdd: QuestionAreaAdd = {
+  name: '',
+  questionSetsIds: [],
+};
+
+export default defaultQuestionArea;

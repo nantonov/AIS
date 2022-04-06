@@ -1,45 +1,57 @@
-import React, {useEffect, useState} from "react";
-import {Typography, Button, Box} from "@mui/material";
-import {QuestionArea} from "../../core/interfaces/questionArea";
-import {useDispatch} from "react-redux";
-import {useParams} from "react-router-dom";
-import {defaultQuestionArea} from "../../core/common/defaultDTO/defaultQuestionArea";
+import React, { useEffect, useState } from 'react';
+import { Grid, Typography, Button, Box, FormControl, TextField } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { QuestionAreaAdd } from '../../core/interfaces/questionArea/questionArea';
 import {
-    createQuestionArea,
-    editQuestionArea,
-    fetchQuestionAreaById
-} from "../../core/store/questionArea/actionCreators";
+  createQuestionArea,
+  fetchQuestionAreaById,
+} from '../../core/store/questionArea/actionCreators';
+import { defaultQuestionAreaAdd } from '../../core/common/defaultDTO/defaultQuestionArea';
+import GridContainer from '../../core/components/gridContainer/GridContainer';
+import QuestionSets from './questionSetsForQuestionAreaForm/questionSetsForQuestionAreaForm';
 
-const QuestionAreasForm: React.FC = () => {
-    const {id} = useParams();
-    const dispatch = useDispatch();
-    const [item, setItem] = useState<QuestionArea>(defaultQuestionArea);
+const QuestionAreaForm: React.FC = () => {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const [item, setItem] = useState<QuestionAreaAdd>(defaultQuestionAreaAdd);
 
-    useEffect(() => {
-        dispatch(fetchQuestionAreaById(Number(id)));
-    }, []);
+  const { t } = useTranslation();
 
-    const change = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setItem((oldItem) => {
-            return {...oldItem, name: e.target.value};
-        });
-    };
+  useEffect(() => {
+    dispatch(fetchQuestionAreaById(Number(id)));
+  }, [dispatch, id]);
 
-    const submit = () => {
-        if (id) {
-            dispatch(editQuestionArea(item));
-        } else {
-            dispatch(createQuestionArea(item));
-        }
-    }
+  const change = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const copy = { ...item, name: event.target.value };
+    setItem(copy);
+  };
 
-    return (
+  const submit = () => {
+    dispatch(createQuestionArea(item));
+  };
+  return (
+    <GridContainer>
+      <Grid item>
         <Box>
-            <Typography>{item.name}</Typography>
-            <input value={item.name} onChange={change}/>
-            <Button onClick={submit}> Send</Button>
+          <Typography>{t('questionAreaName')} </Typography>
+          <FormControl>
+            <TextField
+              required
+              id="outlined-required"
+              label="Required"
+              sx={{ width: 180 }}
+              value={item.name}
+              onChange={change}
+            />
+            <Button onClick={submit}>{t('send')}</Button>
+            <QuestionSets questionArea={item} setItem={setItem} />
+          </FormControl>
         </Box>
-    );
+      </Grid>
+    </GridContainer>
+  );
 };
 
-export default QuestionAreasForm;
+export default QuestionAreaForm;
