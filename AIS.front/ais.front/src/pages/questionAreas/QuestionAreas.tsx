@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { fetchAllQuestionAreas } from '../../core/store/questionArea/actionCreators';
 import QuestionAreaItem from './questionAreaItem/QuestionAreaItem';
 import QuestionAreaItems from '../../core/components/itemsContainer/ItemsContainer';
@@ -16,6 +17,9 @@ const QuestionsAreas: React.FC = () => {
   const questionAreas = useTypedSelector((state) => state.questionAreas.questionAreas);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const { t } = useTranslation();
+
   const routeChange = () => {
     const path = `/${MainRoutes.questionAreaForm}`;
     navigate(path);
@@ -34,14 +38,14 @@ const QuestionsAreas: React.FC = () => {
               questionAreas.map((item) => <QuestionAreaItem key={item.id} questionArea={item} />)
             ) : (
               <TypographyContainer align="center" variant="h3">
-                Something went wrong. Please refresh page!!!.
+                {t('somethingWentWrongPleaseRefreshPage')}
               </TypographyContainer>
             )}
           </QuestionAreaItems>
         </Container>
       </Grid>
       <Grid item>
-        <ToolTipContainer title="Add question area" placement="left-start">
+        <ToolTipContainer title={t('addQuestionArea').toString()} placement="left-start">
           <CircleIconContainer onClick={routeChange} />
         </ToolTipContainer>
       </Grid>

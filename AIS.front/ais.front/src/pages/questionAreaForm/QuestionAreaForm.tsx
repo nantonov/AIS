@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Grid, Typography, Button, Box, FormControl, TextField } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { QuestionAreaAdd } from '../../core/interfaces/questionArea/questionArea';
 import {
   createQuestionArea,
@@ -15,6 +16,8 @@ const QuestionAreaForm: React.FC = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const [item, setItem] = useState<QuestionAreaAdd>(defaultQuestionAreaAdd);
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     dispatch(fetchQuestionAreaById(Number(id)));
@@ -32,7 +35,7 @@ const QuestionAreaForm: React.FC = () => {
     <GridContainer>
       <Grid item>
         <Box>
-          <Typography>Question area name: </Typography>
+          <Typography>{t('questionAreaName')} </Typography>
           <FormControl>
             <TextField
               required
@@ -42,7 +45,7 @@ const QuestionAreaForm: React.FC = () => {
               value={item.name}
               onChange={change}
             />
-            <Button onClick={submit}> Send</Button>
+            <Button onClick={submit}>{t('send')}</Button>
             <QuestionSets questionArea={item} setItem={setItem} />
           </FormControl>
         </Box>

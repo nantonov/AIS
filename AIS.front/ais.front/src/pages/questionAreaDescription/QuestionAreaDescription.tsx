@@ -15,6 +15,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Typography from '@mui/material/Typography';
 import { ExpandMore } from '@material-ui/icons';
+import { useTranslation } from 'react-i18next';
 import QuestionAreasQuestionSetsService from '../../core/services/questionAreasQuestionSetsService';
 import { fetchQuestionAreaById } from '../../core/store/questionArea/actionCreators';
 import GridContainer from '../../core/components/gridContainer/GridContainer';
@@ -26,6 +27,8 @@ const QuestionAreaDescription: React.FC = () => {
   const navigate = useNavigate();
   const questionArea = useTypedSelector((state) => state.questionAreas.questionArea);
   const dispatch = useDispatch();
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     dispatch(fetchQuestionAreaById(Number(id)));
@@ -44,18 +47,18 @@ const QuestionAreaDescription: React.FC = () => {
     <GridContainer>
       <Grid item>
         <Typography variant="h4" component="h5">
-          Question area: {questionArea?.name}
+          {t('questionArea:')} {questionArea?.name}
         </Typography>
       </Grid>
       <Grid item>
         <Typography variant="h5" component="h6" marginTop="10px" marginBottom="10px">
-          Question sets:
+          {t('questionSets')}
         </Typography>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Question sets</TableCell>
+                <TableCell>{t(`questionSets`)}</TableCell>
                 <TableCell />
               </TableRow>
             </TableHead>
@@ -69,10 +72,7 @@ const QuestionAreaDescription: React.FC = () => {
                     {questionSet.name}
                   </TableCell>
                   <TableCell align="right">
-                    <Button
-                      onClick={routeChangeSet(questionSet.id)}
-                      endIcon={<ExpandMore />}
-                    />
+                    <Button onClick={routeChangeSet(questionSet.id)} endIcon={<ExpandMore />} />
                     <Button
                       endIcon={<DeleteIcon />}
                       onClick={DeleteQuestionSet(Number(id), questionSet.id)}

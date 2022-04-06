@@ -11,10 +11,10 @@ import {
   TableHead,
   TableRow,
   TextField,
-  Typography,
 } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useTranslation } from 'react-i18next';
 import { useTypedSelector } from '../../../core/hooks/useTypedSelector';
 import { QuestionAreaAdd } from '../../../core/interfaces/questionArea/questionArea';
 import { getAllData } from '../../../core/store/questionSets/actionCreator';
@@ -27,6 +27,8 @@ const QuestionSets: React.FC<QuestionAreaProps> = ({ questionArea, setItem }) =>
   const dispatch = useDispatch();
   const questionSets = useTypedSelector((state) => state.questionSets.questionSets);
   const [QuestionSetsIds, setQuestionSetsIds] = useState<number[]>(questionArea.questionSetsIds);
+
+  const { t } = useTranslation();
 
   const deleteQuestionSet = (questionSetId: number) => () => {
     const array = QuestionSetsIds.filter((set) => set !== questionSetId);
@@ -53,7 +55,7 @@ const QuestionSets: React.FC<QuestionAreaProps> = ({ questionArea, setItem }) =>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Question sets</TableCell>
+              <TableCell>{t('questionSets')}</TableCell>
               <TableCell />
             </TableRow>
           </TableHead>
@@ -80,7 +82,7 @@ const QuestionSets: React.FC<QuestionAreaProps> = ({ questionArea, setItem }) =>
                     value={0}
                     onChange={changeQuestionSetsHandler}
                   >
-                    <MenuItem value={0}>Choose question set</MenuItem>
+                    <MenuItem value={0}>{t('chooseQuestionSet')}</MenuItem>
                     {getQuestionSetsOptions().map((set) => (
                       <MenuItem key={set.id} value={set.id}>
                         {set.name}

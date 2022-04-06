@@ -3,6 +3,7 @@ import Typography from '@mui/material/Typography';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { QuestionSetAddState } from '../../core/interfaces/questionSet/questionSet';
 import { IQuestionSetAddDefault } from '../../core/common/defaultDTO/defaultQuestionSet';
 import QuestionSetService from '../../core/services/questionSetService';
@@ -21,6 +22,8 @@ const QuestionSetAdd: React.FC = () => {
   const questionAreas = useTypedSelector((state) => state.questionAreas.questionAreas);
   const questionSets = useTypedSelector((state) => state.questionSets.questionSets);
   const questions = useTypedSelector((state) => state.questions.questions);
+
+  const { t } = useTranslation();
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -98,7 +101,7 @@ const QuestionSetAdd: React.FC = () => {
     <GridContainer>
       <Grid item>
         <BoxContainer>
-          <Typography>Question set name: </Typography>
+          <Typography>{t('questionSetName')} </Typography>
           <FormControl>
             <TextField
               required
@@ -114,12 +117,12 @@ const QuestionSetAdd: React.FC = () => {
       <Grid item>
         {questionSetModel.questionAreaIds.map((item, index) => (
           <BoxContainer key={item}>
-            <Typography>Select question area: </Typography>
+            <Typography>{t('selectQuestionArea')} </Typography>
             <TextField
               id="outlined-select-question-area"
               select
               label="Select"
-              helperText="Please select question area"
+              helperText={t('pleaseSelectQuestionArea')}
               value={item}
               onChange={changeQuestionAreaHandler(index)}
             >
@@ -136,19 +139,19 @@ const QuestionSetAdd: React.FC = () => {
           variant="contained"
           onClick={addEmptyQuestionArea}
         >
-          Add question area
+          {t('addQuestionArea')}
         </ButtonContainer>
       </Grid>
 
       <Grid item>
         {questionSetModel.questionIds.map((item, index) => (
           <BoxContainer key={item}>
-            <Typography>Select question: </Typography>
+            <Typography>{t('selectQuestion')} </Typography>
             <TextField
               id="outlined-select-question"
               select
               label="Select"
-              helperText="Please select question"
+              helperText="pleaseSelectQuestion"
               value={item}
               defaultValue={questionSetModel.questionIds[0]}
               onChange={changeQuestionHandler(index)}
@@ -166,12 +169,12 @@ const QuestionSetAdd: React.FC = () => {
           variant="contained"
           onClick={addEmptyQuestionIdsArray}
         >
-          Add question
+          {t('addQuestion')}
         </ButtonContainer>
       </Grid>
       <Grid item>
         <ButtonContainer variant="contained" onClick={saveAction}>
-          Add question set
+          {t('addQuestionSet')}
         </ButtonContainer>
       </Grid>
     </GridContainer>

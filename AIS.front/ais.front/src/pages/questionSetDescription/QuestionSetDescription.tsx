@@ -15,6 +15,7 @@ import { useParams } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Typography from '@mui/material/Typography';
+import { useTranslation } from 'react-i18next';
 import QuestionAreasQuestionSetsService from '../../core/services/questionAreasQuestionSetsService';
 import QuestionsQuestionSetsService from '../../core/services/questionsQuestionSetsService';
 import { getById } from '../../core/store/questionSets/actionCreator';
@@ -25,6 +26,8 @@ const QuestionSetDescription: React.FC = () => {
   const { id } = useParams();
   const questionSet = useTypedSelector((state) => state.questionSets.questionSet);
   const dispatch = useDispatch();
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     dispatch(getById(Number(id)));
@@ -46,18 +49,18 @@ const QuestionSetDescription: React.FC = () => {
     <GridContainer>
       <Grid item>
         <Typography variant="h4" component="h5">
-          Question set: {questionSet.name}
+          {t('questionSet:')} {questionSet.name}
         </Typography>
       </Grid>
       <Grid item>
         <Typography variant="h5" component="h6" marginTop="10px" marginBottom="10px">
-          Question areas:
+          {t('questionAreas:')}
         </Typography>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Question area</TableCell>
+                <TableCell>{t('questionArea')}</TableCell>
                 <TableCell />
               </TableRow>
             </TableHead>
@@ -86,14 +89,14 @@ const QuestionSetDescription: React.FC = () => {
 
       <Grid item>
         <Typography variant="h5" component="h6" marginTop="10px" marginBottom="10px">
-          Questions
+          {t('questions')}
         </Typography>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Number</TableCell>
-                <TableCell>Name</TableCell>
+                <TableCell>{t('number')}</TableCell>
+                <TableCell>{t('name')}</TableCell>
                 <TableCell />
               </TableRow>
             </TableHead>

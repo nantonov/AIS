@@ -12,12 +12,15 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import PagesAppBar from '../../constants/pagesAppBar';
 import Settings from '../../constants/headerSettings';
 
 const Header: React.FC = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+
+  const { t } = useTranslation();
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -84,7 +87,7 @@ const Header: React.FC = () => {
             >
               {PagesAppBar.map((page) => (
                 <MenuItem key={page.label} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page.label}</Typography>
+                  <Typography textAlign="center">{t(`${page.label}`)}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -109,7 +112,7 @@ const Header: React.FC = () => {
                   textTransform: 'capitalize',
                 }}
               >
-                {page.label}
+                {t(`${page.label}`)}
               </Button>
             ))}
           </Box>
@@ -138,7 +141,7 @@ const Header: React.FC = () => {
             >
               {Settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                  <Typography textAlign="center">{t(`${setting}`)}</Typography>
                 </MenuItem>
               ))}
             </Menu>

@@ -1,3 +1,3 @@
-const Settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const Settings = ['profile', 'account', 'dashboard', 'logout'];
 
 export default Settings;
