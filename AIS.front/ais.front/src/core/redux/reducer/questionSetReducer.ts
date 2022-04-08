@@ -28,13 +28,13 @@ const questionSetReducer = (
         ...state,
         isLoading: true,
       };
-    case QuestionSetActionTypes.QUESTION_SET_SUCCES:
+    case QuestionSetActionTypes.QUESTION_SET_SUCCESS:
       return {
         ...state,
         isLoading: false,
         questionSet: action.payload,
       };
-    case QuestionSetActionTypes.QUESTION_SET_SUCCES_ALL:
+    case QuestionSetActionTypes.QUESTION_SET_SUCCESS_ALL:
       return {
         ...state,
         isLoading: false,

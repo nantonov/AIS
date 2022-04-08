@@ -2,7 +2,7 @@ import { AlertColor } from '@mui/material/Alert';
 
 export enum ToastMessageActionTypes {
   TOAST_MESSAGE_START = 'TOAST_MESSAGE_START',
-  TOAST_MESSAGE_SUCCES = 'TOAST_MESSAGE_SUCCES',
+  TOAST_MESSAGE_SUCCESS = 'TOAST_MESSAGE_SUCCESS',
   TOAST_MESSAGE_FAIL = 'TOAST_MESSAGE_FAIL',
   GLOBAL_SET_TOAST_MESSAGE = 'GLOBAL_SET_TOAST_MESSAGE',
 }
@@ -12,7 +12,7 @@ interface ToastMessageStartAction {
 }
 
 interface ToastMessageSuccessAction {
-  type: ToastMessageActionTypes.TOAST_MESSAGE_SUCCES;
+  type: ToastMessageActionTypes.TOAST_MESSAGE_SUCCESS;
   payload: ToastMessage;
 }
 

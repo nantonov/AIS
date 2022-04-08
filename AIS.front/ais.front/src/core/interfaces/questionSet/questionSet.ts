@@ -3,8 +3,8 @@ import { ShortQuestionArea } from '../questionArea/shortQuestionArea';
 
 export enum QuestionSetActionTypes {
   QUESTION_SET_START = 'QUESTION_SET_START',
-  QUESTION_SET_SUCCES = 'QUESTION_SET_SUCCES',
-  QUESTION_SET_SUCCES_ALL = 'QUESTION_SET_SUCCES_ALL',
+  QUESTION_SET_SUCCESS = 'QUESTION_SET_SUCCESS',
+  QUESTION_SET_SUCCESS_ALL = 'QUESTION_SET_SUCCESS_ALL',
   QUESTION_SET_FAIL = 'QUESTION_SET_FAIL',
 }
 
@@ -13,12 +13,12 @@ interface QuestionSetStartAction {
 }
 
 interface QuestionSetSuccessAction {
-  type: QuestionSetActionTypes.QUESTION_SET_SUCCES;
+  type: QuestionSetActionTypes.QUESTION_SET_SUCCESS;
   payload: QuestionSet;
 }
 
 interface QuestionSetSuccessActionAll {
-  type: QuestionSetActionTypes.QUESTION_SET_SUCCES_ALL;
+  type: QuestionSetActionTypes.QUESTION_SET_SUCCESS_ALL;
   payload: QuestionSet[];
 }
 

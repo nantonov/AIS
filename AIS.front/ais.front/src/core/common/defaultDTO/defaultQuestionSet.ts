@@ -4,7 +4,7 @@ export const defaultQuestionSet: QuestionSet = {
   id: 0,
   name: '',
   questionAreaId: 0,
-  questionAreas: null,
+  questionAreas: [],
   questions: [],
 };
 export const IQuestionSetAddDefault = {

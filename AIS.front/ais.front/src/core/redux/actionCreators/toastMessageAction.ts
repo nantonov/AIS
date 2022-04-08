@@ -9,7 +9,7 @@ export const toastMessageStart = (): ToastMessageAction => ({
 });
 
 export const toastMessageSuccess = (toastMessage: ToastMessage): ToastMessageAction => ({
-  type: ToastMessageActionTypes.TOAST_MESSAGE_SUCCES,
+  type: ToastMessageActionTypes.TOAST_MESSAGE_SUCCESS,
   payload: toastMessage,
 });
 

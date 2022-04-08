@@ -9,12 +9,12 @@ export const questionSetStart = (): QuestionSetAction => ({
 });
 
 export const questionSetSuccess = (questionSet: QuestionSet): QuestionSetAction => ({
-  type: QuestionSetActionTypes.QUESTION_SET_SUCCES,
+  type: QuestionSetActionTypes.QUESTION_SET_SUCCESS,
   payload: questionSet,
 });
 
 export const questionSetSuccessAll = (questionSets: QuestionSet[]): QuestionSetAction => ({
-  type: QuestionSetActionTypes.QUESTION_SET_SUCCES_ALL,
+  type: QuestionSetActionTypes.QUESTION_SET_SUCCESS_ALL,
   payload: questionSets,
 });
 

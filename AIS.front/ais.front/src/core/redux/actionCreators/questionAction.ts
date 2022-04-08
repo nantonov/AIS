@@ -5,12 +5,12 @@ export const questionStart = (): QuestionAction => ({
 });
 
 export const questionSuccess = (question: Question): QuestionAction => ({
-  type: QuestionActionTypes.QUESTION_SUCCES,
+  type: QuestionActionTypes.QUESTION_SUCCESS,
   payload: question,
 });
 
 export const questionSuccessAll = (question: Question[]): QuestionAction => ({
-  type: QuestionActionTypes.QUESTION_SUCCES_ALL,
+  type: QuestionActionTypes.QUESTION_SUCCESS_ALL,
   payload: question,
 });
 

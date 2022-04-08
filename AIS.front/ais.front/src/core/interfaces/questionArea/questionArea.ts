@@ -2,8 +2,8 @@ import { ShortQuestionSet } from '../questionSet/shortQuestionSet';
 
 export enum QuestionAreaActionTypes {
   QUESTION_AREA_START = 'QUESTION_AREA_START',
-  QUESTION_AREA_SUCCES = 'QUESTION_AREA_SUCCES',
-  QUESTION_AREA_SUCCES_ALL = 'QUESTION_AREA_SUCCES_ALL',
+  QUESTION_AREA_SUCCESS = 'QUESTION_AREA_SUCCESS',
+  QUESTION_AREA_SUCCESS_ALL = 'QUESTION_AREA_SUCCESS_ALL',
   QUESTION_AREA_FAIL = 'QUESTION_AREA_FAIL',
 }
 
@@ -12,12 +12,12 @@ interface QuestionAreaStartAction {
 }
 
 interface QuestionAreaSuccessAction {
-  type: QuestionAreaActionTypes.QUESTION_AREA_SUCCES;
+  type: QuestionAreaActionTypes.QUESTION_AREA_SUCCESS;
   payload: QuestionArea;
 }
 
 interface QuestionAreaSuccessActionAll {
-  type: QuestionAreaActionTypes.QUESTION_AREA_SUCCES_ALL;
+  type: QuestionAreaActionTypes.QUESTION_AREA_SUCCESS_ALL;
   payload: QuestionArea[];
 }
 

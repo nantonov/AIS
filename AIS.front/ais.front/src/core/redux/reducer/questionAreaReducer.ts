@@ -28,13 +28,13 @@ const questionAreaReducer = (
         ...state,
         isLoading: true,
       };
-    case QuestionAreaActionTypes.QUESTION_AREA_SUCCES:
+    case QuestionAreaActionTypes.QUESTION_AREA_SUCCESS:
       return {
         ...state,
         isLoading: false,
         questionArea: action.payload,
       };
-    case QuestionAreaActionTypes.QUESTION_AREA_SUCCES_ALL:
+    case QuestionAreaActionTypes.QUESTION_AREA_SUCCESS_ALL:
       return {
         ...state,
         isLoading: false,

@@ -26,7 +26,7 @@ const toastMessageReducer = (
         ...state,
         isLoading: true,
       };
-    case ToastMessageActionTypes.TOAST_MESSAGE_SUCCES:
+    case ToastMessageActionTypes.TOAST_MESSAGE_SUCCESS:
       return {
         ...state,
         isLoading: false,

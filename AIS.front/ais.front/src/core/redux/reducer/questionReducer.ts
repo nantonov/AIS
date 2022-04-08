@@ -21,13 +21,13 @@ const questionReducer = (state = initialState, action: QuestionAction): InitQues
         ...state,
         isLoading: true,
       };
-    case QuestionActionTypes.QUESTION_SUCCES:
+    case QuestionActionTypes.QUESTION_SUCCESS:
       return {
         ...state,
         isLoading: false,
         question: action.payload,
       };
-    case QuestionActionTypes.QUESTION_SUCCES_ALL:
+    case QuestionActionTypes.QUESTION_SUCCESS_ALL:
       return {
         ...state,
         isLoading: false,

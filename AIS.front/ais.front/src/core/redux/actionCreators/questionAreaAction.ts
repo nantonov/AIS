@@ -9,12 +9,12 @@ export const questionAreaStart = (): QuestionAreaAction => ({
 });
 
 export const questionAreaSuccess = (questionArea: QuestionArea): QuestionAreaAction => ({
-  type: QuestionAreaActionTypes.QUESTION_AREA_SUCCES,
+  type: QuestionAreaActionTypes.QUESTION_AREA_SUCCESS,
   payload: questionArea,
 });
 
 export const questionAreaSuccessAll = (questionAreas: QuestionArea[]): QuestionAreaAction => ({
-  type: QuestionAreaActionTypes.QUESTION_AREA_SUCCES_ALL,
+  type: QuestionAreaActionTypes.QUESTION_AREA_SUCCESS_ALL,
   payload: questionAreas,
 });
 

@@ -3,8 +3,8 @@ import { ShortTrueAnswer } from '../trueAnswer/shortTrueAnswer';
 
 export enum QuestionActionTypes {
   QUESTION_START = 'QUESTION_START',
-  QUESTION_SUCCES = 'QUESTION_SUCCES',
-  QUESTION_SUCCES_ALL = 'QUESTION_SUCCES_ALL',
+  QUESTION_SUCCESS = 'QUESTION_SUCCESS',
+  QUESTION_SUCCESS_ALL = 'QUESTION_SUCCESS_ALL',
   QUESTION_FAIL = 'QUESTION_FAIL',
 }
 
@@ -13,12 +13,12 @@ interface QuestionStartAction {
 }
 
 interface QuestionSuccessAction {
-  type: QuestionActionTypes.QUESTION_SUCCES;
+  type: QuestionActionTypes.QUESTION_SUCCESS;
   payload: Question;
 }
 
 interface QuestionSuccessActionAll {
-  type: QuestionActionTypes.QUESTION_SUCCES_ALL;
+  type: QuestionActionTypes.QUESTION_SUCCESS_ALL;
   payload: Question[];
 }
 
