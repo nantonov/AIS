@@ -4,21 +4,21 @@ import {
   QuestionSet,
 } from '../../interfaces/questionSet/questionSet';
 
-export const questionSetStart = (): QuestionSetAction => ({
+export const setQuestionSetStart = (): QuestionSetAction => ({
   type: QuestionSetActionTypes.QUESTION_SET_START,
 });
 
-export const questionSetSuccess = (questionSet: QuestionSet): QuestionSetAction => ({
+export const setQuestionSetSuccess = (questionSet: QuestionSet): QuestionSetAction => ({
   type: QuestionSetActionTypes.QUESTION_SET_SUCCESS,
   payload: questionSet,
 });
 
-export const questionSetSuccessAll = (questionSets: QuestionSet[]): QuestionSetAction => ({
+export const setQuestionSetSuccessAll = (questionSets: QuestionSet[]): QuestionSetAction => ({
   type: QuestionSetActionTypes.QUESTION_SET_SUCCESS_ALL,
   payload: questionSets,
 });
 
-export const questionSetFail = (error: string): QuestionSetAction => ({
+export const setQuestionSetFail = (error: string): QuestionSetAction => ({
   type: QuestionSetActionTypes.QUESTION_SET_FAIL,
   payload: error,
 });

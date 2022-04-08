@@ -1,20 +1,20 @@
 import { Question, QuestionAction, QuestionActionTypes } from '../../interfaces/question/question';
 
-export const questionStart = (): QuestionAction => ({
+export const setQuestionStart = (): QuestionAction => ({
   type: QuestionActionTypes.QUESTION_START,
 });
 
-export const questionSuccess = (question: Question): QuestionAction => ({
+export const setQuestionSuccess = (question: Question): QuestionAction => ({
   type: QuestionActionTypes.QUESTION_SUCCESS,
   payload: question,
 });
 
-export const questionSuccessAll = (question: Question[]): QuestionAction => ({
+export const setQuestionSuccessAll = (question: Question[]): QuestionAction => ({
   type: QuestionActionTypes.QUESTION_SUCCESS_ALL,
   payload: question,
 });
 
-export const questionFail = (error: string): QuestionAction => ({
+export const setQuestionFail = (error: string): QuestionAction => ({
   type: QuestionActionTypes.QUESTION_FAIL,
   payload: error,
 });

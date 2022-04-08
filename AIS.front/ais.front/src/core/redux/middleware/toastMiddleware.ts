@@ -4,9 +4,9 @@ import * as actions from '../actionCreators/toastMessageAction';
 
 const toastMiddleware: Middleware = (store) => (next) => (action: ActionType<AnyAction>) => {
   const { dispatch } = store;
-  dispatch(actions.toastMessageStart());
-  if (action.type === getType(actions.toastMessageGlobalSet)) {
-    dispatch(actions.toastMessageSuccess(action.payload));
+  dispatch(actions.setToastMessageStart());
+  if (action.type === getType(actions.setToastMessageGlobalSet)) {
+    dispatch(actions.setToastMessageSuccess(action.payload));
   }
 
   return next(action);

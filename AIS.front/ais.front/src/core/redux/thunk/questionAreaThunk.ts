@@ -1,9 +1,9 @@
 import { Dispatch } from 'redux';
 import {
-  questionAreaStart,
-  questionAreaSuccess,
-  questionAreaSuccessAll,
-  questionAreaFail,
+  setQuestionAreaStart,
+  setQuestionAreaSuccess,
+  setQuestionAreaSuccessAll,
+  setQuestionAreaFail,
 } from '../actionCreators/questionAreaAction';
 import {
   QuestionArea,
@@ -14,67 +14,67 @@ import QuestionAreaService from '../../services/questionAreaService';
 
 export const getAllQuestionAreas = () => async (dispatch: Dispatch<QuestionAreaAction>) => {
   try {
-    dispatch(questionAreaStart());
+    dispatch(setQuestionAreaStart());
     const questionAreas = await QuestionAreaService.getAll();
-    dispatch(questionAreaSuccessAll(questionAreas));
+    dispatch(setQuestionAreaSuccessAll(questionAreas));
   } catch (error) {
     const errorMessage = (error as Error).message;
-    dispatch(questionAreaFail(errorMessage));
+    dispatch(setQuestionAreaFail(errorMessage));
   }
 };
 
 export const getQuestionAreaById =
   (id: number) => async (dispatch: Dispatch<QuestionAreaAction>) => {
     try {
-      dispatch(questionAreaStart());
+      dispatch(setQuestionAreaStart());
       const questionArea = await QuestionAreaService.getById(id);
-      dispatch(questionAreaSuccess(questionArea));
+      dispatch(setQuestionAreaSuccess(questionArea));
     } catch (error) {
       const errorMessage = (error as Error).message;
-      dispatch(questionAreaFail(errorMessage));
+      dispatch(setQuestionAreaFail(errorMessage));
     }
   };
 
 export const postQuestionArea =
   (questionArea: QuestionAreaAdd) => async (dispatch: Dispatch<QuestionAreaAction>) => {
     try {
-      dispatch(questionAreaStart());
+      dispatch(setQuestionAreaStart());
       const result = await QuestionAreaService.create(questionArea);
       if (result) {
         const questionAreas = await QuestionAreaService.getAll();
-        dispatch(questionAreaSuccessAll(questionAreas));
+        dispatch(setQuestionAreaSuccessAll(questionAreas));
       }
     } catch (error) {
       const errorMessage = (error as Error).message;
-      dispatch(questionAreaFail(errorMessage));
+      dispatch(setQuestionAreaFail(errorMessage));
     }
   };
 
 export const putQuestionArea =
   (questionArea: QuestionArea) => async (dispatch: Dispatch<QuestionAreaAction>) => {
     try {
-      dispatch(questionAreaStart());
+      dispatch(setQuestionAreaStart());
       const result = await QuestionAreaService.update(questionArea);
       if (result) {
         const questionAreas = await QuestionAreaService.getAll();
-        dispatch(questionAreaSuccessAll(questionAreas));
+        dispatch(setQuestionAreaSuccessAll(questionAreas));
       }
     } catch (error) {
       const errorMessage = (error as Error).message;
-      dispatch(questionAreaFail(errorMessage));
+      dispatch(setQuestionAreaFail(errorMessage));
     }
   };
 
 export const deleteQuestionArea =
   (questionArea: QuestionArea) => async (dispatch: Dispatch<QuestionAreaAction>) => {
     try {
-      dispatch(questionAreaStart());
+      dispatch(setQuestionAreaStart());
       await QuestionAreaService.deleteById(questionArea.id).then(async () => {
         const questionAreas = await QuestionAreaService.getAll();
-        dispatch(questionAreaSuccessAll(questionAreas));
+        dispatch(setQuestionAreaSuccessAll(questionAreas));
       });
     } catch (error) {
       const errorMessage = (error as Error).message;
-      dispatch(questionAreaFail(errorMessage));
+      dispatch(setQuestionAreaFail(errorMessage));
     }
   };
