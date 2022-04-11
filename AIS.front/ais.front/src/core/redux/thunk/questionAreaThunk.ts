@@ -10,12 +10,18 @@ import {
   QuestionAreaAction,
   QuestionAreaAdd,
 } from '../../interfaces/questionArea/questionArea';
-import QuestionAreaService from '../../services/questionAreaService';
+import {
+  getAllQuestionAreasService,
+  getQuestionAreaByIdService,
+  createQuestionAreaService,
+  deleteQuestionAreaService,
+  updateQuestionAreaService,
+} from '../../services/questionAreaService';
 
 export const getAllQuestionAreas = () => async (dispatch: Dispatch<QuestionAreaAction>) => {
   try {
     dispatch(setQuestionAreaStart());
-    const questionAreas = await QuestionAreaService.getAll();
+    const questionAreas = await getAllQuestionAreasService();
     dispatch(setQuestionAreaSuccessAll(questionAreas));
   } catch (error) {
     const errorMessage = (error as Error).message;
@@ -27,7 +33,7 @@ export const getQuestionAreaById =
   (id: number) => async (dispatch: Dispatch<QuestionAreaAction>) => {
     try {
       dispatch(setQuestionAreaStart());
-      const questionArea = await QuestionAreaService.getById(id);
+      const questionArea = await getQuestionAreaByIdService(id);
       dispatch(setQuestionAreaSuccess(questionArea));
     } catch (error) {
       const errorMessage = (error as Error).message;
@@ -39,9 +45,9 @@ export const postQuestionArea =
   (questionArea: QuestionAreaAdd) => async (dispatch: Dispatch<QuestionAreaAction>) => {
     try {
       dispatch(setQuestionAreaStart());
-      const result = await QuestionAreaService.create(questionArea);
+      const result = await createQuestionAreaService(questionArea);
       if (result) {
-        const questionAreas = await QuestionAreaService.getAll();
+        const questionAreas = await getAllQuestionAreasService();
         dispatch(setQuestionAreaSuccessAll(questionAreas));
       }
     } catch (error) {
@@ -54,9 +60,9 @@ export const putQuestionArea =
   (questionArea: QuestionArea) => async (dispatch: Dispatch<QuestionAreaAction>) => {
     try {
       dispatch(setQuestionAreaStart());
-      const result = await QuestionAreaService.update(questionArea);
+      const result = await updateQuestionAreaService(questionArea);
       if (result) {
-        const questionAreas = await QuestionAreaService.getAll();
+        const questionAreas = await getAllQuestionAreasService();
         dispatch(setQuestionAreaSuccessAll(questionAreas));
       }
     } catch (error) {
@@ -69,8 +75,8 @@ export const deleteQuestionArea =
   (questionArea: QuestionArea) => async (dispatch: Dispatch<QuestionAreaAction>) => {
     try {
       dispatch(setQuestionAreaStart());
-      await QuestionAreaService.deleteById(questionArea.id).then(async () => {
-        const questionAreas = await QuestionAreaService.getAll();
+      await deleteQuestionAreaService(questionArea.id).then(async () => {
+        const questionAreas = await getAllQuestionAreasService();
         dispatch(setQuestionAreaSuccessAll(questionAreas));
       });
     } catch (error) {
