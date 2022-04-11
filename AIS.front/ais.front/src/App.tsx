@@ -8,7 +8,6 @@ import Sessions from './pages/session/Session';
 import QuestionsSets from './pages/questionsSets/QuestionsSets';
 import QuestionSetDescription from './pages/questionSetDescription/QuestionSetDescription';
 import QuestionAreaForm from './pages/questionAreaForm/QuestionAreaForm';
-import AddQuestionSet from './pages/questionSetAdd/QuestionSetAdd';
 import QuestionAreas from './pages/questionAreas/QuestionAreas';
 import QuestionAreaDescription from './pages/questionAreaDescription/QuestionAreaDescription';
 
@@ -23,7 +22,6 @@ const App: React.FC = () => (
       <Route path={`${MainRoutes.questionArea}/:id`} element={<QuestionAreaDescription />} />
       <Route path={`${MainRoutes.questionAreaForm}/:id`} element={<QuestionAreaForm />} />
       <Route path={MainRoutes.questionAreaForm} element={<QuestionAreaForm />} />
-      <Route path={MainRoutes.addQuestionSet} element={<AddQuestionSet />} />
     </Routes>
   </Provider>
 );

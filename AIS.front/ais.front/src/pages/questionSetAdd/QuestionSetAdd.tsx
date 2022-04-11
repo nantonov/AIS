@@ -1,4 +1,4 @@
-import { FormControl, Grid, MenuItem, TextField } from '@mui/material';
+import { FormControl, MenuItem, TextField } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -18,6 +18,7 @@ import MainRoutes from '../../core/constants/mainRoutes';
 import questionAreaSelector from '../../core/redux/selectors/questionAreaSelector';
 import questionSetSelector from '../../core/redux/selectors/questionSetSelector';
 import questionSelector from '../../core/redux/selectors/questionSelector';
+import { GridItemContainer } from './styled/GridItemContainer';
 
 const QuestionSetAdd: React.FC = () => {
   const [questionSetModel, setQuestionSetModel] =
@@ -102,7 +103,7 @@ const QuestionSetAdd: React.FC = () => {
 
   return (
     <GridContainer>
-      <Grid item>
+      <GridItemContainer>
         <BoxContainer>
           <Typography>{t('questionSetName')} </Typography>
           <FormControl>
@@ -116,8 +117,8 @@ const QuestionSetAdd: React.FC = () => {
             />
           </FormControl>
         </BoxContainer>
-      </Grid>
-      <Grid item>
+      </GridItemContainer>
+      <GridContainer>
         {questionSetModel.questionAreaIds.map((item, index) => (
           <BoxContainer key={item}>
             <Typography>{t('selectQuestionArea')} </Typography>
@@ -144,9 +145,9 @@ const QuestionSetAdd: React.FC = () => {
         >
           {t('addQuestionArea')}
         </ButtonContainer>
-      </Grid>
+      </GridContainer>
 
-      <Grid item>
+      <GridContainer>
         {questionSetModel.questionIds.map((item, index) => (
           <BoxContainer key={item}>
             <Typography>{t('selectQuestion')} </Typography>
@@ -174,12 +175,12 @@ const QuestionSetAdd: React.FC = () => {
         >
           {t('addQuestion')}
         </ButtonContainer>
-      </Grid>
-      <Grid item>
+      </GridContainer>
+      <GridContainer>
         <ButtonContainer variant="contained" onClick={saveAction}>
           {t('addQuestionSet')}
         </ButtonContainer>
-      </Grid>
+      </GridContainer>
     </GridContainer>
   );
 };
