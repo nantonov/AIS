@@ -17,21 +17,22 @@ import Typography from '@mui/material/Typography';
 import { ExpandMore } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
 import QuestionAreasQuestionSetsService from '../../core/services/questionAreasQuestionSetsService';
-import { fetchQuestionAreaById } from '../../core/store/questionArea/actionCreators';
+import { getQuestionAreaById } from '../../core/redux/thunk/questionAreaThunk';
 import GridContainer from '../../core/components/gridContainer/GridContainer';
 import { useTypedSelector } from '../../core/hooks/useTypedSelector';
 import MainRoutes from '../../core/constants/mainRoutes';
+import questionAreaSelector from '../../core/redux/selectors/questionAreaSelector';
 
 const QuestionAreaDescription: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const questionArea = useTypedSelector((state) => state.questionAreas.questionArea);
+  const { questionArea } = useTypedSelector(questionAreaSelector);
   const dispatch = useDispatch();
 
   const { t } = useTranslation();
 
   useEffect(() => {
-    dispatch(fetchQuestionAreaById(Number(id)));
+    dispatch(getQuestionAreaById(Number(id)));
   }, [dispatch, id]);
   const routeChangeSet = (changeId: Number) => () => {
     const path = `/${MainRoutes.questionSet}/${changeId}`;
@@ -39,7 +40,7 @@ const QuestionAreaDescription: React.FC = () => {
   };
   const DeleteQuestionSet = (questionAreaId: number, questionSetId: number) => () => {
     QuestionAreasQuestionSetsService.deleteByTwoIds(questionAreaId, questionSetId).then(() => {
-      fetchQuestionAreaById(Number(id));
+      getQuestionAreaById(Number(id));
     });
   };
 

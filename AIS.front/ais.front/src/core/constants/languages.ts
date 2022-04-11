@@ -1,6 +1,6 @@
 enum Languages {
   ru = 'ru',
-  en = 'en'
+  en = 'en',
 }
 
 export default Languages;

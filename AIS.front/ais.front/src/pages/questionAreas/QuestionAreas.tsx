@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { fetchAllQuestionAreas } from '../../core/store/questionArea/actionCreators';
+import { getAllQuestionAreas } from '../../core/redux/thunk/questionAreaThunk';
 import QuestionAreaItem from './questionAreaItem/QuestionAreaItem';
 import QuestionAreaItems from '../../core/components/itemsContainer/ItemsContainer';
 import Container from '../../core/components/container/Container';
@@ -12,9 +12,10 @@ import ToolTipContainer from '../../core/components/toolTipContainer/ToolTipCont
 import TypographyContainer from '../../core/components/typographyContainer/TypographyContainer';
 import MainRoutes from '../../core/constants/mainRoutes';
 import { useTypedSelector } from '../../core/hooks/useTypedSelector';
+import questionAreaSelector from '../../core/redux/selectors/questionAreaSelector';
 
 const QuestionsAreas: React.FC = () => {
-  const questionAreas = useTypedSelector((state) => state.questionAreas.questionAreas);
+  const { questionAreas } = useTypedSelector(questionAreaSelector);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -26,7 +27,7 @@ const QuestionsAreas: React.FC = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchAllQuestionAreas());
+    dispatch(getAllQuestionAreas());
   }, [dispatch]);
 
   return (

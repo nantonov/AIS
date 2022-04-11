@@ -7,21 +7,24 @@ import { useTranslation } from 'react-i18next';
 import { QuestionSetAddState } from '../../core/interfaces/questionSet/questionSet';
 import { IQuestionSetAddDefault } from '../../core/common/defaultDTO/defaultQuestionSet';
 import QuestionSetService from '../../core/services/questionSetService';
-import { getAllData } from '../../core/store/questionSets/actionCreator';
-import { getAllData as getQuestions } from '../../core/store/questions/actionCreator';
-import { fetchAllQuestionAreas } from '../../core/store/questionArea/actionCreators';
+import { getAllQuestionSets } from '../../core/redux/thunk/questionSetThunk';
+import { getAllQuestions } from '../../core/redux/thunk/questionThunk';
+import { getAllQuestionAreas } from '../../core/redux/thunk/questionAreaThunk';
 import { useTypedSelector } from '../../core/hooks/useTypedSelector';
 import GridContainer from '../../core/components/gridContainer/GridContainer';
 import BoxContainer from '../../core/components/boxContainer/BoxContainer';
 import ButtonContainer from '../../core/components/buttonContainer/ButtonContainer';
 import MainRoutes from '../../core/constants/mainRoutes';
+import questionAreaSelector from '../../core/redux/selectors/questionAreaSelector';
+import questionSetSelector from '../../core/redux/selectors/questionSetSelector';
+import questionSelector from '../../core/redux/selectors/questionSelector';
 
 const QuestionSetAdd: React.FC = () => {
   const [questionSetModel, setQuestionSetModel] =
     useState<QuestionSetAddState>(IQuestionSetAddDefault);
-  const questionAreas = useTypedSelector((state) => state.questionAreas.questionAreas);
-  const questionSets = useTypedSelector((state) => state.questionSets.questionSets);
-  const questions = useTypedSelector((state) => state.questions.questions);
+  const { questionAreas } = useTypedSelector(questionAreaSelector);
+  const { questionSets } = useTypedSelector(questionSetSelector);
+  const { questions } = useTypedSelector(questionSelector);
 
   const { t } = useTranslation();
 
@@ -46,9 +49,9 @@ const QuestionSetAdd: React.FC = () => {
   };
 
   useEffect(() => {
-    dispatch(getAllData());
-    dispatch(getQuestions());
-    dispatch(fetchAllQuestionAreas());
+    dispatch(getAllQuestionSets());
+    dispatch(getAllQuestions());
+    dispatch(getAllQuestionAreas());
   }, [dispatch]);
 
   const addEmptyQuestionIdsArray = () => {
