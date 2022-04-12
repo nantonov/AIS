@@ -6,12 +6,15 @@ import {
   setQuestionSetFail,
 } from '../actionCreators/questionSetAction';
 import { QuestionSetAction } from '../../interfaces/questionSet/questionSet';
-import QuestionSetService from '../../services/questionSetService';
+import {
+  getQuestionByIdService,
+  getQuestionSetsAllService,
+} from '../../services/questionSetService';
 
 export const getAllQuestionSets = () => async (dispatch: Dispatch<QuestionSetAction>) => {
   try {
     dispatch(setQuestionSetStart());
-    const questionSets = await QuestionSetService.getAll();
+    const questionSets = await getQuestionSetsAllService();
     if (questionSets) {
       dispatch(setQuestionSetSuccessAll(questionSets));
     }
@@ -24,7 +27,7 @@ export const getAllQuestionSets = () => async (dispatch: Dispatch<QuestionSetAct
 export const getQuestionSetById = (id: number) => async (dispatch: Dispatch<QuestionSetAction>) => {
   try {
     dispatch(setQuestionSetStart());
-    const questionSet = await QuestionSetService.getById(id);
+    const questionSet = await getQuestionByIdService(id);
     if (questionSet) {
       dispatch(setQuestionSetSuccess(questionSet));
     }
