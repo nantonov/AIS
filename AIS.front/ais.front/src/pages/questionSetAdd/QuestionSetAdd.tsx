@@ -19,6 +19,7 @@ import questionAreaSelector from '../../core/redux/selectors/questionAreaSelecto
 import questionSetSelector from '../../core/redux/selectors/questionSetSelector';
 import questionSelector from '../../core/redux/selectors/questionSelector';
 import { GridItemContainer } from './styled/GridItemContainer';
+import { DivContainer } from './styled/DivContainer';
 
 const QuestionSetAdd: React.FC = () => {
   const [questionSetModel, setQuestionSetModel] =
@@ -118,7 +119,7 @@ const QuestionSetAdd: React.FC = () => {
           </FormControl>
         </BoxContainer>
       </GridItemContainer>
-      <GridContainer>
+      <GridItemContainer>
         {questionSetModel.questionAreaIds.map((item, index) => (
           <BoxContainer key={item}>
             <Typography>{t('selectQuestionArea')} </Typography>
@@ -138,16 +139,17 @@ const QuestionSetAdd: React.FC = () => {
             </TextField>
           </BoxContainer>
         ))}
-        <ButtonContainer
-          disabled={questionSets.length <= questionSetModel.questionAreaIds.length}
-          variant="contained"
-          onClick={addEmptyQuestionArea}
-        >
-          {t('addQuestionArea')}
-        </ButtonContainer>
-      </GridContainer>
-
-      <GridContainer>
+        <DivContainer>
+          <ButtonContainer
+            disabled={questionSets.length <= questionSetModel.questionAreaIds.length}
+            variant="contained"
+            onClick={addEmptyQuestionArea}
+          >
+            {t('addQuestionArea')}
+          </ButtonContainer>
+        </DivContainer>
+      </GridItemContainer>
+      <GridItemContainer>
         {questionSetModel.questionIds.map((item, index) => (
           <BoxContainer key={item}>
             <Typography>{t('selectQuestion')} </Typography>
@@ -168,19 +170,23 @@ const QuestionSetAdd: React.FC = () => {
             </TextField>
           </BoxContainer>
         ))}
-        <ButtonContainer
-          disabled={questions.length <= questionSetModel.questionIds.length}
-          variant="contained"
-          onClick={addEmptyQuestionIdsArray}
-        >
-          {t('addQuestion')}
-        </ButtonContainer>
-      </GridContainer>
-      <GridContainer>
-        <ButtonContainer variant="contained" onClick={saveAction}>
-          {t('addQuestionSet')}
-        </ButtonContainer>
-      </GridContainer>
+        <DivContainer>
+          <ButtonContainer
+            disabled={questions.length <= questionSetModel.questionIds.length}
+            variant="contained"
+            onClick={addEmptyQuestionIdsArray}
+          >
+            {t('addQuestion')}
+          </ButtonContainer>
+        </DivContainer>
+      </GridItemContainer>
+      <GridItemContainer>
+        <DivContainer>
+          <ButtonContainer variant="contained" onClick={saveAction}>
+            {t('addQuestionSet')}
+          </ButtonContainer>
+        </DivContainer>
+      </GridItemContainer>
     </GridContainer>
   );
 };

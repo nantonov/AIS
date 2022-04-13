@@ -11,7 +11,7 @@ import CircleIconContainer from '../../core/components/circleIconContainer/Circl
 import ToolTipContainer from '../../core/components/toolTipContainer/ToolTipContainer';
 import TypographyContainer from '../../core/components/typographyContainer/TypographyContainer';
 import questionSetSelector from '../../core/redux/selectors/questionSetSelector';
-import { BoxContainer, BoxStyle } from './style/BoxContainer';
+import { BoxContainer } from './style/BoxContainer';
 import QuestionSetAdd from '../questionSetAdd/QuestionSetAdd';
 
 const QuestionsSets: React.FC = () => {
@@ -55,7 +55,7 @@ const QuestionsSets: React.FC = () => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <BoxContainer sx={BoxStyle}>
+        <BoxContainer>
           <QuestionSetAdd />
         </BoxContainer>
       </Modal>
