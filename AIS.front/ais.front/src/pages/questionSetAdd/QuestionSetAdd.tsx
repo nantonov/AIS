@@ -1,4 +1,4 @@
-import { FormControl, Grid, MenuItem, TextField } from '@mui/material';
+import { FormControl, MenuItem, TextField } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -18,6 +18,8 @@ import MainRoutes from '../../core/constants/mainRoutes';
 import questionAreaSelector from '../../core/redux/selectors/questionAreaSelector';
 import questionSetSelector from '../../core/redux/selectors/questionSetSelector';
 import questionSelector from '../../core/redux/selectors/questionSelector';
+import { GridItemContainer } from './styled/GridItemContainer';
+import { DivContainer } from './styled/DivContainer';
 
 const QuestionSetAdd: React.FC = () => {
   const [questionSetModel, setQuestionSetModel] =
@@ -102,7 +104,7 @@ const QuestionSetAdd: React.FC = () => {
 
   return (
     <GridContainer>
-      <Grid item>
+      <GridItemContainer>
         <BoxContainer>
           <Typography>{t('questionSetName')} </Typography>
           <FormControl>
@@ -116,8 +118,8 @@ const QuestionSetAdd: React.FC = () => {
             />
           </FormControl>
         </BoxContainer>
-      </Grid>
-      <Grid item>
+      </GridItemContainer>
+      <GridItemContainer>
         {questionSetModel.questionAreaIds.map((item, index) => (
           <BoxContainer key={item}>
             <Typography>{t('selectQuestionArea')} </Typography>
@@ -137,16 +139,17 @@ const QuestionSetAdd: React.FC = () => {
             </TextField>
           </BoxContainer>
         ))}
-        <ButtonContainer
-          disabled={questionSets.length <= questionSetModel.questionAreaIds.length}
-          variant="contained"
-          onClick={addEmptyQuestionArea}
-        >
-          {t('addQuestionArea')}
-        </ButtonContainer>
-      </Grid>
-
-      <Grid item>
+        <DivContainer>
+          <ButtonContainer
+            disabled={questionSets.length <= questionSetModel.questionAreaIds.length}
+            variant="contained"
+            onClick={addEmptyQuestionArea}
+          >
+            {t('addQuestionArea')}
+          </ButtonContainer>
+        </DivContainer>
+      </GridItemContainer>
+      <GridItemContainer>
         {questionSetModel.questionIds.map((item, index) => (
           <BoxContainer key={item}>
             <Typography>{t('selectQuestion')} </Typography>
@@ -167,19 +170,23 @@ const QuestionSetAdd: React.FC = () => {
             </TextField>
           </BoxContainer>
         ))}
-        <ButtonContainer
-          disabled={questions.length <= questionSetModel.questionIds.length}
-          variant="contained"
-          onClick={addEmptyQuestionIdsArray}
-        >
-          {t('addQuestion')}
-        </ButtonContainer>
-      </Grid>
-      <Grid item>
-        <ButtonContainer variant="contained" onClick={saveAction}>
-          {t('addQuestionSet')}
-        </ButtonContainer>
-      </Grid>
+        <DivContainer>
+          <ButtonContainer
+            disabled={questions.length <= questionSetModel.questionIds.length}
+            variant="contained"
+            onClick={addEmptyQuestionIdsArray}
+          >
+            {t('addQuestion')}
+          </ButtonContainer>
+        </DivContainer>
+      </GridItemContainer>
+      <GridItemContainer>
+        <DivContainer>
+          <ButtonContainer variant="contained" onClick={saveAction}>
+            {t('addQuestionSet')}
+          </ButtonContainer>
+        </DivContainer>
+      </GridItemContainer>
     </GridContainer>
   );
 };

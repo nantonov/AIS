@@ -6,7 +6,6 @@ const CircleIconContainer = styledComponent(AddCircleIcon)`
   fontsize: 'large';
   font-size: 3.5rem;
   display: flex;
-  margin-left: 90%;
   opacity: 1;
 
   &:hover {
