@@ -36,3 +36,14 @@ export const getQuestionSetById = (id: number) => async (dispatch: Dispatch<Ques
     dispatch(setQuestionSetFail(errorMessage));
   }
 };
+
+export const deleteQuestionSetById =
+  (id: number) => async (dispatch: Dispatch<QuestionSetAction>) => {
+    try {
+      dispatch(setQuestionSetStart());
+      await QuestionSetService.deleteById(id);
+    } catch (error) {
+      const errorMessage = (error as Error).message;
+      dispatch(setQuestionSetFail(errorMessage));
+    }
+  };
