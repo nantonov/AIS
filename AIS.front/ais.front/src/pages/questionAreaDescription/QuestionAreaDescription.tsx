@@ -16,7 +16,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Typography from '@mui/material/Typography';
 import { ExpandMore } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
-import QuestionAreasQuestionSetsService from '../../core/services/questionAreasQuestionSetsService';
+import { deleteByTwoIdsAreaSet } from '../../core/services/questionAreasQuestionSetsService';
 import { getQuestionAreaById } from '../../core/redux/thunk/questionAreaThunk';
 import GridContainer from '../../core/components/gridContainer/GridContainer';
 import { useTypedSelector } from '../../core/hooks/useTypedSelector';
@@ -39,7 +39,7 @@ const QuestionAreaDescription: React.FC = () => {
     navigate(path);
   };
   const DeleteQuestionSet = (questionAreaId: number, questionSetId: number) => () => {
-    QuestionAreasQuestionSetsService.deleteByTwoIds(questionAreaId, questionSetId).then(() => {
+    deleteByTwoIdsAreaSet(questionAreaId, questionSetId).then(() => {
       getQuestionAreaById(Number(id));
     });
   };

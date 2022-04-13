@@ -16,8 +16,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Typography from '@mui/material/Typography';
 import { useTranslation } from 'react-i18next';
-import QuestionAreasQuestionSetsService from '../../core/services/questionAreasQuestionSetsService';
-import QuestionsQuestionSetsService from '../../core/services/questionsQuestionSetsService';
+import { deleteByTwoIdsAreaSet } from '../../core/services/questionAreasQuestionSetsService';
+import { deleteByTwoIdsSetQuestion } from '../../core/services/questionsQuestionSetsService';
 import { getQuestionSetById } from '../../core/redux/thunk/questionSetThunk';
 import { useTypedSelector } from '../../core/hooks/useTypedSelector';
 import GridContainer from '../../core/components/gridContainer/GridContainer';
@@ -35,13 +35,13 @@ const QuestionSetDescription: React.FC = () => {
   }, [dispatch, id]);
 
   const DeleteQuestion = (questionSetId: number, questionId: number) => () => {
-    QuestionsQuestionSetsService.deleteByTwoIds(questionSetId, questionId).then(() => {
+    deleteByTwoIdsSetQuestion(questionSetId, questionId).then(() => {
       getQuestionSetById(Number(id));
     });
   };
 
   const DeleteQuestionArea = (questionAreaId: number, questionSetId: number) => () => {
-    QuestionAreasQuestionSetsService.deleteByTwoIds(questionAreaId, questionSetId).then(() => {
+    deleteByTwoIdsAreaSet(questionAreaId, questionSetId).then(() => {
       getQuestionSetById(Number(id));
     });
   };

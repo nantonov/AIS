@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { QuestionSetAddState } from '../../core/interfaces/questionSet/questionSet';
 import { IQuestionSetAddDefault } from '../../core/common/defaultDTO/defaultQuestionSet';
-import QuestionSetService from '../../core/services/questionSetService';
+import { addQuestionSetService } from '../../core/services/questionSetService';
 import { getAllQuestionSets } from '../../core/redux/thunk/questionSetThunk';
 import { getAllQuestions } from '../../core/redux/thunk/questionThunk';
 import { getAllQuestionAreas } from '../../core/redux/thunk/questionAreaThunk';
@@ -39,7 +39,7 @@ const QuestionSetAdd: React.FC = () => {
   };
 
   const saveAction = () => {
-    QuestionSetService.addQuestionSet(questionSetModel);
+    addQuestionSetService(questionSetModel);
     routeChange();
   };
 

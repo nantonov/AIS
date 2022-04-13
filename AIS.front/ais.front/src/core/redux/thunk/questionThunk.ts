@@ -1,16 +1,12 @@
 import { Dispatch } from 'redux';
 import { QuestionAction } from '../../interfaces/question/question';
-import QuestionService from '../../services/questionService';
-import {
-  setQuestionStart,
-  setQuestionSuccessAll,
-  setQuestionFail,
-} from '../actionCreators/questionAction';
+import { setQuestionStart, setQuestionSuccessAll, setQuestionFail } from '../actionCreators/questionAction';
+import { getQuestionsAllService } from '../../services/questionService';
 
 export const getAllQuestions = () => async (dispatch: Dispatch<QuestionAction>) => {
   try {
     dispatch(setQuestionStart());
-    const questions = await QuestionService.getAll();
+    const questions = await getQuestionsAllService();
     if (questions) {
       dispatch(setQuestionSuccessAll(questions));
     }

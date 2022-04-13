@@ -3,46 +3,45 @@ import { QuestionIntervieweeAnswer } from '../interfaces/questionIntervieweeAnsw
 import axiosInstance from '../../config/getAxious';
 import Config from '../../config/config';
 
-class QuestionIntervieweeAnswerServer {
-  public static async getAll(): Promise<QuestionIntervieweeAnswer[]> {
-    const result = await axiosInstance
-      .get<QuestionIntervieweeAnswer[]>(Config.QUESTION_INTERVIEWEE_ANSWER_URL)
-      .then((res) => res.data);
+export const getQuestionIntervieweeAnswersAllService = async (): Promise<
+  QuestionIntervieweeAnswer[]
+> => {
+  const result = await axiosInstance
+    .get<QuestionIntervieweeAnswer[]>(Config.QUESTION_INTERVIEWEE_ANSWER_URL)
+    .then((res) => res.data);
 
-    return result || [];
-  }
+  return result || [];
+};
 
-  public static async getById(
-    questionIntervieweeAnswerId: number
-  ): Promise<QuestionIntervieweeAnswer> {
-    const result = await axiosInstance
-      .get<QuestionIntervieweeAnswer>(
-        `${Config.QUESTION_INTERVIEWEE_ANSWER_URL}/${questionIntervieweeAnswerId}`
-      )
-      .then((res) => res.data);
-
-    return result || defaultQuestionIntervieweeAnswer;
-  }
-
-  public static deleteById(questionIntervieweeAnswerId: number): Promise<any> {
-    return axiosInstance.delete(
+export const getQuestionIntervieweeAnswerByIdService = async (
+  questionIntervieweeAnswerId: number
+): Promise<QuestionIntervieweeAnswer> => {
+  const result = await axiosInstance
+    .get<QuestionIntervieweeAnswer>(
       `${Config.QUESTION_INTERVIEWEE_ANSWER_URL}/${questionIntervieweeAnswerId}`
-    );
-  }
+    )
+    .then((res) => res.data);
 
-  public static create(questionIntervieweeAnswer: QuestionIntervieweeAnswer): Promise<any> {
-    return axiosInstance.post(Config.QUESTION_INTERVIEWEE_ANSWER_URL, {
-      ...questionIntervieweeAnswer,
-    });
-  }
+  return result || defaultQuestionIntervieweeAnswer;
+};
 
-  public static update(questionIntervieweeAnswer: QuestionIntervieweeAnswer): Promise<boolean> {
-    return axiosInstance.put(
-      Config.QUESTION_INTERVIEWEE_ANSWER_URL,
-      { ...questionIntervieweeAnswer },
-      { params: { id: questionIntervieweeAnswer.id } }
-    );
-  }
-}
+export const deleteQuestionIntervieweeAnswerService = (
+  questionIntervieweeAnswerId: number
+): Promise<any> =>
+  axiosInstance.delete(`${Config.QUESTION_INTERVIEWEE_ANSWER_URL}/${questionIntervieweeAnswerId}`);
 
-export default QuestionIntervieweeAnswerServer;
+export const createQuestionIntervieweeAnswerService = (
+  questionIntervieweeAnswer: QuestionIntervieweeAnswer
+): Promise<any> =>
+  axiosInstance.post(Config.QUESTION_INTERVIEWEE_ANSWER_URL, {
+    ...questionIntervieweeAnswer,
+  });
+
+export const updateQuestionIntervieweeAnswerService = (
+  questionIntervieweeAnswer: QuestionIntervieweeAnswer
+): Promise<boolean> =>
+  axiosInstance.put(
+    Config.QUESTION_INTERVIEWEE_ANSWER_URL,
+    { ...questionIntervieweeAnswer },
+    { params: { id: questionIntervieweeAnswer.id } }
+  );
