@@ -7,6 +7,7 @@ import {
 } from '../actionCreators/questionSetAction';
 import { QuestionSetAction } from '../../interfaces/questionSet/questionSet';
 import {
+  deleteQuestionService,
   getQuestionByIdService,
   getQuestionSetsAllService,
 } from '../../services/questionSetService';
@@ -41,7 +42,7 @@ export const deleteQuestionSetById =
   (id: number) => async (dispatch: Dispatch<QuestionSetAction>) => {
     try {
       dispatch(setQuestionSetStart());
-      await QuestionSetService.deleteById(id);
+      await deleteQuestionService(id);
     } catch (error) {
       const errorMessage = (error as Error).message;
       dispatch(setQuestionSetFail(errorMessage));
