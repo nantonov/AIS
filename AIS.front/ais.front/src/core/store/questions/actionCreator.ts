@@ -1,8 +1,8 @@
-import { Question } from './../../interfaces/question';
-import {ApplicationDispatch} from "../typing";
-import {QuestionActions} from "./reducer";
-import {fetchAll} from "./action";
-import {QuestionService} from "../../services/questionService";
+import { ApplicationDispatch } from '../typing';
+import { QuestionActions } from './reducer';
+import { fetchAll } from './action';
+import QuestionService from '../../services/questionService';
+import { Question } from '../../interfaces/question/question';
 
 export const getAllData = () => async (dispatch: ApplicationDispatch<QuestionActions>) => {
   const questions = await QuestionService.getAll();
@@ -11,24 +11,20 @@ export const getAllData = () => async (dispatch: ApplicationDispatch<QuestionAct
   }
 };
 
-export const deleteQuestion = (id: number) => {
-    return async (dispatch: ApplicationDispatch<QuestionActions>) => {
-        await QuestionService.deleteById(id)
-        dispatch(getAllData());
-    };
+export const deleteQuestion =
+  (id: number) => async (dispatch: ApplicationDispatch<QuestionActions>) => {
+    await QuestionService.deleteById(id);
+    dispatch(getAllData());
   };
 
-export const editQuestion = (question: Question) => {
-  return async (dispatch: ApplicationDispatch<QuestionActions>) => {
+export const editQuestion =
+  (question: Question) => async (dispatch: ApplicationDispatch<QuestionActions>) => {
     const result = await QuestionService.update(question);
     if (result) dispatch(getAllData());
   };
-};
 
-export const createQuestion = (question: Question) => {
-  return async (dispatch: ApplicationDispatch<QuestionActions>) => {
+export const createQuestion =
+  (question: Question) => async (dispatch: ApplicationDispatch<QuestionActions>) => {
     const result = await QuestionService.create(question);
     if (result) dispatch(getAllData());
   };
-};
-

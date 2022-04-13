@@ -23,8 +23,8 @@ const rootReducer = (history: BrowserHistory) =>
     questionSets: questionSetReducer,
     questionAreas: questionAreasReducer,
     questions: questionReducer,
+    trueAnswers: trueAnswerReducer,
   });
-        trueAnswers:trueAnswerReducer
 
 export const store = createStore<ApplicationState, AnyAction, unknown, unknown>(
   rootReducer(browserHistory),

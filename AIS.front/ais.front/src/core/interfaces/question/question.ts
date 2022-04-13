@@ -1,3 +1,4 @@
+import { TrueAnswer } from '../trueAnswer/trueAnswer';
 import { ShortQuestionSet } from '../questionSet/shortQuestionSet';
 import { ShortTrueAnswer } from '../trueAnswer/shortTrueAnswer';
 
@@ -6,5 +7,5 @@ export interface Question {
   text: string;
   questionSetid: number;
   questionSet: ShortQuestionSet | null;
-  trueAnswer: ShortTrueAnswer | null;
+  trueAnswer: TrueAnswer | ShortTrueAnswer | null;
 }

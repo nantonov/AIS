@@ -11,6 +11,7 @@ import QuestionAreaForm from './pages/questionAreaForm/QuestionAreaForm';
 import AddQuestionSet from './pages/questionSetAdd/QuestionSetAdd';
 import QuestionAreas from './pages/questionAreas/QuestionAreas';
 import QuestionAreaDescription from './pages/questionAreaDescription/QuestionAreaDescription';
+import Questions from './pages/questions/Questions';
 
 const App: React.FC = () => (
   <Provider store={store}>
@@ -24,7 +25,7 @@ const App: React.FC = () => (
       <Route path={`${MainRoutes.questionAreaForm}/:id`} element={<QuestionAreaForm />} />
       <Route path={MainRoutes.questionAreaForm} element={<QuestionAreaForm />} />
       <Route path={MainRoutes.addQuestionSet} element={<AddQuestionSet />} />
-                    <Route path={MainRoutes.questions} element ={<Questions/>}/>
+      <Route path={MainRoutes.questions} element={<Questions />} />
     </Routes>
   </Provider>
 );
