@@ -1,30 +1,26 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Button, Grid, Typography } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { bindActionCreators, Dispatch } from 'redux';
 import { AddQuestionDialog } from './components/AddQuestionDialog';
-import { ApplicationState } from '../../core/store/typing';
-import { questionsActionCreators } from '../../core/store/questions';
-import { trueAnswerActionCreators } from '../../core/store/trueAnswer';
 import { QuestionComponent } from './components';
+import { Question } from '../../core/interfaces/question/question';
+import { getAllQuestions } from '../../core/redux/thunk/questionThunk';
+import questionSelector from '../../core/redux/selectors/questionSelector';
+import { useTypedSelector } from '../../core/hooks/useTypedSelector';
 
-const Questions: React.FC<Props> = ({
-  questions,
-  getAllData,
-  deleteQuestion,
-  updateQuestion,
-  updateTrueAnswer,
-}) => {
+const Questions: React.FC = () => {
   const [open, setOpen] = React.useState(false);
+  const dispatch = useDispatch();
+  const { questions } = useTypedSelector(questionSelector);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   useEffect(() => {
-    getAllData();
-  }, []);
+    dispatch(getAllQuestions());
+  }, [dispatch]);
 
   return (
     <Grid container direction="column" justifyContent="center" alignItems="center">
@@ -39,35 +35,11 @@ const Questions: React.FC<Props> = ({
 
         <AddQuestionDialog open={open} setOpen={setOpen} />
       </Grid>
-
-      {questions.map((item) => (
-        <QuestionComponent
-          key={item.id}
-          item={item}
-          deleteQuestion={deleteQuestion}
-          updateQuestion={updateQuestion}
-          updateTrueAnswer={updateTrueAnswer}
-        />
+      {questions.map((item: Question) => (
+        <QuestionComponent key={item.id} item={item} />
       ))}
     </Grid>
   );
 };
 
-const mapStateToProps = (state: ApplicationState) => ({
-  questions: state.questions.questions,
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) =>
-  bindActionCreators(
-    {
-      getAllData: questionsActionCreators.getAllData,
-      deleteQuestion: questionsActionCreators.deleteQuestion,
-      updateQuestion: questionsActionCreators.editQuestion,
-      updateTrueAnswer: trueAnswerActionCreators.editTrueAnswer,
-    },
-    dispatch
-  );
-
-type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
-
-export default connect(mapStateToProps, mapDispatchToProps)(Questions);
+export default Questions;

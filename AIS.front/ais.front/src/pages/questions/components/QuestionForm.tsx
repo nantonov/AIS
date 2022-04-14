@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import Typography from '@mui/material/Typography';
 import { Button, TextField } from '@mui/material';
 import styled from 'styled-components';
 import { Question } from '../../../core/interfaces/question/question';
 import { TrueAnswer } from '../../../core/interfaces/trueAnswer/trueAnswer';
 import defaultTrueAnswer from '../../../core/common/defaultDTO/defaultTrueAnswer';
+import { deleteQuestionById, putQuestion } from '../../../core/redux/thunk/questionThunk';
+import { putTrueAnswer } from '../../../core/redux/thunk/trueAnswerThunk';
 
 interface Props {
   item: Question;
-  deleteQuestion: (id: number) => void;
-  updateQuestion: (question: Question) => void;
-  updateTrueAnswer: (trueAnswer: TrueAnswer) => void;
 }
 
 const ButtonsContainer = styled.div`
@@ -20,14 +20,10 @@ const ButtonsContainer = styled.div`
   justify-content: space-around;
 `;
 
-export const QuestionForm: React.FC<Props> = ({
-  item,
-  deleteQuestion,
-  updateQuestion,
-  updateTrueAnswer,
-}) => {
+export const QuestionForm: React.FC<Props> = ({ item }) => {
   const [question, setQuestion] = useState<Question>(item);
   const [trueAnswer, setTrueAnswer] = useState<TrueAnswer>(defaultTrueAnswer);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (item.trueAnswer) {
@@ -41,12 +37,12 @@ export const QuestionForm: React.FC<Props> = ({
   }, []);
 
   const saveAction = () => {
-    updateQuestion(question);
-    updateTrueAnswer(trueAnswer);
+    dispatch(putQuestion(question));
+    dispatch(putTrueAnswer(trueAnswer));
   };
 
   const handlerClickDelete = () => {
-    deleteQuestion(question.id);
+    dispatch(deleteQuestionById(question.id));
   };
 
   return (

@@ -6,21 +6,12 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { QuestionForm } from './QuestionForm';
 import { Question } from '../../../core/interfaces/question/question';
-import { TrueAnswer } from '../../../core/interfaces/trueAnswer/trueAnswer';
 
 interface Props {
   item: Question;
-  deleteQuestion: (id: number) => void;
-  updateQuestion: (question: Question) => void;
-  updateTrueAnswer: (trueAnswer: TrueAnswer) => void;
 }
 
-export const QuestionComponent: React.FC<Props> = ({
-  item,
-  deleteQuestion,
-  updateQuestion,
-  updateTrueAnswer,
-}) => (
+export const QuestionComponent: React.FC<Props> = ({ item }) => (
   <Accordion sx={{ width: '75%' }}>
     <AccordionSummary
       expandIcon={<ExpandMoreIcon />}
@@ -31,12 +22,7 @@ export const QuestionComponent: React.FC<Props> = ({
     </AccordionSummary>
 
     <AccordionDetails>
-      <QuestionForm
-        item={item}
-        deleteQuestion={deleteQuestion}
-        updateQuestion={updateQuestion}
-        updateTrueAnswer={updateTrueAnswer}
-      />
+      <QuestionForm item={item} />
     </AccordionDetails>
   </Accordion>
 );
