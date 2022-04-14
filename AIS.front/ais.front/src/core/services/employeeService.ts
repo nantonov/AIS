@@ -3,32 +3,25 @@ import { Employee } from '../interfaces/employee/employee';
 import axiosInstance from '../../config/getAxious';
 import Config from '../../config/config';
 
-class EmployeeService {
-  public static async getAll(): Promise<Employee[]> {
-    const result = await axiosInstance.get<Employee[]>(Config.EMPLOYEE_URL).then((res) => res.data);
+export const getEmployeesAllService = async (): Promise<Employee[]> => {
+  const result = await axiosInstance.get<Employee[]>(Config.EMPLOYEE_URL).then((res) => res.data);
 
-    return result || [];
-  }
+  return result || [];
+};
 
-  public static async getById(companyId: number): Promise<Employee> {
-    const result = await axiosInstance
-      .get<Employee>(`${Config.EMPLOYEE_URL}/${companyId}`)
-      .then((res) => res.data);
+export const getEmployeeByIdService = async (companyId: number): Promise<Employee> => {
+  const result = await axiosInstance
+    .get<Employee>(`${Config.EMPLOYEE_URL}/${companyId}`)
+    .then((res) => res.data);
 
-    return result || defaultEmployee;
-  }
+  return result || defaultEmployee;
+};
 
-  public static deleteById(companyId: number): Promise<any> {
-    return axiosInstance.delete(`${Config.EMPLOYEE_URL}/${companyId}`);
-  }
+export const deleteEmployeeServcie = (companyId: number): Promise<any> =>
+  axiosInstance.delete(`${Config.EMPLOYEE_URL}/${companyId}`);
 
-  public static create(company: Employee): Promise<any> {
-    return axiosInstance.post(Config.EMPLOYEE_URL, { ...company });
-  }
+export const createEmployeeService = (company: Employee): Promise<any> =>
+  axiosInstance.post(Config.EMPLOYEE_URL, { ...company });
 
-  public static update(company: Employee): Promise<boolean> {
-    return axiosInstance.put(Config.EMPLOYEE_URL, { ...company }, { params: { id: company.id } });
-  }
-}
-
-export default EmployeeService;
+export const updateEmployeeService = (company: Employee): Promise<boolean> =>
+  axiosInstance.put(Config.EMPLOYEE_URL, { ...company }, { params: { id: company.id } });

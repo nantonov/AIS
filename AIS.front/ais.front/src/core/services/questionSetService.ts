@@ -3,46 +3,38 @@ import { QuestionSet, QuestionSetAddState } from '../interfaces/questionSet/ques
 import axiosInstance from '../../config/getAxious';
 import Config from '../../config/config';
 
-class QuestionSetService {
-  public static async getAll(): Promise<QuestionSet[]> {
-    const result = await axiosInstance
-      .get<QuestionSet[]>(Config.QUESTION_SET_URL)
-      .then((res) => res.data);
+export const getQuestionSetsAllService = async (): Promise<QuestionSet[]> => {
+  const result = await axiosInstance
+    .get<QuestionSet[]>(Config.QUESTION_SET_URL)
+    .then((res) => res.data);
 
-    return result || [];
-  }
+  return result || [];
+};
 
-  public static async getById(questionSetId: number): Promise<QuestionSet> {
-    const result = await axiosInstance
-      .get<QuestionSet>(`${Config.QUESTION_SET_URL}/${questionSetId}`)
-      .then((res) => res.data);
+export const getQuestionByIdService = async (questionSetId: number): Promise<QuestionSet> => {
+  const result = await axiosInstance
+    .get<QuestionSet>(`${Config.QUESTION_SET_URL}/${questionSetId}`)
+    .then((res) => res.data);
 
-    return result || defaultQuestionSet;
-  }
+  return result || defaultQuestionSet;
+};
 
-  public static deleteById(questionSetId: number): Promise<any> {
-    return axiosInstance.delete(`${Config.QUESTION_SET_URL}/${questionSetId}`);
-  }
+export const deleteQuestionService = (questionSetId: number): Promise<any> =>
+  axiosInstance.delete(`${Config.QUESTION_SET_URL}/${questionSetId}`);
 
-  public static create(questionSet: QuestionSet): Promise<any> {
-    return axiosInstance.post(Config.QUESTION_SET_URL, { ...questionSet });
-  }
+export const createQuestionService = (questionSet: QuestionSet): Promise<any> =>
+  axiosInstance.post(Config.QUESTION_SET_URL, { ...questionSet });
 
-  public static update(questionSet: QuestionSet): Promise<boolean> {
-    return axiosInstance.put(
-      Config.QUESTION_SET_URL,
-      { ...questionSet },
-      { params: { id: questionSet.id } }
-    );
-  }
+export const updateQuestionService = (questionSet: QuestionSet): Promise<boolean> =>
+  axiosInstance.put(
+    Config.QUESTION_SET_URL,
+    { ...questionSet },
+    { params: { id: questionSet.id } }
+  );
 
-  public static addQuestionSet(questionSetAdd: QuestionSetAddState): Promise<any> {
-    return axiosInstance.post(
-      Config.QUESTION_SET_URL,
-      { ...questionSetAdd },
-      { params: { questionSetAdd } }
-    );
-  }
-}
-
-export default QuestionSetService;
+export const addQuestionSetService = (questionSetAdd: QuestionSetAddState): Promise<any> =>
+  axiosInstance.post(
+    Config.QUESTION_SET_URL,
+    { ...questionSetAdd },
+    { params: { questionSetAdd } }
+  );

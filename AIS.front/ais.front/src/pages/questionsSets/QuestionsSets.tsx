@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Grid } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { Button, Grid, Modal } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { getAllData } from '../../core/store/questionSets/actionCreator';
+import { getAllQuestionSets } from '../../core/redux/thunk/questionSetThunk';
 import QuestionSetItem from './questionSetItem/QuestionSetItem';
 import { useTypedSelector } from '../../core/hooks/useTypedSelector';
 import QuestionSetItems from '../../core/components/itemsContainer/ItemsContainer';
@@ -11,22 +10,21 @@ import Container from '../../core/components/container/Container';
 import CircleIconContainer from '../../core/components/circleIconContainer/CircleIconContainer';
 import ToolTipContainer from '../../core/components/toolTipContainer/ToolTipContainer';
 import TypographyContainer from '../../core/components/typographyContainer/TypographyContainer';
-import MainRoutes from '../../core/constants/mainRoutes';
+import questionSetSelector from '../../core/redux/selectors/questionSetSelector';
+import { BoxContainer } from './style/BoxContainer';
+import QuestionSetAdd from '../questionSetAdd/QuestionSetAdd';
 
 const QuestionsSets: React.FC = () => {
-  const questionSets = useTypedSelector((state) => state.questionSets.questionSets);
-  const navigate = useNavigate();
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const { questionSets } = useTypedSelector(questionSetSelector);
   const dispatch = useDispatch();
 
   const { t } = useTranslation();
 
-  const routeChange = () => {
-    const path = `/${MainRoutes.addQuestionSet}`;
-    navigate(path);
-  };
-
   useEffect(() => {
-    dispatch(getAllData());
+    dispatch(getAllQuestionSets());
   }, [dispatch]);
 
   return (
@@ -46,9 +44,21 @@ const QuestionsSets: React.FC = () => {
       </Grid>
       <Grid item>
         <ToolTipContainer title={t('addQuestionSet').toString()} placement="left-start">
-          <CircleIconContainer onClick={routeChange} />
+          <Button onClick={handleOpen}>
+            <CircleIconContainer />
+          </Button>
         </ToolTipContainer>
       </Grid>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <BoxContainer>
+          <QuestionSetAdd />
+        </BoxContainer>
+      </Modal>
     </Grid>
   );
 };
