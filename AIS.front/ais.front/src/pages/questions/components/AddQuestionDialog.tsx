@@ -16,8 +16,6 @@ import { TrueAnswer } from '../../../core/interfaces/trueAnswer/trueAnswer';
 interface Props {
   open: boolean;
   setOpen: (open: boolean) => void;
-  // updateQuestion:(question :Question) =>void
-  // updateTrueAnswer:(trueAnswer :TrueAnswer) =>void
 }
 
 export const AddQuestionDialog: React.FC<Props> = ({ setOpen, open }) => {
@@ -26,6 +24,16 @@ export const AddQuestionDialog: React.FC<Props> = ({ setOpen, open }) => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const changeQuestion = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const copy = { ...question, text: event.target.value };
+    setQuestion(copy);
+  };
+
+  const changeTrueAnswer = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const copy = { ...trueAnswer, text: event.target.value };
+    setTrueAnswer(copy);
   };
 
   return (
@@ -39,9 +47,7 @@ export const AddQuestionDialog: React.FC<Props> = ({ setOpen, open }) => {
           autoFocus
           type="text"
           value={question.text}
-          onChange={(event) => {
-            setQuestion((prev: Question) => ({ ...prev, text: event.target.value }));
-          }}
+          onChange={changeQuestion}
         />
 
         <Typography pt={2}>True Answer</Typography>
@@ -51,9 +57,7 @@ export const AddQuestionDialog: React.FC<Props> = ({ setOpen, open }) => {
           multiline
           maxRows={8}
           value={trueAnswer.text}
-          onChange={(event) => {
-            setTrueAnswer((prev: TrueAnswer) => ({ ...prev, text: event.target.value }));
-          }}
+          onChange={changeTrueAnswer}
         />
       </DialogContent>
 

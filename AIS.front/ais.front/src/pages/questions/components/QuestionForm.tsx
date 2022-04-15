@@ -34,7 +34,7 @@ export const QuestionForm: React.FC<Props> = ({ item }) => {
         text: item.trueAnswer!.text,
       }));
     }
-  }, []);
+  }, [item.id, item.trueAnswer]);
 
   const saveAction = () => {
     dispatch(putQuestion(question));
@@ -45,31 +45,26 @@ export const QuestionForm: React.FC<Props> = ({ item }) => {
     dispatch(deleteQuestionById(question.id));
   };
 
+  const changeQuestion = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const copy = { ...question, text: event.target.value };
+    setQuestion(copy);
+  };
+
+  const changeTrueAnswer = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const copy = { ...trueAnswer, text: event.target.value };
+    setTrueAnswer(copy);
+  };
+
   return (
     <div>
       <Typography> Update Question</Typography>
-      <TextField
-        fullWidth
-        type="text"
-        value={question.text}
-        onChange={(event) => {
-          setQuestion((prev: Question) => ({ ...prev, text: event.target.value }));
-        }}
-      />
+      <TextField fullWidth type="text" value={question.text} onChange={changeQuestion} />
 
       <Typography pt={2}> True Answer</Typography>
-      <TextField
-        fullWidth
-        type="text"
-        value={trueAnswer.text}
-        onChange={(event) => {
-          setTrueAnswer((prev: TrueAnswer) => ({ ...prev, text: event.target.value }));
-        }}
-      />
+      <TextField fullWidth type="text" value={trueAnswer.text} onChange={changeTrueAnswer} />
 
       <ButtonsContainer>
         <Button variant="contained" onClick={saveAction}>
-          {' '}
           Confirm
         </Button>
         <Button variant="contained" onClick={handlerClickDelete}>
