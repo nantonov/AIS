@@ -1,6 +1,7 @@
 import { FormControl, MenuItem, TextField } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import React, { useEffect, useState } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -22,6 +23,8 @@ import { GridItemContainer } from './styled/GridItemContainer';
 import { DivContainer } from './styled/DivContainer';
 
 const QuestionSetAdd: React.FC = () => {
+  const { getAccessTokenSilently } = useAuth0();
+  const [token, setToken] = useState('');
   const [questionSetModel, setQuestionSetModel] =
     useState<QuestionSetAddState>(IQuestionSetAddDefault);
   const { questionAreas } = useTypedSelector(questionAreaSelector);
@@ -51,10 +54,19 @@ const QuestionSetAdd: React.FC = () => {
   };
 
   useEffect(() => {
+    const getUserMetadata = async () => {
+      const accessToken = await getAccessTokenSilently({
+        audience: `https://localhost:5001`,
+        scope: 'read:current_user',
+      });
+      setToken(accessToken);
+    };
+
+    getUserMetadata();
     dispatch(getAllQuestionSets());
     dispatch(getAllQuestions());
-    dispatch(getAllQuestionAreas());
-  }, [dispatch]);
+    dispatch(getAllQuestionAreas(token));
+  }, [dispatch, token, getAccessTokenSilently]);
 
   const addEmptyQuestionIdsArray = () => {
     const previousQuestionArray = [...questionSetModel.questionIds, 0];

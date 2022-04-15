@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Grid, Typography, Button, Box, FormControl, TextField } from '@mui/material';
 import { useDispatch } from 'react-redux';
+import { useAuth0 } from '@auth0/auth0-react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { QuestionAreaAdd } from '../../core/interfaces/questionArea/questionArea';
@@ -10,6 +11,8 @@ import GridContainer from '../../core/components/gridContainer/GridContainer';
 import QuestionSets from './questionSetsForQuestionAreaForm/questionSetsForQuestionAreaForm';
 
 const QuestionAreaForm: React.FC = () => {
+  const { getAccessTokenSilently } = useAuth0();
+  const [token, setToken] = useState('');
   const { id } = useParams();
   const dispatch = useDispatch();
   const [item, setItem] = useState<QuestionAreaAdd>(defaultQuestionAreaAdd);
@@ -17,8 +20,17 @@ const QuestionAreaForm: React.FC = () => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    dispatch(getQuestionAreaById(Number(id)));
-  }, [dispatch, id]);
+    const getUserMetadata = async () => {
+      const accessToken = await getAccessTokenSilently({
+        audience: `https://localhost:5001`,
+        scope: 'read:current_user',
+      });
+      setToken(accessToken);
+    };
+
+    getUserMetadata();
+    dispatch(getQuestionAreaById(Number(id), token));
+  }, [dispatch, id, token, getAccessTokenSilently]);
 
   const change = (event: React.ChangeEvent<HTMLInputElement>) => {
     const copy = { ...item, name: event.target.value };
@@ -26,7 +38,7 @@ const QuestionAreaForm: React.FC = () => {
   };
 
   const submit = () => {
-    dispatch(postQuestionArea(item));
+    dispatch(postQuestionArea(item, token));
   };
   return (
     <GridContainer>

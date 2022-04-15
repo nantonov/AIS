@@ -9,9 +9,16 @@ export const getEmployeesAllService = async (): Promise<Employee[]> => {
   return result || [];
 };
 
-export const getEmployeeByIdService = async (companyId: number): Promise<Employee> => {
+export const getEmployeeByIdService = async (
+  companyId: number,
+  accessToken: string
+): Promise<Employee> => {
   const result = await axiosInstance
-    .get<Employee>(`${Config.EMPLOYEE_URL}/${companyId}`)
+    .get<Employee>(`${Config.EMPLOYEE_URL}/${companyId}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
     .then((res) => res.data);
 
   return result || defaultEmployee;

@@ -3,31 +3,68 @@ import { QuestionArea, QuestionAreaAdd } from '../interfaces/questionArea/questi
 import axiosInstance from '../../config/getAxious';
 import Config from '../../config/config';
 
-export const getAllQuestionAreasService = async (): Promise<QuestionArea[]> => {
+export const getAllQuestionAreasService = async (accessToken: string): Promise<QuestionArea[]> => {
   const result = await axiosInstance
-    .get<QuestionArea[]>(Config.QUESTION_AREA_URL)
+    .get<QuestionArea[]>(Config.QUESTION_AREA_URL, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
     .then((res) => res.data);
 
   return result || [];
 };
 
-export const getQuestionAreaByIdService = async (questionAreaId: number): Promise<QuestionArea> => {
+export const getQuestionAreaByIdService = async (
+  questionAreaId: number,
+  accessToken: string
+): Promise<QuestionArea> => {
   const result = await axiosInstance
-    .get<QuestionArea>(`${Config.QUESTION_AREA_URL}/${questionAreaId}`)
+    .get<QuestionArea>(`${Config.QUESTION_AREA_URL}/${questionAreaId}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
     .then((res) => res.data);
 
   return result || defaultQuestionArea;
 };
 
-export const deleteQuestionAreaService = (questionAreaId: number): Promise<any> =>
-  axiosInstance.delete(`${Config.QUESTION_AREA_URL}/${questionAreaId}`);
+export const deleteQuestionAreaService = (
+  questionAreaId: number,
+  accessToken: string
+): Promise<any> =>
+  axiosInstance.delete(`${Config.QUESTION_AREA_URL}/${questionAreaId}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
 
-export const createQuestionAreaService = (questionArea: QuestionAreaAdd): Promise<any> =>
-  axiosInstance.post(Config.QUESTION_AREA_URL, { ...questionArea });
+export const createQuestionAreaService = (
+  questionArea: QuestionAreaAdd,
+  accessToken: string
+): Promise<any> =>
+  axiosInstance.post(
+    Config.QUESTION_AREA_URL,
+    { ...questionArea },
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
 
-export const updateQuestionAreaService = (questionArea: QuestionArea): Promise<boolean> =>
+export const updateQuestionAreaService = (
+  questionArea: QuestionArea,
+  accessToken: string
+): Promise<boolean> =>
   axiosInstance.put(
     Config.QUESTION_AREA_URL,
     { ...questionArea },
-    { params: { id: questionArea.id } }
+    {
+      params: { id: questionArea.id },
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
   );

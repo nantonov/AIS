@@ -18,22 +18,23 @@ import {
   updateQuestionAreaService,
 } from '../../services/questionAreaService';
 
-export const getAllQuestionAreas = () => async (dispatch: Dispatch<QuestionAreaAction>) => {
-  try {
-    dispatch(setQuestionAreaStart());
-    const questionAreas = await getAllQuestionAreasService();
-    dispatch(setQuestionAreaSuccessAll(questionAreas));
-  } catch (error) {
-    const errorMessage = (error as Error).message;
-    dispatch(setQuestionAreaFail(errorMessage));
-  }
-};
-
-export const getQuestionAreaById =
-  (id: number) => async (dispatch: Dispatch<QuestionAreaAction>) => {
+export const getAllQuestionAreas =
+  (token: string) => async (dispatch: Dispatch<QuestionAreaAction>) => {
     try {
       dispatch(setQuestionAreaStart());
-      const questionArea = await getQuestionAreaByIdService(id);
+      const questionAreas = await getAllQuestionAreasService(token);
+      dispatch(setQuestionAreaSuccessAll(questionAreas));
+    } catch (error) {
+      const errorMessage = (error as Error).message;
+      dispatch(setQuestionAreaFail(errorMessage));
+    }
+  };
+
+export const getQuestionAreaById =
+  (id: number, token: string) => async (dispatch: Dispatch<QuestionAreaAction>) => {
+    try {
+      dispatch(setQuestionAreaStart());
+      const questionArea = await getQuestionAreaByIdService(id, token);
       dispatch(setQuestionAreaSuccess(questionArea));
     } catch (error) {
       const errorMessage = (error as Error).message;
@@ -42,12 +43,13 @@ export const getQuestionAreaById =
   };
 
 export const postQuestionArea =
-  (questionArea: QuestionAreaAdd) => async (dispatch: Dispatch<QuestionAreaAction>) => {
+  (questionArea: QuestionAreaAdd, token: string) =>
+  async (dispatch: Dispatch<QuestionAreaAction>) => {
     try {
       dispatch(setQuestionAreaStart());
-      const result = await createQuestionAreaService(questionArea);
+      const result = await createQuestionAreaService(questionArea, token);
       if (result) {
-        const questionAreas = await getAllQuestionAreasService();
+        const questionAreas = await getAllQuestionAreasService(token);
         dispatch(setQuestionAreaSuccessAll(questionAreas));
       }
     } catch (error) {
@@ -57,12 +59,12 @@ export const postQuestionArea =
   };
 
 export const putQuestionArea =
-  (questionArea: QuestionArea) => async (dispatch: Dispatch<QuestionAreaAction>) => {
+  (questionArea: QuestionArea, token: string) => async (dispatch: Dispatch<QuestionAreaAction>) => {
     try {
       dispatch(setQuestionAreaStart());
-      const result = await updateQuestionAreaService(questionArea);
+      const result = await updateQuestionAreaService(questionArea, token);
       if (result) {
-        const questionAreas = await getAllQuestionAreasService();
+        const questionAreas = await getAllQuestionAreasService(token);
         dispatch(setQuestionAreaSuccessAll(questionAreas));
       }
     } catch (error) {
@@ -72,11 +74,11 @@ export const putQuestionArea =
   };
 
 export const deleteQuestionArea =
-  (questionArea: QuestionArea) => async (dispatch: Dispatch<QuestionAreaAction>) => {
+  (questionArea: QuestionArea, token: string) => async (dispatch: Dispatch<QuestionAreaAction>) => {
     try {
       dispatch(setQuestionAreaStart());
-      await deleteQuestionAreaService(questionArea.id).then(async () => {
-        const questionAreas = await getAllQuestionAreasService();
+      await deleteQuestionAreaService(questionArea.id, token).then(async () => {
+        const questionAreas = await getAllQuestionAreasService(token);
         dispatch(setQuestionAreaSuccessAll(questionAreas));
       });
     } catch (error) {

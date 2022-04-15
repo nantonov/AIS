@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using AIS.API.ViewModels.QuestionArea;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AIS.API.Controllers
 {
@@ -23,6 +24,7 @@ namespace AIS.API.Controllers
             _mapper = mapper;
         }
 
+        [Authorize]
         [HttpGet(EndpointConstants.IdTemplate)]
         public async Task<QuestionAreaViewModel> GetQuestionArea(int id, CancellationToken ct)
         {
@@ -30,6 +32,7 @@ namespace AIS.API.Controllers
             return questionArea;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IEnumerable<ShortQuestionAreaViewModel>> GetQuestionAreas(CancellationToken ct)
         {
