@@ -2,23 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Typography from '@mui/material/Typography';
 import { Button, TextField } from '@mui/material';
-import styled from 'styled-components';
 import { Question } from '../../../core/interfaces/question/question';
 import { TrueAnswer } from '../../../core/interfaces/trueAnswer/trueAnswer';
 import defaultTrueAnswer from '../../../core/common/defaultDTO/defaultTrueAnswer';
 import { deleteQuestionById, putQuestion } from '../../../core/redux/thunk/questionThunk';
 import { putTrueAnswer } from '../../../core/redux/thunk/trueAnswerThunk';
+import { ButtonsContainer } from './styled/ButtonsContainer';
 
 interface Props {
   item: Question;
 }
-
-const ButtonsContainer = styled.div`
-  margin-top: 1em;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-`;
 
 export const QuestionForm: React.FC<Props> = ({ item }) => {
   const [question, setQuestion] = useState<Question>(item);

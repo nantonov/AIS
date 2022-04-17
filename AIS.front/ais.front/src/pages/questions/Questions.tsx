@@ -8,6 +8,7 @@ import { Question } from '../../core/interfaces/question/question';
 import { getAllQuestions } from '../../core/redux/thunk/questionThunk';
 import questionSelector from '../../core/redux/selectors/questionSelector';
 import { useTypedSelector } from '../../core/hooks/useTypedSelector';
+import { GridItemContainer } from './styled/GridItemContainer';
 
 const Questions: React.FC = () => {
   const [open, setOpen] = React.useState(false);
@@ -23,7 +24,7 @@ const Questions: React.FC = () => {
   }, [dispatch]);
 
   return (
-    <Grid container direction="column" justifyContent="center" alignItems="center">
+    <GridItemContainer>
       <Grid pt={1} pb={1}>
         <Typography variant="h5">Questions</Typography>
       </Grid>
@@ -38,7 +39,7 @@ const Questions: React.FC = () => {
       {questions.map((item: Question) => (
         <QuestionComponent key={item.id} item={item} />
       ))}
-    </Grid>
+    </GridItemContainer>
   );
 };
 
