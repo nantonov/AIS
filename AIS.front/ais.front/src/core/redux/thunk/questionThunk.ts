@@ -27,10 +27,9 @@ export const getAllQuestions = () => async (dispatch: Dispatch<QuestionAction>) 
 export const deleteQuestionById = (id: number) => async (dispatch: Dispatch<QuestionAction>) => {
   try {
     dispatch(setQuestionStart());
-    await deleteQuestionService(id).then(async () => {
-      const questions = await getQuestionsAllService();
-      dispatch(setQuestionSuccessAll(questions));
-    });
+    await deleteQuestionService(id);
+    const questions = await getQuestionsAllService();
+    dispatch(setQuestionSuccessAll(questions));
   } catch (error) {
     const errorMessage = (error as Error).message;
     dispatch(setQuestionFail(errorMessage));
