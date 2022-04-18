@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Button,
   Dialog,
@@ -21,6 +22,7 @@ interface Props {
 export const AddQuestionDialog: React.FC<Props> = ({ setOpen, open }) => {
   const [question, setQuestion] = useState<Question>(defaultQuestion);
   const [trueAnswer, setTrueAnswer] = useState<TrueAnswer>(defaultTrueAnswer);
+  const { t } = useTranslation();
 
   const handleClose = () => {
     setOpen(false);
@@ -38,10 +40,10 @@ export const AddQuestionDialog: React.FC<Props> = ({ setOpen, open }) => {
 
   return (
     <Dialog open={open} onClose={handleClose} PaperProps={{ sx: { width: '75%', height: '50%' } }}>
-      <DialogTitle color="primary">New question</DialogTitle>
+      <DialogTitle color="primary">{t('New Question')}</DialogTitle>
 
       <DialogContent>
-        <Typography>Question</Typography>
+        <Typography>{t('Question')}</Typography>
         <TextField
           fullWidth
           autoFocus
@@ -63,10 +65,10 @@ export const AddQuestionDialog: React.FC<Props> = ({ setOpen, open }) => {
 
       <DialogActions>
         <Button onClick={handleClose} variant="contained">
-          Cancel
+          {t('Cancel')}
         </Button>
         <Button onClick={handleClose} variant="contained">
-          Add
+          {t('Add')}
         </Button>
       </DialogActions>
     </Dialog>

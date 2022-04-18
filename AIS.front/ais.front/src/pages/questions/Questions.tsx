@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { Button, Grid, Typography } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { AddQuestionDialog } from './components/AddQuestionDialog';
@@ -14,6 +15,7 @@ const Questions: React.FC = () => {
   const [open, setOpen] = React.useState(false);
   const dispatch = useDispatch();
   const { questions } = useTypedSelector(questionSelector);
+  const { t } = useTranslation();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -26,12 +28,12 @@ const Questions: React.FC = () => {
   return (
     <GridItemContainer>
       <Grid pt={1} pb={1}>
-        <Typography variant="h5">Questions</Typography>
+        <Typography variant="h5">{t('Questions')}</Typography>
       </Grid>
 
       <Grid pt={1} pb={1}>
         <Button variant="contained" startIcon={<AddCircleIcon />} onClick={handleClickOpen}>
-          Add question
+          {t('Add Question')}
         </Button>
 
         <AddQuestionDialog open={open} setOpen={setOpen} />

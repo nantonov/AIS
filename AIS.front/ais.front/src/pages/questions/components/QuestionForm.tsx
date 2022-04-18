@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import Typography from '@mui/material/Typography';
 import { Button, TextField } from '@mui/material';
 import { Question } from '../../../core/interfaces/question/question';
@@ -17,6 +18,7 @@ export const QuestionForm: React.FC<Props> = ({ item }) => {
   const [question, setQuestion] = useState<Question>(item);
   const [trueAnswer, setTrueAnswer] = useState<TrueAnswer>(defaultTrueAnswer);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (item.trueAnswer) {
@@ -50,18 +52,18 @@ export const QuestionForm: React.FC<Props> = ({ item }) => {
 
   return (
     <div>
-      <Typography> Update Question</Typography>
+      <Typography>{t('Update Question')}</Typography>
       <TextField fullWidth type="text" value={question.text} onChange={changeQuestion} />
 
-      <Typography pt={2}> True Answer</Typography>
+      <Typography pt={2}> {t('True Answer')}</Typography>
       <TextField fullWidth type="text" value={trueAnswer.text} onChange={changeTrueAnswer} />
 
       <ButtonsContainer>
         <Button variant="contained" onClick={saveAction}>
-          Confirm
+          {t('Confirm')}
         </Button>
         <Button variant="contained" onClick={handlerClickDelete}>
-          Delete
+          {t('Delete')}
         </Button>
       </ButtonsContainer>
     </div>
