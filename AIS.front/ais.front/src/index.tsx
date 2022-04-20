@@ -10,7 +10,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Auth0Provider
       domain="dev---aps9vw.us.auth0.com"
-      clientId="PBqz8sdZeHcyMd06RfKiIZAoDaP73q5G"
+      clientId="aBwI04NXIdoO0VEiGiL3ivmSyVSFNWFZ"
       redirectUri={window.location.origin}
       audience="https://localhost:5001"
       scope="read:current_user update:current_user_metadata"

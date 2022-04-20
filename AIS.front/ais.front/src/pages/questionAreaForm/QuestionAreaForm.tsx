@@ -22,7 +22,7 @@ const QuestionAreaForm: React.FC = () => {
   useEffect(() => {
     const getUserMetadata = async () => {
       const accessToken = await getAccessTokenSilently({
-        audience: `https://localhost:5001`,
+        audience: `https://dev---aps9vw.us.auth0.com/api/v2/`,
         scope: 'read:current_user',
       });
       setToken(accessToken);

@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace AIS.API.Controllers
 {
+
     [Route(EndpointConstants.ControllerEndpointRoute)]
     [ApiController]
     public class QuestionAreaController : ControllerBase
@@ -24,7 +25,7 @@ namespace AIS.API.Controllers
             _mapper = mapper;
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpGet(EndpointConstants.IdTemplate)]
         public async Task<QuestionAreaViewModel> GetQuestionArea(int id, CancellationToken ct)
         {
