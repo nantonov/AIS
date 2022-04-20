@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   Button,
   Grid,
@@ -11,7 +11,6 @@ import {
   TableRow,
 } from '@mui/material';
 import { useDispatch } from 'react-redux';
-import { useAuth0 } from '@auth0/auth0-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Typography from '@mui/material/Typography';
@@ -25,8 +24,6 @@ import MainRoutes from '../../core/constants/mainRoutes';
 import questionAreaSelector from '../../core/redux/selectors/questionAreaSelector';
 
 const QuestionAreaDescription: React.FC = () => {
-  const [token, setToken] = useState('');
-  const { getAccessTokenSilently } = useAuth0();
   const { id } = useParams();
   const navigate = useNavigate();
   const { questionArea } = useTypedSelector(questionAreaSelector);
@@ -35,25 +32,15 @@ const QuestionAreaDescription: React.FC = () => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    const getUserMetadata = async () => {
-      const accessToken = await getAccessTokenSilently({
-        audience: `https://localhost:5001`,
-        scope: 'read:current_user',
-      });
-      setToken(accessToken);
-    };
-
-    getUserMetadata();
-
-    dispatch(getQuestionAreaById(Number(id), token));
-  }, [dispatch, id, token, getAccessTokenSilently]);
+    dispatch(getQuestionAreaById(Number(id)));
+  }, [dispatch, id]);
   const routeChangeSet = (changeId: Number) => () => {
     const path = `/${MainRoutes.questionSet}/${changeId}`;
     navigate(path);
   };
   const DeleteQuestionSet = (questionAreaId: number, questionSetId: number) => () => {
     deleteByTwoIdsAreaSet(questionAreaId, questionSetId).then(() => {
-      getQuestionAreaById(Number(id), token);
+      getQuestionAreaById(Number(id));
     });
   };
 
