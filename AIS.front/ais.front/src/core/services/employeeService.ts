@@ -10,15 +10,10 @@ export const getEmployeesAllService = async (): Promise<Employee[]> => {
 };
 
 export const getEmployeeByIdService = async (
-  companyId: number,
-  accessToken: string
+  companyId: number
 ): Promise<Employee> => {
   const result = await axiosInstance
-    .get<Employee>(`${Config.EMPLOYEE_URL}/${companyId}`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    })
+    .get<Employee>(`${Config.EMPLOYEE_URL}/${companyId}`)
     .then((res) => res.data);
 
   return result || defaultEmployee;
