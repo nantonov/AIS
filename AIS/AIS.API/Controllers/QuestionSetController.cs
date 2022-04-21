@@ -7,9 +7,11 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using AIS.API.ViewModels.QuestionSet;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AIS.API.Controllers
 {
+    [Authorize]
     [Route(EndpointConstants.ControllerEndpointRoute)]
     [ApiController]
     public class QuestionSetController : ControllerBase

@@ -11,12 +11,16 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import { useAuth0 } from '@auth0/auth0-react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import PagesAppBar from '../../constants/pagesAppBar';
 import Settings from '../../constants/headerSettings';
+import LoginButton from '../loginButton/LoginButton';
+import LogoutButton from '../logoutButton/LogoutButton';
 
 const Header: React.FC = () => {
+  const { isAuthenticated } = useAuth0();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -90,6 +94,8 @@ const Header: React.FC = () => {
                   <Typography textAlign="center">{t(`${page.label}`)}</Typography>
                 </MenuItem>
               ))}
+              <LoginButton />
+              {isAuthenticated && <LogoutButton />}
             </Menu>
           </Box>
           <Typography
@@ -115,6 +121,8 @@ const Header: React.FC = () => {
                 {t(`${page.label}`)}
               </Button>
             ))}
+            <LoginButton />
+            {isAuthenticated && <LogoutButton />}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>

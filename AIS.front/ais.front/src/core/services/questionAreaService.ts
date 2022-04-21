@@ -29,5 +29,7 @@ export const updateQuestionAreaService = (questionArea: QuestionArea): Promise<b
   axiosInstance.put(
     Config.QUESTION_AREA_URL,
     { ...questionArea },
-    { params: { id: questionArea.id } }
+    {
+      params: { id: questionArea.id },
+    }
   );

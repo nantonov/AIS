@@ -18,7 +18,6 @@ const QuestionsAreas: React.FC = () => {
   const { questionAreas } = useTypedSelector(questionAreaSelector);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const { t } = useTranslation();
 
   const routeChange = () => {
